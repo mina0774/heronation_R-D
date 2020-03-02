@@ -7,16 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.heronation.R;
-import com.example.heronation.shop.ShoplistRecyclerViewAdapter.ShopRecyclerViewAdapter;
-import com.example.heronation.shop.ShoplistRecyclerViewAdapter.dataClass.ShopContent;
-
-import java.util.ArrayList;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 

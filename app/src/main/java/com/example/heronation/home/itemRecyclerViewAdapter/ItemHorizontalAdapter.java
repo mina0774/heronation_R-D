@@ -20,7 +20,6 @@ import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent
 import com.example.heronation.R;
 import com.example.heronation.home.topbarFragment.ItemHomeFragment;
 import com.example.heronation.main.MainActivity;
-import com.example.heronation.shop.topbarFragment.ShopRankingFragment;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
 import java.util.ArrayList;

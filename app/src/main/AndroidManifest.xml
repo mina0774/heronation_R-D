@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".shop.ShopWebViewActivity"></activity>
         <activity android:name=".login_register.RegisterAiActivity" />
         <activity android:name=".wishlist.WishlistClosetDeleteActivity" />
         <activity android:name=".login_register.IntroActivity">
@@ -28,7 +27,6 @@
         <activity android:name=".wishlist.WishlistClosetEditBodyActivity" />
         <activity android:name=".login_register.RegisterActivity" />
         <activity android:name=".home.ItemSearchActivity" />
-        <activity android:name=".shop.ShopRankingSearchActivity" />
         <activity android:name=".login_register.loginPageActivity" />
         <activity android:name=".main.MainActivity" />
     </application>

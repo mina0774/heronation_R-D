@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.heronation.R;
-import com.example.heronation.shop.topbarFragment.ShopFavoritesNotLoginFragment;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.topbarFragment.ItemAiFragment;
 import com.example.heronation.home.topbarFragment.ItemBestFragment;
@@ -40,8 +39,6 @@ import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.measurement.MeasurementFragment;
 import com.example.heronation.mypage.MypageConnectingFragment;
 import com.example.heronation.mypage.MypageFragment;
-import com.example.heronation.shop.ShopFragment;
-import com.example.heronation.shop.topbarFragment.ShopFavoritesFragment;
 import com.example.heronation.wishlist.WishlistFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetNotLoginFragment;
@@ -68,7 +65,6 @@ import retrofit2.http.Header;
 // TODO: 2020-02-06 세션 처리 어떻게 할지 고민하기... 현재 드로워에서 사용자 정보 출력 방식과, 마이페이지 정보 출력 방식에서 코드가 반복되는 경우가 많은데 두가지의 방법을 통일시킬 방안 생각해보기 
 public class MainActivity extends AppCompatActivity
         implements
-        ShopFragment.OnFragmentInteractionListener,
         WishlistFragment.OnFragmentInteractionListener,
         ItemFragment.OnFragmentInteractionListener,
         MypageFragment.OnFragmentInteractionListener,
@@ -79,12 +75,10 @@ public class MainActivity extends AppCompatActivity
         ItemBestFragment.OnFragmentInteractionListener,
         ItemAiFragment.OnFragmentInteractionListener,
         ItemSaleFragment.OnFragmentInteractionListener,
-        ShopFavoritesFragment.OnFragmentInteractionListener,
         WishlistShopFragment.OnFragmentInteractionListener,
         WishlistRecentlyViewedItemFragment.OnFragmentInteractionListener,
         WishlistClosetFragment.OnFragmentInteractionListener,
-        WishlistClosetNotLoginFragment.OnFragmentInteractionListener,
-        ShopFavoritesNotLoginFragment.OnFragmentInteractionListener
+        WishlistClosetNotLoginFragment.OnFragmentInteractionListener
 {
     /*
     * Fragment Manager 선언 -- Acitivity 내에서 Fragment를 관리해주기 위해서는 FragmentManager를 사용해야함
@@ -96,7 +90,6 @@ public class MainActivity extends AppCompatActivity
     private MypageConnectingFragment mypageConnectingFragment=new MypageConnectingFragment();
     private MypageFragment mypageNoConnectingFragment = new MypageFragment();
     private ItemFragment itemFragment=new ItemFragment();
-    private ShopFragment shopFragment=new ShopFragment();
     private WishlistFragment wishlistFragment=new WishlistFragment();
 
     /* 하단바 */
@@ -309,7 +302,6 @@ public class MainActivity extends AppCompatActivity
     * BottomNavaigationView Menu Bar에 있는 특정 값을 선택하였을 때
     * Switch문으로 경우를 나누어
     * Item 버튼을  눌렀을 때, Item Fragment로 이동
-    * Shop 버튼을 눌렀을 때, Shop Fragment로 이동
     * 측정 버튼을 눌렀을 때, Measurement Fragment로 이동
     * 찜 버튼을 눌렀을 때, Wishlist Fragment로 이동
     * 마이 페이지 버튼을 눌렀을 때, Mypage Fragment로 이동
@@ -321,9 +313,6 @@ public class MainActivity extends AppCompatActivity
             switch(menuItem.getItemId()){
                 case R.id.menuitem_bottombar_item:
                     transaction.replace(R.id.fragment_container, itemFragment).commit();
-                    return true;
-                case R.id.menuitem_bottombar_shop:
-                    transaction.replace(R.id.fragment_container, shopFragment).commit();
                     return true;
                 case R.id.menuitem_bottombar_measurement:
                     transaction.replace(R.id.fragment_container,measurementFragment).commit();
@@ -340,13 +329,6 @@ public class MainActivity extends AppCompatActivity
             }
             return false;
         }
-    }
-
-
-    public void go_to_shop_fragment(){
-        bottomNavigationView.setSelectedItemId(R.id.menuitem_bottombar_shop);
-        FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
-        transaction.replace(R.id.fragment_container, shopFragment).commit();
     }
 
     public void go_to_measurement(){

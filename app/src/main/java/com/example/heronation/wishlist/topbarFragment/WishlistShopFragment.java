@@ -17,12 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
-import com.example.heronation.shop.ShoplistRecyclerViewAdapter.ShopFavoritesRecyclerViewAdapter;
-import com.example.heronation.shop.ShoplistRecyclerViewAdapter.dataClass.ShopFavoritesContent;
-import com.example.heronation.shop.topbarFragment.ShopFavoritesFragment;
-import com.example.heronation.zeyoAPI.ServiceGenerator;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,73 +42,19 @@ public class WishlistShopFragment extends Fragment {
     @BindView(R.id.favorite_folder) ImageButton favorite_folder;
     @BindView(R.id.recycler_view_wishilist_shop) RecyclerView recycler_view_wishilist_shop;
 
-    private ArrayList<ShopFavoritesContent> shop_list;
-    private ShopFavoritesRecyclerViewAdapter shopRecyclerViewAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_wishlist_shop, container,false);
         ButterKnife.bind(this,rootView);
-        shop_list=new ArrayList<>();
 
         /* 레이아웃 매니저 수평으로 지정 */
         recycler_view_wishilist_shop.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
 
-        GetShopInfo();
-        /* 리사이클러뷰 객체 생성 */
-        shopRecyclerViewAdapter=new ShopFavoritesRecyclerViewAdapter(getActivity(),shop_list);
-        /* 리사이클러뷰에 어댑터 지정 */
-        recycler_view_wishilist_shop.setAdapter(shopRecyclerViewAdapter);
-
-          /* 찜한 마켓이 없을 시에 ShopRankingFragment로 이동*/
-        wishlist_best_market.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity)getActivity()).go_to_shop_fragment();
-            }
-        });
-
         return rootView;
     }
 
-    //쇼핑몰 찜 목록 받아오는 기능
-    public void GetShopInfo() {
-        String authorization = "Bearer " + MainActivity.access_token;
-        String accept = "application/json";
-
-        ShopFavoritesFragment.ShopFavoritesInfoService shopFavoritesInfoService = ServiceGenerator.createService(ShopFavoritesFragment.ShopFavoritesInfoService.class);
-        retrofit2.Call<List<ShopFavoritesContent>> request = shopFavoritesInfoService.ShopInfo(authorization, accept);
-        request.enqueue(new Callback<List<ShopFavoritesContent>>() {
-            @Override
-            public void onResponse(Call<List<ShopFavoritesContent>> call, Response<List<ShopFavoritesContent>> response) {
-                System.out.println("Response" + response.code());
-                List<ShopFavoritesContent> shopFavoritesListInfo=response.body();
-                if(shopFavoritesListInfo.size()!=0) {
-                    /* 찜 마켓 없을 시 화면 삭제 */
-                    have_not_shop.setVisibility(View.GONE);
-                    /* 찜 화면 있을시 화면 보이게 하기 */
-                    have_shop.setVisibility(View.VISIBLE);
-                    /*shop 목록을 생성*/
-                    make_shop_list(shopFavoritesListInfo);
-                    wishlist_shop_num.setText("즐겨찾기 " + shopFavoritesListInfo.size() + "개");
-                    shopRecyclerViewAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ShopFavoritesContent>> call, Throwable t) {
-                System.out.println("error + Connect Server Error is " + t.toString());
-            }
-        });
-    }
-
-    public void make_shop_list(List<ShopFavoritesContent> shopListInfo){
-        /* Shop 목록을 생성함 */
-        for(int i = 0; i<shopListInfo.size(); i++){
-            shop_list.add(shopListInfo.get(i));
-        }
-    }
 
     /**
      * This interface must be implemented by activities that contain this

@@ -14,8 +14,6 @@ import com.example.heronation.wishlist.topbarFragment.WishlistItemFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistItemNotLoginFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemNotLoginFragment;
-import com.example.heronation.wishlist.topbarFragment.WishlistShopFragment;
-import com.example.heronation.wishlist.topbarFragment.WishlistShopNotLoginFragment;
 
 public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
     private int mPageCount;
@@ -26,41 +24,34 @@ public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
      */
     public WishlistViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
-        this.mPageCount=behavior;
+        this.mPageCount = behavior;
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch(position){
+        switch (position) {
             case 0:
-                if(MainActivity.access_token.matches("null")) {
+                if (MainActivity.access_token.matches("null")) {
                     WishlistClosetNotLoginFragment wishlistClosetNotLoginFragment = new WishlistClosetNotLoginFragment();
                     return wishlistClosetNotLoginFragment;
-                }else{
+                } else {
                     WishlistClosetFragment wishlistClosetFragment = new WishlistClosetFragment();
-                    return wishlistClosetFragment; }
+                    return wishlistClosetFragment;
+                }
             case 1:
-                if(MainActivity.access_token.matches("null")) {
+                if (MainActivity.access_token.matches("null")) {
                     WishlistItemNotLoginFragment wishlistItemNotLoginFragment = new WishlistItemNotLoginFragment();
                     return wishlistItemNotLoginFragment;
-                }else {
+                } else {
                     WishlistItemFragment wishlistItemFragment = new WishlistItemFragment();
                     return wishlistItemFragment;
                 }
             case 2:
-                if(MainActivity.access_token.matches("null")) {
-                    WishlistShopNotLoginFragment wishlistShopNotLoginFragment = new WishlistShopNotLoginFragment();
-                    return wishlistShopNotLoginFragment;
-                }else {
-                    WishlistShopFragment wishlistShopFragment = new WishlistShopFragment();
-                    return wishlistShopFragment;
-                }
-            case 3:
-                if(MainActivity.access_token.matches("null")) {
+                if (MainActivity.access_token.matches("null")) {
                     WishlistRecentlyViewedItemNotLoginFragment wishlisttRecentlyViewedItemNotLoginFragment = new WishlistRecentlyViewedItemNotLoginFragment();
                     return wishlisttRecentlyViewedItemNotLoginFragment;
-                }else {
+                } else {
                     WishlistRecentlyViewedItemFragment wishlistRecentlyViewedItemFragment = new WishlistRecentlyViewedItemFragment();
                     return wishlistRecentlyViewedItemFragment;
                 }

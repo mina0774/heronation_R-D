@@ -42,7 +42,6 @@ import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetNotLoginFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistItemFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
-import com.example.heronation.wishlist.topbarFragment.WishlistShopFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity
         ItemHomeFragment.OnFragmentInteractionListener,
         ItemBestFragment.OnFragmentInteractionListener,
         ItemAiFragment.OnFragmentInteractionListener,
-        WishlistShopFragment.OnFragmentInteractionListener,
         WishlistRecentlyViewedItemFragment.OnFragmentInteractionListener,
         WishlistClosetFragment.OnFragmentInteractionListener,
         WishlistClosetNotLoginFragment.OnFragmentInteractionListener

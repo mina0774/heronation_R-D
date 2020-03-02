@@ -28,10 +28,6 @@ public class MypageConnectingFragment extends Fragment {
 
     @BindView(R.id.mypage_ninkname_text) TextView mypage_ninkname_text;
 
-    @BindView(R.id.mypage_gender_f) TextView mypage_gender_f;
-
-    @BindView(R.id.mypage_gender_m) TextView mypage_gender_m;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,12 +64,6 @@ public class MypageConnectingFragment extends Fragment {
                     //회원정보 설정
                     /* 상단 텍스트뷰 설정 */
                     mypage_ninkname_text.setText("안녕하세요!\n"+userMyInfo.getName()+"님\n"+userMyInfo.getEmail());
-                    /* 성별 설정 */
-                    if(userMyInfo.getGender().matches("M")){
-                        mypage_gender_m.setTextColor(Color.parseColor("#000000"));
-                    }else if(userMyInfo.getGender().matches("F")){
-                        mypage_gender_f.setTextColor(Color.parseColor("#000000"));
-                    }
                 }
                 /*토큰 만료기한이 끝나, 재로그인이 필요할 때*/
                 else {

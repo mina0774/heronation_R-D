@@ -11,82 +11,48 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
+            <ImageView
+                android:layout_marginTop="86dp"
+                android:layout_width="208dp"
+                android:layout_height="208dp"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="8dp"
+                android:src="@drawable/zeyo_measure" />
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="24dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:src="@drawable/zeyo_measure" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <Button
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/button_background"
-                    android:text="스타일" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
             android:layout_weight="1">
 
             <Button
-                android:layout_width="120dp"
+                android:layout_width="0dp"
                 android:layout_height="120dp"
-                android:layout_marginRight="48dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                android:text="스타일" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
                 android:background="@drawable/button_background"
                 android:text="AR" />
 
             <Button
-                android:layout_width="120dp"
+                android:layout_width="0dp"
                 android:layout_height="120dp"
-                android:background="@drawable/button_background"
-                android:text="직접 입력" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1">
-
-            <Button
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginRight="48dp"
-                android:background="@drawable/button_background"
-                android:text="브랜드비교" />
-
-            <Button
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/button_background"
                 android:text="신체비교" />
+
 
         </LinearLayout>
 

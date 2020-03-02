@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.text_id) TextView id_text;
     @BindView(R.id.btn_alarm) Button btn_alarm;
     @BindView(R.id.btn_mypage) Button btn_mypage;
+    @BindView(R.id.btn_style_recommendation) Button btn_style_recommendation;
+    @BindView(R.id.btn_size_measurement) Button btn_size_measurement;
     /* Shop Ranking에 필터 버튼 눌렀을 때, seekBar 설정에 필요한 변수들 */
     int number=0;
     private SeekBar seekBar;
@@ -265,6 +267,24 @@ public class MainActivity extends AppCompatActivity
                 finish();
             }
         });
+        btn_size_measurement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(),IntroActivity.class);
+                Toast.makeText(getApplicationContext(),"로그인이 필요한 서비스입니다.",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                finish();
+            }
+        });
+        btn_style_recommendation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(),IntroActivity.class);
+                Toast.makeText(getApplicationContext(),"로그인이 필요한 서비스입니다.",Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
     public void DrawerGotoLoginConnect(UserMyInfo userMyInfo){
@@ -276,6 +296,15 @@ public class MainActivity extends AppCompatActivity
                 bottomNavigationView.setSelectedItemId(R.id.menuitem_bottombar_mypage);
                 FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
                 transaction.replace(R.id.fragment_container, mypageConnectingFragment).commit();
+            }
+        });
+        btn_size_measurement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawers();
+                bottomNavigationView.setSelectedItemId(R.id.menuitem_bottombar_measurement);
+                FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
+                transaction.replace(R.id.fragment_container, measurementFragment).commit();
             }
         });
     }

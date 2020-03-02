@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -18,8 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.heronation.home.itemRecyclerViewAdapter.ItemNewAdapter;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.FavoriteItemAdapter;
@@ -36,7 +33,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Query;
 
 
 public class WishlistItemFragment extends Fragment {

@@ -10,8 +10,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.heronation.home.topbarFragment.ItemAiFragment;
 import com.example.heronation.home.topbarFragment.ItemBestFragment;
 import com.example.heronation.home.topbarFragment.ItemHomeFragment;
-import com.example.heronation.home.topbarFragment.ItemNewFragment;
-import com.example.heronation.home.topbarFragment.ItemSaleFragment;
 
 public class ItemViewPagerAdapter extends FragmentPagerAdapter {
     private int mPageCount;
@@ -34,17 +32,11 @@ public class ItemViewPagerAdapter extends FragmentPagerAdapter {
                 ItemHomeFragment itemHomeFragment=new ItemHomeFragment();
                 return itemHomeFragment;
             case 1:
-                ItemNewFragment itemNewFragment=new ItemNewFragment();
-                return itemNewFragment;
-            case 2:
                 ItemBestFragment itemBestFragment=new ItemBestFragment();
                 return itemBestFragment;
-            case 3:
+            case 2:
                 ItemAiFragment itemAiFragment=new ItemAiFragment();
                 return itemAiFragment;
-            case 4:
-                ItemSaleFragment itemSaleFragment=new ItemSaleFragment();
-                return itemSaleFragment;
         }
         return null;
     }

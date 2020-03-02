@@ -32,8 +32,6 @@ import com.example.heronation.home.topbarFragment.ItemAiFragment;
 import com.example.heronation.home.topbarFragment.ItemBestFragment;
 import com.example.heronation.home.ItemFragment;
 import com.example.heronation.home.topbarFragment.ItemHomeFragment;
-import com.example.heronation.home.topbarFragment.ItemNewFragment;
-import com.example.heronation.home.topbarFragment.ItemSaleFragment;
 import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.measurement.MeasurementFragment;
@@ -71,10 +69,8 @@ public class MainActivity extends AppCompatActivity
         MeasurementFragment.OnFragmentInteractionListener,
         WishlistItemFragment.OnFragmentInteractionListener,
         ItemHomeFragment.OnFragmentInteractionListener,
-        ItemNewFragment.OnFragmentInteractionListener,
         ItemBestFragment.OnFragmentInteractionListener,
         ItemAiFragment.OnFragmentInteractionListener,
-        ItemSaleFragment.OnFragmentInteractionListener,
         WishlistShopFragment.OnFragmentInteractionListener,
         WishlistRecentlyViewedItemFragment.OnFragmentInteractionListener,
         WishlistClosetFragment.OnFragmentInteractionListener,

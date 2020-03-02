@@ -15,12 +15,7 @@
             android:layout_height="wrap_content"
             android:text="홈" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="신상" />
-
-        <com.google.android.material.tabs.TabItem
+           <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="베스트" />
@@ -30,10 +25,6 @@
             android:layout_height="wrap_content"
             android:text="AI" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="세일" />
     </com.google.android.material.tabs.TabLayout>
 
     <!--Fragment가 나타나는 부분 -->

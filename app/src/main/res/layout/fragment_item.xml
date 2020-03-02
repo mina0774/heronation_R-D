@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.ItemFragment">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/item_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="홈" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="신상" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="베스트" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="세일" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <!--Fragment가 나타나는 부분 -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/item_fragment_container"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:layout_above="@id/bottomnavigation_menu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>

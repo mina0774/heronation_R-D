@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.topbarFragment.ItemSaleFragment">
+    <!--shop에 해당하는 카테고리들은 android:layout_marginTop="40dp"를 선언해주어야 함.
+    왜냐하면 Main에서 상단바를 40dp 설정해주었기 때문에 이와 겹치지 않기 위함 -->
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Sale"
+        android:textSize="40dp"/>
+
+</FrameLayout>

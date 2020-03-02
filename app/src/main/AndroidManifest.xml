@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.heronation">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".shop.ShopWebViewActivity"></activity>
+        <activity android:name=".login_register.RegisterAiActivity" />
+        <activity android:name=".wishlist.WishlistClosetDeleteActivity" />
+        <activity android:name=".login_register.IntroActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".login_register.RegisterBodyActivity" />
+        <activity android:name=".wishlist.WishlistClosetItemEditActivity" />
+        <activity android:name=".wishlist.WishlistClosetEditBodyInfoActivity" />
+        <activity android:name=".wishlist.WishlistClosetEditBodyActivity" />
+        <activity android:name=".login_register.RegisterActivity" />
+        <activity android:name=".home.ItemSearchActivity" />
+        <activity android:name=".shop.ShopRankingSearchActivity" />
+        <activity android:name=".login_register.loginPageActivity" />
+        <activity android:name=".main.MainActivity" />
+    </application>
+
+</manifest>

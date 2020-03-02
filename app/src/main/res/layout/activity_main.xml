@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.MainActivity">
+    <!--drawerlayout 안에 상단바랑 frameLayout이 있음-->
+    <androidx.drawerlayout.widget.DrawerLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".main.MainActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!--상단바-->
+    <RelativeLayout
+        android:id="@+id/drawer_area"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#A0A0A0">
+        <!--상단바 좌측에 있는 이미지 버튼-->
+
+        <ImageButton
+            android:contentDescription="@string/app_name"
+            android:id="@+id/btn_open"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/appbar_icon"
+            android:layout_marginLeft="15dp" />
+    </RelativeLayout>
+
+    <!--Fragment가 나타나는 부분 -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_below="@id/drawer_area"
+        android:layout_above="@id/bottomnavigation_menu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+        <!-- bottom_bar_menu를 bottomnavigation_menu_bar에 바인딩 -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomnavigation_menu_bar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            app:itemBackground="@android:color/white"
+            app:labelVisibilityMode="labeled"
+            style="@style/BottomNavigationView"
+            app:menu="@menu/bottom_bar_menu" />
+    </RelativeLayout>
+
+
+        <include layout="@layout/drawer" /> <!-- 액티비티 드로워 레이아웃을 메인과 연결시킨거-->
+    </androidx.drawerlayout.widget.DrawerLayout>
+    <!-- 여기까지 드로워 -->
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

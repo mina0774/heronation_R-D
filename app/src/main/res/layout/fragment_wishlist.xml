@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".wishlist.WishlistFragment">
+
+    <!--상단 탭바 Wishlist일때만 보여야함-->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/wishlist_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="옷장" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="찜" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shop" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최근 본 상품" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <!--Fragment가 나타나는 부분 -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/wishlist_fragment_container"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:layout_above="@id/bottomnavigation_menu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout>

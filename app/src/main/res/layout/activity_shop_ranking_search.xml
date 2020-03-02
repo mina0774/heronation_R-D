@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context=".shop.ShopRankingSearchActivity">
+
+<LinearLayout
+    android:layout_marginTop="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/shop_ranking_search_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
+        android:background="#ffffff"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_back_button_24dp"
+        android:onClick="click_back_button"/>
+
+    <TextView
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shop 검색"
+        android:layout_gravity="center_vertical"
+        android:textSize="18sp"
+    />
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:padding="8dp"
+        android:background="@drawable/round_rectangle_f3f3f3"
+        android:orientation="horizontal">
+
+
+        <ImageButton
+            android:id="@+id/item_home_search_icon"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:background="#f3f3f3"
+            android:src="@drawable/ic_search_black_24dp" />
+
+        <EditText
+            android:id="@+id/item_home_search_edittext"
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:padding="8dp"
+            android:background="@null"
+            android:hint="예쁜 쇼핑몰을 검색해보세요."
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/item_home_search_mike"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:background="#f3f3f3"
+            android:src="@drawable/ic_mic_black_24dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical">
+    <TextView
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="추천 SHOP"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:padding="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="난닝구"/>
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:padding="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="스타일난다"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="@android:color/transparent"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"/>
+
+
+    <!--검색어가 없을 경우 버튼 visibility를 visible로 설정하여 활성화하기 -->
+    <Button
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:padding="8dp"
+        android:layout_height="40dp"
+        android:text="+'검색어' 쇼핑몰 추가 요청"
+        android:background="@drawable/button_background"
+        android:layout_gravity="center_horizontal"
+        android:visibility="invisible"
+ />
+
+
+</LinearLayout>

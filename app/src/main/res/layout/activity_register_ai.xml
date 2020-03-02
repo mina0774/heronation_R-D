@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".login_register.RegisterAiActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_background"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="30dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Style AI"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좋아하는 스타일을 선택해 주세요." />
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_marginTop="10dp"
+                android:stretchColumns="0,1">
+
+                <TableRow
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="-5dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/register_style_1"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/style_1"
+                        android:text="" />
+
+                    <ImageButton
+                        android:id="@+id/register_style_2"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/style_4"
+                        android:text="" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/register_style_3"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/style_3"
+                        android:text="" />
+
+                    <ImageButton
+                        android:id="@+id/register_style_4"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/style_2"
+                        android:text="" />
+                </TableRow>
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="세부 스타일" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="232dp"
+                    android:layout_marginTop="10dp"
+                    android:stretchColumns="0,1,2">
+
+                    <TableRow android:layout_weight="1">
+
+                        <Button
+                            android:id="@+id/btn_casual"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="casual" />
+
+                        <Button
+                            android:id="@+id/btn_street"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="street" />
+
+                        <Button
+                            android:id="@+id/btn_vintage"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="vintage" />
+                    </TableRow>
+
+                    <TableRow android:layout_weight="1">
+
+                        <Button
+                            android:id="@+id/btn_sexy"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="sexy" />
+
+                        <Button
+                            android:id="@+id/btn_modern"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="modern" />
+
+                        <Button
+                            android:id="@+id/btn_feminine"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="feminine" />
+                    </TableRow>
+
+                    <TableRow android:layout_weight="1">
+
+                        <Button
+                            android:id="@+id/btn_dandy"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="dandy" />
+
+                        <Button
+                            android:id="@+id/btn_lovely"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="lovely" />
+
+                        <Button
+                            android:id="@+id/btn_unique"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="Unique" />
+                    </TableRow>
+
+                    <TableRow android:layout_weight="1">
+
+                        <Button
+                            android:id="@+id/btn_classic"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="classic" />
+
+                        <Button
+                            android:id="@+id/btn_sporty"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="sporty" />
+
+                        <Button
+                            android:id="@+id/btn_layered"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/btn_background"
+                            android:text="layered" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/registerai_previous_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/btn_background"
+                    android:onClick="click_registerai_previous"
+                    android:text="이전" />
+
+                <Button
+                    android:id="@+id/registerai_next_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_background"
+                    android:onClick="click_registerai_next"
+                    android:text="완료" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

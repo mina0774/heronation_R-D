@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".filter.FilterCategoryFragment">
+<LinearLayout
+    android:layout_gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_selected"
+                android:text="상의"
+                android:textSize="10sp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_selected"
+                android:text="하의"
+                android:textSize="10sp" />
+
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_selected"
+                android:text="아우터"
+                android:textSize="10sp" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_selected"
+                android:text="원피스"
+                android:textSize="10sp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_selected"
+                android:text="스커트"
+                android:textSize="10sp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_selected"
+                android:text="슈즈"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_selected"
+                android:text="가방"
+                android:textSize="10sp" />
+
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_selected"
+                android:text="액세서리"
+                android:textSize="10sp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_selected"
+                android:text="패션소품"
+                android:textSize="10sp" />
+
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="32dp"
+            android:background="@drawable/round_rectange_color"
+            android:layout_marginRight="4dp"
+            android:text="초기화"
+            android:textSize="12sp"
+            android:textColor="#ffffff"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:layout_height="32dp"
+            android:background="@drawable/round_rectange_color"
+            android:text="450개 상품 보기"
+            android:textSize="12sp"
+            android:textColor="#ffffff"/>
+
+    </LinearLayout>
+</LinearLayout>
+</FrameLayout>

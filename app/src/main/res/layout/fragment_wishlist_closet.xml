@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f3f3f3"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".wishlist.topbarFragment.WishlistClosetFragment">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+<androidx.cardview.widget.CardView
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_margin="8dp"
+    android:layout_height="160dp"
+    app:cardCornerRadius="15dp">
+
+    <LinearLayout
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+        android:id="@+id/text_body"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:text="내 체형"/>
+
+            <Button
+                android:id="@+id/wishlist_closet_edit_button"
+                android:layout_width="80dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_background_rectangle"
+                android:text="체형 수정"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/image_view_body_group"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+
+            android:src="@drawable/shop_img1" />
+
+        <LinearLayout
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/image_view_body_group"
+            android:layout_width="240dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/closet_body_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="성별: 여"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/closet_body_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나이: 25"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/closet_body_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="키: 168"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/closet_body_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="몸무게: 50"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/closet_body_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="체형: ① ② ③ ④ ⑤"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+
+        <ImageButton
+            android:background="#f3f3f3"
+            android:id="@+id/closet_delete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_favorite_trash"/>
+
+    <Spinner
+
+        android:id="@+id/wishlist_closet_spinner_category"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:gravity="center"
+        android:layout_width="104dp"
+        android:layout_height="32dp"
+        android:background="@drawable/button_background"
+        />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_wishilist_closet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

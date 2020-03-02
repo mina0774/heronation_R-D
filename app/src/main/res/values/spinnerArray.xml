@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerArray_category">
+        <item> 카테고리 </item>
+        <item> 상의 </item>
+        <item> 하의 </item>
+        <item> 아우터 </item>
+        <item> 원피스 </item>
+        <item> 스커트 </item>
+        <item> 슈즈 </item>
+        <item> 가방 </item>
+        <item> 액세서리 </item>
+        <item> 패션소품 </item>
+    </string-array>
+
+    <string-array name="spinnerArray_order">
+        <item> 최신순 </item>
+        <item> 인기순 </item>
+        <item> 저가순 </item>
+        <item> 고가순 </item>
+    </string-array>
+
+
+</resources>

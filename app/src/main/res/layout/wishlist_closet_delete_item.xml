@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_margin="8dp"
+    android:layout_height="160dp"
+    app:cardCornerRadius="15dp">
+
+
+
+    <RelativeLayout
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+
+
+
+        <ImageView
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/wishlist_closet_item"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/shop_item_example_img"
+            android:scaleType="centerCrop" />
+
+
+
+        <ImageButton
+            android:id="@+id/favorite_button"
+            android:background="#ffffff"
+            android:layout_margin="4dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/selector_star"
+            android:layout_alignParentRight="true"
+            />
+
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/wishlist_closet_item"
+            android:layout_below="@id/favorite_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="카테고리: " />
+                <TextView
+                    android:id="@+id/wishlist_closet_item_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="[카테고리]" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="이름: " />
+                <TextView
+                    android:id="@+id/wishlist_closet_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="이름"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="등록일: " />
+                <TextView
+                    android:id="@+id/wishlist_closet_item_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="등록일"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="쇼핑몰 이름: " />
+                <TextView
+                    android:id="@+id/wishlist_closet_item_shop_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="쇼핑몰 이름"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="측정 방식: " />
+                <TextView
+                    android:id="@+id/wishlist_closet_item_measurement_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="측정 방식"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <CheckBox
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="4dp"
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

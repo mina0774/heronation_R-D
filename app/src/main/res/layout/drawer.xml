@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer"
+    android:layout_width="290dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="#E7E7E7"
+    android:orientation="vertical">     <!--main에서 drawer 파일을 불러오기 위해 id 값 지정-->
+    <LinearLayout
+        android:padding="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/button_background_rectangle"
+        android:orientation="horizontal"> <!-- (로고+아이디)칸의 리니어-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/logo" /> <!--이미지 둥글게 만드는 라이브러리 사용-->
+
+        <TextView
+            android:id="@+id/text_id"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:text="로그인/회원가입"
+            android:textSize="16sp" />  <!-- 닉네임-->
+
+        <Button
+            android:id="@+id/btn_close"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="right"
+            android:background="@drawable/ic_close_black_24dp"
+            android:onClick="click_close"
+            android:textColor="#808080" /> <!-- 네비바를 닫는 X버튼, 그림자 없애고 사용-->
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        android:stretchColumns="0,1,2,3">   <!-- 알림, 설정, 마이페이지, 주문/배송이 있는 테이블 레이아웃-->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_alarm"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/button_background_rectangle"
+                android:text="알림" />
+
+
+            <Button
+                android:id="@+id/btn_mypage"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/button_background_rectangle"
+                android:text="마이페이지" />
+
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_size_measurement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/button_background_rectangle"
+        android:text="사이즈 측정" />    <!-- 사이즈 측정 버튼-->
+
+    <Button
+        android:id="@+id/btn_style_recommendation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background_rectangle"
+        android:text="스타일 추천" />    <!--스타일 추천 버튼-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="1dp"
+        android:background="@drawable/button_background_rectangle"
+        android:orientation="vertical">     <!-- 카테고리 텍스트와 카테고리 테이블레이아웃이 함께있음-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="카테고리" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:stretchColumns="0,1,2">     <!-- 카테고리 종류가 바둑판 배열로 있는 테이블 레이아웃-->
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btn_category_1"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:text="(이미지)\n티셔츠" />
+
+                <Button
+                    android:id="@+id/btn_category_2"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:text="(이미지)\n티셔츠" />
+
+                <Button
+                    android:id="@+id/btn_category_3"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:text="(이미지)\n티셔츠" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btn_category_4"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:text="(이미지)\n티셔츠" />
+
+                <Button
+                    android:id="@+id/btn_category_5"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:text="(이미지)\n티셔츠" />
+
+                <Button
+                    android:id="@+id/btn_category_6"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:text="(이미지)\n티셔츠" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btn_category_7"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:text="(이미지)\n티셔츠" />
+
+                <Button
+                    android:id="@+id/btn_category_8"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:text="(이미지)\n티셔츠" />
+
+                <Button
+                    android:id="@+id/btn_category_9"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:text="(이미지)\n티셔츠" />
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">   <!-- 정보담은 텍스트 -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:background="#FFFFFF"
+            android:gravity="center_horizontal"
+            android:text="\n히어로네이션 \n 주소 가앙동구청 \n 연락처 등등등"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+</LinearLayout>

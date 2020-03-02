@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f3f3f3"
+    tools:context=".wishlist.WishlistClosetEditBodyInfoActivity">
+    <ImageButton
+        android:id="@+id/shop_ranking_search_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
+        android:background="#f3f3f3"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_back_button_24dp"
+        android:onClick="click_back_button"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:layout_height="160dp"
+        app:cardCornerRadius="15dp">
+
+        <RelativeLayout
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/image_view_body_group"
+                    android:layout_width="120dp"
+                    android:layout_height="100dp"
+
+                    android:src="@drawable/shop_img1" />
+
+                <LinearLayout
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/image_view_body_group"
+                    android:layout_width="240dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="성별: 여" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="나이: 25" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="키: 168" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="몸무게: 50" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="체형: ① ② ③ ④ ⑤" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/wishlist_closet_edit_button"
+                android:layout_width="80dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_background_rectangle"
+                android:text="수정"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="24dp">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="240dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="40dp"
+            android:progress="40"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="성별"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_marginRight="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="32dp"
+                android:text="남"
+                android:textSize="12sp"
+                android:background="@drawable/button_background"/>
+
+            <Button
+                android:layout_marginLeft="32dp"
+                android:layout_width="48dp"
+                android:layout_height="32dp"
+                android:textSize="12sp"
+                android:text="여"
+                android:background="@drawable/button_background"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="키"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:background="@drawable/button_background_rectangle"
+                android:hint="  키를 입력해주세요."
+                android:textSize="12sp"
+                android:layout_marginRight="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="200dp"
+                android:layout_height="32dp"/>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="몸무게"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:background="@drawable/button_background_rectangle"
+                android:hint="  몸무게를 입력해주세요."
+                android:textSize="12sp"
+                android:layout_marginRight="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="200dp"
+                android:layout_height="32dp"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나이"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:background="@drawable/button_background_rectangle"
+                android:hint="  나이를 입력해주세요."
+                android:textSize="12sp"
+                android:layout_marginRight="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="200dp"
+                android:layout_height="32dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="64dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:background="#f3f3f3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_chevron_left_black_24dp"/>
+
+            <ImageButton
+                android:background="#f3f3f3"
+                android:layout_alignParentRight="true"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_chevron_right_black_24dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

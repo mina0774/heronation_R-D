@@ -16,13 +16,6 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
     }
-    public void go_to_main(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        //비회원 사용자일 때
-        intent.putExtra("access_token","null");
-        startActivity(intent);
-        finish();
-    }
 
     public void go_to_login(View view){
         Intent intent = new Intent(this, loginPageActivity.class);

@@ -94,16 +94,20 @@ public interface APIInterface {
     public interface ModifyUserInfoService {
         @PATCH("api/consumers")
         retrofit2.Call<String> ModifyUserInfo(@Header("Authorization") String authorization,
-                                              @Header("Accept") String accept,
+                                              @Header("Accept")  String accept,
                                               @Header("ShopContent-Type") String content_type,
                                               @Body UserModifyInfo userModifyInfo);
     }
 
-    /* 사용자 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/
+    /* 사용자 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스
+     * style_tag_id는 사용자 정보를 받아올 때, 사용자 정보에서 Style_Tag 정보를 볼 수 있는 login_register 폴더,
+     * 하위 폴더 dataClass에 있는 StyleTagResponse의 id를 받아주면 됨.
+     */
     public interface StyleRecommendationBasedUserService {
-        @GET("api/items/style-tags/1,2/user-base")
-        retrofit2.Call<StyleRecommendationBasedUser> ShopItemInfo(@Header("authorization") String authorization,
-                                                              @Header("Accept") String accept);
+        @GET("api/items/style-tags/{style_tag_id}/user-base")
+        retrofit2.Call<StyleRecommendationBasedUser> ShopItemInfo(@Path("style_tag_id") String style_tag_id,
+                                                                  @Header("authorization") String authorization,
+                                                                  @Header("Accept") String accept);
     }
 
     /* 타사용자 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/

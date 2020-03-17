@@ -30,6 +30,7 @@ public class UserMyInfo implements Serializable {
     private Integer hipSensibilityLevel;
     private Integer thighSensibilityLevel;
     private List<BodyResponse> bodyResponses = null;
+    private List<StyleTagResponse> styleTagResponses = null;
 
     public String getConsumerId() {
         return consumerId;
@@ -221,6 +222,14 @@ public class UserMyInfo implements Serializable {
 
     public void setBodyResponses(List<BodyResponse> bodyResponses) {
         this.bodyResponses = bodyResponses;
+    }
+
+    public List<StyleTagResponse> getStyleTagResponses() {
+        return styleTagResponses;
+    }
+
+    public void setStyleTagResponses(List<StyleTagResponse> styleTagResponses) {
+        this.styleTagResponses = styleTagResponses;
     }
 
 }

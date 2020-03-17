@@ -8,6 +8,8 @@ import com.example.heronation.login_register.dataClass.UserLoginInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -105,10 +107,10 @@ public interface APIInterface {
      */
     public interface StyleRecommendationBasedUserService {
         @GET("api/items/style-tags/{style_tag_id}/user-base")
-        retrofit2.Call<StyleRecommendationBasedUser> ShopItemInfo(@Path("style_tag_id") String style_tag_id,
-                                                                  @Header("authorization") String authorization,
-                                                                  @Header("Accept") String accept);
-    }
+    retrofit2.Call<StyleRecommendationBasedUser> ShopItemInfo(@Path("style_tag_id") String style_tag_id,
+                                                                   @Header("authorization") String authorization,
+                                                                   @Header("Accept") String accept);
+}
 
     /* 타사용자 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/
     public interface StyleRecommendationBasedOtherService {

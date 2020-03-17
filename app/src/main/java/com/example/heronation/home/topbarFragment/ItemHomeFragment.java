@@ -47,11 +47,6 @@ public class ItemHomeFragment extends Fragment {
     @BindView(R.id.item_home_recyclerViewVertical1) RecyclerView item_recyclerView;
     @BindView(R.id.nested_item_home) NestedScrollView nested_item_home;
 
-    //아이템들의 묶음
-    private ArrayList<ShopItemPackage> item_list;
-
-    private ItemVerticalAdapter verticalAdapter;
-
     /* 필터 버튼 */
     @BindView(R.id.item_home_filter) ImageButton filter_button;
 
@@ -62,6 +57,10 @@ public class ItemHomeFragment extends Fragment {
     /* 검색창 */
     @BindView(R.id.item_home_search_edittext) EditText search_item;
 
+    //아이템들의 묶음
+    private ArrayList<ShopItemPackage> item_list;
+    /* 아이템 수평 리스트 담는 수직 어댑터*/
+    private ItemVerticalAdapter verticalAdapter;
     /* 상품 리스트 묶음 번호 */
     private Integer package_num;
     /* 상품 리스트 묶음 이름의 리스트 */

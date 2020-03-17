@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.heronation.R;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
+import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendationBasedUser;
 
 import java.util.ArrayList;
 

@@ -133,7 +133,7 @@ public class ItemBestFragment extends Fragment {
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems(NestedScrollView nestedScrollView, final Context context) {
-        package_num=4;
+       package_num=4;
         GetItemInfo(package_num,package_name_list.get(package_num-4));
         item_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -146,7 +146,6 @@ public class ItemBestFragment extends Fragment {
                 }
             }
         });
-
     }
 
 

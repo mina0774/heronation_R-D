@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.heronation.R;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendationBasedUser;
 
 import java.util.ArrayList;
 
@@ -40,7 +39,7 @@ public class ItemVerticalAdapter extends RecyclerView.Adapter<ItemVerticalAdapte
     @Override
     public void onBindViewHolder(@NonNull ItemVerticalAdapter.VerticalViewHolder holder, int position) {
         //수평 리사이클러뷰 어댑터
-        ItemHorizontalAdapter adapter=new ItemHorizontalAdapter(itemList_List.get(position).getShopItems(),context);
+        ItemStyleHorizontalAdapter adapter=new ItemStyleHorizontalAdapter(itemList_List.get(position).getShopItems(),context);
         /* 수직 리사이클러뷰의 하나의 아이템에 수평 리사이클러뷰의 아이템을 수평 방향으로 배치 설정, 어댑터 지정
         * (ex)  수평 리사이클러뷰
         *       수평 리사이클러뷰

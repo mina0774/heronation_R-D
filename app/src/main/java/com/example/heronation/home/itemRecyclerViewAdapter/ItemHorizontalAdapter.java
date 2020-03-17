@@ -16,18 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.BodyRecommendation;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent;
 import com.example.heronation.R;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendationBasedOther;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendationBasedUser;
-import com.example.heronation.home.topbarFragment.ItemHomeFragment;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -21,6 +21,7 @@ import com.example.heronation.adapter.bannerAdapter.bannerAdapter;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent;
 import com.example.heronation.home.ItemSearchActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemVerticalAdapter;
+import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -61,10 +62,7 @@ public class ItemHomeFragment extends Fragment {
     private ArrayList<ShopItemPackage> item_list;
     /* 아이템 수평 리스트 담는 수직 어댑터*/
     private ItemVerticalAdapter verticalAdapter;
-    /* 상품 리스트 묶음 번호 */
     private Integer package_num;
-    /* 상품 리스트 묶음 이름의 리스트 */
-    private ArrayList<String> package_name_list=new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,11 +83,6 @@ public class ItemHomeFragment extends Fragment {
         verticalAdapter=new ItemVerticalAdapter(item_list,getActivity());
         item_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         item_recyclerView.setAdapter(verticalAdapter);
-
-        /* 상품 목록 리스트의 이름 리스트 생성*/
-        package_name_list.add("신상품");
-        package_name_list.add("내 사이즈 추천");
-        package_name_list.add("내 사이즈와 같은 회원의 인기상품");
         loadItems(nested_item_home,getActivity());
 
         /*  검색창 클릭했을 때, 아이템 검색 액티비티로 이동 */
@@ -118,33 +111,82 @@ public class ItemHomeFragment extends Fragment {
         return rootView;
     }
 
-
-    /*Item의 정보를 얻는 함수*/
-    public void GetItemInfo(Integer page_num,String package_name) {
+    /* 스타일 추천 Item의 정보를 얻는 함수 */
+    public void GetItemInfoUser(String package_name) {
         String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
         String accept = "application/json";
 
-        APIInterface.ItemInfoService itemInfoService = ServiceGenerator.createService(APIInterface.ItemInfoService.class);
-        retrofit2.Call<ShopItemInfo> request = itemInfoService.ItemInfo(page_num,5,"id,asc","heronation","cafe24", authorization, accept);
-        request.enqueue(new Callback<ShopItemInfo>() {
+        APIInterface.StyleRecommendationBasedUserService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserService.class);
+        // TODO: 2020-03-17  사용자 정보 받아오기
+        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo("1,2", authorization, accept); //사용자 정보 받아오기
+        request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
             @Override
-            public void onResponse(Call<ShopItemInfo> call, Response<ShopItemInfo> response) {
+            public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
                 System.out.println("Response" + response.code());
                 if(response.code()==200) {
                     //아이템의 데이터를 받는 리스트
-                    ArrayList<ItemContent> item_info=new ArrayList<>();
-                    ShopItemInfo shopItemInfo = response.body();
-                    /* Shop 목록을 생성함 */
-                    for(int i = 0; i<shopItemInfo.getContent().size(); i++){
-                        item_info.add(shopItemInfo.getContent().get(i));
-                    }
-                    item_list.add(new ShopItemPackage(package_name,item_info));
+                    ArrayList<StyleRecommendation> shopItemInfo = response.body();
+                    item_list.add(new ShopItemPackage(package_name,shopItemInfo));
                     verticalAdapter.notifyDataSetChanged();
                 }
             }
 
             @Override
-            public void onFailure(Call<ShopItemInfo> call, Throwable t) {
+            public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
+    }
+
+    /*타사용자 기반 스타일 추천 Item의 정보를 얻는 함수*/
+    public void GetItemInfoOther(String package_name) {
+        String authorization = "bearer "+MainActivity.access_token;
+        String accept = "application/json";
+
+        APIInterface.StyleRecommendationBasedOtherService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedOtherService.class);
+        //사용자 정보 받아오기
+        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(authorization, accept); //사용자 정보 받아오기
+        request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
+                System.out.println("Response" + response.code());
+                if(response.code()==200) {
+                    //아이템의 데이터를 받는 리스트
+                    ArrayList<StyleRecommendation> shopItemInfo = response.body();
+                    item_list.add(new ShopItemPackage(package_name,shopItemInfo));
+                    verticalAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
+    }
+
+    /*체형 기반 추천 Item의 정보를 얻는 함수*/
+    public void GetItemInfoBody(String package_name) {
+        String authorization = "bearer "+MainActivity.access_token;
+        String accept = "application/json";
+
+        APIInterface.BodyRecommendationService itemInfoService = ServiceGenerator.createService(APIInterface.BodyRecommendationService.class);
+        //사용자 정보 받아오기
+        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(authorization, accept); //사용자 정보 받아오기
+        request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
+                System.out.println("Response" + response.code());
+                if(response.code()==200) {
+                    //아이템의 데이터를 받는 리스트
+                    ArrayList<StyleRecommendation> shopItemInfo = response.body();
+                    item_list.add(new ShopItemPackage(package_name,shopItemInfo));
+                    verticalAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
                 System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
@@ -153,15 +195,16 @@ public class ItemHomeFragment extends Fragment {
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems(NestedScrollView nestedScrollView, final Context context) {
-        package_num=1;
-        GetItemInfo(package_num,package_name_list.get(package_num-1));
+        package_num=0;
+        GetItemInfoUser("스타일 추천");
+        GetItemInfoOther("다른 사용자와 유사한 스타일 추천");
         item_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 if(!item_recyclerView.canScrollVertically(1)){
-                    if(package_num<3) {
-                        package_num+=1;
-                        GetItemInfo(package_num, package_name_list.get(package_num-1));
+                    package_num=package_num+1;
+                    if(package_num==1) {
+                        GetItemInfoBody("내 사이즈와 같은 회원의 인기상품");
                     }
                 }
             }

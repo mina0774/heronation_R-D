@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendationBasedOther;
+import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
@@ -28,38 +28,38 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ItemOtherHorizontalAdapter extends RecyclerView.Adapter<ItemOtherHorizontalAdapter.HorizontalViewHolder>  {
-    private ArrayList<StyleRecommendationBasedOther> ItemBasedOther;
+public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHorizontalAdapter.HorizontalViewHolder>{
+    private ArrayList<StyleRecommendation> styleRecommendation;
 
     /* glide를 통해 URL을 통해서 이미지를 받아올 때,
      * 현재 어떤 액태비티의 Context인지 알아야하므로, 이를 받아오기 위함
      * 생성자에서 받아줌*/
     private Context context;
 
-    public ItemOtherHorizontalAdapter(ArrayList<StyleRecommendationBasedOther> itemList, Context context){
-        this.ItemBasedOther=itemList;
+    public ItemStyleHorizontalAdapter(ArrayList<StyleRecommendation> itemList, Context context){
+        this.styleRecommendation=itemList;
         this.context=context;
     }
 
     /* viewType 형태의 아이템 뷰를 위한 뷰홀더 객체 생성*/
     @NonNull
     @Override
-    public ItemOtherHorizontalAdapter.HorizontalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemStyleHorizontalAdapter.HorizontalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         /* 아이템 하나를 나타내는 xml파일을 뷰에 바인딩 */
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.shopitem_list_item,parent,false);
         /* 뷰홀더 객체 생성 */
-        ItemOtherHorizontalAdapter.HorizontalViewHolder holder=new ItemOtherHorizontalAdapter.HorizontalViewHolder(view);
+        ItemStyleHorizontalAdapter.HorizontalViewHolder holder=new ItemStyleHorizontalAdapter.HorizontalViewHolder(view);
         return holder;
     }
 
     /* position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시 */
     @Override
-    public void onBindViewHolder(@NonNull final ItemOtherHorizontalAdapter.HorizontalViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ItemStyleHorizontalAdapter.HorizontalViewHolder holder, int position) {
         int item_position=position;
         /* Glide를 통해 URL로 받아온 이미지를 로드해서 뷰홀더에 있는 이미지뷰에 뿌려줌 */
-        Glide.with(context).load(ItemBasedOther.get(item_position).getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
-        holder.item_name.setText(ItemBasedOther.get(item_position).getItemName());
-        holder.originalPrice.setText(ItemBasedOther.get(item_position).getPrice().toString());
+        Glide.with(context).load(styleRecommendation.get(item_position).getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
+        holder.item_name.setText(styleRecommendation.get(item_position).getItemName());
+        holder.originalPrice.setText(styleRecommendation.get(item_position).getPrice().toString());
         holder.heart_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +76,7 @@ public class ItemOtherHorizontalAdapter extends RecyclerView.Adapter<ItemOtherHo
                     });
                     animator.start();
                     holder.isSongLikedClicked = true;
-                    RegisterItem(ItemBasedOther.get(holder.getAdapterPosition()).getItemId());
+                    RegisterItem(styleRecommendation.get(holder.getAdapterPosition()).getItemId());
                 }
                 else {
                     // 애니메이션을 한번 실행시킨다.
@@ -91,7 +91,7 @@ public class ItemOtherHorizontalAdapter extends RecyclerView.Adapter<ItemOtherHo
                     });
                     animator.start();
                     holder.isSongLikedClicked = false;
-                    DeleteItem(ItemBasedOther.get(holder.getAdapterPosition()).getItemId());
+                    DeleteItem(styleRecommendation.get(holder.getAdapterPosition()).getItemId());
                 }
 
             }
@@ -172,7 +172,7 @@ public class ItemOtherHorizontalAdapter extends RecyclerView.Adapter<ItemOtherHo
     /* 전체 아이템 개수를 return */
     @Override
     public int getItemCount() {
-        return ItemBasedOther.size();
+        return styleRecommendation.size();
     }
 
     /* 뷰홀더 데이터가 놓일 공간을 마련해준다. */

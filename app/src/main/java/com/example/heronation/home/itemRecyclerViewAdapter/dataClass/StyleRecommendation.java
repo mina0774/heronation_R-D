@@ -1,19 +1,48 @@
 package com.example.heronation.home.itemRecyclerViewAdapter.dataClass;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class BodyRecommendation {
+public class StyleRecommendation {
+    private Integer targetStyleTagId;
+    private String styleTagId;
+    private String styleTagName;
     private Integer itemId;
     private String itemName;
     private String code;
+    private String shopProductId;
     private Integer price;
+    private String registerType;
     private String shopImage;
     private Integer hit;
     private Integer subCategoryId;
     private String itemCreateDt;
+    private Integer consumerId;
+    private String genderAndAgeGroup;
     private String partKind;
     private String mensurations;
+
+
+    public Integer getTargetStyleTagId() {
+        return targetStyleTagId;
+    }
+
+    public void setTargetStyleTagId(Integer targetStyleTagId) {
+        this.targetStyleTagId = targetStyleTagId;
+    }
+
+    public String getStyleTagId() {
+        return styleTagId;
+    }
+
+    public void setStyleTagId(String styleTagId) {
+        this.styleTagId = styleTagId;
+    }
+
+    public String getStyleTagName() {
+        return styleTagName;
+    }
+
+    public void setStyleTagName(String styleTagName) {
+        this.styleTagName = styleTagName;
+    }
 
     public Integer getItemId() {
         return itemId;
@@ -39,12 +68,28 @@ public class BodyRecommendation {
         this.code = code;
     }
 
+    public String getShopProductId() {
+        return shopProductId;
+    }
+
+    public void setShopProductId(String shopProductId) {
+        this.shopProductId = shopProductId;
+    }
+
     public Integer getPrice() {
         return price;
     }
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getRegisterType() {
+        return registerType;
+    }
+
+    public void setRegisterType(String registerType) {
+        this.registerType = registerType;
     }
 
     public String getShopImage() {
@@ -79,6 +124,22 @@ public class BodyRecommendation {
         this.itemCreateDt = itemCreateDt;
     }
 
+    public Integer getConsumerId() {
+        return consumerId;
+    }
+
+    public void setConsumerId(Integer consumerId) {
+        this.consumerId = consumerId;
+    }
+
+    public String getGenderAndAgeGroup() {
+        return genderAndAgeGroup;
+    }
+
+    public void setGenderAndAgeGroup(String genderAndAgeGroup) {
+        this.genderAndAgeGroup = genderAndAgeGroup;
+    }
+
     public String getPartKind() {
         return partKind;
     }
@@ -94,4 +155,5 @@ public class BodyRecommendation {
     public void setMensurations(String mensurations) {
         this.mensurations = mensurations;
     }
+
 }

@@ -2,8 +2,6 @@ package com.example.heronation.home.itemRecyclerViewAdapter.dataClass;
 
 /* 상품 정보를 보여주는 리사이클러뷰를 위해 상품 정보를 받아오기 위한 클래스 */
 public class ShopItem {
-
-
     private String itemImage_URL;
     private String itemName;
     private String shopName;

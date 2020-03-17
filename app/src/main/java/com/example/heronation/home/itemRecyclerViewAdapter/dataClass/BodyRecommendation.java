@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BodyRecommendation {
-
     private Integer itemId;
     private String itemName;
     private String code;

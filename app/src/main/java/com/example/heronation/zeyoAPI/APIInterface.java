@@ -1,6 +1,9 @@
 package com.example.heronation.zeyoAPI;
 
+import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.BodyRecommendation;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
+import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendationBasedOther;
+import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendationBasedUser;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
@@ -53,7 +56,7 @@ public interface APIInterface {
                                           @Header("Content-Type") String content_type);
     }
 
-
+    /* 로그인 서비스 */
     public interface LoginService{
         @FormUrlEncoded
         @POST("oauth/token")
@@ -67,6 +70,7 @@ public interface APIInterface {
                                                 @Field("grant_type") String grant_type);
     }
 
+    /* 회원가입 서비스 */
     public interface RegisterService{
         @FormUrlEncoded
         @POST("api/consumers/registry")
@@ -93,5 +97,26 @@ public interface APIInterface {
                                               @Header("Accept") String accept,
                                               @Header("ShopContent-Type") String content_type,
                                               @Body UserModifyInfo userModifyInfo);
+    }
+
+    /* 사용자 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/
+    public interface StyleRecommendationBasedUserService {
+        @GET("api/items/style-tags/1,2/user-base")
+        retrofit2.Call<StyleRecommendationBasedUser> ShopItemInfo(@Header("authorization") String authorization,
+                                                              @Header("Accept") String accept);
+    }
+
+    /* 타사용자 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/
+    public interface StyleRecommendationBasedOtherService {
+        @GET("api/items/others-user-base")
+        retrofit2.Call<StyleRecommendationBasedOther> ShopItemInfo(@Header("authorization") String authorization,
+                                                                   @Header("Accept") String accept);
+    }
+
+    /* 체형 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/
+    public interface BodyRecommendationService {
+        @GET("api/items/body-type")
+        retrofit2.Call<BodyRecommendation> ShopItemInfo(@Header("authorization") String authorization,
+                                                        @Header("Accept") String accept);
     }
 }

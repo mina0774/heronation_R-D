@@ -22,6 +22,7 @@ import com.example.heronation.home.itemRecyclerViewAdapter.ItemBestCategoryAdapt
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemVerticalAdapter;
 import com.example.heronation.R;
+import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
@@ -103,7 +104,7 @@ public class ItemBestFragment extends Fragment {
         String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
         String accept = "application/json";
 
-        ItemHomeFragment.ItemInfoService itemInfoService = ServiceGenerator.createService(ItemHomeFragment.ItemInfoService.class);
+        APIInterface.ItemInfoService itemInfoService = ServiceGenerator.createService(APIInterface.ItemInfoService.class);
         retrofit2.Call<ShopItemInfo> request = itemInfoService.ItemInfo(page_num,5,"id,asc","heronation","cafe24", authorization, accept);
         request.enqueue(new Callback<ShopItemInfo>() {
             @Override

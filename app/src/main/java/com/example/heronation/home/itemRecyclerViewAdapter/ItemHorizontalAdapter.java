@@ -20,6 +20,7 @@ import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent
 import com.example.heronation.R;
 import com.example.heronation.home.topbarFragment.ItemHomeFragment;
 import com.example.heronation.main.MainActivity;
+import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
 import java.util.ArrayList;
@@ -108,7 +109,7 @@ public class ItemHorizontalAdapter extends RecyclerView.Adapter<ItemHorizontalAd
         String accept = "application/json";
         String content_type = "application/json";
 
-        ItemHomeFragment.ItemRegisterService itemRegisterService = ServiceGenerator.createService(ItemHomeFragment.ItemRegisterService.class);
+        APIInterface.ItemRegisterService itemRegisterService = ServiceGenerator.createService(APIInterface.ItemRegisterService.class);
         retrofit2.Call<String> request = itemRegisterService.ItemRegister(item_id,authorization,accept,content_type);
         request.enqueue(new Callback<String>() {
             @Override
@@ -139,7 +140,7 @@ public class ItemHorizontalAdapter extends RecyclerView.Adapter<ItemHorizontalAd
         String accept = "application/json";
         String content_type = "application/json";
 
-        ItemHomeFragment.ItemDeleteService shopRegisterService = ServiceGenerator.createService(ItemHomeFragment.ItemDeleteService.class);
+        APIInterface.ItemDeleteService shopRegisterService = ServiceGenerator.createService(APIInterface.ItemDeleteService.class);
         retrofit2.Call<String>  request = shopRegisterService.ItemDelete(item_id,authorization,accept,content_type);
         request.enqueue(new Callback<String>() {
             @Override

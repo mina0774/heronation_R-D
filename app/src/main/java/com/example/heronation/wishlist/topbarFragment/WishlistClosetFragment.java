@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.WishlistClosetAdapter;
@@ -120,7 +121,7 @@ public class WishlistClosetFragment extends Fragment {
         */
         if(!MainActivity.access_token.matches("null")) { //회원 사용자일 때
             authorization="bearer " +MainActivity.access_token;
-            MainActivity.UserInfoService userInfoService= ServiceGenerator.createService(MainActivity.UserInfoService.class);
+            APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
             retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
             request.enqueue(new Callback<UserMyInfo>() {
                 @Override

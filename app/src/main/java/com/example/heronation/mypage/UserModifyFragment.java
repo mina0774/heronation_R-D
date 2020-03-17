@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.heronation.login_register.DatePickerFragment;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
@@ -110,7 +111,7 @@ public class UserModifyFragment extends Fragment{
         String authorization="bearer "+ MainActivity.access_token;
         String accept="application/json";
         String content_type="application/json";
-        ModifyUserInfoService modifyUserInfoService= ServiceGenerator.createService(ModifyUserInfoService.class);
+        APIInterface.ModifyUserInfoService modifyUserInfoService= ServiceGenerator.createService(APIInterface.ModifyUserInfoService.class);
         retrofit2.Call<String> request=modifyUserInfoService.ModifyUserInfo(authorization,accept,content_type,userModifyInfo);
         request.enqueue(new Callback<String>() {
             @Override
@@ -138,7 +139,7 @@ public class UserModifyFragment extends Fragment{
         //회원정보를 받아옴
         String authorization="bearer " + MainActivity.access_token;
         String accept="application/json";
-        MainActivity.UserInfoService userInfoService=ServiceGenerator.createService(MainActivity.UserInfoService.class);
+        APIInterface.UserInfoService userInfoService=ServiceGenerator.createService(APIInterface.UserInfoService.class);
         retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
         request.enqueue(new Callback<UserMyInfo>() {
             @Override
@@ -225,16 +226,4 @@ public class UserModifyFragment extends Fragment{
         void onFragmentInteraction(Uri uri);
     }
 
-    //인터페이스 - 추상 메소드(구현부가 없는 메시드)의 모임
-    /* retrofit은 인터페이스에 기술된 명세를 Http API(호출 가능한 객체)로 전환해줌
-    => 우리가 요청할 API들에 대한 명세만을 Interface에 기술해두면 됨.
-     */
-    /* 사용자 정보를 변경하는 인터페이스*/
-    public interface ModifyUserInfoService {
-        @PATCH("api/consumers")
-        retrofit2.Call<String> ModifyUserInfo(@Header("Authorization") String authorization,
-                                      @Header("Accept") String accept,
-                                      @Header("ShopContent-Type") String content_type,
-                                      @Body UserModifyInfo userModifyInfo);
-    }
 }

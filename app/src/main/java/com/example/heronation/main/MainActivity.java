@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.heronation.R;
+import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.topbarFragment.ItemAiFragment;
 import com.example.heronation.home.topbarFragment.ItemBestFragment;
@@ -174,7 +175,7 @@ public class MainActivity extends AppCompatActivity
         */
         if(!access_token.matches("null")) { //회원 사용자일 때
             authorization="bearer " +access_token;
-            UserInfoService userInfoService= ServiceGenerator.createService(UserInfoService.class);
+            APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
             retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
             request.enqueue(new Callback<UserMyInfo>() {
                 @Override
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity
         */
         if(!access_token.matches("null")) { //회원 사용자일 때
             authorization="bearer " +access_token;
-            UserInfoService userInfoService=ServiceGenerator.createService(UserInfoService.class);
+            APIInterface.UserInfoService userInfoService=ServiceGenerator.createService(APIInterface.UserInfoService.class);
             retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
             request.enqueue(new Callback<UserMyInfo>() {
                 @Override
@@ -796,16 +797,5 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
-    }
-
-    //인터페이스 - 추상 메소드(구현부가 없는 메시드)의 모임
-    /* retrofit은 인터페이스에 기술된 명세를 Http API(호출 가능한 객체)로 전환해줌
-    => 우리가 요청할 API들에 대한 명세만을 Interface에 기술해두면 됨.
-     */
-    /* 사용자 정보를 서버에서 받아오는 인터페이스*/
-    public interface UserInfoService {
-        @GET("api/consumers/me")
-        retrofit2.Call<UserMyInfo> UserInfo(@Header("authorization") String authorization,
-                                                @Header("Accept") String accept);
     }
 }

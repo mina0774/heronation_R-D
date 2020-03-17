@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
 
@@ -53,7 +54,7 @@ public class  loginPageActivity extends AppCompatActivity {
         String heronation_api_uniqId_key="jvvzfj7p";
         String autorization= "Basic emV5b191c2VyOmlhbXVzZXI=";
 
-        LoginService loginService= ServiceGenerator.createService(LoginService.class);
+        APIInterface.LoginService loginService= ServiceGenerator.createService(APIInterface.LoginService.class);
         retrofit2.Call<UserLoginInfo> request=loginService.LoginInfo(accept,content_type,heronation_api_login_key,heronation_api_uniqId_key,autorization,
                 login_id_et.getText().toString(),login_password_et.getText().toString(),"password");
 
@@ -97,22 +98,7 @@ public class  loginPageActivity extends AppCompatActivity {
         }
     }
 
-    //인터페이스 - 추상 메소드(구현부가 없는 메시드)의 모임
-    /* retrofit은 인터페이스에 기술된 명세를 Http API(호출 가능한 객체)로 전환해줌
-    => 우리가 요청할 API들에 대한 명세만을 Interface에 기술해두면 됨.
-     */
-    public interface LoginService{
-        @FormUrlEncoded
-        @POST("oauth/token")
-        retrofit2.Call<UserLoginInfo> LoginInfo(@Header("Accept") String accept,
-                                        @Header("ShopContent-Type") String content_type,
-                                        @Header("heronation-api-login-key") String heronation_api_login_key,
-                                        @Header("heronation-api-uniqId-key") String heronation_api_uniqId_key,
-                                        @Header("Authorization") String authorization,
-                                        @Field("username") String username,
-                                        @Field("password") String password,
-                                        @Field("grant_type") String grant_type);
-    }
+
 
 
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 
@@ -53,7 +54,7 @@ public class MypageConnectingFragment extends Fragment {
 
         String authorization="bearer " + access_token;
         String accept="application/json";
-        MainActivity.UserInfoService userInfoService= ServiceGenerator.createService(MainActivity.UserInfoService.class);
+        APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
         retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
         request.enqueue(new Callback<UserMyInfo>() {
             @Override

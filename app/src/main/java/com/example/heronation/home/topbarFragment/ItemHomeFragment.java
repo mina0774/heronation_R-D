@@ -23,6 +23,7 @@ import com.example.heronation.home.ItemSearchActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemVerticalAdapter;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
@@ -124,7 +125,7 @@ public class ItemHomeFragment extends Fragment {
         String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
         String accept = "application/json";
 
-        ItemInfoService itemInfoService = ServiceGenerator.createService(ItemInfoService.class);
+        APIInterface.ItemInfoService itemInfoService = ServiceGenerator.createService(APIInterface.ItemInfoService.class);
         retrofit2.Call<ShopItemInfo> request = itemInfoService.ItemInfo(page_num,5,"id,asc","heronation","cafe24", authorization, accept);
         request.enqueue(new Callback<ShopItemInfo>() {
             @Override
@@ -173,37 +174,4 @@ public class ItemHomeFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    //인터페이스 - 추상 메소드(구현부가 없는 메시드)의 모임
-    /* retrofit은 인터페이스에 기술된 명세를 Http API(호출 가능한 객체)로 전환해줌
-    => 우리가 요청할 API들에 대한 명세만을 Interface에 기술해두면 됨.
-     */
-    /* 사용자 정보를 서버에서 받아오는 인터페이스*/
-    public interface ItemInfoService {
-        @GET("api/items/test")
-        retrofit2.Call<ShopItemInfo> ItemInfo(@Query("page") Integer page,
-                                              @Query("size") Integer size,
-                                              @Query("sort") String sort,
-                                              @Query("storeId") String storeId,
-                                              @Query("storeType") String storeType,
-                                              @Header("authorization") String authorization,
-                                              @Header("Accept") String accept);
-    }
-
-    /* 아이템 찜 추가 */
-    public interface ItemRegisterService {
-        @POST("api/consumers/items/{item_id}/interest")
-        retrofit2.Call<String> ItemRegister(@Path("item_id") Integer item_id,
-                                            @Header("authorization") String authorization,
-                                            @Header("Accept") String accept,
-                                            @Header("Content-Type") String content_type);
-    }
-
-    /* 아이템 찜 삭제*/
-    public interface ItemDeleteService {
-        @DELETE("api/consumers/items/{item_id}/interest")
-        retrofit2.Call<String> ItemDelete(@Path("item_id") Integer item_id,
-                                          @Header("authorization") String authorization,
-                                          @Header("Accept") String accept,
-                                          @Header("Content-Type") String content_type);
-    }
 }

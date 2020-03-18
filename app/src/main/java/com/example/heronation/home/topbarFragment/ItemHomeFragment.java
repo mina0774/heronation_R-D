@@ -199,8 +199,8 @@ public class ItemHomeFragment extends Fragment {
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems(NestedScrollView nestedScrollView, final Context context) {
         package_num=0;
-        GetItemInfoBody("내 사이즈와 같은 회원의 인기상품");
-        GetItemInfoOther("다른 사용자와 유사한 스타일 추천");
+        GetItemInfoBody("사이즈 추천");
+        GetItemInfoOther("비슷한 스타일 유저의 추천");
         item_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {

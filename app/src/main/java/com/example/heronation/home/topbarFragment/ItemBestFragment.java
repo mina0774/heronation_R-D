@@ -90,6 +90,7 @@ public class ItemBestFragment extends Fragment {
         package_name_list.add("All best");
         package_name_list.add("상의 best");
         package_name_list.add("하의 best");
+
         loadItems(nested_item_best,getActivity());
 
         /* 이미지 슬라이딩을 위해 뷰페이저를 이용했고, 이를 설정해주는 이미지 어댑터를 설정하여 슬라이딩 구현 */
@@ -105,7 +106,7 @@ public class ItemBestFragment extends Fragment {
         String accept = "application/json";
 
         APIInterface.ItemInfoService itemInfoService = ServiceGenerator.createService(APIInterface.ItemInfoService.class);
-        retrofit2.Call<ShopItemInfo> request = itemInfoService.ItemInfo(page_num,5,"id,asc","heronation","cafe24", authorization, accept);
+        retrofit2.Call<ShopItemInfo> request = itemInfoService.ItemInfo(page_num,3,"id,asc","heronation","cafe24", authorization, accept);
         request.enqueue(new Callback<ShopItemInfo>() {
             @Override
             public void onResponse(Call<ShopItemInfo> call, Response<ShopItemInfo> response) {
@@ -133,15 +134,17 @@ public class ItemBestFragment extends Fragment {
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems(NestedScrollView nestedScrollView, final Context context) {
-       package_num=4;
-        GetItemInfo(package_num,package_name_list.get(package_num-4));
+       package_num=1;
+        GetItemInfo(package_num,package_name_list.get(package_num-1));
+        package_num+=1;
+        GetItemInfo(package_num, package_name_list.get(package_num-1));
         item_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 if(!item_recyclerView.canScrollVertically(1)){
-                    if(package_num<6) {
+                    if(package_num<3) {
                         package_num+=1;
-                        GetItemInfo(package_num, package_name_list.get(package_num-4));
+                        GetItemInfo(package_num, package_name_list.get(package_num-1));
                     }
                 }
             }

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.heronation.adapter.bannerAdapter.bannerAdapter;
+import com.example.heronation.home.itemRecyclerViewAdapter.ItemStyleVerticalAdapter;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent;
 import com.example.heronation.home.ItemSearchActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemVerticalAdapter;
@@ -63,7 +64,7 @@ public class ItemHomeFragment extends Fragment {
     //아이템들의 묶음
     private ArrayList<ShopItemPackage> item_list;
     /* 아이템 수평 리스트 담는 수직 어댑터*/
-    private ItemVerticalAdapter verticalAdapter;
+    private ItemStyleVerticalAdapter verticalAdapter;
     private Integer package_num;
 
     @Override
@@ -82,7 +83,7 @@ public class ItemHomeFragment extends Fragment {
          *       수평 리사이클러뷰
          *       수평 리사이클러뷰
          * */
-        verticalAdapter=new ItemVerticalAdapter(item_list,getActivity());
+        verticalAdapter=new ItemStyleVerticalAdapter(item_list,getActivity());
         item_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         item_recyclerView.setAdapter(verticalAdapter);
         loadItems(nested_item_home,getActivity());

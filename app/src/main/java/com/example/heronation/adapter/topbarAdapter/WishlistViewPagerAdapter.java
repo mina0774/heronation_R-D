@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetNotLoginFragment;
@@ -32,7 +33,7 @@ public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                if (MainActivity.access_token.matches("null")) {
+                if (loginPageActivity.access_token.matches("null")) {
                     WishlistClosetNotLoginFragment wishlistClosetNotLoginFragment = new WishlistClosetNotLoginFragment();
                     return wishlistClosetNotLoginFragment;
                 } else {
@@ -40,7 +41,7 @@ public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
                     return wishlistClosetFragment;
                 }
             case 1:
-                if (MainActivity.access_token.matches("null")) {
+                if (loginPageActivity.access_token.matches("null")) {
                     WishlistItemNotLoginFragment wishlistItemNotLoginFragment = new WishlistItemNotLoginFragment();
                     return wishlistItemNotLoginFragment;
                 } else {
@@ -48,7 +49,7 @@ public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
                     return wishlistItemFragment;
                 }
             case 2:
-                if (MainActivity.access_token.matches("null")) {
+                if (loginPageActivity.access_token.matches("null")) {
                     WishlistRecentlyViewedItemNotLoginFragment wishlisttRecentlyViewedItemNotLoginFragment = new WishlistRecentlyViewedItemNotLoginFragment();
                     return wishlisttRecentlyViewedItemNotLoginFragment;
                 } else {

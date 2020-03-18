@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent
 import com.example.heronation.home.ItemSearchActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemVerticalAdapter;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
+import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -117,8 +119,8 @@ public class ItemHomeFragment extends Fragment {
         String accept = "application/json";
 
         APIInterface.StyleRecommendationBasedUserService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserService.class);
-        // TODO: 2020-03-17  사용자 정보 받아오기
-        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo("1,2", authorization, accept); //사용자 정보 받아오기
+
+        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(loginPageActivity.style_tag_id, authorization, accept); //사용자 정보 받아오기
         request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
             @Override
             public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
@@ -140,7 +142,7 @@ public class ItemHomeFragment extends Fragment {
 
     /*타사용자 기반 스타일 추천 Item의 정보를 얻는 함수*/
     public void GetItemInfoOther(String package_name) {
-        String authorization = "bearer "+MainActivity.access_token;
+        String authorization = "bearer "+loginPageActivity.access_token;
         String accept = "application/json";
 
         APIInterface.StyleRecommendationBasedOtherService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedOtherService.class);
@@ -167,7 +169,7 @@ public class ItemHomeFragment extends Fragment {
 
     /*체형 기반 추천 Item의 정보를 얻는 함수*/
     public void GetItemInfoBody(String package_name) {
-        String authorization = "bearer "+MainActivity.access_token;
+        String authorization = "bearer "+loginPageActivity.access_token;
         String accept = "application/json";
 
         APIInterface.BodyRecommendationService itemInfoService = ServiceGenerator.createService(APIInterface.BodyRecommendationService.class);
@@ -196,7 +198,7 @@ public class ItemHomeFragment extends Fragment {
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems(NestedScrollView nestedScrollView, final Context context) {
         package_num=0;
-        GetItemInfoUser("스타일 추천");
+        GetItemInfoBody("내 사이즈와 같은 회원의 인기상품");
         GetItemInfoOther("다른 사용자와 유사한 스타일 추천");
         item_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -204,7 +206,7 @@ public class ItemHomeFragment extends Fragment {
                 if(!item_recyclerView.canScrollVertically(1)){
                     package_num=package_num+1;
                     if(package_num==1) {
-                        GetItemInfoBody("내 사이즈와 같은 회원의 인기상품");
+                        GetItemInfoUser("스타일 추천");
                     }
                 }
             }

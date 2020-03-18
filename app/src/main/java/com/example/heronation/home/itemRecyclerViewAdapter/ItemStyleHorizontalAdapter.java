@@ -18,6 +18,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
+import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
@@ -100,7 +101,7 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
 
     //아이템 찜 등록하는 기능, Zeyo API 연동
     public void RegisterItem(Integer item_id) {
-        String authorization = "Bearer "+ MainActivity.access_token;
+        String authorization = "Bearer "+ loginPageActivity.access_token;
         String accept = "application/json";
         String content_type = "application/json";
 
@@ -131,7 +132,7 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
 
     //아이템 찜 목록에서 삭제하는 기능
     public void DeleteItem(Integer item_id){
-        String authorization = "Bearer "+ MainActivity.access_token;
+        String authorization = "Bearer "+ loginPageActivity.access_token;
         String accept = "application/json";
         String content_type = "application/json";
 

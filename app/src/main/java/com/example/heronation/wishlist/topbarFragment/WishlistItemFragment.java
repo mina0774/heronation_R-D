@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.FavoriteItemAdapter;
@@ -77,7 +78,7 @@ public class WishlistItemFragment extends Fragment {
 
     //아이템 찜 목록 받아오는 기능
     public void GetItemInfo() {
-        String authorization = "Bearer " + MainActivity.access_token;
+        String authorization = "Bearer " + loginPageActivity.access_token;
         String content_type = "application/json";
 
         FavoriteItemInfoService favoriteItemInfoService = ServiceGenerator.createService(FavoriteItemInfoService.class);

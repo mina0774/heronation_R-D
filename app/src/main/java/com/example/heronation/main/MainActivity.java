@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.heronation.R;
 import com.example.heronation.login_register.dataClass.StyleTagResponse;
+import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.topbarFragment.ItemAiFragment;
@@ -117,9 +119,6 @@ public class MainActivity extends AppCompatActivity
     private Button style_sexy; private Button style_school; private Button style_romantic; private Button style_office;
     private Button filter_return; private Button filter_finish;
 
-    /* access token을 Package 내에서 공유 , access token은 로그인할 때 한번만 받음 */
-    public static String access_token;
-    public static String style_tag_id; // TODO: 2020-03-17 다시 고쳐보기!
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,10 +126,6 @@ public class MainActivity extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
-        access_token=getIntent().getStringExtra("access_token");
-        GetStyleTagInfo(); //스타일 태그 아이디를 받아오는 작업 // TODO: 2020-03-17 다시 고쳐보기! 
-
         ButterKnife.bind(this);
 
         /* BottomNavigation view를 선언해주고, bottomNavigationView의 객체를 생성한 후,
@@ -161,6 +156,7 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout.closeDrawers();
             }
         });
+
         drawerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -171,35 +167,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    // TODO: 2020-03-17 다시 고쳐보기!
-    /* 사용자 스타일 태그 정보 받아오기 */
-    public void GetStyleTagInfo(){
-        String authorization="";
-        String accept="application/json";
-        if(!access_token.matches("null")) { //회원 사용자일 때
-            authorization="bearer " +access_token;
-            APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
-            retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
-            request.enqueue(new Callback<UserMyInfo>() {
-                @Override
-                public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
-                    if(response.code()==200) { //정상적으로 로그인이 되었을 때
-                        UserMyInfo userMyInfo=response.body();
-                        for(int i=0; i<userMyInfo.getStyleTagResponses().size(); i++) {
-                            style_tag_id +=userMyInfo.getStyleTagResponses().get(i).getId()+",";
-                            if(i==userMyInfo.getStyleTagResponses().size()-1){
-                                style_tag_id+=userMyInfo.getStyleTagResponses().get(i).getId();
-                            }
-                        }
-                    }
-                }
-                @Override
-                public void onFailure(Call<UserMyInfo> call, Throwable t) {
-            }
-            });
-        }
-    }
-
     /*마이페이지에서 사용자 정보 받아오는 함수*/
     public void myPageGetUserInfo(){
         String authorization="";
@@ -208,8 +175,8 @@ public class MainActivity extends AppCompatActivity
         /* access_token이 null이면 비회원 사용자이고, access_token의 값이 존재하면 회원 사용자임
         (token이 유효한지 판단한 후에, 이를 통해 로그인 여부를 판단할 수 있음)
         */
-        if(!access_token.matches("null")) { //회원 사용자일 때
-            authorization="bearer " +access_token;
+        if(!loginPageActivity.access_token.matches("null")) { //회원 사용자일 때
+            authorization="bearer " +loginPageActivity.access_token;
             APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
             retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
             request.enqueue(new Callback<UserMyInfo>() {
@@ -243,8 +210,8 @@ public class MainActivity extends AppCompatActivity
         /* access_token이 null이면 비회원 사용자이고, access_token의 값이 존재하면 회원 사용자임
         (token이 유효한지 판단한 후에, 이를 통해 로그인 여부를 판단할 수 있음)
         */
-        if(!access_token.matches("null")) { //회원 사용자일 때
-            authorization="bearer " +access_token;
+        if(!loginPageActivity.access_token.matches("null")) { //회원 사용자일 때
+            authorization="bearer " +loginPageActivity.access_token;
             APIInterface.UserInfoService userInfoService=ServiceGenerator.createService(APIInterface.UserInfoService.class);
             retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
             request.enqueue(new Callback<UserMyInfo>() {

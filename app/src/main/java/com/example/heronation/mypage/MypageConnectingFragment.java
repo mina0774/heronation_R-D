@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -35,7 +36,7 @@ public class MypageConnectingFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_mypage_connecting,container,false);
         ButterKnife.bind(this,rootView);
-        getUserInfo( MainActivity.access_token);
+        getUserInfo( loginPageActivity.access_token);
 
         /* 회원 정보 수정 버튼을 눌렀을 때 */
         mypage_userModify_btn.setOnClickListener(new View.OnClickListener() {

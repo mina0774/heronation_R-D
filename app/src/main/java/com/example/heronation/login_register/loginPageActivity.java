@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -20,6 +22,9 @@ import com.example.heronation.login_register.dataClass.UserLoginInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
@@ -29,6 +34,9 @@ public class  loginPageActivity extends AppCompatActivity {
     @BindView(R.id.login_id_et) EditText login_id_et;
     @BindView(R.id.login_password_et) EditText login_password_et;
     @BindView(R.id.login_button) Button login_button;
+    /* access token을 Package 내에서 공유 , access token은 로그인할 때 한번만 받음 */
+    public static String access_token;
+    public static String style_tag_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,7 @@ public class  loginPageActivity extends AppCompatActivity {
             @Override
             public void onResponse(retrofit2.Call<UserLoginInfo> call, retrofit2.Response<UserLoginInfo> response) {
                 UserLoginInfo userLoginInfo=response.body();
+                GetStyleTagInfo(userLoginInfo.access_token);
 
                 if(response.code()!=200){
                     backgroundThreadShortToast(getApplicationContext(), "등록되지 않은 아이디거나 아이디 또는 비밀번호가 일치하지 않습니다.");
@@ -74,7 +83,7 @@ public class  loginPageActivity extends AppCompatActivity {
                 }
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("access_token",userLoginInfo.access_token);
+                access_token=userLoginInfo.access_token;
                 startActivity(intent);
                 finish();
             }
@@ -98,8 +107,33 @@ public class  loginPageActivity extends AppCompatActivity {
         }
     }
 
+    /* 사용자 스타일 태그 정보 받아오기 */
+    public void GetStyleTagInfo(String access_token) {
+        String authorization = "";
+        String accept = "application/json";
+        authorization = "bearer " + access_token;
+        APIInterface.UserInfoService userInfoService = ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request = userInfoService.UserInfo(authorization, accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                style_tag_id = "";
+                UserMyInfo userMyInfo = response.body();
+                for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
+                    style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
+                    if (i == userMyInfo.getStyleTagResponses().size() - 1) {
+                        style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
+                    }
+                }
+                Log.d("스타일태그", style_tag_id);
 
+            }
 
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+            }
+        });
 
+    }
 
 }

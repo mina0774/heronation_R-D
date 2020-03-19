@@ -4,9 +4,11 @@ import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInf
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
+import com.example.heronation.measurement.dataClass.SubCategoryResponse;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -122,5 +124,11 @@ public interface APIInterface {
         @GET("api/items/body-type")
         retrofit2.Call<ArrayList<StyleRecommendation>> ShopItemInfo(@Header("authorization") String authorization,
                                                         @Header("Accept") String accept);
+    }
+
+    /* 옷 종류 카테고리를 받아주는 인터페이스 */
+    public interface GetClothCategoryService{
+        @GET("api/v2_categorys")
+        retrofit2.Call<List<SubCategoryResponse>> GetCategory(@Header("authorization") String authorization);
     }
 }

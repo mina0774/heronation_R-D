@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import com.example.heronation.R;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
+import com.example.heronation.measurement.dataClass.MeasureItemResponse;
 import com.example.heronation.measurement.dataClass.SubCategoryResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
@@ -41,7 +43,8 @@ public class MeasurementArFragment extends Fragment {
     @BindView(R.id.ar_spinner_select_category) Spinner ar_spinner_select_category; //카테고리 선택 spinner
     private ArrayAdapter<String> spinner_adapter; // 스피너 어댑터
     List<String> cloth_category_list; //옷 카테고리를 담는 변수
-//    public ArrayList<String> Measure_item, Image_item, measureItemId, min_scope, max_scope; //옷 카테고리에 따른 측정 목록을 담는 변수들
+    public String category_select_id; //선택된 옷의 특정 카테고리의 ID, 이 아이디를 통해 측정 목록에 접근하여 담을 수 있음.
+    public ArrayList<String> Measure_item, Image_item, measureItemId, min_scope, max_scope; //옷 카테고리에 따른 측정 목록을 담는 변수들
     MeasurementFragment measurementFragment;
 
     @Override
@@ -90,14 +93,14 @@ public class MeasurementArFragment extends Fragment {
                         int pos = ar_spinner_select_category.getSelectedItemPosition();
                         String temp_id = subCategoryResponses.get(pos).getId();
                         setClothCategoryImageView(temp_id); //스피너에 선택된 옷 카테고리에 따라 이미지 뷰 설정
+                        category_select_id=category.get(cloth_category_list.get(pos)); //선택된 카테고리 id 설정
+                        /* 선택된 옷 카테고리에 따른 측정 목록을 받아오는 함수 */
+                        getMeasurementIndex(category_select_id);
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
-
                     }
                 });
-
             }
             @Override
             public void onFailure(Call<List<SubCategoryResponse>> call, Throwable t) {
@@ -106,6 +109,7 @@ public class MeasurementArFragment extends Fragment {
         });
     }
 
+    /* 스피너에 선택된 옷 카테고리에 따라 이미지 뷰 설정 */
     public void setClothCategoryImageView(String temp_id){
         if(temp_id.equals("2"))
             ar_start_measure_image_body.setBackgroundResource(R.drawable.img_tshirt);
@@ -136,5 +140,35 @@ public class MeasurementArFragment extends Fragment {
         if(temp_id.equals("15"))
             ar_start_measure_image_body.setBackgroundResource(R.drawable.img_skirt);
 
+    }
+
+    /* 선택된 옷 카테고리에 따른 측정 목록을 받아오는 함수 */
+    public void getMeasurementIndex(String category_select_id){
+        String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
+        APIInterface.GetMeasurementIndexService getMeasurementIndexService= ServiceGenerator.createService(APIInterface.GetMeasurementIndexService.class);
+        retrofit2.Call<List<MeasureItemResponse>> request=getMeasurementIndexService.GetMeasurementIndex(category_select_id, authorization);
+        request.enqueue(new Callback<List<MeasureItemResponse>>() {
+            @Override
+            public void onResponse(Call<List<MeasureItemResponse>> call, Response<List<MeasureItemResponse>> response) {
+                List<MeasureItemResponse> measureItemResponses = response.body();
+                Measure_item = new ArrayList<>();                                                         //측정 항목들의 이름이 들어가는 배열
+                Image_item = new ArrayList<>();                                                           //측정 항목들의 이미지들이 들어가는 배열
+                measureItemId = new ArrayList<>();                                                        //측정 항목들의 ID가 들어가는 배열
+                min_scope = new ArrayList<>();                                                             //측정 항목들의 최소 측정 값이 들어가는 배열
+                max_scope = new ArrayList<>();                                                             //측정 항목들의 최대 측정 값이 들어가는 배열
+                //위의 배열들은 MeasureActivity에서 count라는 인덱스로 접근해 측정 항목별로 관리한다.
+                for(int i=0;i<measureItemResponses.size();i++){
+                    Measure_item.add(measureItemResponses.get(i).getItemName());
+                    Image_item.add(measureItemResponses.get(i).getItemImage());
+                    measureItemId.add(measureItemResponses.get(i).getId());
+                    min_scope.add(measureItemResponses.get(i).getItemMinScope());
+                    max_scope.add(measureItemResponses.get(i).getItemMaxScope());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<MeasureItemResponse>> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
     }
 }

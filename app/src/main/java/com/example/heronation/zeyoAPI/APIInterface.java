@@ -4,6 +4,7 @@ import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInf
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
+import com.example.heronation.measurement.dataClass.MeasureItemResponse;
 import com.example.heronation.measurement.dataClass.SubCategoryResponse;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 
@@ -130,5 +131,12 @@ public interface APIInterface {
     public interface GetClothCategoryService{
         @GET("api/v2_categorys")
         retrofit2.Call<List<SubCategoryResponse>> GetCategory(@Header("authorization") String authorization);
+    }
+
+    /* 옷 종류에 따른 측정 목록을 받아오는 인터페이스 */
+    public interface GetMeasurementIndexService{
+        @GET("api/measure_items/subcateorys/{id}")
+        retrofit2.Call<List<MeasureItemResponse>> GetMeasurementIndex(@Path("id") String id,
+                                                                      @Header("authorization") String authorization);
     }
 }

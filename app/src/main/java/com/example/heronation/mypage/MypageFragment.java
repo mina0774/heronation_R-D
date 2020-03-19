@@ -14,17 +14,21 @@ import android.widget.Button;
 import com.example.heronation.R;
 import com.example.heronation.login_register.loginPageActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MypageFragment extends Fragment {
+    @BindView(R.id.mypage_signInUp_btn) Button mypage_signInUp_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_mypage,container,false);
+        ButterKnife.bind(this,rootView);
         /* 로그인/회원가입 버튼 클릭시 이동 */
-        Button btn1 = (Button)rootView.findViewById(R.id.mypage_signInUp_btn);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        mypage_signInUp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), loginPageActivity.class);

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".measurement.MeasurementArFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.058">
+            <ImageButton
+                android:id="@+id/ar_back_btn"
+                android:background="@drawable/ic_back_button_24dp"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.034"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.197"
+                android:textSize="16dp"
+                android:textColor="#000000"
+                android:gravity="center_vertical"
+                android:text="측정 정보 입력"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="16dp"
+            android:layout_weight="0.140">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1401">
+                <ImageView
+                    android:id="@+id/addclothpicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/addclothpicure"/>
+                <ImageButton
+                    android:id="@+id/ar_add_cloth_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:background="#00000000"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="0.1551"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txt_cloth_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.015"
+                    android:textSize="12dp"
+                    android:text="옷 이름"
+                    android:textColor="#777777"
+                    android:gravity="center_vertical"/>
+
+                <EditText
+                    android:id="@+id/ar_cloth_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.040"
+                    android:hint="ex) 빨간 스웨터"
+                    android:textSize="13dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#777777"/>
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/txt_cloth_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.015"
+                    android:textSize="12dp"
+                    android:text="옷 카테고리"
+                    android:textColor="#777777"
+                    android:gravity="center_vertical"/>
+
+                <Spinner
+                    android:id="@+id/ar_spinner_select_category"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/underline"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.040"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.240">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.312"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/image_body" />
+
+                <ImageView
+                    android:id="@+id/ar_start_measure_image_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.050">
+
+            <Button
+                android:layout_margin="12dp"
+                android:id="@+id/ar_start_measure"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3427"
+                android:background="@drawable/rectangle_button"
+                android:gravity="center"
+                android:text="측정 시작하기"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

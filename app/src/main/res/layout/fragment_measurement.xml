@@ -29,6 +29,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/measurement_style_button"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_marginLeft="8dp"
@@ -38,6 +39,7 @@
                 android:text="스타일" />
 
             <Button
+                android:id="@+id/measurement_AR_button"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_marginRight="16dp"
@@ -46,6 +48,7 @@
                 android:text="AR" />
 
             <Button
+                android:id="@+id/measurement_body_button"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
                 android:layout_marginRight="8dp"

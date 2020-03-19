@@ -27,7 +27,6 @@ import retrofit2.Response;
 
 public class MypageConnectingFragment extends Fragment {
     @BindView(R.id.mypage_userModify_btn) ImageButton mypage_userModify_btn;
-
     @BindView(R.id.mypage_ninkname_text) TextView mypage_ninkname_text;
 
     @Override

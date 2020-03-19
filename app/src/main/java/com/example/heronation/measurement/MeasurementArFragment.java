@@ -1,5 +1,6 @@
 package com.example.heronation.measurement;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.heronation.R;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
@@ -24,6 +26,7 @@ import com.example.heronation.measurement.dataClass.SubCategoryResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,19 +37,30 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class MeasurementArFragment extends Fragment {
     @BindView(R.id.ar_back_btn) ImageButton ar_back_btn; //뒤로 가기 버튼
     @BindView(R.id.ar_add_cloth_btn) ImageButton ar_add_cloth_btn; // 사진 등록 버튼
+    @BindView(R.id.ar_start_measure) Button ar_start_measure; // 측정 시작 버튼
     @BindView(R.id.ar_cloth_name_et) EditText ar_cloth_name_et; // 등록 아이템의 이름 설정
     @BindView(R.id.ar_start_measure_image_body) ImageView ar_start_measure_image_body;  // 카테고리를 선택했을 때 밑에 나타나는 옷 카테고리 이미지
     @BindView(R.id.ar_spinner_select_category) Spinner ar_spinner_select_category; //카테고리 선택 spinner
+
     private ArrayAdapter<String> spinner_adapter; // 스피너 어댑터
-    List<String> cloth_category_list; //옷 카테고리를 담는 변수
+    private List<String> cloth_category_list; //옷 카테고리를 담는 변수
     public String category_select_id; //선택된 옷의 특정 카테고리의 ID, 이 아이디를 통해 측정 목록에 접근하여 담을 수 있음.
     public ArrayList<String> Measure_item, Image_item, measureItemId, min_scope, max_scope; //옷 카테고리에 따른 측정 목록을 담는 변수들
-    MeasurementFragment measurementFragment;
+    public String clothName; // 옷 이름 저장하는 변수
 
+    //카메라, 갤러리 접근 관련
+    private Boolean isPermission = true;
+    private static final int PICK_FROM_ALBUM = 1;
+    private static final int PICK_FROM_CAMERA = 2;
+    private File tempFile;
+    public File file; // 사진 파일 저장하는 변수
+    public String cameraFilePath;
+    public String Path;
+
+    MeasurementFragment measurementFragment;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,6 +79,25 @@ public class MeasurementArFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, measurementFragment).commit();
             }
         });
+
+        /* 측정 시작 버튼을 눌렀을 때*/
+        ar_start_measure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ar_cloth_name_et.getText().toString().length() == 0){ //이름이 비었는지 확인
+                    Toast.makeText(getActivity(),"이름을 입력해주세요.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if(file == null){ //사진이 비었는지 확인
+                    Toast.makeText(getActivity(),"사진을 등록해주세요.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                clothName=ar_cloth_name_et.getText().toString();
+                Intent intent = new Intent(getActivity(), MeasurementARActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 

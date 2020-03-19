@@ -1,5 +1,6 @@
 package com.example.heronation.measurement;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -25,6 +26,8 @@ import com.example.heronation.measurement.dataClass.MeasureItemResponse;
 import com.example.heronation.measurement.dataClass.SubCategoryResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -71,6 +74,9 @@ public class MeasurementArFragment extends Fragment {
         cloth_category_list=new ArrayList<>();
         /* 측정할 옷 종류 카테고리 받아오는 함수 - 스피너 설정, 이미지뷰 설정 */
         getClothCategory();
+
+        /* 사진 등록 위한 카메라 접근 권한*/
+        cameraPermission();
 
         /* 뒤로가기 버튼을 눌렀을 때*/
         ar_back_btn.setOnClickListener(new View.OnClickListener() {
@@ -203,5 +209,25 @@ public class MeasurementArFragment extends Fragment {
                 System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
+    }
+
+    /* 사진 등록 위한 카메라 접근 권한*/
+    private void cameraPermission() {
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                isPermission = true;
+            }
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                isPermission = false;
+            }
+        };
+        TedPermission.with(getActivity())
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage("사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.")
+                .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
     }
 }

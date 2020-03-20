@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -28,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
@@ -49,6 +52,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 public class MeasurementArFragment extends Fragment {
     @BindView(R.id.ar_back_btn) ImageButton ar_back_btn; //뒤로 가기 버튼
     @BindView(R.id.ar_add_cloth_btn) ImageButton ar_add_cloth_btn; // 사진 등록 버튼
@@ -65,9 +70,9 @@ public class MeasurementArFragment extends Fragment {
 
     //카메라, 갤러리 접근 관련
     private Boolean isPermission = true; // 카메라 접근 권한 허용 여부를 나태내는 변수
-    private static final int PICK_FROM_ALBUM = 1;
-    private static final int PICK_FROM_CAMERA = 2;
-    private File tempFile;
+    private static final int PICK_FROM_ALBUM = 1; //앨범을 선택했을 때, 고유 번호
+    private static final int PICK_FROM_CAMERA = 2; //카메라를 선택했을 때 고유 번호
+    private File tempFile; // 카메라로 사진 저장할 때, 임시로 사진 파일을 받는 변수
     public File file; // 사진 파일 저장하는 변수
     public String cameraFilePath;
     public String Path;
@@ -282,9 +287,37 @@ public class MeasurementArFragment extends Fragment {
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     }
 
+    /* 받아온 이미지를 이미지뷰에 뿌려주는 함수 */
+    private void setImage(){
+        Glide.with(getActivity()).load(file.getAbsolutePath()).into(ar_add_cloth_btn);
+    }
+
     /* 앨범, 카메라에서 받아온 사진 파일 처리*/
     @Override
-    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
-        super.startActivityForResult(intent, requestCode, options);
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==PICK_FROM_ALBUM  && resultCode == RESULT_OK){
+            Uri photoUri=data.getData();
+            Cursor cursor=null;
+            try{
+                String[] proj={ MediaStore.Images.Media.DATA };
+                assert photoUri != null;
+                cursor=getActivity().getContentResolver().query(photoUri,proj,null,null,null);
+                assert cursor != null;
+                int column_index=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                tempFile=new File(cursor.getString(column_index));
+                file=tempFile;
+            }
+            finally{
+                if(cursor!=null){
+                    cursor.close();
+                }
+            }
+            setImage(); //받아온 이미지를 이미지 뷰에 뿌려줌
+        }
     }
+
+
+
 }

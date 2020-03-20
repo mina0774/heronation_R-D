@@ -1,11 +1,20 @@
 package com.example.heronation.measurement;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +64,7 @@ public class MeasurementArFragment extends Fragment {
     public String clothName; // 옷 이름 저장하는 변수
 
     //카메라, 갤러리 접근 관련
-    private Boolean isPermission = true;
+    private Boolean isPermission = true; // 카메라 접근 권한 허용 여부를 나태내는 변수
     private static final int PICK_FROM_ALBUM = 1;
     private static final int PICK_FROM_CAMERA = 2;
     private File tempFile;
@@ -75,10 +84,10 @@ public class MeasurementArFragment extends Fragment {
         /* 측정할 옷 종류 카테고리 받아오는 함수 - 스피너 설정, 이미지뷰 설정 */
         getClothCategory();
 
-        /* 사진 등록 위한 카메라 접근 권한*/
+        /* 사진 등록 위한 카메라 접근 권한 */
         cameraPermission();
 
-        /* 뒤로가기 버튼을 눌렀을 때*/
+        /* 뒤로가기 버튼을 눌렀을 때 */
         ar_back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,7 +95,7 @@ public class MeasurementArFragment extends Fragment {
             }
         });
 
-        /* 측정 시작 버튼을 눌렀을 때*/
+        /* 측정 시작 버튼을 눌렀을 때 */
         ar_start_measure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +110,36 @@ public class MeasurementArFragment extends Fragment {
                 clothName=ar_cloth_name_et.getText().toString();
                 Intent intent = new Intent(getActivity(), MeasurementARActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        /* 옷 사진 등록 버튼을 눌렀을 때 - 사진을 받아올 경로를 선택하도록 알림창을 띄워줌 */
+        ar_add_cloth_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title_text="선택";
+                final CharSequence[] image_path_pick = {"앨범에서 선택", "카메라 촬영"};
+                AlertDialog.Builder dialogBuilder= new AlertDialog.Builder(getActivity());
+                ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#353535"));
+                SpannableStringBuilder spannableStringBuilder=new SpannableStringBuilder(title_text);
+                spannableStringBuilder.setSpan(foregroundColorSpan,0,title_text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                dialogBuilder.setTitle(spannableStringBuilder);
+                /* 다이얼로그에 앨범 혹은 카메라에서 사진을 받아올 지, 선택되었을 때 일어나는 이벤트 */
+                dialogBuilder.setItems(image_path_pick, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(i==0){ // 앨범에서 선택을 누른 경우
+                            if(isPermission) gotoAlbum();
+                            else Toast.makeText(getActivity(), "사진 및 파일을 저장하기 위해선 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                        }
+                        else if(i==1){ // 카메라 촬영을 누른 경우
+                            if(isPermission) takePhoto();
+                            else Toast.makeText(getActivity(), "사진 및 파일을 저장하기 위해선 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                AlertDialog alertDialog=dialogBuilder.create();
+                alertDialog.show();
             }
         });
 
@@ -229,5 +268,23 @@ public class MeasurementArFragment extends Fragment {
                 .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
+    }
+
+    /* 앨범에 접근하여 사진을 받아오는 함수 */
+    private void gotoAlbum(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent,PICK_FROM_ALBUM);
+    }
+
+    /* 카메라를 이용하여 사진을 받아오는 함수 */
+    private void takePhoto(){
+        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    }
+
+    /* 앨범, 카메라에서 받아온 사진 파일 처리*/
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
+        super.startActivityForResult(intent, requestCode, options);
     }
 }

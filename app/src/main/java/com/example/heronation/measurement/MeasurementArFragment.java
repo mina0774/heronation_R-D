@@ -11,8 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -42,7 +44,10 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,8 +79,7 @@ public class MeasurementArFragment extends Fragment {
     private static final int PICK_FROM_CAMERA = 2; //카메라를 선택했을 때 고유 번호
     private File tempFile; // 카메라로 사진 저장할 때, 임시로 사진 파일을 받는 변수
     public File file; // 사진 파일 저장하는 변수
-    public String cameraFilePath;
-    public String Path;
+    public String cameraFilePath; // 카메라에서 촬영한 사진 경로
 
     MeasurementFragment measurementFragment;
     @Override
@@ -86,6 +90,7 @@ public class MeasurementArFragment extends Fragment {
         ButterKnife.bind(this,rootView);
         measurementFragment=new MeasurementFragment();
         cloth_category_list=new ArrayList<>();
+
         /* 측정할 옷 종류 카테고리 받아오는 함수 - 스피너 설정, 이미지뷰 설정 */
         getClothCategory();
 
@@ -285,6 +290,48 @@ public class MeasurementArFragment extends Fragment {
     /* 카메라를 이용하여 사진을 받아오는 함수 */
     private void takePhoto(){
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            tempFile = createImageFile(); //카메라 촬영 후 이미지 파일을 생성하는 함수
+        } catch (IOException e) {
+            Toast.makeText(getActivity(), "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+        if(tempFile != null){
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                Uri photoUri = FileProvider.getUriForFile(getActivity(),"com.example.heronation.provider", tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+            } else {
+                Uri photoUri = Uri.fromFile(tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+            }
+        }
+
+    }
+
+    /* 카메라 촬영 후 이미지 파일을 생성하는 함수 */
+    private File createImageFile() throws IOException{
+        // 이미지 파일 이름 설정
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName="JPEG_"+timeStamp;
+        // 이미지가 저장될 폴더 이름
+        File storageDir=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),"Camera");
+        if(!storageDir.exists()) storageDir.mkdirs(); // 저장 디렉토리가 없을 시 디렉토리 생성
+        //빈 파일 생성
+        File image=File.createTempFile(imageFileName,".jpg",storageDir);
+        cameraFilePath=image.getAbsolutePath();
+        file=image;
+        return file;
+    }
+
+    /* 카메라 촬영 후 사진을 앨범에 저장하는 함수 */
+    private void galleryAddPic(){
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File file = new File(cameraFilePath);
+        Uri contentUri = Uri.fromFile(file);
+        mediaScanIntent.setData(contentUri);
+        getActivity().sendBroadcast(mediaScanIntent);
     }
 
     /* 받아온 이미지를 이미지뷰에 뿌려주는 함수 */
@@ -292,32 +339,31 @@ public class MeasurementArFragment extends Fragment {
         Glide.with(getActivity()).load(file.getAbsolutePath()).into(ar_add_cloth_btn);
     }
 
-    /* 앨범, 카메라에서 받아온 사진 파일 처리*/
+    /* 앨범, 카메라에서 받아온 사진 파일 처리 */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==PICK_FROM_ALBUM  && resultCode == RESULT_OK){
-            Uri photoUri=data.getData();
-            Cursor cursor=null;
-            try{
-                String[] proj={ MediaStore.Images.Media.DATA };
+        if (requestCode == PICK_FROM_ALBUM && resultCode == RESULT_OK) {
+            Uri photoUri = data.getData();
+            Cursor cursor = null;
+            try {
+                String[] proj = {MediaStore.Images.Media.DATA};
                 assert photoUri != null;
-                cursor=getActivity().getContentResolver().query(photoUri,proj,null,null,null);
+                cursor = getActivity().getContentResolver().query(photoUri, proj, null, null, null);
                 assert cursor != null;
-                int column_index=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 cursor.moveToFirst();
-                tempFile=new File(cursor.getString(column_index));
-                file=tempFile;
-            }
-            finally{
-                if(cursor!=null){
+                tempFile = new File(cursor.getString(column_index));
+                file = tempFile;
+            } finally {
+                if (cursor != null) {
                     cursor.close();
                 }
             }
             setImage(); //받아온 이미지를 이미지 뷰에 뿌려줌
+        } else if (requestCode == PICK_FROM_CAMERA && resultCode == RESULT_OK) {
+            galleryAddPic(); //카메라 촬영 후 촬영 사진은 앨범에 저장
+            setImage(); //받아온 이미지를 이미지 뷰에 뿌려줌
         }
     }
-
-
-
 }

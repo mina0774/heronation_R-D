@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="667"
     android:orientation="vertical"
     tools:context=".measurement.MeasurementResultActivity">
     <LinearLayout
@@ -31,7 +30,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="140"
+        android:layout_weight="180"
         android:orientation="horizontal"
         android:weightSum="375">
         <LinearLayout
@@ -43,7 +42,7 @@
             android:layout_height="match_parent"
             android:layout_weight="140">
             <ImageView
-                android:id="@+id/measure_result_image"
+                android:id="@+id/measurement_result_imageview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
@@ -52,52 +51,20 @@
             android:layout_height="match_parent"
             android:layout_weight="118.1"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="57"/>
 
-    <ScrollView
+
+    <TextView
+        android:id="@+id/measurement_result_textview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="262">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="375"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="72"/>
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/measure_category_dynamic"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="100.8"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="36.2"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="59"
-                android:id="@+id/dynamicArea"
-                android:orientation="vertical"/>
-            <LinearLayout
-                android:id="@+id/cm_area"
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="46"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="61"/>
-        </LinearLayout>
-    </ScrollView>
+        android:layout_weight="262"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:textSize="18sp"
+        android:textAlignment="center"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -112,7 +79,7 @@
             android:layout_height="match_parent"
             android:layout_weight="139.5">
             <Button
-                android:id="@+id/measure_again"
+                android:id="@+id/measurement_again_button"
                 android:background="@drawable/round_rectangle"
                 android:text="재촬영"
                 android:textSize="16dp"
@@ -129,7 +96,7 @@
             android:layout_height="match_parent"
             android:layout_weight="139.5">
             <Button
-                android:id="@+id/save_measure_result"
+                android:id="@+id/save_measurement_result_button"
                 android:background="@drawable/rectangle_blue"
                 android:text="저장"
                 android:textSize="16dp"

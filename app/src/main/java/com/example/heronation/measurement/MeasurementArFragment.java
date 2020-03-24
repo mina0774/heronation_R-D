@@ -78,7 +78,7 @@ public class MeasurementArFragment extends Fragment {
     private static final int PICK_FROM_ALBUM = 1; //앨범을 선택했을 때, 고유 번호
     private static final int PICK_FROM_CAMERA = 2; //카메라를 선택했을 때 고유 번호
     private File tempFile; // 카메라로 사진 저장할 때, 임시로 사진 파일을 받는 변수
-    public File file; // 사진 파일 저장하는 변수
+    public static File file; // 사진 파일 저장하는 변수
     public String cameraFilePath; // 카메라에서 촬영한 사진 경로
 
     MeasurementFragment measurementFragment;

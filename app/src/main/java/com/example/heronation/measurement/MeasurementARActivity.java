@@ -24,6 +24,8 @@ import com.example.heronation.measurement.renderer.BackgroundRenderer;
 import com.example.heronation.measurement.renderer.ObjectRenderer;
 import com.example.heronation.measurement.renderer.PointCloudRenderer;
 import com.example.heronation.measurement.renderer.PlaneRenderer;
+import com.example.heronation.measurement.renderer.RectanglePolygonRenderer;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.Camera;
@@ -56,7 +58,6 @@ import butterknife.ButterKnife;
 
 /* 측정 클래스, MeasureFragment에서 카테고리에 따른 측정항목이 넘어오면, 해당 항목을 측정해서 결과값을 MeasureResult로 넘겨줌. */
 public class MeasurementARActivity extends AppCompatActivity implements GLSurfaceView.Renderer {
-    public static Context mContext;
     private static final String TAG = MeasurementARActivity.class.getSimpleName();
 
     // Rendering. 여기서 렌더러가 생성, GL surface가 생성 될 때 초기화
@@ -74,6 +75,12 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
     private final ObjectRenderer virtualObject = new ObjectRenderer(); // 화면에 보여줄 Object
     private final PlaneRenderer planeRenderer = new PlaneRenderer();
     private final PointCloudRenderer pointCloudRenderer = new PointCloudRenderer();  // Rendering 됐을 시 그려줄 Object
+    private RectanglePolygonRenderer lineRenderer=new RectanglePolygonRenderer(); // 점과 점 사이의 선을 그리는 Object
+
+    private int viewHeight=0;
+    private int viewWidth=0;
+    float[] projmtx = new float[16]; // projection matrix
+    float[] viewmtx = new float[16]; // camera matrix
 
     // Temporary matrix allocated here to reduce number of allocations for each frame.
     private final float[] anchorMatrix = new float[16];
@@ -111,10 +118,11 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         ButterKnife.bind(this);
         displayRotationHelper = new DisplayRotationHelper(/*context=*/ this);
 
+        installRequested = false;
+
         // Set up tap listener.
         tapHelper = new TapHelper(/*context=*/ this);
         surfaceView.setOnTouchListener(tapHelper);
-
         // Set up renderer.
         surfaceView.setPreserveEGLContextOnPause(true);
         surfaceView.setEGLContextClientVersion(2);
@@ -123,10 +131,9 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         surfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
         surfaceView.setWillNotDraw(false);
 
-        showLoadingMessage(this);
+        showLoadingMessage(this); //처음 gif 로딩 화면을 띄워줌
 
-        installRequested = false;
-
+        measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count)); //첫 측정 항목 설정
 
         // 다음 버튼을 눌렀을 경우, 다음 측정 항목으로 넘어감
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -135,13 +142,17 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 // 현재 상태가, anchor의 점이 2개 찍힌 상태이고, 측정 항목의 개수보다 적은 상태에서
                 // 다음 버튼을 누를 시에, 원래 찍혀있던 anchor를 초기화함으로써 제거하고,
                 // anchor의 좌표를 저장하는 mPoints 또한 초기화함으로써 제거,
-                // 측정한 횟수인 count 를 1 올려주고,
                 // 실제 거리 "수치"로 설정된 textview를 "거리"로 변경
+                // 다음 측정 항목으로 변경
+                // 측정한 횟수인 count 를 1 +
                 if(measurement_count<measurement_item_size-1 && anchors.size()==2){
                     anchors=new ArrayList<>();
                     mPoints=new ArrayList<>();
+
                     measurement_count++;
-                    distanceTextview.setText("거리");
+
+                    distanceTextview.setText("시작점을 찍어주세요.");
+                    measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
                 }
                 // 현재 상태가, 측정이 모두 완료된 상태이면,
                 // 각 측정 항목의 거리를 전송
@@ -252,7 +263,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
             @Override
             public void run() {
                 gifImageView.setBackgroundResource(R.drawable.mobile_moving);
-                messageSnackbarHelper.showMessage(measurementARActivity, "측정을 시작하려면 스마트폰을\n좌우로 기울여주세요");
             }
         });
     }
@@ -267,6 +277,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
             backgroundRenderer.createOnGlThread(/*context=*/ this);
             planeRenderer.createOnGlThread(/*context=*/ this, "models/trigrid.png");
             pointCloudRenderer.createOnGlThread(/*context=*/ this);
+            lineRenderer=new RectanglePolygonRenderer();
 
             virtualObject.createOnGlThread(/*context=*/ this, "models/dot.obj", "models/andy.png");
             virtualObject.setMaterialProperties(0.0f, 2.0f, 0.5f, 6.0f);
@@ -279,6 +290,8 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         displayRotationHelper.onSurfaceChanged(width, height);
         GLES20.glViewport(0, 0, width, height);
+        viewWidth=width;
+        viewHeight=height;
     }
 
     @Override
@@ -319,11 +332,11 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
             }
 
             // Get projection matrix.
-            float[] projmtx = new float[16];
+            projmtx = new float[16];
             camera.getProjectionMatrix(projmtx, 0, 0.1f, 100.0f);
 
             // Get camera matrix and draw.
-            float[] viewmtx = new float[16];
+            viewmtx = new float[16];
             camera.getViewMatrix(viewmtx, 0);
 
             // Compute lighting from average intensity of the image.
@@ -362,20 +375,37 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 // Get the current pose of an Anchor in world space. The Anchor pose is updated
                 // during calls to session.update() as ARCore refines its estimate of the world.
                 coloredAnchor.anchor.getPose().toMatrix(anchorMatrix, 0);
-
-                coloredAnchor.anchor.getPose().getXAxis();
-                coloredAnchor.anchor.getPose().getYAxis();
-                coloredAnchor.anchor.getPose().getZAxis();
-
                 // Update and draw the model and its shadow.
                 virtualObject.updateModelMatrix(anchorMatrix, scaleFactor);
                 virtualObject.draw(viewmtx, projmtx, colorCorrectionRgba, coloredAnchor.color);
+            }
+
+            if(anchors.size()==2){
+                // 두 점이 모두 찍혔을 때, 선을 그려줌
+                drawLine(anchors.get(0).anchor.getPose(),anchors.get(1).anchor.getPose(),viewmtx,projmtx);
             }
 
         } catch (Throwable t) {
             // Avoid crashing the application due to unhandled exceptions.
             Log.e(TAG, "Exception on the OpenGL thread", t);
         }
+    }
+
+    //두 점 사이의 선을 그리는 함수
+    private void drawLine(Pose pose0, Pose pose1, float[] viewmtx, float[] projmtx) {
+        float lineWidth = 0.004f;
+        float lineWidthH = lineWidth / viewHeight * viewWidth;
+        lineRenderer.setVerts(
+                pose0.tx() - lineWidth, pose0.ty() + lineWidthH, pose0.tz() - lineWidth,
+                pose0.tx() + lineWidth, pose0.ty() + lineWidthH, pose0.tz() + lineWidth,
+                pose1.tx() + lineWidth, pose1.ty() + lineWidthH, pose1.tz() + lineWidth,
+                pose1.tx() - lineWidth, pose1.ty() + lineWidthH, pose1.tz() - lineWidth,
+                pose0.tx() - lineWidth, pose0.ty() - lineWidthH, pose0.tz() - lineWidth,
+                pose0.tx() + lineWidth, pose0.ty() - lineWidthH, pose0.tz() + lineWidth,
+                pose1.tx() + lineWidth, pose1.ty() - lineWidthH, pose1.tz() + lineWidth,
+                pose1.tx() - lineWidth, pose1.ty() - lineWidthH, pose1.tz() - lineWidth
+        );
+        lineRenderer.draw(viewmtx, projmtx);
     }
 
     // Handle only one tap per frame, as taps are usually low frequency compared to frame rate.
@@ -393,23 +423,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                             || (trackable instanceof Point
                             && ((Point) trackable).getOrientationMode()
                             == Point.OrientationMode.ESTIMATED_SURFACE_NORMAL)) {
-
-                        //화면을 누른 지점
-                        Pose pose = hit.getHitPose();
-                        //카메라 위치
-                        float CamerapointX = camera.getPose().tx();
-                        float CamerapointY = camera.getPose().ty();
-                        float CamerapointZ = camera.getPose().tz();
-                        // Rendering 된 지점 선택 위치와 거리(카메라와의)
-                        float returnDistance = hit.getDistance(); // 미터 단위
-
-                        //Hits are sorted by depth. Consider only closest hit on a plane or oriented point.
-                        // Cap the number of objects created. This avoids overloading both the
-                        // rendering system and ARCore.
-                        if (anchors.size() >= 2) {
-                            //anchors.get(0).anchor.detach();
-                            //anchors.remove(0);
-                        }
 
                         // Assign a color to the object for rendering based on the trackable type
                         // this anchor attached to. For AR_TRACKABLE_POINT, it's blue color, and
@@ -433,15 +446,17 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                             float anchorY = anchors.get(0).anchor.getPose().ty();
                             float anchorZ = anchors.get(0).anchor.getPose().tz();
                             float[] points = new float[]{anchorX, anchorY, anchorZ};
-                            mPoints.add(0, points);
+                            mPoints.add(0, points); // 해당 점의 좌표를 배열에 저장
                         } else if (anchors.size() == 2) {
                             float anchorX = anchors.get(1).anchor.getPose().tx();
                             float anchorY = anchors.get(1).anchor.getPose().ty();
                             float anchorZ = anchors.get(1).anchor.getPose().tz();
                             float[] points = new float[]{anchorX, anchorY, anchorZ};
-                            mPoints.add(1, points);
+                            mPoints.add(1, points); // 헤당 점의 좌표를 배열에 저장
+                            //거리 업데이트
+                            updateDistance(mPoints.get(0),mPoints.get(1));
                         }
-                        updateDistance(); //거리 업데이트
+
                         break;
                     }
                 }
@@ -459,14 +474,12 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         return false;
     }
 
-    public void updateDistance(){
+    public void updateDistance(float[] start, float[] end){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 double distance=0.0;
                 if(mPoints.size()==2){
-                    float[] start=mPoints.get(0); //시작점
-                    float[] end=mPoints.get(1); //끝점
                     distance=Math.sqrt((start[0]-end[0])*(start[0]-end[0])+(start[1]-end[1])*(start[1]-end[1])+(start[2]-end[2])*(start[2]-end[2])); // 거리 구하기
                     String distanceString=String.format(Locale.getDefault(),"%.2f",distance*100)+"cm";
                     distanceTextview.setText(distanceString);

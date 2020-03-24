@@ -9,157 +9,44 @@
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.opengl.GLSurfaceView
-            android:id="@+id/surfaceview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top" />
 
-        <!-- 대표 레이아웃 화면-->
-        <LinearLayout
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00000000"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_marginTop="36dp"
-                android:layout_weight="30"
-                android:layout_width="match_parent"
-                android:layout_height="0px">
-
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="32">
-                    <ImageButton
-                        android:id="@+id/left_above_question"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/ic_question_mark"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="106.25"/>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="96">
-                    <TextView
-                        android:id="@+id/measure_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/rectangle_blue"
-                        android:textColor="#ffffff"
-                        android:textSize="16dp"
-                        android:gravity="center"
-                        android:scaleType="fitCenter" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="136.5"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="24dp"
-                android:layout_weight="300"
-                android:layout_width="match_parent"
-                android:gravity="center_horizontal"
-                android:layout_height="0px">
-
-                <TextView
-                    android:id="@+id/distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle_gray"
-                    android:textColor="#1d1d1d"
-                    android:text="\t\t시작점을 찍어주세요.\t\t"
-                    android:textSize="20sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_weight="284.5"
-                android:layout_width="match_parent"
-                android:layout_height="0px"/>
-        </LinearLayout>
-        <!-- 대표 레이아웃 화면 -->
-
-        <!-- 카메라 가이드 과녁모양 -->
-        <ImageView
-            android:id="@+id/cameraFocusQR"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"/>
-        <!-- 카메라 가이드 과녁모양 -->
-
-        <!-- 첫 카메라 가이드 gif 화면-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
-            <pl.droidsonroids.gif.GifImageView
-                android:layout_width="250dp"
-                android:layout_height="112dp"
-                android:id="@+id/myCoordinatorLayout"
-                android:background="#00000000"
-                android:scaleType="centerCrop"
-                android:layout_centerInParent="true"/>
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:layout_width="311.3dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/myCoordinatorLayout"
-                android:id="@+id/myCoordinatorLayout2"
-                android:layout_centerInParent="true"/>
-        </RelativeLayout>
-        <!-- 첫 카메라 가이드 gif 화면-->
-
-
-        <!-- 하단 버튼 화면 -->
+        <!-- glsurfaceview + 하단 버튼 화면 -->
         <LinearLayout
             android:background="#00000000"
             android:orientation="vertical"
-            android:weightSum="667"
+            android:weightSum="647"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:background="#00000000"
+
+            <android.opengl.GLSurfaceView
+                android:id="@+id/surfaceview"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="547"/>
+
             <LinearLayout
-                android:background="#80000000"
+                android:background="#000000"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="120">
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_weight="100">
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="31"/>
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="36"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0395"/>
+
                     <ImageButton
-                        android:id="@+id/delete"
+                        android:id="@+id/delete_image_button"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:background="#00000000"
                         android:layout_weight="0.03"
                         android:layout_gravity="center"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0205" />
+
                     <TextView
                         android:id="@+id/txt_delete"
                         android:layout_width="match_parent"
@@ -169,176 +56,83 @@
                         android:textColor="#FFFFFF"
                         android:gravity="center"
                         android:layout_weight="0.015"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0151"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="22.55"/>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="42.5"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.044"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.022">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.01325"/>
-                        <ImageButton
-                            android:id="@+id/prev"
-                            android:layout_width="0dp"
-                            android:background="#00000000"
-                            android:layout_weight="0.016"
-                            android:layout_height="match_parent" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.01325"/>
-                    </LinearLayout>
-                    <LinearLayout
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="36"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/prev_image_button"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.0239"/>
+                        android:layout_weight="0.03"
+                        android:background="#00000000"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_chevron_left_white_24dp" />
+
                     <TextView
                         android:id="@+id/txt_prev"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:text="이전"
-                        android:textSize="12dp"
-                        android:textColor="#FFFFFF"
+                        android:layout_weight="0.015"
                         android:gravity="center"
-                        android:layout_weight="0.015"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0151"/>
+                        android:text="이전"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12dp" />
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="29.75"/>
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="54"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.028"/>
-                    <ImageButton
-                        android:id="@+id/fab"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.054"
-                        android:background="#00000000"
-                        android:layout_gravity="center"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0079"/>
-                    <TextView
-                        android:id="@+id/txt_fab"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.015"
-                        android:text="점찍기"
-                        android:textSize="12dp"
-                        android:textColor="#FFFFFF"
-                        android:gravity="center"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0151"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="28.75"/>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="42.5"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.044"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.022">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.01325"/>
-                        <ImageButton
-                            android:id="@+id/next"
-                            android:layout_width="0dp"
-                            android:layout_weight="0.016"
-                            android:background="#00000000"
-                            android:layout_height="match_parent" />
+                    android:orientation="vertical"></LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.01325"/>
-                    </LinearLayout>
-                    <LinearLayout
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="36"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/next_image_button"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.0239"/>
+                        android:layout_weight="0.03"
+                        android:background="#00000000"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_chevron_right_white_24dp" />
+
                     <TextView
                         android:id="@+id/txt_next"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.015"
+                        android:gravity="center"
                         android:text="다음"
-                        android:textSize="12dp"
                         android:textColor="#FFFFFF"
-                        android:gravity="center"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0151"/>
+                        android:textSize="12dp" />
+
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="23.95"/>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="34"
+                    android:layout_weight="36"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0375"/>
+
                     <ImageButton
-                        android:id="@+id/guide"
+                        android:id="@+id/guide_image_button"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.034"
+                        android:layout_weight="0.03"
                         android:background="#00000000"
                         android:scaleType="centerInside"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0081"/>
+
                     <TextView
                         android:id="@+id/txt_guide"
                         android:layout_width="match_parent"
@@ -347,30 +141,72 @@
                         android:textSize="12dp"
                         android:textColor="#FFFFFF"
                         android:gravity="center"
-                        android:layout_weight="0.030"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.0104"/>
+                        android:layout_weight="0.015"/>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="30"/>
-
             </LinearLayout>
+
         </LinearLayout>
         <!-- 하단 버튼 화면 -->
 
-        <!-- 하단 버튼 이미지-->
-        <FrameLayout
-            android:id="@+id/final_bottom"
-            android:background="@drawable/final_bottom"
+
+        <!-- 대표 레이아웃 화면-->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
-        <!-- 하단 버튼 이미지-->
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/measure_item_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rectangle_blue"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:text="측정 항목"
+                android:textColor="#ffffff"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/distance_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rectangle_gray"
+                android:padding="8dp"
+                android:text="시작점을 찍어주세요."
+                android:textColor="#1d1d1d"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+        <!-- 대표 레이아웃 화면 -->
+
+        <!-- 첫 카메라 가이드 gif 화면-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="250dp"
+                android:layout_height="112dp"
+                android:id="@+id/gifImageView"
+                android:background="#00000000"
+                android:scaleType="centerCrop"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:id="@+id/snackbar_textview"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/gifImageView"/>
+
+        </LinearLayout>
+        <!-- 첫 카메라 가이드 gif 화면-->
+
 
     </FrameLayout>
 

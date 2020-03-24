@@ -70,7 +70,7 @@ public class MeasurementArFragment extends Fragment {
     private ArrayAdapter<String> spinner_adapter; // 스피너 어댑터
     private List<String> cloth_category_list; //옷 카테고리를 담는 변수
     public String category_select_id; //선택된 옷의 특정 카테고리의 ID, 이 아이디를 통해 측정 목록에 접근하여 담을 수 있음.
-    public ArrayList<String> Measure_item, Image_item, measureItemId, min_scope, max_scope; //옷 카테고리에 따른 측정 목록을 담는 변수들
+    public static ArrayList<String> Measure_item, Image_item, measureItemId, min_scope, max_scope; //옷 카테고리에 따른 측정 목록을 담는 변수들
     public String clothName; // 옷 이름 저장하는 변수
 
     //카메라, 갤러리 접근 관련
@@ -105,24 +105,6 @@ public class MeasurementArFragment extends Fragment {
             }
         });
 
-        /* 측정 시작 버튼을 눌렀을 때 */
-        ar_start_measure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(ar_cloth_name_et.getText().toString().length() == 0){ //이름이 비었는지 확인
-                    Toast.makeText(getActivity(),"이름을 입력해주세요.",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else if(file == null){ //사진이 비었는지 확인
-                    Toast.makeText(getActivity(),"사진을 등록해주세요.",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                clothName=ar_cloth_name_et.getText().toString();
-                Intent intent = new Intent(getActivity(), MeasurementARActivity.class);
-                startActivity(intent);
-            }
-        });
-
         /* 옷 사진 등록 버튼을 눌렀을 때 - 사진을 받아올 경로를 선택하도록 알림창을 띄워줌 */
         ar_add_cloth_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +132,24 @@ public class MeasurementArFragment extends Fragment {
                 });
                 AlertDialog alertDialog=dialogBuilder.create();
                 alertDialog.show();
+            }
+        });
+
+        /* 측정 시작 버튼을 눌렀을 때 */
+        ar_start_measure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ar_cloth_name_et.getText().toString().length() == 0){ //이름이 비었는지 확인
+                    Toast.makeText(getActivity(),"이름을 입력해주세요.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if(file == null){ //사진이 비었는지 확인
+                    Toast.makeText(getActivity(),"사진을 등록해주세요.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                clothName=ar_cloth_name_et.getText().toString();
+                Intent intent = new Intent(getActivity(), MeasurementARActivity.class);
+                startActivity(intent);
             }
         });
 

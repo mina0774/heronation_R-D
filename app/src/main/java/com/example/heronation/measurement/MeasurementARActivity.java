@@ -3,6 +3,7 @@ package com.example.heronation.measurement;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -95,7 +96,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
     private Integer measurement_count=0; // 현재 측정된 항목의 개수
     private Integer measurement_item_size=MeasurementArFragment.Measure_item.size(); // 전체 측정 항목의 개수
-    private ArrayList<Double> measurement_items_distance=new ArrayList<>(); // 측정 항목을 저장하는 배열
+    public static ArrayList<Double> measurement_items_distance=new ArrayList<>(); // 측정 항목을 저장하는 배열
 
     // Anchors created from taps used for object placing with a given color.
     private static class ColoredAnchor {
@@ -157,7 +158,9 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 // 현재 상태가, 측정이 모두 완료된 상태이면,
                 // 각 측정 항목의 거리를 전송
                 else if(measurement_count==measurement_item_size-1){
-                    Log.d("측정",measurement_items_distance.toString());
+                    Intent intent=new Intent(getApplicationContext(),MeasurementResultActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -263,6 +266,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
             @Override
             public void run() {
                 gifImageView.setBackgroundResource(R.drawable.mobile_moving);
+                messageSnackbarHelper.showMessage(MeasurementARActivity.this, "측정을 시작하려면 스마트폰을\n좌우로 기울여주세요");
             }
         });
     }
@@ -391,7 +395,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         }
     }
 
-    //두 점 사이의 선을 그리는 함수
+    // 두 점 사이의 선을 그리는 함수
     private void drawLine(Pose pose0, Pose pose1, float[] viewmtx, float[] projmtx) {
         float lineWidth = 0.004f;
         float lineWidthH = lineWidth / viewHeight * viewWidth;
@@ -440,6 +444,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                         // space. This anchor is created on the Plane to place the 3D model
                         // in the correct position relative both to the world and to the plane.
                         anchors.add(new ColoredAnchor(hit.createAnchor(), objColor));
+                        Log.d("추가","추가 "+anchors.size());
 
                         if (anchors.size() == 1) {
                             float anchorX = anchors.get(0).anchor.getPose().tx();
@@ -452,7 +457,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                             float anchorY = anchors.get(1).anchor.getPose().ty();
                             float anchorZ = anchors.get(1).anchor.getPose().tz();
                             float[] points = new float[]{anchorX, anchorY, anchorZ};
-                            mPoints.add(1, points); // 헤당 점의 좌표를 배열에 저장
+                            mPoints.add(1,points);
                             //거리 업데이트
                             updateDistance(mPoints.get(0),mPoints.get(1));
                         }
@@ -478,12 +483,26 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Integer min_scope= Integer.parseInt(MeasurementArFragment.min_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최소값
+                Integer max_scope = Integer.parseInt(MeasurementArFragment.max_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최대값
                 double distance=0.0;
-                if(mPoints.size()==2){
+                Log.d("포인트","사이즈 "+mPoints.size());
+                if(mPoints.size()>=2){
                     distance=Math.sqrt((start[0]-end[0])*(start[0]-end[0])+(start[1]-end[1])*(start[1]-end[1])+(start[2]-end[2])*(start[2]-end[2])); // 거리 구하기
                     String distanceString=String.format(Locale.getDefault(),"%.2f",distance*100)+"cm";
-                    distanceTextview.setText(distanceString);
-                    measurement_items_distance.add(distance);
+                    // 측정 항목의 범위 안에 속할 경우
+                    if((distance*100 >= min_scope) && (max_scope >= distance*100)) {
+                        distanceTextview.setText(distanceString);
+                        measurement_items_distance.add(distance);
+                    }
+                    // 측정 항목의 범위 안에 속하지 않을 경우
+                    else{
+                        distanceTextview.setText(distanceString+"\n"
+                                +"측정 가능한 범위에서 측정해주세요 \n"
+                                +"측정 가능한 범위는 "+min_scope+"cm"+"~"+max_scope+"cm 입니다.");
+                        anchors.get(1).anchor.detach();
+                        anchors.remove(1);
+                    }
                 }
             }
         });

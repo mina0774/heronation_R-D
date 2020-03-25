@@ -112,8 +112,9 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         }
     }
 
-    private ArrayList<ColoredAnchor> anchors = new ArrayList<>();
+    private ArrayList<ColoredAnchor> anchors = new ArrayList<>(); // 측정 항목당 두 개의 anchor를 저장하는 배열
     private List<float[]> mPoints=new ArrayList<float[]>(); // anchor의 좌표를 저장하는 배열
+    private ArrayList[] allAnchors; // 이전에 찍은 모든 점을 저장하는 리스트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +127,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         measurement_count=0; // 현재 측정된 항목의 개수
         measurement_items_distance=new Double[20];
         mPoints=new ArrayList<float[]>(); // anchor의 좌표를 저장하는 배열
+        allAnchors= new ArrayList[measurement_item_size];
 
         installRequested = false;
 
@@ -154,6 +156,27 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                     anchors.remove(anchors.size()-1); // 해당 점을 삭제
                     distanceTextview.setText("점을 찍어주세요."); // textview 설정
                 }
+            }
+        });
+
+        // 이전 버튼을 눌렀을 경우
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(measurement_count > 0) // 첫번째 측정항목이 아닐 경우에, 이전 버튼 활성화
+                {
+                    measurement_count--; // 이전 버튼 누를 시 measurement_count 1 감소
+                    anchors=allAnchors[measurement_count]; // 이전 버튼을 눌렀을 때 이동한 측정항목으로 anchors를 설정
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 측정 항목에 해당하는 anchor 거리 설정, 측정 항목 설정
+                            distanceTextview.setText(String.format(Locale.getDefault(),"%.2f",measurement_items_distance[measurement_count]*100)+"cm");
+                            measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
+                        }
+                    });
+                }
+
             }
         });
 
@@ -187,15 +210,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 }
             }
         });
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        //저장되는 값을 초기화시켜줌
-        measurement_count=0; // 현재 측정된 항목의 개수
-        measurement_items_distance=new Double[20];
-        mPoints=new ArrayList<float[]>(); // anchor의 좌표를 저장하는 배열
     }
 
     @Override
@@ -523,6 +537,8 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                     if((distance*100 >= min_scope) && (max_scope >= distance*100)) {
                         distanceTextview.setText(distanceString);
                         measurement_items_distance[measurement_count]=distance;
+                        // anchors가 2개 찍혔을 때, 모든 anchors를 저장하는 allAnchors 배열에 해당 측정 항목 번호를 인덱스로 두어 저장함
+                        allAnchors[measurement_count]=anchors;
                     }
                     // 측정 항목의 범위 안에 속하지 않을 경우
                     else{

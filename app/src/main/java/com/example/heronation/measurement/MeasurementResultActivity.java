@@ -31,8 +31,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_measurement_result);
         ButterKnife.bind(this);
 
-
-        measurement_items_distance=MeasurementARActivity.measurement_items_distance;
+        measurement_items_distance=MeasurementARActivity.measurement_items_distance; // 측정 항목의 거리를 받아옴
 
         // 측정 시작 시에 촬영한 사진 or 갤러리에서 받아온 사진을 띄워줌
         Glide.with(this).load(MeasurementArFragment.file.getAbsolutePath()).into(measurement_result_imageview);

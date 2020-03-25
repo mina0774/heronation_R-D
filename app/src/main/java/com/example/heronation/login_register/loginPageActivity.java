@@ -2,6 +2,7 @@ package com.example.heronation.login_register;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -83,6 +84,12 @@ public class  loginPageActivity extends AppCompatActivity {
                 }
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                } else {
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                }
+
                 access_token=userLoginInfo.access_token;
                 startActivity(intent);
                 finish();
@@ -125,8 +132,6 @@ public class  loginPageActivity extends AppCompatActivity {
                         style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
                     }
                 }
-                Log.d("스타일태그", style_tag_id);
-
             }
 
             @Override

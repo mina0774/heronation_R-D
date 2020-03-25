@@ -258,7 +258,11 @@ public class RegisterActivity extends AppCompatActivity {
                  System.out.println("Response" + response.code()); //204 사이의 값이 나왔을 때는 회원가입이 정상적으로 이루어짐
                  response_code = response.code();
                  //204의 값이 나오지 않으면, 회원가입이 정상적으로 이루어지지 않음
-                 if (response.code() != 204) {
+                 if(response.code()==500){
+                     backgroundThreadShortToast(getApplicationContext(), "서버 에러입니다.");
+                     return;
+                 }
+                 else if (response.code() != 204) {
                      backgroundThreadShortToast(getApplicationContext(), "이미 등록된 아이디입니다.");
                      return;
                  } else if(response.code() == 204){

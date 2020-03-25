@@ -2,13 +2,16 @@ package com.example.heronation.measurement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -45,5 +48,23 @@ public class MeasurementResultActivity extends AppCompatActivity {
 
         // 측정 결과값을 텍스트뷰에 설정
         measurement_result_textview.setText(result);
+
+        // 재촬영 버튼을 눌렀을 경우, AR로 돌아감
+        measurement_again_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(), MeasurementARActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        // 저장 버튼을 눌렀을 경우 ? 일단 Main으로 돌아감 (수정 필요)
+        save_measurement_result_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

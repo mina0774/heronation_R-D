@@ -63,7 +63,8 @@
         android:paddingRight="16dp"
         android:paddingLeft="16dp"
         android:textSize="18sp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textColor="#5D5D5D" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,7 +84,7 @@
                 android:background="@drawable/round_rectangle"
                 android:text="재촬영"
                 android:textSize="16dp"
-                android:textColor="#1048ff"
+                android:textColor="#5D5D5D"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
@@ -97,7 +98,7 @@
             android:layout_weight="139.5">
             <Button
                 android:id="@+id/save_measurement_result_button"
-                android:background="@drawable/rectangle_blue"
+                android:background="@drawable/rectangle_button"
                 android:text="저장"
                 android:textSize="16dp"
                 android:textColor="#ffffff"

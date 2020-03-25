@@ -119,6 +119,9 @@ public class MainActivity extends AppCompatActivity
     private Button style_sexy; private Button style_school; private Button style_romantic; private Button style_office;
     private Button filter_return; private Button filter_finish;
 
+    /* 뒤로가기 처리 */
+    private BackPressCloseHandler backPressCloseHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +131,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        backPressCloseHandler=new BackPressCloseHandler(this);
         /* BottomNavigation view를 선언해주고, bottomNavigationView의 객체를 생성한 후,
          * bottomNavigationView에 activity_main.xml의 bottomnavigation_menu_bar를 할당해준 후,
          * bottomItemSelectedListener 클래스를, bottomNavigatioView 객체에 할당
@@ -164,8 +168,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
         /* 상단바 메뉴 드로워 */
-
     }
+
+    /* 뒤로가기 버튼을 눌렀을 경우 */
+    @Override
+    public void onBackPressed(){
+        backPressCloseHandler.onBackPressed();
+    }
+
+
 
     /*마이페이지에서 사용자 정보 받아오는 함수*/
     public void myPageGetUserInfo(){

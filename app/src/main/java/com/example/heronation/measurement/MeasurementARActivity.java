@@ -91,12 +91,15 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
     @BindView(R.id.gifImageView) pl.droidsonroids.gif.GifImageView gifImageView;
     @BindView(R.id.distance_textview) TextView distanceTextview;
+    @BindView(R.id.delete_image_button) ImageButton deleteButton;
+    @BindView(R.id.prev_image_button) ImageButton prevButton;
     @BindView(R.id.next_image_button) ImageButton nextButton;
+    @BindView(R.id.guide_image_button) ImageButton guideButton;
     @BindView(R.id.measure_item_textview) TextView measureItemTextview;
 
     private Integer measurement_count=0; // 현재 측정된 항목의 개수
-    private Integer measurement_item_size=MeasurementArFragment.Measure_item.size(); // 전체 측정 항목의 개수
-    public static ArrayList<Double> measurement_items_distance=new ArrayList<>(); // 측정 항목을 저장하는 배열
+    private Integer measurement_item_size; // 전체 측정 항목의 개수
+    public static Double[] measurement_items_distance; // 측정 항목을 저장하는 배열
 
     // Anchors created from taps used for object placing with a given color.
     private static class ColoredAnchor {
@@ -119,6 +122,11 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         ButterKnife.bind(this);
         displayRotationHelper = new DisplayRotationHelper(/*context=*/ this);
 
+        measurement_item_size=MeasurementArFragment.Measure_item.size(); // 전체 측정 항목의 개수
+        measurement_count=0; // 현재 측정된 항목의 개수
+        measurement_items_distance=new Double[20];
+        mPoints=new ArrayList<float[]>(); // anchor의 좌표를 저장하는 배열
+
         installRequested = false;
 
         // Set up tap listener.
@@ -136,6 +144,19 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
         measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count)); //첫 측정 항목 설정
 
+        // 삭제 버튼을 눌렀을 경우
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(anchors.size()>0) // 이미 찍힌 점이 있다면,
+                {
+                    anchors.get(anchors.size()-1).anchor.detach();
+                    anchors.remove(anchors.size()-1); // 해당 점을 삭제
+                    distanceTextview.setText("점을 찍어주세요."); // textview 설정
+                }
+            }
+        });
+
         // 다음 버튼을 눌렀을 경우, 다음 측정 항목으로 넘어감
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,13 +173,15 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
                     measurement_count++;
 
-                    distanceTextview.setText("시작점을 찍어주세요.");
+                    distanceTextview.setText("점을 찍어주세요.");
                     measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
                 }
                 // 현재 상태가, 측정이 모두 완료된 상태이면,
                 // 각 측정 항목의 거리를 전송
                 else if(measurement_count==measurement_item_size-1){
+                    Log.d("측정항목",measurement_items_distance[0]+"");
                     Intent intent=new Intent(getApplicationContext(),MeasurementResultActivity.class);
+                    intent.putExtra("distance",measurement_items_distance);
                     startActivity(intent);
                     finish();
                 }
@@ -166,6 +189,14 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         });
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //저장되는 값을 초기화시켜줌
+        measurement_count=0; // 현재 측정된 항목의 개수
+        measurement_items_distance=new Double[20];
+        mPoints=new ArrayList<float[]>(); // anchor의 좌표를 저장하는 배열
+    }
 
     @Override
     protected void onResume() {
@@ -444,7 +475,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                         // space. This anchor is created on the Plane to place the 3D model
                         // in the correct position relative both to the world and to the plane.
                         anchors.add(new ColoredAnchor(hit.createAnchor(), objColor));
-                        Log.d("추가","추가 "+anchors.size());
 
                         if (anchors.size() == 1) {
                             float anchorX = anchors.get(0).anchor.getPose().tx();
@@ -486,14 +516,13 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 Integer min_scope= Integer.parseInt(MeasurementArFragment.min_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최소값
                 Integer max_scope = Integer.parseInt(MeasurementArFragment.max_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최대값
                 double distance=0.0;
-                Log.d("포인트","사이즈 "+mPoints.size());
                 if(mPoints.size()>=2){
                     distance=Math.sqrt((start[0]-end[0])*(start[0]-end[0])+(start[1]-end[1])*(start[1]-end[1])+(start[2]-end[2])*(start[2]-end[2])); // 거리 구하기
                     String distanceString=String.format(Locale.getDefault(),"%.2f",distance*100)+"cm";
                     // 측정 항목의 범위 안에 속할 경우
                     if((distance*100 >= min_scope) && (max_scope >= distance*100)) {
                         distanceTextview.setText(distanceString);
-                        measurement_items_distance.add(distance);
+                        measurement_items_distance[measurement_count]=distance;
                     }
                     // 측정 항목의 범위 안에 속하지 않을 경우
                     else{

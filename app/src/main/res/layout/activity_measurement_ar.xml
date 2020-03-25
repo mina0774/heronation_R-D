@@ -193,26 +193,17 @@
         <!-- 대표 레이아웃 화면 -->
 
         <!-- 첫 카메라 가이드 gif 화면-->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/gifImageView"
+            android:layout_width="250dp"
+            android:layout_height="112dp"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:orientation="vertical">
-            <pl.droidsonroids.gif.GifImageView
-                android:layout_width="250dp"
-                android:layout_height="112dp"
-                android:id="@+id/gifImageView"
-                android:background="#00000000"
-                android:scaleType="centerCrop"
-                android:layout_centerInParent="true"/>
+            android:background="#00000000"
+            android:scaleType="centerCrop" />
 
-            <TextView
-                android:id="@+id/snackbar_textview"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/gifImageView"/>
 
-        </LinearLayout>
         <!-- 첫 카메라 가이드 gif 화면-->
 
 

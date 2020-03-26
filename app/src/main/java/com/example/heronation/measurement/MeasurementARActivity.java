@@ -109,6 +109,8 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
     private Integer measurement_count=0; // 현재 측정된 항목의 개수
     private Integer measurement_item_size; // 전체 측정 항목의 개수
     public static Double[] measurement_items_distance; // 측정 항목을 저장하는 배열
+    Integer min_scope; // 해당 측정 항목의 거리의 최소값
+    Integer max_scope; // 해당 측정 항목의 거리의 최대값
 
     // Anchors created from taps used for object placing with a given color.
     private static class ColoredAnchor {
@@ -128,7 +130,8 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
     public static int long_pressed_flag; // anchor를 꾹 누르는 이벤트를 판단하는 flag 변수
     private final int DEFAULT_VALUE=-1; // 현재 터치하고 있는 anchor index의 디폴트값
     private int nowTouchingPointIndex=DEFAULT_VALUE; // 현재 터치하고 있는 anchor의 index
-    private float x, y; //특정 지점을 터치한 좌표를 담는 변수
+    private float x, y; // 특정 지점을 터치한 좌표를 담는 변수
+    private int outOfRange=0; // 거리가 범위 안에 속하는지 판단하는 변수
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +146,10 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         mPoints=new float[2][3]; // anchor의 좌표를 저장하는 배열, 2개의 anchor, x,y,z 좌표
         allAnchors= new ArrayList[measurement_item_size]; // 이전에 찍은 모든 점을 저장하는 리스트
        long_pressed_flag=0;
+       nowTouchingPointIndex=DEFAULT_VALUE;
+       outOfRange=0;
+       min_scope = Integer.parseInt(MeasurementArFragment.min_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최소값
+       max_scope = Integer.parseInt(MeasurementArFragment.max_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최대값
 
         installRequested = false;
 
@@ -205,8 +212,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                     anchors.get(anchors.size()-1).anchor.detach();
                     anchors.remove(anchors.size()-1); // 해당 점을 삭제
                     distanceTextview.setText("점을 찍어주세요."); // textview 설정
-
-                    nowTouchingPointIndex--;
                 }
             }
         });
@@ -236,18 +241,24 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 측정 거리가 범위에서 벗어났을 경우
+                if(outOfRange==1){
+                    Toast.makeText(getApplicationContext(),"측정 가능한 범위에서 측정해주세요.",Toast.LENGTH_SHORT).show();
+                }
                 // 현재 상태가, anchor의 점이 2개 찍힌 상태이고, 측정 항목의 개수보다 적은 상태에서
                 // 다음 측정 항목이 측정이 안되어있는 상태일 경우
                 // 다음 버튼을 누를 시에, 원래 찍혀있던 anchor를 초기화함으로써 제거하고,
                 // 측정한 횟수인 measurement_count를 1 증가
                 // 실제 거리 "수치"로 설정된 textview를 "점을 찍어주세요."로 변경
                 // 다음 측정 항목으로 변경
-                if(measurement_count<measurement_item_size-1 && anchors.size()==2 && allAnchors[measurement_count+1]==null){
+                else if(measurement_count<measurement_item_size-1 && anchors.size()==2 && allAnchors[measurement_count+1]==null){
                     anchors=new ArrayList<>();
                     measurement_count++;
 
                     distanceTextview.setText("점을 찍어주세요.");
                     measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
+                    nowTouchingPointIndex=DEFAULT_VALUE;
+                    outOfRange=0;
                 }
                 // 현재 상태가, anchor의 점이 2개 찍힌 상태이고, 측정 항목의 개수보다 적은 상태에서
                 // 다음 측정 항목이 측정이 되어있는 상태일 경우
@@ -264,6 +275,8 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                             // 측정 항목에 해당하는 anchor 거리 설정, 측정 항목 설정
                             distanceTextview.setText(String.format(Locale.getDefault(),"%.2f",measurement_items_distance[measurement_count]*100)+"cm");
                             measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
+                            nowTouchingPointIndex=DEFAULT_VALUE;
+                            outOfRange=0;
                         }
                     });
 
@@ -398,7 +411,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
             planeRenderer.createOnGlThread(/*context=*/ this, "models/trigrid.png");
             pointCloudRenderer.createOnGlThread(/*context=*/ this);
             lineRenderer=new RectanglePolygonRenderer();
-
             virtualObject.createOnGlThread(/*context=*/ this, "models/dot.obj", "models/andy.png");
             virtualObject.setMaterialProperties(0.0f, 2.0f, 0.5f, 6.0f);
         } catch (IOException e) {
@@ -491,6 +503,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
             // Visualize anchors created by touch.
             float scaleFactor = 0.15f;
+
             for (ColoredAnchor coloredAnchor : anchors) {
                 if (coloredAnchor.anchor.getTrackingState() != TrackingState.TRACKING) {
                     continue;
@@ -498,22 +511,54 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 // Get the current pose of an Anchor in world space. The Anchor pose is updated
                 // during calls to session.update() as ARCore refines its estimate of the world.
                 coloredAnchor.anchor.getPose().toMatrix(anchorMatrix, 0);
+
                 // Update and draw the model and its shadow.
                 virtualObject.updateModelMatrix(anchorMatrix, scaleFactor);
                 virtualObject.draw(viewmtx, projmtx, colorCorrectionRgba, coloredAnchor.color);
-                checkIfHit(virtualObject, anchors.size()-1);
+
             }
 
-            if(anchors.size()==2){
-                // 두 점이 모두 찍혔을 때, 선을 그려줌
-                drawLine(anchors.get(0).anchor.getPose(),anchors.get(1).anchor.getPose(),viewmtx,projmtx);
+
+            if (anchors != null && !anchors.isEmpty()) {
+                if (nowTouchingPointIndex != DEFAULT_VALUE) {
+                    // Get the current pose of an Anchor in world space. The Anchor pose is updated
+                    // during calls to session.update() as ARCore refines its estimate of the world.
+                    anchors.get(nowTouchingPointIndex).anchor.getPose().toMatrix(anchorMatrix, 0);
+
+                    // Update and draw the model and its shadow.
+                    virtualObject.updateModelMatrix(anchorMatrix, scaleFactor);
+                    virtualObject.draw(viewmtx, projmtx, colorCorrectionRgba, anchors.get(nowTouchingPointIndex).color);
+                    checkIfHit(virtualObject, nowTouchingPointIndex);
+                }
+
+                    Pose point0 = anchors.get(0).anchor.getPose();
+                    point0.toMatrix(anchorMatrix, 0);
+                    virtualObject.updateModelMatrix(anchorMatrix, scaleFactor);
+                    virtualObject.draw(viewmtx, projmtx, colorCorrectionRgba, anchors.get(0).color);
+                    checkIfHit(virtualObject, 0);
+
+                    if(anchors.size()==2){
+                    Pose point1 = anchors.get(1).anchor.getPose();
+                    point1.toMatrix(anchorMatrix, 0);
+                    virtualObject.updateModelMatrix(anchorMatrix, scaleFactor);
+                    virtualObject.draw(viewmtx, projmtx, colorCorrectionRgba, anchors.get(1).color);
+                    checkIfHit(virtualObject, 1);}
+
+                if(anchors.size()==2){
+                    // 두 점이 모두 찍혔을 때, 선을 그려줌
+                    drawLine(anchors.get(0).anchor.getPose(),anchors.get(1).anchor.getPose(),viewmtx,projmtx);
+                }
             }
+
+
+
 
         } catch (Throwable t) {
             // Avoid crashing the application due to unhandled exceptions.
             Log.e(TAG, "Exception on the OpenGL thread", t);
         }
     }
+
 
     // 두 점 사이의 선을 그리는 함수
     private void drawLine(Pose pose0, Pose pose1, float[] viewmtx, float[] projmtx) {
@@ -560,14 +605,12 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                         float anchorY = anchors.get(0).anchor.getPose().ty();
                         float anchorZ = anchors.get(0).anchor.getPose().tz();
                         float[] points = new float[]{anchorX, anchorY, anchorZ};
-                        nowTouchingPointIndex = anchors.size() - 1;
                         mPoints[0] = points; // 해당 점의 좌표를 배열에 저장
                     } else if (anchors.size() == 2) {
                         float anchorX = anchors.get(1).anchor.getPose().tx();
                         float anchorY = anchors.get(1).anchor.getPose().ty();
                         float anchorZ = anchors.get(1).anchor.getPose().tz();
                         float[] points = new float[]{anchorX, anchorY, anchorZ};
-                        nowTouchingPointIndex = anchors.size() - 1;
                         mPoints[1] = points; // 해당 점의 좌표를 배열에 저장
                         updateDistance(mPoints[0], mPoints[1]); //거리 업데이트
                     }
@@ -576,7 +619,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 }
             }
         }
-        else if(long_pressed_flag==1) // 점이 꾹 눌리면, 점을 이동시킴
+        else if(anchors.size() == 2 && long_pressed_flag==1) // 점이 꾹 눌리면, 점을 이동시킴
         {
             for (HitResult hit : frame.hitTest(x,y)) {
                 handleMoveEvent(nowTouchingPointIndex, hit);
@@ -600,8 +643,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Integer min_scope = Integer.parseInt(MeasurementArFragment.min_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최소값
-                Integer max_scope = Integer.parseInt(MeasurementArFragment.max_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최대값
                 double distance = 0.0;
                 distance = Math.sqrt((start[0] - end[0]) * (start[0] - end[0]) + (start[1] - end[1]) * (start[1] - end[1]) + (start[2] - end[2]) * (start[2] - end[2])); // 거리 구하기
                 String distanceString = String.format(Locale.getDefault(), "%.2f", distance * 100) + "cm";
@@ -612,16 +653,14 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                     measurement_items_distance[measurement_count] = distance;
                     // anchors가 2개 찍혔을 때, 모든 anchors를 저장하는 allAnchors 배열에 해당 측정 항목 번호를 인덱스로 두어 저장함
                     allAnchors[measurement_count] = anchors;
+                    outOfRange=0;
                 }
                 // 측정 항목의 범위 안에 속하지 않을 경우
                 else {
                     distanceTextview.setText(distanceString + "\n"
                             + "측정 가능한 범위에서 측정해주세요 \n"
                             + "측정 가능한 범위는 " + min_scope + "cm" + "~" + max_scope + "cm 입니다.");
-                    if(anchors.size()==2) {
-                        anchors.get(1).anchor.detach();
-                        anchors.remove(1);
-                    }
+                    outOfRange=1;
                 }
             }
         });
@@ -635,14 +674,15 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 return;
             }
 
-            // 해당 점을 삭제
             if (anchors.size() > nowSelectedIndex && long_pressed_flag == 1) {
+                // 해당 점을 삭제
                 anchors.get(nowSelectedIndex).anchor.detach();
                 anchors.remove(nowSelectedIndex);
 
                 // 현재 hit 부분에 앵커 생성
                 float[] objColor = new float[]{66.0f, 133.0f, 244.0f, 255.0f};
                 anchors.add(nowSelectedIndex,new ColoredAnchor(hit.createAnchor(), objColor));
+                Log.d("anchors",anchors.size()+"");
 
                 // 앵커 포인트를 받아옴
                 Pose point0 = anchors.get(0).anchor.getPose();
@@ -650,14 +690,16 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 float anchorY = point0.ty();
                 float anchorZ = point0.tz();
                 float[] points0 = new float[]{anchorX, anchorY, anchorZ};
+                mPoints[0]=points0;
                 Pose point1 = anchors.get(1).anchor.getPose();
                 anchorX = point1.tx();
                 anchorY = point1.ty();
                 anchorZ = point1.tz();
                 float[] points1 = new float[]{anchorX, anchorY, anchorZ};
+                mPoints[1]=points1;
 
-                    // 거리 업데이트
-                    updateDistance(points0, points1);
+                // 거리 업데이트
+                updateDistance(mPoints[0], mPoints[1]);
             }
         } catch (NotTrackingException e1) {
             e1.printStackTrace();

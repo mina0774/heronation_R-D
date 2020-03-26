@@ -428,6 +428,18 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         nowTouchingPointIndex=DEFAULT_VALUE; // 현재 touching point index를 -1로 설정
     }
 
+    /*
+    -      처음에 아무것도 없을 때 – anchor를 두는 로직
+1)    화면을 탭하면, handleTap 함수에서, tap한 위치에 anchor가 생성된다.
+2)    Anchor가 생성됨과 동시에 Anchor를 화면 상에 그려줌 (virtualObject.draw)
+3)    그 후에, Anchor 2개가 찍히는 순간에 거리를 측정함
+3-1) 거리가 범위 안에 속할 경우, 범위 플래그 outOfRange=0으로 설정
+3-2) 거리가 범위 바깥에 속할 경우, 범위 플래그 outOfRange=1으로 설정 => 여기서 원래는 anchor가 놓이면 안되지만, 로직이 생각이 안나서… anchor를 삭제하지는 않고, 다음 버튼을 눌렀을 때, outOfRange 플래그를 이용하여 다음 버튼이 작동하지 않도록 함
+-      점이 2개 놓였을떄, 꾹 눌렀을 떄의 로직
+1)    꾹 눌렀을 때, 점이 선택된 nowTouchingPointIndex를 확인.
+2)    handleMoveEvent 함수에서 선택된 anchor를 삭제하고, 해당 nowTouchingPointIndex에 드래그한 새로운 위치에 nowSelectedAnchor를 위치하게 함
+3)    그 후에, 새롭게 만들어진 anchor의 포인트를 받아, updateDistance 함수를 통해 거리를 업데이트함.
+*/
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -653,14 +665,14 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                     measurement_items_distance[measurement_count] = distance;
                     // anchors가 2개 찍혔을 때, 모든 anchors를 저장하는 allAnchors 배열에 해당 측정 항목 번호를 인덱스로 두어 저장함
                     allAnchors[measurement_count] = anchors;
-                    outOfRange=0;
+                    outOfRange=0; // 범위에 벗어나지 않았으므로 0 으로 설정
                 }
                 // 측정 항목의 범위 안에 속하지 않을 경우
                 else {
                     distanceTextview.setText(distanceString + "\n"
                             + "측정 가능한 범위에서 측정해주세요 \n"
                             + "측정 가능한 범위는 " + min_scope + "cm" + "~" + max_scope + "cm 입니다.");
-                    outOfRange=1;
+                    outOfRange=1; // 범위에 벗어났으므로 1로 설정 - 다음 버튼을 눌렀을 때 넘어가는 것 방지하기
                 }
             }
         });
@@ -670,7 +682,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
     private void handleMoveEvent(int nowSelectedIndex, HitResult hit) {
         try {
             // anchor가 선택되지 않았으므로 움직이면 안됨
-            if (nowTouchingPointIndex == DEFAULT_VALUE) {
+            if (nowSelectedIndex == DEFAULT_VALUE) {
                 return;
             }
 
@@ -706,7 +718,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         }
     }
 
-    // 현재 선택된 점을 판단
+    // 현재 선택된 점을 판단하는데 이용
     private void checkIfHit(ObjectRenderer renderer, int anchorIndex) {
         if (isMVPMatrixHitMotionEvent(renderer.getModelViewProjectionMatrix(), tapHelper.longPressPeek())) {
             nowTouchingPointIndex = anchorIndex;
@@ -718,6 +730,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         }
     }
 
+    // 현재 선택된 점을 판단하는데 이용
     private boolean isMVPMatrixHitMotionEvent(float[] ModelViewProjectionMatrix, MotionEvent event) {
         float[] vertexResult = new float[4];
         float[] centerVertexOfAnchor = {0f, 0f, 0f, 1};

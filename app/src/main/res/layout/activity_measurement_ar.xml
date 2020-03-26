@@ -120,7 +120,6 @@
                         android:text="다음"
                         android:textColor="#FFFFFF"
                         android:textSize="12dp" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -138,8 +137,7 @@
                         android:src="@drawable/ic_question_mark"
                         android:scaleType="fitCenter"
                         android:scaleX="0.7"
-                        android:scaleY="0.7"
-                      />
+                        android:scaleY="0.7" />
 
                     <TextView
                         android:id="@+id/txt_guide"
@@ -158,6 +156,18 @@
 
 
         <!-- 대표 레이아웃 화면-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/measurement_item_guide_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:background="#00000000"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_question_mark"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -190,10 +200,10 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
+        </RelativeLayout>
         <!-- 대표 레이아웃 화면 -->
 
         <!-- 첫 카메라 가이드 gif 화면-->
-
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/gifImageView"
             android:layout_width="250dp"
@@ -202,10 +212,32 @@
             android:layout_gravity="center"
             android:background="#00000000"
             android:scaleType="centerCrop" />
-
-
         <!-- 첫 카메라 가이드 gif 화면-->
 
+        <RelativeLayout
+            android:id="@+id/measurement_item_guide_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            android:layout_margin="40dp">
+
+            <ImageView
+                android:id="@+id/measurement_item_guide_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/measurement_item_guide_close_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="#00000000"
+                android:src="@drawable/ic_close_black_24dp"/>
+
+        </RelativeLayout>
 
     </FrameLayout>
 

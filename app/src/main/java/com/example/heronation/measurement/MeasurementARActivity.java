@@ -6,14 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.opengl.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.measurement.helper.CameraPermissionHelper;
 import com.example.heronation.measurement.helper.DisplayRotationHelper;
@@ -40,11 +44,13 @@ import com.google.ar.core.Session;
 import com.google.ar.core.Trackable;
 import com.google.ar.core.TrackingState;
 import com.google.ar.core.exceptions.CameraNotAvailableException;
+import com.google.ar.core.exceptions.NotTrackingException;
 import com.google.ar.core.exceptions.UnavailableApkTooOldException;
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
+import com.google.ar.sceneform.AnchorNode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,7 +71,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
     @BindView(R.id.surfaceview) GLSurfaceView surfaceView;
 
     private boolean installRequested; // ARCore 설치 유무
-
     private Session session;
     private final SnackbarHelper messageSnackbarHelper = new SnackbarHelper(); // Snackbar 관련
     private DisplayRotationHelper displayRotationHelper; // Device 각도 관련
@@ -91,11 +96,15 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
     @BindView(R.id.gifImageView) pl.droidsonroids.gif.GifImageView gifImageView;
     @BindView(R.id.distance_textview) TextView distanceTextview;
+    @BindView(R.id.measurement_item_guide_button) ImageButton measurement_item_guide_button;
     @BindView(R.id.delete_image_button) ImageButton deleteButton;
     @BindView(R.id.prev_image_button) ImageButton prevButton;
     @BindView(R.id.next_image_button) ImageButton nextButton;
     @BindView(R.id.guide_image_button) ImageButton guideButton;
     @BindView(R.id.measure_item_textview) TextView measureItemTextview;
+    @BindView(R.id.measurement_item_guide_layout) RelativeLayout measurement_item_guide_layout;
+    @BindView(R.id.measurement_item_guide_imageview) ImageView measurement_item_guide_imageview;
+    @BindView(R.id.measurement_item_guide_close_button) ImageView measurement_item_guide_close_button;
 
     private Integer measurement_count=0; // 현재 측정된 항목의 개수
     private Integer measurement_item_size; // 전체 측정 항목의 개수
@@ -116,7 +125,12 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
     private float[][] mPoints; // anchor의 좌표를 저장하는 배열
     private ArrayList[] allAnchors; // 이전에 찍은 모든 점을 저장하는 리스트
 
-    @Override
+    public static int long_pressed_flag; // anchor를 꾹 누르는 이벤트를 판단하는 flag 변수
+    private final int DEFAULT_VALUE=-1; // 현재 터치하고 있는 anchor index의 디폴트값
+    private int nowTouchingPointIndex=DEFAULT_VALUE; // 현재 터치하고 있는 anchor의 index
+    private float x, y; //특정 지점을 터치한 좌표를 담는 변수
+
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement_ar);
@@ -127,13 +141,32 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         measurement_count=0; // 현재 측정된 항목의 개수
         measurement_items_distance=new Double[20];
         mPoints=new float[2][3]; // anchor의 좌표를 저장하는 배열, 2개의 anchor, x,y,z 좌표
-        allAnchors= new ArrayList[measurement_item_size];
+        allAnchors= new ArrayList[measurement_item_size]; // 이전에 찍은 모든 점을 저장하는 리스트
+       long_pressed_flag=0;
 
         installRequested = false;
 
         // Set up tap listener.
         tapHelper = new TapHelper(/*context=*/ this);
-        surfaceView.setOnTouchListener(tapHelper);
+        surfaceView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:                                               //Touch 감지
+                        x = event.getX();
+                        y = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:                                               //Drag 감지
+                        x = event.getX();
+                        y = event.getY();
+                        break;
+                    case MotionEvent.ACTION_UP:                                                 //화면에서 손을 떼는 것 감지
+                        long_pressed_flag = 0;
+                        break;
+                }
+                return tapHelper.onTouch(surfaceView,event);
+            }
+        });
         // Set up renderer.
         surfaceView.setPreserveEGLContextOnPause(true);
         surfaceView.setEGLContextClientVersion(2);
@@ -146,6 +179,23 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
         measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count)); //첫 측정 항목 설정
 
+        // 왼쪽 상단 가이드 버튼을 눌렀을 경우
+        measurement_item_guide_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                measurement_item_guide_layout.setVisibility(View.VISIBLE);
+                Glide.with(getApplicationContext()).load(MeasurementArFragment.Image_item.get(measurement_count)).into(measurement_item_guide_imageview);
+            }
+        });
+
+        // 왼쪽 상단 가이드 닫는 버튼을 눌렀을 경우
+        measurement_item_guide_close_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                measurement_item_guide_layout.setVisibility(View.INVISIBLE);
+            }
+        });
+
         // 삭제 버튼을 눌렀을 경우
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +205,8 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                     anchors.get(anchors.size()-1).anchor.detach();
                     anchors.remove(anchors.size()-1); // 해당 점을 삭제
                     distanceTextview.setText("점을 찍어주세요."); // textview 설정
+
+                    nowTouchingPointIndex--;
                 }
             }
         });
@@ -218,7 +270,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 }
                 // 현재 상태가, 측정이 모두 완료된 상태이면,
                 // 각 측정 항목의 거리를 전송
-                else if(measurement_count==measurement_item_size-1){
+                else if(anchors.size()==2 && measurement_count==measurement_item_size-1){
                     Log.d("측정항목",measurement_items_distance[0]+"");
                     Intent intent=new Intent(getApplicationContext(),MeasurementResultActivity.class);
                     intent.putExtra("distance",measurement_items_distance);
@@ -228,6 +280,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
             }
         });
+
     }
 
     @Override
@@ -359,7 +412,10 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         GLES20.glViewport(0, 0, width, height);
         viewWidth=width;
         viewHeight=height;
+
+        nowTouchingPointIndex=DEFAULT_VALUE; // 현재 touching point index를 -1로 설정
     }
+
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -445,6 +501,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 // Update and draw the model and its shadow.
                 virtualObject.updateModelMatrix(anchorMatrix, scaleFactor);
                 virtualObject.draw(viewmtx, projmtx, colorCorrectionRgba, coloredAnchor.color);
+                checkIfHit(virtualObject, anchors.size()-1);
             }
 
             if(anchors.size()==2){
@@ -477,58 +534,56 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
     // Handle only one tap per frame, as taps are usually low frequency compared to frame rate.
     private void handleTap(Frame frame, Camera camera) {
-        if(anchors.size()<2) {
-            MotionEvent tap = tapHelper.poll();
-            if (tap != null && camera.getTrackingState() == TrackingState.TRACKING) {
-                for (HitResult hit : frame.hitTest(tap)) {
-                    // Check if any plane was hit, and if it was hit inside the plane polygon
-                    Trackable trackable = hit.getTrackable();
-                    // Creates an anchor if a plane or an oriented point was hit.
-                    if ((trackable instanceof Plane
-                            && ((Plane) trackable).isPoseInPolygon(hit.getHitPose())
-                            && (PlaneRenderer.calculateDistanceToPlane(hit.getHitPose(), camera.getPose()) > 0))
-                            || (trackable instanceof Point
-                            && ((Point) trackable).getOrientationMode()
-                            == Point.OrientationMode.ESTIMATED_SURFACE_NORMAL)) {
+        MotionEvent tap = tapHelper.queuedSingleTapsPoll();
+        if (anchors.size() < 2 && tap != null && camera.getTrackingState() == TrackingState.TRACKING) {
+            for (HitResult hit : frame.hitTest(x,y)) {
+                // Check if any plane was hit, and if it was hit inside the plane polygon
+                Trackable trackable = hit.getTrackable();
+                // Creates an anchor if a plane or an oriented point was hit.
+                if ((trackable instanceof Plane
+                        && ((Plane) trackable).isPoseInPolygon(hit.getHitPose())
+                        && (PlaneRenderer.calculateDistanceToPlane(hit.getHitPose(), camera.getPose()) > 0))
+                        || (trackable instanceof Point
+                        && ((Point) trackable).getOrientationMode()
+                        == Point.OrientationMode.ESTIMATED_SURFACE_NORMAL)) {
 
-                        // Assign a color to the object for rendering based on the trackable type
-                        // this anchor attached to. For AR_TRACKABLE_POINT, it's blue color, and
-                        // for AR_TRACKABLE_PLANE, it's green color.
-                        float[] objColor;
-                        if (trackable instanceof Point) {
-                            objColor = new float[]{66.0f, 133.0f, 244.0f, 255.0f};
-                        } else if (trackable instanceof Plane) {
-                            objColor = new float[]{139.0f, 195.0f, 74.0f, 255.0f};
-                        } else {
-                            objColor = DEFAULT_COLOR;
-                        }
+                    // Assign a color to the object for rendering based on the trackable type
+                    // this anchor attached to. - 파란색
+                    float[] objColor = new float[]{66.0f, 133.0f, 244.0f, 255.0f};
 
-                        // Adding an Anchor tells ARCore that it should track this position in
-                        // space. This anchor is created on the Plane to place the 3D model
-                        // in the correct position relative both to the world and to the plane.
-                        anchors.add(new ColoredAnchor(hit.createAnchor(), objColor));
+                    // Adding an Anchor tells ARCore that it should track this position in
+                    // space.
+                    anchors.add(new ColoredAnchor(hit.createAnchor(), objColor));
 
-                        if (anchors.size() == 1) {
-                            float anchorX = anchors.get(0).anchor.getPose().tx();
-                            float anchorY = anchors.get(0).anchor.getPose().ty();
-                            float anchorZ = anchors.get(0).anchor.getPose().tz();
-                            float[] points = new float[]{anchorX, anchorY, anchorZ};
-                            mPoints[0]=points; // 해당 점의 좌표를 배열에 저장
-                        } else if (anchors.size() == 2) {
-                            float anchorX = anchors.get(1).anchor.getPose().tx();
-                            float anchorY = anchors.get(1).anchor.getPose().ty();
-                            float anchorZ = anchors.get(1).anchor.getPose().tz();
-                            float[] points = new float[]{anchorX, anchorY, anchorZ};
-                            mPoints[1]=points; // 해당 점의 좌표를 배열에 저장
-                            //거리 업데이트
-                            updateDistance(mPoints[0],mPoints[1]);
-                        }
-
-                        break;
+                    if (anchors.size() == 1) {
+                        float anchorX = anchors.get(0).anchor.getPose().tx();
+                        float anchorY = anchors.get(0).anchor.getPose().ty();
+                        float anchorZ = anchors.get(0).anchor.getPose().tz();
+                        float[] points = new float[]{anchorX, anchorY, anchorZ};
+                        nowTouchingPointIndex = anchors.size() - 1;
+                        mPoints[0] = points; // 해당 점의 좌표를 배열에 저장
+                    } else if (anchors.size() == 2) {
+                        float anchorX = anchors.get(1).anchor.getPose().tx();
+                        float anchorY = anchors.get(1).anchor.getPose().ty();
+                        float anchorZ = anchors.get(1).anchor.getPose().tz();
+                        float[] points = new float[]{anchorX, anchorY, anchorZ};
+                        nowTouchingPointIndex = anchors.size() - 1;
+                        mPoints[1] = points; // 해당 점의 좌표를 배열에 저장
+                        updateDistance(mPoints[0], mPoints[1]); //거리 업데이트
                     }
+
+                    break;
                 }
             }
         }
+        else if(long_pressed_flag==1) // 점이 꾹 눌리면, 점을 이동시킴
+        {
+            for (HitResult hit : frame.hitTest(x,y)) {
+                handleMoveEvent(nowTouchingPointIndex, hit);
+            }
+
+        }
+
     }
 
     /** Checks if we detected at least one plane. */
@@ -563,11 +618,78 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                     distanceTextview.setText(distanceString + "\n"
                             + "측정 가능한 범위에서 측정해주세요 \n"
                             + "측정 가능한 범위는 " + min_scope + "cm" + "~" + max_scope + "cm 입니다.");
-                    anchors.get(1).anchor.detach();
-                    anchors.remove(1);
+                    if(anchors.size()==2) {
+                        anchors.get(1).anchor.detach();
+                        anchors.remove(1);
+                    }
                 }
             }
         });
     }
+
+    // anchor를 꾹 눌렀을 때, 이동이 가능하게 하는 이벤트 처리
+    private void handleMoveEvent(int nowSelectedIndex, HitResult hit) {
+        try {
+            // anchor가 선택되지 않았으므로 움직이면 안됨
+            if (nowTouchingPointIndex == DEFAULT_VALUE) {
+                return;
+            }
+
+            // 해당 점을 삭제
+            if (anchors.size() > nowSelectedIndex && long_pressed_flag == 1) {
+                anchors.get(nowSelectedIndex).anchor.detach();
+                anchors.remove(nowSelectedIndex);
+
+                // 현재 hit 부분에 앵커 생성
+                float[] objColor = new float[]{66.0f, 133.0f, 244.0f, 255.0f};
+                anchors.add(nowSelectedIndex,new ColoredAnchor(hit.createAnchor(), objColor));
+
+                // 앵커 포인트를 받아옴
+                Pose point0 = anchors.get(0).anchor.getPose();
+                float anchorX = point0.tx();
+                float anchorY = point0.ty();
+                float anchorZ = point0.tz();
+                float[] points0 = new float[]{anchorX, anchorY, anchorZ};
+                Pose point1 = anchors.get(1).anchor.getPose();
+                anchorX = point1.tx();
+                anchorY = point1.ty();
+                anchorZ = point1.tz();
+                float[] points1 = new float[]{anchorX, anchorY, anchorZ};
+
+                    // 거리 업데이트
+                    updateDistance(points0, points1);
+            }
+        } catch (NotTrackingException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    // 현재 선택된 점을 판단
+    private void checkIfHit(ObjectRenderer renderer, int anchorIndex) {
+        if (isMVPMatrixHitMotionEvent(renderer.getModelViewProjectionMatrix(), tapHelper.longPressPeek())) {
+            nowTouchingPointIndex = anchorIndex;
+            tapHelper.longPressPoll();
+            long_pressed_flag = 1;
+        } else if (isMVPMatrixHitMotionEvent(renderer.getModelViewProjectionMatrix(), tapHelper.queuedSingleTapsPeek())) {
+            nowTouchingPointIndex = anchorIndex;
+            tapHelper.queuedSingleTapsPoll();
+        }
+    }
+
+    private boolean isMVPMatrixHitMotionEvent(float[] ModelViewProjectionMatrix, MotionEvent event) {
+        float[] vertexResult = new float[4];
+        float[] centerVertexOfAnchor = {0f, 0f, 0f, 1};
+        float AnchorHitAreaRadius = 0.08f;
+        if (event == null) {
+            return false;
+        }
+        Matrix.multiplyMV(vertexResult, 0, ModelViewProjectionMatrix, 0, centerVertexOfAnchor, 0);
+        float radius = (viewWidth / 2) * (AnchorHitAreaRadius / vertexResult[3]);
+        float dx = event.getX() - (viewWidth / 2) * (1 + vertexResult[0] / vertexResult[3]);
+        float dy = event.getY() - (viewHeight / 2) * (1 - vertexResult[1] / vertexResult[3]);
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        return distance < radius;
+    }
+
 }
 

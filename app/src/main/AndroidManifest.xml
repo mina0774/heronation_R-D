@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".measurement.MeasurementResultActivity"></activity>
+        <activity android:name=".measurement.MeasurementResultActivity" />
         <activity android:name=".measurement.MeasurementARActivity" />
         <activity android:name=".login_register.RegisterAiActivity" />
         <activity android:name=".wishlist.WishlistClosetDeleteActivity" />

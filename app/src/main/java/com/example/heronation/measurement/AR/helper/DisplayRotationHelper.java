@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.heronation.measurement.helper;
+package com.example.heronation.measurement.AR.helper;
 
 import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
@@ -23,8 +23,6 @@ import android.hardware.display.DisplayManager.DisplayListener;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.ar.core.Session;
 

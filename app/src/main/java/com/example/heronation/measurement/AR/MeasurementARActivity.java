@@ -1,8 +1,9 @@
-package com.example.heronation.measurement;
+package com.example.heronation.measurement.AR;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -19,18 +20,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
-import com.example.heronation.measurement.helper.CameraPermissionHelper;
-import com.example.heronation.measurement.helper.DisplayRotationHelper;
-import com.example.heronation.measurement.helper.FullScreenHelper;
-import com.example.heronation.measurement.helper.SnackbarHelper;
-import com.example.heronation.measurement.helper.TapHelper;
-import com.example.heronation.measurement.helper.TrackingStateHelper;
-import com.example.heronation.measurement.renderer.BackgroundRenderer;
-import com.example.heronation.measurement.renderer.ObjectRenderer;
-import com.example.heronation.measurement.renderer.PointCloudRenderer;
-import com.example.heronation.measurement.renderer.PlaneRenderer;
-import com.example.heronation.measurement.renderer.RectanglePolygonRenderer;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.heronation.measurement.AR.InnerGuide.InnerGuideViewPager;
+import com.example.heronation.measurement.AR.helper.CameraPermissionHelper;
+import com.example.heronation.measurement.AR.helper.DisplayRotationHelper;
+import com.example.heronation.measurement.AR.helper.FullScreenHelper;
+import com.example.heronation.measurement.AR.helper.SnackbarHelper;
+import com.example.heronation.measurement.AR.helper.TapHelper;
+import com.example.heronation.measurement.AR.helper.TrackingStateHelper;
+import com.example.heronation.measurement.AR.renderer.BackgroundRenderer;
+import com.example.heronation.measurement.AR.renderer.ObjectRenderer;
+import com.example.heronation.measurement.AR.renderer.PointCloudRenderer;
+import com.example.heronation.measurement.AR.renderer.PlaneRenderer;
+import com.example.heronation.measurement.AR.renderer.RectanglePolygonRenderer;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.Camera;
@@ -50,11 +51,9 @@ import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
-import com.google.ar.sceneform.AnchorNode;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -105,6 +104,12 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
     @BindView(R.id.measurement_item_guide_layout) RelativeLayout measurement_item_guide_layout;
     @BindView(R.id.measurement_item_guide_imageview) ImageView measurement_item_guide_imageview;
     @BindView(R.id.measurement_item_guide_close_button) ImageView measurement_item_guide_close_button;
+
+    @BindView(R.id.standard_measurement_guide_layout) RelativeLayout standard_measurement_guide_layout;
+    @BindView(R.id.indicator) ImageView indicator;
+    @BindView(R.id.standard_measurement_guide_close_button) ImageButton standard_measurement_guide_close_button;
+    @BindView(R.id.measurement_guide_viewPager) ViewPager measurement_guide_viewPager;
+    FragmentPagerAdapter adapterViewPager;
 
     private Integer measurement_count=0; // 현재 측정된 항목의 개수
     private Integer measurement_item_size; // 전체 측정 항목의 개수
@@ -232,6 +237,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                             measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
                         }
                     });
+                    outOfRange=0;
                 }
 
             }
@@ -285,7 +291,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 // 각 측정 항목의 거리를 전송
                 else if(anchors.size()==2 && measurement_count==measurement_item_size-1){
                     Log.d("측정항목",measurement_items_distance[0]+"");
-                    Intent intent=new Intent(getApplicationContext(),MeasurementResultActivity.class);
+                    Intent intent=new Intent(getApplicationContext(), MeasurementResultActivity.class);
                     intent.putExtra("distance",measurement_items_distance);
                     startActivity(intent);
                     finish();
@@ -294,6 +300,42 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
             }
         });
 
+       // 오른쪽 하단 가이드 버튼을 눌렀을 경우
+       guideButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               standard_measurement_guide_layout.setVisibility(View.VISIBLE);
+               adapterViewPager=new InnerGuideViewPager.MyPagerAdapter(getSupportFragmentManager());
+               measurement_guide_viewPager.setAdapter(adapterViewPager);
+               measurement_guide_viewPager.setBackgroundColor(0x7F000000);
+               indicator.setBackgroundResource(R.drawable.indicator1);
+               measurement_guide_viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                   public void onPageScrollStateChanged(int state) {
+                   }
+
+                   public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                   }
+
+                   public void onPageSelected(int position) { //화면 전환 이벤트 처리
+                       if (position == 0) {
+                           indicator.setBackgroundResource(R.drawable.indicator1);
+                       } else if (position == 1) {
+                           indicator.setBackgroundResource(R.drawable.indicator2);
+                       } else {
+                           indicator.setBackgroundResource(R.drawable.indicator3);
+                       }
+                   }
+               });
+           }
+       });
+
+       // 오른쪽 하단 가이드의 닫기버튼을 눌렀을 경우
+       standard_measurement_guide_close_button.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               standard_measurement_guide_layout.setVisibility(View.INVISIBLE);
+           }
+       });
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.heronation.measurement;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.heronation.R;
+import com.example.heronation.measurement.AR.MeasurementArFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

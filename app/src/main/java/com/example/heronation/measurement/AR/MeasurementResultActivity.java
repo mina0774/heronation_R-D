@@ -1,4 +1,4 @@
-package com.example.heronation.measurement;
+package com.example.heronation.measurement.AR;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
-import com.example.heronation.main.MainActivity;
+import com.example.heronation.measurement.AR.MeasurementARActivity;
+import com.example.heronation.measurement.AR.MeasurementArFragment;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -42,7 +43,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_measurement_result);
         ButterKnife.bind(this);
 
-        MeasureItem=MeasurementArFragment.Measure_item; // 측정 항목을 받아옴
+        MeasureItem= MeasurementArFragment.Measure_item; // 측정 항목을 받아옴
         measurement_items_distance=MeasurementARActivity.measurement_items_distance; // 측정 항목의 거리를 받아옴
 
         TextView result_measure_item[]=new TextView[MeasureItem.size()];

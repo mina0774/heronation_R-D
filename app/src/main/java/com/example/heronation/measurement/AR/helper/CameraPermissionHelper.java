@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.heronation.measurement.helper;
+package com.example.heronation.measurement.AR.helper;
 
 import android.Manifest;
 import android.content.Intent;

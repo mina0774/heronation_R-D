@@ -12,15 +12,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.heronation.measurement.helper;
+package com.example.heronation.measurement.AR.helper;
 
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-
-import com.example.heronation.measurement.MeasurementARActivity;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;

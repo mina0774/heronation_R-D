@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000">
+
+
+    <LinearLayout
+        android:background="@drawable/round_rectange_gray"
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/inner_first_img"
+            android:layout_width="320dp"
+            android:layout_height="140dp"
+            android:background="@drawable/point_picking" />
+
+        <TextView
+            android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="상단의 측정부위와 가이드에 따라\n측장점을 찍어 길이를 측정해주세요."
+            android:textColor="#ffffff"
+            android:textAlignment="center"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

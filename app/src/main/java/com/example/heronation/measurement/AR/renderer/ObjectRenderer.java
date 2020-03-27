@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.heronation.measurement.renderer;
+package com.example.heronation.measurement.AR.renderer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -280,7 +280,7 @@ public class ObjectRenderer {
    *
    * @param cameraView A 4x4 view matrix, in column-major order.
    * @param cameraPerspective A 4x4 projection matrix, in column-major order.
-   * @param lightIntensity Illumination intensity. Combined with diffuse and specular material
+   * @ lightIntensity Illumination intensity. Combined with diffuse and specular material
    *     properties.
    * @see #setBlendMode(BlendMode)
    * @see #updateModelMatrix(float[], float)

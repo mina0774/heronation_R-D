@@ -4,8 +4,8 @@ import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInf
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
-import com.example.heronation.measurement.dataClass.MeasureItemResponse;
-import com.example.heronation.measurement.dataClass.SubCategoryResponse;
+import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
+import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 
 import java.util.ArrayList;

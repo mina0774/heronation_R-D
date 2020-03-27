@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000">
+
+
+    <LinearLayout
+        android:background="@drawable/round_rectange_gray"
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="측정 결과 예시"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"/>
+
+        <ImageView
+            android:id="@+id/measurement_guide_result_image"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp" />
+
+        <TextView
+            android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="어깨 단면:    48cm\n팔 단면:   48cm"
+            android:textColor="#ffffff"
+            android:textAlignment="center"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_marginTop="32dp"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="부위별 측정이 끝난 후 '다음'\n버튼을 터치하여 측정결과를 확인하세요!"
+            android:textColor="#ffffff"
+            android:textAlignment="center"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,10 +1,9 @@
-package com.example.heronation.measurement;
+package com.example.heronation.measurement.AR;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -19,7 +18,6 @@ import android.provider.MediaStore;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +32,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
-import com.example.heronation.login_register.dataClass.UserMyInfo;
-import com.example.heronation.main.MainActivity;
-import com.example.heronation.measurement.dataClass.MeasureItemResponse;
-import com.example.heronation.measurement.dataClass.SubCategoryResponse;
+import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
+import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
+import com.example.heronation.measurement.MeasurementFragment;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.gun0912.tedpermission.PermissionListener;

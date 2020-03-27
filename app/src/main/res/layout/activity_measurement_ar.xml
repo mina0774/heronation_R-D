@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <!-- glsurfaceview + 하단 버튼 화면 -->
         <LinearLayout
             android:background="#00000000"
@@ -202,16 +203,30 @@
         <!-- 대표 레이아웃 화면 -->
 
         <!-- 첫 카메라 가이드 gif 화면-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/gifImageView"
             android:layout_width="250dp"
             android:layout_height="112dp"
-            android:layout_centerInParent="true"
+
             android:layout_gravity="center"
             android:background="#00000000"
             android:scaleType="centerCrop" />
-        <!-- 첫 카메라 가이드 gif 화면-->
 
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_marginTop="16dp"
+            android:id="@+id/snackbar_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+        <!-- 첫 카메라 가이드 gif 화면-->
     </FrameLayout>
 
     <!-- 측정 항목별 가이드 화면 -->
@@ -274,6 +289,8 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_close_white_24dp"/>
 
+
     </RelativeLayout>
+
     <!-- 기본 가이드 화면 - 뷰페이저 -->
 </RelativeLayout>

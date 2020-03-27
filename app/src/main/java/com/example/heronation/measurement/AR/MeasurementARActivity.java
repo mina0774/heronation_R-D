@@ -416,7 +416,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
         if (!CameraPermissionHelper.hasCameraPermission(this)) {
-            Toast.makeText(this, "Camera permission is needed to run this application", Toast.LENGTH_LONG)
+            Toast.makeText(this, "카메라 권한이 필요합니다.", Toast.LENGTH_LONG)
                     .show();
             if (!CameraPermissionHelper.shouldShowRequestPermissionRationale(this)) {
                 // Permission denied with checking "Do not ask again".
@@ -513,12 +513,13 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
             // Keep the screen unlocked while tracking, but allow it to lock when tracking stops.
             trackingStateHelper.updateKeepScreenOnFlag(camera.getTrackingState());
 
+            /*
             // If not tracking, don't draw 3D objects, show tracking failure reason instead.
             if (camera.getTrackingState() == TrackingState.PAUSED) {
                 messageSnackbarHelper.showMessage(
                         this, TrackingStateHelper.getTrackingFailureReasonString(camera));
                 return;
-            }
+            }*/
 
             // Get projection matrix.
             projmtx = new float[16];
@@ -548,7 +549,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 gifImageView.setVisibility(View.INVISIBLE);
                 messageSnackbarHelper.hide(this);
             } else {
-                messageSnackbarHelper.showMessage(this, SEARCHING_PLANE_MESSAGE);
+              //  messageSnackbarHelper.showMessage(this, SEARCHING_PLANE_MESSAGE);
             }
 
             // Visualize planes.

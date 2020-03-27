@@ -194,7 +194,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/rectangle_gray"
                 android:padding="8dp"
-                android:text="시작점을 찍어주세요."
+                android:text="점을 찍어주세요."
                 android:textColor="#1d1d1d"
                 android:textSize="18sp" />
 

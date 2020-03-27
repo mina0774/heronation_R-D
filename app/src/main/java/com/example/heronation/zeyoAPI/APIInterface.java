@@ -8,6 +8,7 @@ import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
 import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,5 +139,14 @@ public interface APIInterface {
         @GET("api/measure_items/subcateorys/{id}")
         retrofit2.Call<List<MeasureItemResponse>> GetMeasurementIndex(@Path("id") String id,
                                                                       @Header("authorization") String authorization);
+    }
+
+    /* 옷 측정할 때, 업로드한 사진을 저장하는 인터페이스 */
+    public interface  UploadImageFileService{
+        @POST("commons/temp/upload")
+        retrofit2.Call<String> UploadImageFile(@Header("Authorization") String authorization,
+                                               @Header("Accept") String accept,
+                                               @Header("Content-Type") String content_type,
+                                               @Field("file") File file);
     }
 }

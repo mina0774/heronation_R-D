@@ -113,7 +113,7 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<FavoriteItemAdapte
 
     //아이템 찜 등록하는 기능, Zeyo API 연동
     public void RegisterItem(Integer item_id) {
-        String authorization = "Bearer " + loginPageActivity.access_token;
+        String authorization = "Bearer " + MainActivity.access_token;
         String accept = "application/json";
         String content_type = "application/json";
 
@@ -145,7 +145,7 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<FavoriteItemAdapte
 
     //아이템 찜 목록에서 삭제하는 기능
     public void DeleteItem(Integer item_id) {
-        String authorization = "Bearer " + loginPageActivity.access_token;
+        String authorization = "Bearer " + MainActivity.access_token;
         String accept = "application/json";
         String content_type = "application/json";
 

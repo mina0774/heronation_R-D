@@ -2,9 +2,18 @@ package com.example.heronation.measurement.AR;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.util.Measure;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +21,38 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.login_register.loginPageActivity;
+import com.example.heronation.main.MainActivity;
 import com.example.heronation.measurement.AR.MeasurementARActivity;
 import com.example.heronation.measurement.AR.MeasurementArFragment;
+import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
+import com.example.heronation.zeyoAPI.APIInterface;
+import com.example.heronation.zeyoAPI.ServiceGenerator;
+import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import id.zelory.compressor.Compressor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.graphics.Typeface.BOLD;
 
@@ -36,6 +66,8 @@ public class MeasurementResultActivity extends AppCompatActivity {
 
     public ArrayList<String> MeasureItem;
     public static Double[] measurement_items_distance;
+    String temp_file; // 이미지 파일 임시 저장 이름
+    ProgressDialog progressDialog; // 저장 시에 띄우는 다이얼로그
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +101,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
             result_distance[i].setLayoutParams(layoutParams);
             result_distance[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             result_distance[i].setTextSize(16);
-            String distanceString=String.format(Locale.getDefault(),"%.2f",measurement_items_distance[i]*100);
+            String distanceString=String.format(Locale.getDefault(),"%d",Math.round(measurement_items_distance[i]*100));
             result_distance[i].setText(distanceString + "\n");
             result_distance[i].setTextAppearance(BOLD);
             result_distance[i].setTextColor(Color.parseColor("#3464ff"));
@@ -95,12 +127,161 @@ public class MeasurementResultActivity extends AppCompatActivity {
             }
         });
 
-        // 저장 버튼을 눌렀을 경우 ? 일단 Main으로 돌아감 (수정 필요)
+        // 저장 버튼을 눌렀을 경우 - 로그인 되지 않았을때 토큰이 만료되었을 때 어떻게 할지 생각해보기
         save_measurement_result_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                progressDialog=new ProgressDialog(MeasurementResultActivity.this);
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.setMessage("옷장 저장 중입니다...");
+                progressDialog.show();
+
+                saveImageFile();
             }
         });
     }
+
+    // 사진 파일 저장하는 함수
+    public void saveImageFile(){
+        File compressedImageFile=null;
+        try {
+            compressedImageFile=new Compressor(getApplicationContext()).compressToFile(MeasurementArFragment.file);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        RequestBody requestBody=RequestBody.create(MediaType.parse("multipart/form-data"),compressedImageFile);
+        MultipartBody.Part body=MultipartBody.Part.createFormData("file",MeasurementArFragment.file.getName(),requestBody);
+
+        String authorization="bearer "+MainActivity.access_token;
+        String accept="application/json";
+        String content_type="multipart/form-data";
+
+        APIInterface.UploadImageFileService uploadImageFileService=ServiceGenerator.createService(APIInterface.UploadImageFileService.class);
+        retrofit2.Call<String> request=uploadImageFileService.UploadImageFile(authorization,accept,content_type,body);
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    Response<String> temp_file_name=request.execute();
+                    temp_file=temp_file_name.body();
+                }catch (IOException e){
+                }
+                return null;
+            }
+            //temp/upload에 정상적으로 사진이 추가되면, 그 후에 JsonObject를 생성해 옷장 추가에 필요한 body를 생성
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                SaveMeasurementItem_JSONObejct();
+            }
+        }.execute();
+    }
+
+    // JSONObject를 생성하고, 측정 목록을 저장하는 함수
+    public void SaveMeasurementItem_JSONObejct(){
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", 0); // ???????? id가 무슨 역할 ???????
+            jsonObject.put("name",MeasurementArFragment.clothName);
+            jsonObject.put("subCategoryId",MeasurementArFragment.category_select_id);
+            jsonObject.put("registerType","D");
+
+            JSONObject fileObject=new JSONObject();
+            fileObject.put("temp_name",temp_file);
+            fileObject.put("real_name",MeasurementArFragment.file.getName());
+            JSONArray attachFile=new JSONArray();
+            attachFile.put(fileObject);
+            jsonObject.put("attachFile",attachFile);
+
+            JSONObject measurementObject;
+            JSONArray wardrobe=new JSONArray();
+            for (int i=0; i< MeasureItem.size(); i++){
+                measurementObject=new JSONObject();
+                measurementObject.put("measureItemId",MeasurementArFragment.measureItemId.get(i));
+                measurementObject.put("vaule",Math.round(measurement_items_distance[i]*100));
+                wardrobe.put(measurementObject);
+            }
+            jsonObject.put("wardrobeScmmValueRequests", wardrobe);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+
+            String authorization="bearer "+MainActivity.access_token;
+            String accept="application/json";
+            String content_type="application/json";
+            APIInterface.UploadMeasurementResultService uploadMeasurementResultService=ServiceGenerator.createService(APIInterface.UploadMeasurementResultService.class);
+            retrofit2.Call<JSONObject> request=uploadMeasurementResultService.UploadMeasurementResult(authorization,accept,content_type,requestBody);
+            request.enqueue(new Callback<JSONObject>() {
+                @Override
+                public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MeasurementResultActivity.this);
+                    progressDialog.dismiss();
+                    builder.setCancelable(false);
+                    builder.setMessage("내 옷장에 저장되었습니다.");
+                    builder.setNegativeButton("메인",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                    builder.setPositiveButton("옷장으로",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                    builder.show();
+                }
+
+                @Override
+                public void onFailure(Call<JSONObject> call, Throwable t) {
+                    backgroundThreadShortToast(getApplicationContext(),"로그인 정보가 초기화되었습니다. 다시 로그인 해주세요.");
+                }
+            });
+
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
+    public static void backgroundThreadShortToast(final Context context, final String msg) {
+        if (context != null && msg != null) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            }); } }
+
+
 }
+
+
+/*
+    String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
+    APIInterface.GetMeasurementIndexService getMeasurementIndexService= ServiceGenerator.createService(APIInterface.GetMeasurementIndexService.class);
+    retrofit2.Call<List<MeasureItemResponse>> request=getMeasurementIndexService.GetMeasurementIndex(category_select_id, authorization);
+        request.enqueue(new Callback<List<MeasureItemResponse>>() {
+@Override
+public void onResponse(Call<List<MeasureItemResponse>> call, Response<List<MeasureItemResponse>> response) {
+        List<MeasureItemResponse> measureItemResponses = response.body();
+        Measure_item = new ArrayList<>();                                                         //측정 항목들의 이름이 들어가는 배열
+        Image_item = new ArrayList<>();                                                           //측정 항목들의 이미지들이 들어가는 배열
+        measureItemId = new ArrayList<>(); 444                                                       //측정 항목들의 ID가 들어가는 배열
+        min_scope = new ArrayList<>();                                                             //측정 항목들의 최소 측정 값이 들어가는 배열
+        max_scope = new ArrayList<>();                                                             //측정 항목들의 최대 측정 값이 들어가는 배열
+        //위의 배열들은 MeasureActivity에서 count라는 인덱스로 접근해 측정 항목별로 관리한다.
+        for(int i=0;i<measureItemResponses.size();i++){
+        Measure_item.add(measureItemResponses.get(i).getItemName());
+        Image_item.add(measureItemResponses.get(i).getItemImage());
+        measureItemId.add(measureItemResponses.get(i).getId());
+        min_scope.add(measureItemResponses.get(i).getItemMinScope());
+        max_scope.add(measureItemResponses.get(i).getItemMaxScope());
+        }
+        }
+@Override
+public void onFailure(Call<List<MeasureItemResponse>> call, Throwable t) {
+        System.out.println("error + Connect Server Error is " + t.toString());
+        }
+        });
+ */

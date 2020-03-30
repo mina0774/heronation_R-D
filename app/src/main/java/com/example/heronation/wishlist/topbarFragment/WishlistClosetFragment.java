@@ -120,8 +120,8 @@ public class WishlistClosetFragment extends Fragment {
      /* access_token이 null이면 비회원 사용자이고, access_token의 값이 존재하면 회원 사용자임
         (token이 유효한지 판단한 후에, 이를 통해 로그인 여부를 판단할 수 있음)
         */
-        if(!loginPageActivity.access_token.matches("null")) { //회원 사용자일 때
-            authorization="bearer " +loginPageActivity.access_token;
+        if(!MainActivity.access_token.matches("null")) { //회원 사용자일 때
+            authorization="bearer " +MainActivity.access_token;
             APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
             retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
             request.enqueue(new Callback<UserMyInfo>() {

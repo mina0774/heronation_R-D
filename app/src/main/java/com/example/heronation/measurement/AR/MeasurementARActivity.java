@@ -153,8 +153,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
        long_pressed_flag=0;
        nowTouchingPointIndex=DEFAULT_VALUE;
        outOfRange=0;
-       min_scope = Integer.parseInt(MeasurementArFragment.min_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최소값
-       max_scope = Integer.parseInt(MeasurementArFragment.max_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최대값
+
 
         installRequested = false;
 
@@ -233,7 +232,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                         @Override
                         public void run() {
                             // 측정 항목에 해당하는 anchor 거리 설정, 측정 항목 설정
-                            distanceTextview.setText(String.format(Locale.getDefault(),"%.2f",measurement_items_distance[measurement_count]*100)+"cm");
+                            distanceTextview.setText(String.format(Locale.getDefault(),"%d",Math.round(measurement_items_distance[measurement_count]*100)+"cm"));
                             measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
                         }
                     });
@@ -279,7 +278,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                         @Override
                         public void run() {
                             // 측정 항목에 해당하는 anchor 거리 설정, 측정 항목 설정
-                            distanceTextview.setText(String.format(Locale.getDefault(),"%.2f",measurement_items_distance[measurement_count]*100)+"cm");
+                            distanceTextview.setText(String.format(Locale.getDefault(),"%d",Math.round(measurement_items_distance[measurement_count]*100)+"cm"));
                             measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
                             nowTouchingPointIndex=DEFAULT_VALUE;
                             outOfRange=0;
@@ -604,10 +603,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                     drawLine(anchors.get(0).anchor.getPose(),anchors.get(1).anchor.getPose(),viewmtx,projmtx);
                 }
             }
-
-
-
-
         } catch (Throwable t) {
             // Avoid crashing the application due to unhandled exceptions.
             Log.e(TAG, "Exception on the OpenGL thread", t);
@@ -698,9 +693,11 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                min_scope = Integer.parseInt(MeasurementArFragment.min_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최소값
+                max_scope = Integer.parseInt(MeasurementArFragment.max_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최대값
                 double distance = 0.0;
                 distance = Math.sqrt((start[0] - end[0]) * (start[0] - end[0]) + (start[1] - end[1]) * (start[1] - end[1]) + (start[2] - end[2]) * (start[2] - end[2])); // 거리 구하기
-                String distanceString = String.format(Locale.getDefault(), "%.2f", distance * 100) + "cm";
+                String distanceString = String.format(Locale.getDefault(), "%d", Math.round(distance * 100)) + "cm";
                 // 측정 항목의 범위 안에 속할 경우
                 if ((distance * 100 >= min_scope) && (max_scope >= distance * 100)) {
                     distanceTextview.setText(distanceString);

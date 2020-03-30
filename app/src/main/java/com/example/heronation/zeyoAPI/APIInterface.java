@@ -8,10 +8,14 @@ import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
 import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -19,8 +23,10 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -142,11 +148,21 @@ public interface APIInterface {
     }
 
     /* 옷 측정할 때, 업로드한 사진을 저장하는 인터페이스 */
-    public interface  UploadImageFileService{
+    public interface UploadImageFileService{
+        @Multipart
         @POST("commons/temp/upload")
         retrofit2.Call<String> UploadImageFile(@Header("Authorization") String authorization,
                                                @Header("Accept") String accept,
                                                @Header("Content-Type") String content_type,
-                                               @Field("file") File file);
+                                               @Part MultipartBody.Part File);
+    }
+
+    /* 옷 측정시, 수치를 저장하는 인터페이스 */
+    public interface UploadMeasurementResultService {
+        @POST("api/wardrobes")
+        retrofit2.Call<JSONObject> UploadMeasurementResult(@Header("Authorization") String authorization,
+                                                       @Header("Accept") String accept,
+                                                       @Header("Content-Type") String content_type,
+                                                       @Body RequestBody requestBody);
     }
 }

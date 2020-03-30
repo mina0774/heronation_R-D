@@ -66,9 +66,9 @@ public class MeasurementArFragment extends Fragment {
 
     private ArrayAdapter<String> spinner_adapter; // 스피너 어댑터
     private List<String> cloth_category_list; //옷 카테고리를 담는 변수
-    public String category_select_id; //선택된 옷의 특정 카테고리의 ID, 이 아이디를 통해 측정 목록에 접근하여 담을 수 있음.
+    public static String category_select_id; //선택된 옷의 특정 카테고리의 ID, 이 아이디를 통해 측정 목록에 접근하여 담을 수 있음.
     public static ArrayList<String> Measure_item, Image_item, measureItemId, min_scope, max_scope; //옷 카테고리에 따른 측정 목록을 담는 변수들
-    public String clothName; // 옷 이름 저장하는 변수
+    public static String clothName; // 옷 이름 저장하는 변수
 
     //카메라, 갤러리 접근 관련
     private Boolean isPermission = true; // 카메라 접근 권한 허용 여부를 나태내는 변수
@@ -168,24 +168,27 @@ public class MeasurementArFragment extends Fragment {
                     category.put(subCategoryResponses.get(i).getName(), subCategoryResponses.get(i).getId()); //뽑아낸 이름과 ID를 해쉬맵에 넣는다.
                 }
                 /* 옷 카테고리 리스트를 선택할 수 있는 스피너 어댑터 설정 */
-                spinner_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, cloth_category_list);
-                spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                ar_spinner_select_category.setAdapter(spinner_adapter);
-                /*스피너에 옷 카테고리 아이템 추가 */
-                ar_spinner_select_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        int pos = ar_spinner_select_category.getSelectedItemPosition();
-                        String temp_id = subCategoryResponses.get(pos).getId();
-                        setClothCategoryImageView(temp_id); //스피너에 선택된 옷 카테고리에 따라 이미지 뷰 설정
-                        category_select_id=category.get(cloth_category_list.get(pos)); //선택된 카테고리 id 설정
-                        /* 선택된 옷 카테고리에 따른 측정 목록을 받아오는 함수 */
-                        getMeasurementIndex(category_select_id);
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-                    }
-                });
+                if(getActivity()!=null) {
+                    spinner_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, cloth_category_list);
+                    spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    ar_spinner_select_category.setAdapter(spinner_adapter);
+                    /*스피너에 옷 카테고리 아이템 추가 */
+                    ar_spinner_select_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            int pos = ar_spinner_select_category.getSelectedItemPosition();
+                            String temp_id = subCategoryResponses.get(pos).getId();
+                            setClothCategoryImageView(temp_id); //스피너에 선택된 옷 카테고리에 따라 이미지 뷰 설정
+                            category_select_id = category.get(cloth_category_list.get(pos)); //선택된 카테고리 id 설정
+                            /* 선택된 옷 카테고리에 따른 측정 목록을 받아오는 함수 */
+                            getMeasurementIndex(category_select_id);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        }
+                    });
+                }
             }
             @Override
             public void onFailure(Call<List<SubCategoryResponse>> call, Throwable t) {

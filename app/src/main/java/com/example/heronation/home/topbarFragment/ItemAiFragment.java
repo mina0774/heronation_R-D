@@ -108,7 +108,7 @@ public class ItemAiFragment extends Fragment {
 
     /*타사용자 기반 스타일 추천 Item의 정보를 얻는 함수*/
     public void GetItemInfoOther(String package_name) {
-        String authorization = "bearer "+loginPageActivity.access_token;
+        String authorization = "bearer "+MainActivity.access_token;
         String accept = "application/json";
 
         APIInterface.StyleRecommendationBasedOtherService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedOtherService.class);
@@ -135,7 +135,7 @@ public class ItemAiFragment extends Fragment {
 
     /*체형 기반 추천 Item의 정보를 얻는 함수*/
     public void GetItemInfoBody(String package_name) {
-        String authorization = "bearer "+loginPageActivity.access_token;
+        String authorization = "bearer "+MainActivity.access_token;
         String accept = "application/json";
 
         APIInterface.BodyRecommendationService itemInfoService = ServiceGenerator.createService(APIInterface.BodyRecommendationService.class);

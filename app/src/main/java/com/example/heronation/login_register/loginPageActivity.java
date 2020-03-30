@@ -36,7 +36,7 @@ public class  loginPageActivity extends AppCompatActivity {
     @BindView(R.id.login_password_et) EditText login_password_et;
     @BindView(R.id.login_button) Button login_button;
     /* access token을 Package 내에서 공유 , access token은 로그인할 때 한번만 받음 */
-    public static String access_token;
+    public String access_token;
     public static String style_tag_id;
 
     @Override
@@ -91,6 +91,7 @@ public class  loginPageActivity extends AppCompatActivity {
                 }
 
                 access_token=userLoginInfo.access_token;
+                intent.putExtra("access_token",access_token);
                 startActivity(intent);
                 finish();
             }

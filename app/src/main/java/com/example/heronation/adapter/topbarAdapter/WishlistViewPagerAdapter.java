@@ -33,7 +33,7 @@ public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                if (loginPageActivity.access_token.matches("null")) {
+                if (MainActivity.access_token==null) {
                     WishlistClosetNotLoginFragment wishlistClosetNotLoginFragment = new WishlistClosetNotLoginFragment();
                     return wishlistClosetNotLoginFragment;
                 } else {
@@ -41,7 +41,7 @@ public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
                     return wishlistClosetFragment;
                 }
             case 1:
-                if (loginPageActivity.access_token.matches("null")) {
+                if (MainActivity.access_token==null) {
                     WishlistItemNotLoginFragment wishlistItemNotLoginFragment = new WishlistItemNotLoginFragment();
                     return wishlistItemNotLoginFragment;
                 } else {
@@ -49,7 +49,7 @@ public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
                     return wishlistItemFragment;
                 }
             case 2:
-                if (loginPageActivity.access_token.matches("null")) {
+                if (MainActivity.access_token==null) {
                     WishlistRecentlyViewedItemNotLoginFragment wishlisttRecentlyViewedItemNotLoginFragment = new WishlistRecentlyViewedItemNotLoginFragment();
                     return wishlisttRecentlyViewedItemNotLoginFragment;
                 } else {

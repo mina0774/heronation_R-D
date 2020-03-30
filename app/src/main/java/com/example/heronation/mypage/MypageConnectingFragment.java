@@ -35,7 +35,7 @@ public class MypageConnectingFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_mypage_connecting,container,false);
         ButterKnife.bind(this,rootView);
-        getUserInfo( loginPageActivity.access_token);
+        getUserInfo( MainActivity.access_token);
 
         /* 회원 정보 수정 버튼을 눌렀을 때 */
         mypage_userModify_btn.setOnClickListener(new View.OnClickListener() {

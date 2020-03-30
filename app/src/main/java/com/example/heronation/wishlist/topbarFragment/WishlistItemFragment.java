@@ -78,7 +78,7 @@ public class WishlistItemFragment extends Fragment {
 
     //아이템 찜 목록 받아오는 기능
     public void GetItemInfo() {
-        String authorization = "Bearer " + loginPageActivity.access_token;
+        String authorization = "Bearer " + MainActivity.access_token;
         String content_type = "application/json";
 
         FavoriteItemInfoService favoriteItemInfoService = ServiceGenerator.createService(FavoriteItemInfoService.class);

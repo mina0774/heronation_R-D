@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity
     /* 뒤로가기 처리 */
     private BackPressCloseHandler backPressCloseHandler;
 
+    public static String access_token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +132,8 @@ public class MainActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+            access_token = getIntent().getStringExtra("access_token");
 
         backPressCloseHandler=new BackPressCloseHandler(this);
         /* BottomNavigation view를 선언해주고, bottomNavigationView의 객체를 생성한 후,
@@ -168,8 +172,12 @@ public class MainActivity extends AppCompatActivity
             }
         });
         /* 상단바 메뉴 드로워 */
-    }
 
+        /* 옷 저장하기를 통해 Main Activity로 이동했을 시, fragment를 wishlist로 설정 */
+        if(getIntent().getStringExtra("gotocloset")=="gotocloset"){
+            go_to_wishlist();
+        }
+    }
     /* 뒤로가기 버튼을 눌렀을 경우 */
     @Override
     public void onBackPressed(){
@@ -186,8 +194,8 @@ public class MainActivity extends AppCompatActivity
         /* access_token이 null이면 비회원 사용자이고, access_token의 값이 존재하면 회원 사용자임
         (token이 유효한지 판단한 후에, 이를 통해 로그인 여부를 판단할 수 있음)
         */
-        if(!loginPageActivity.access_token.matches("null")) { //회원 사용자일 때
-            authorization="bearer " +loginPageActivity.access_token;
+        if(!access_token.matches("null")) { //회원 사용자일 때
+            authorization="bearer " +access_token;
             APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
             retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
             request.enqueue(new Callback<UserMyInfo>() {
@@ -221,8 +229,8 @@ public class MainActivity extends AppCompatActivity
         /* access_token이 null이면 비회원 사용자이고, access_token의 값이 존재하면 회원 사용자임
         (token이 유효한지 판단한 후에, 이를 통해 로그인 여부를 판단할 수 있음)
         */
-        if(!loginPageActivity.access_token.matches("null")) { //회원 사용자일 때
-            authorization="bearer " +loginPageActivity.access_token;
+        if(!access_token.matches("null")) { //회원 사용자일 때
+            authorization="bearer " +access_token;
             APIInterface.UserInfoService userInfoService=ServiceGenerator.createService(APIInterface.UserInfoService.class);
             retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
             request.enqueue(new Callback<UserMyInfo>() {

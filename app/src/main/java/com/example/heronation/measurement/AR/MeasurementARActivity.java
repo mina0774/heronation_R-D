@@ -699,7 +699,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                 distance = Math.sqrt((start[0] - end[0]) * (start[0] - end[0]) + (start[1] - end[1]) * (start[1] - end[1]) + (start[2] - end[2]) * (start[2] - end[2])); // 거리 구하기
                 String distanceString = String.format(Locale.getDefault(), "%d", Math.round(distance * 100)) + "cm";
                 // 측정 항목의 범위 안에 속할 경우
-                if ((distance * 100 >= min_scope) && (max_scope >= distance * 100)) {
+                if ((Math.round(distance * 100) >= min_scope) && (max_scope >= (Math.round(distance * 100)))) {
                     distanceTextview.setText(distanceString);
                     // 모든 거리를 저장하는 배열에 해당 측정 항목 번호를 인덱스로 두어 거리를 저장함
                     measurement_items_distance[measurement_count] = distance;

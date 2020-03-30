@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity
     private BackPressCloseHandler backPressCloseHandler;
 
     public static String access_token;
+    public static Integer control_closet_to_activity=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,7 +185,18 @@ public class MainActivity extends AppCompatActivity
         backPressCloseHandler.onBackPressed();
     }
 
-
+    // MeasurementResultActivity에서 측정한 옷 정보를 저장한 후 finish를 했을 때, 메인으로 돌아갈지, 옷장으로 돌아갈지에 대한 작업을 처리함
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(control_closet_to_activity==0){
+            go_to_item();
+            control_closet_to_activity=-1;
+        }else if(control_closet_to_activity==1){
+            go_to_wishlist();
+            control_closet_to_activity=-1;
+        }
+    }
 
     /*마이페이지에서 사용자 정보 받아오는 함수*/
     public void myPageGetUserInfo(){
@@ -396,6 +408,12 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationView.setSelectedItemId(R.id.menuitem_bottombar_wishlist);
         FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
         transaction.replace(R.id.fragment_container, wishlistFragment).commit();
+    }
+
+    public void go_to_item(){
+        bottomNavigationView.setSelectedItemId(R.id.menuitem_bottombar_item);
+        FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
+        transaction.replace(R.id.fragment_container, itemFragment).commit();
     }
 
     ///그냥 나중에 필요할까봐 넣어 놓았습니다

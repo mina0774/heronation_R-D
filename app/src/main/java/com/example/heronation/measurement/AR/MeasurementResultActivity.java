@@ -221,12 +221,16 @@ public class MeasurementResultActivity extends AppCompatActivity {
                     builder.setNegativeButton("메인",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    // finish하고 main activity로 돌아갔을 때, main activity에서 어떤 작업을 해줘야하는지를 나타내는 변수
+                                    MainActivity.control_closet_to_activity=0;
                                     finish();
                                 }
                             });
                     builder.setPositiveButton("옷장으로",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    // finish하고 main activity로 돌아갔을 때, main activity에서 어떤 작업을 해줘야하는지를 나타내는 변수
+                                    MainActivity.control_closet_to_activity=1;
                                     finish();
                                 }
                             });
@@ -257,33 +261,3 @@ public class MeasurementResultActivity extends AppCompatActivity {
 
 
 }
-
-
-/*
-    String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
-    APIInterface.GetMeasurementIndexService getMeasurementIndexService= ServiceGenerator.createService(APIInterface.GetMeasurementIndexService.class);
-    retrofit2.Call<List<MeasureItemResponse>> request=getMeasurementIndexService.GetMeasurementIndex(category_select_id, authorization);
-        request.enqueue(new Callback<List<MeasureItemResponse>>() {
-@Override
-public void onResponse(Call<List<MeasureItemResponse>> call, Response<List<MeasureItemResponse>> response) {
-        List<MeasureItemResponse> measureItemResponses = response.body();
-        Measure_item = new ArrayList<>();                                                         //측정 항목들의 이름이 들어가는 배열
-        Image_item = new ArrayList<>();                                                           //측정 항목들의 이미지들이 들어가는 배열
-        measureItemId = new ArrayList<>(); 444                                                       //측정 항목들의 ID가 들어가는 배열
-        min_scope = new ArrayList<>();                                                             //측정 항목들의 최소 측정 값이 들어가는 배열
-        max_scope = new ArrayList<>();                                                             //측정 항목들의 최대 측정 값이 들어가는 배열
-        //위의 배열들은 MeasureActivity에서 count라는 인덱스로 접근해 측정 항목별로 관리한다.
-        for(int i=0;i<measureItemResponses.size();i++){
-        Measure_item.add(measureItemResponses.get(i).getItemName());
-        Image_item.add(measureItemResponses.get(i).getItemImage());
-        measureItemId.add(measureItemResponses.get(i).getId());
-        min_scope.add(measureItemResponses.get(i).getItemMinScope());
-        max_scope.add(measureItemResponses.get(i).getItemMaxScope());
-        }
-        }
-@Override
-public void onFailure(Call<List<MeasureItemResponse>> call, Throwable t) {
-        System.out.println("error + Connect Server Error is " + t.toString());
-        }
-        });
- */

@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -198,7 +199,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
             for (int i=0; i< MeasureItem.size(); i++){
                 measurementObject=new JSONObject();
                 measurementObject.put("measureItemId",MeasurementArFragment.measureItemId.get(i));
-                measurementObject.put("vaule",Math.round(measurement_items_distance[i]*100));
+                measurementObject.put("value",Math.round(measurement_items_distance[i]*100));
                 wardrobe.put(measurementObject);
             }
             jsonObject.put("wardrobeScmmValueRequests", wardrobe);
@@ -212,6 +213,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
             request.enqueue(new Callback<JSONObject>() {
                 @Override
                 public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                   Log.d("저장",response.toString());
                     AlertDialog.Builder builder = new AlertDialog.Builder(MeasurementResultActivity.this);
                     progressDialog.dismiss();
                     builder.setCancelable(false);

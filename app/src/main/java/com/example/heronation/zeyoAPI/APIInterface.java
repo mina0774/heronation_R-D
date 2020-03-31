@@ -7,6 +7,7 @@ import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
 import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
+import com.example.heronation.wishlist.dataClass.ClosetDetailResponse;
 import com.example.heronation.wishlist.dataClass.ClosetResponse;
 
 import org.json.JSONObject;
@@ -173,5 +174,13 @@ public interface APIInterface {
                                                      @Query("sort") String sort,
                                                      @Header("authorization") String authorization,
                                                      @Header("Accept") String accept);
+    }
+
+    /* 측정한 특정 옷의 구체적인 정보를 받아오는 인터페이스 */
+    public interface GetClosetDetailInfoService{
+        @GET("api/wardrobes/{item_id}")
+        retrofit2.Call<ClosetDetailResponse> GetClosetDetailInfo(@Path("item_id") Integer item_id,
+                                                                 @Header("authorization") String authorization,
+                                                                 @Header("Accept") String accept);
     }
 }

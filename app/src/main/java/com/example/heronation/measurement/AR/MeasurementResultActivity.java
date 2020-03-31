@@ -144,29 +144,31 @@ public class MeasurementResultActivity extends AppCompatActivity {
 
     // 사진 파일 저장하는 함수
     public void saveImageFile(){
-        File compressedImageFile=null;
+        File compressedImageFile = null;
+        File file=new File(MeasurementArFragment.file.getAbsolutePath());
         try {
-            compressedImageFile=new Compressor(getApplicationContext()).compressToFile(MeasurementArFragment.file);
-        } catch (IOException e){
+            compressedImageFile = new Compressor(getApplicationContext()).compressToFile(file);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        RequestBody requestBody=RequestBody.create(MediaType.parse("multipart/form-data"),compressedImageFile);
-        MultipartBody.Part body=MultipartBody.Part.createFormData("file",MeasurementArFragment.file.getName(),requestBody);
+
+        RequestBody requestFile=RequestBody.create(MediaType.parse("multipart/form-data"),compressedImageFile);
+        MultipartBody.Part body=MultipartBody.Part.createFormData("file",file.getName(),requestFile);
 
         String authorization="bearer "+MainActivity.access_token;
         String accept="application/json";
         String content_type="multipart/form-data";
 
         APIInterface.UploadImageFileService uploadImageFileService=ServiceGenerator.createService(APIInterface.UploadImageFileService.class);
-        retrofit2.Call<String> request=uploadImageFileService.UploadImageFile(authorization,accept,content_type,body);
+        retrofit2.Call<String> request=uploadImageFileService.UploadImageFile(authorization,body);
 
         new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
                     Response<String> temp_file_name=request.execute();
+                    Log.d("템프",temp_file_name.body()+" "+temp_file_name.message());
                     temp_file=temp_file_name.body();
-                    Log.d("템프",temp_file);
                 }catch (IOException e){
                 }
                 return null;

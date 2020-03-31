@@ -150,11 +150,9 @@ public interface APIInterface {
 
     /* 옷 측정할 때, 업로드한 사진을 저장하는 인터페이스 */
     public interface UploadImageFileService{
-        @Multipart
         @POST("commons/temp/upload")
-        retrofit2.Call<String> UploadImageFile(@Header("Authorization") String authorization,
-                                               @Header("Accept") String accept,
-                                               @Header("Content-Type") String content_type,
+        @Multipart
+        Call<String> UploadImageFile(@Header("Authorization") String authorization,
                                                @Part MultipartBody.Part File);
     }
 

@@ -128,6 +128,13 @@
                 android:text="측정 방식"/>
         </LinearLayout>
 
+            <TextView
+                android:id="@+id/wishlist_closet_item_measurement_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"/>
+
+
 
         </LinearLayout>
 

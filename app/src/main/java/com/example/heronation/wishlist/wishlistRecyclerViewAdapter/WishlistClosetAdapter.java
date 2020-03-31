@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.ClosetItem;
 import com.example.heronation.R;
 import com.example.heronation.wishlist.WishlistClosetItemEditActivity;
@@ -42,11 +44,13 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
     /* position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시 */
     @Override
     public void onBindViewHolder(@NonNull final WishlistClosetAdapter.Holder holder, int position) {
+        Glide.with(context).load(item_list.get(position).getImage_url()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.image);
         holder.category.setText(item_list.get(position).getCategory());
         holder.item_name.setText(item_list.get(position).getItem_name());
         holder.date.setText(item_list.get(position).getDate());
         holder.shop_name.setText(item_list.get(position).getShop_name());
         holder.measurement_type.setText(item_list.get(position).getMeasurement_type());
+        holder.id.setText(item_list.get(position).getId());
 
         /* 즐겨찾기 버튼 별 모양을 클릭했을 때,
         선택될 시에 사진을 노란색 별모양으로 설정
@@ -76,22 +80,25 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
 
     /* 뷰홀더 데이터가 놓일 공간을 마련해준다. */
     public class Holder extends RecyclerView.ViewHolder{
+        public ImageView image;
         public TextView category;
         public TextView item_name;
         public TextView date;
         public TextView shop_name;
         public TextView measurement_type;
         public ImageButton favorite_button;
-
+        public TextView id;
 
         public Holder(View view){
             super(view);
+            image=(ImageView)view.findViewById(R.id.wishlist_closet_item);
             category=(TextView)view.findViewById(R.id.wishlist_closet_item_category);
             item_name=(TextView)view.findViewById(R.id.wishlist_closet_item_name);
             date=(TextView)view.findViewById(R.id.wishlist_closet_item_date);
             shop_name=(TextView)view.findViewById(R.id.wishlist_closet_item_shop_name);
             measurement_type=(TextView)view.findViewById(R.id.wishlist_closet_item_measurement_type);
             favorite_button=(ImageButton)view.findViewById(R.id.favorite_button);
+            id=(TextView)view.findViewById(R.id.wishlist_closet_item_measurement_id);
 
             //특정 아이템이 클릭되었을 때 아이템에 대한 데이터 정보를 아이템 수정 페이지로 이동시켜줌
             view.setOnClickListener(new View.OnClickListener() {
@@ -100,11 +107,13 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
                     int position=getAdapterPosition();
                     if(position!=RecyclerView.NO_POSITION){
                         Intent intent=new Intent(context, WishlistClosetItemEditActivity.class);
+                        intent.putExtra("image",item_list.get(position).getImage_url());
                         intent.putExtra("category",item_list.get(position).getCategory());
                         intent.putExtra("item_name",item_list.get(position).getItem_name());
                         intent.putExtra("date",item_list.get(position).getDate());
                         intent.putExtra("shop_name",item_list.get(position).getShop_name());
                         intent.putExtra("measurement_type",item_list.get(position).getMeasurement_type());
+                        intent.putExtra("id",item_list.get(position).getId());
                         context.startActivity(intent);
 
                     }

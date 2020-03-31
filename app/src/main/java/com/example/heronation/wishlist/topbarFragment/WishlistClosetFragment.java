@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,9 +22,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent;
+import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
+import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
 import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.wishlist.dataClass.ClosetResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
@@ -58,6 +63,9 @@ public class WishlistClosetFragment extends Fragment {
     @BindView(R.id.closet_body_age) TextView closet_body_age;
     @BindView(R.id.closet_body_height) TextView closet_body_height;
     @BindView(R.id.closet_body_weight) TextView closet_body_weight;
+
+    WishlistClosetAdapter wishlistClosetAdapter;
+    Integer page_num; // 동적 로딩을 위한 page number
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,15 +75,15 @@ public class WishlistClosetFragment extends Fragment {
         ButterKnife.bind(this,rootView);
 
         item_list=new ArrayList<>();
-        this.make_item_list();
 
         getBodyInfo();
         /* 리사이클러뷰 객체 생성 */
-        WishlistClosetAdapter wishlistClosetAdapter=new WishlistClosetAdapter(getActivity(),item_list);
+        wishlistClosetAdapter=new WishlistClosetAdapter(getActivity(),item_list);
         /* 레이아웃 매니저 수평으로 지정 */
         closet_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         /* 리사이클러뷰에 어댑터 지정 */
         closet_recyclerView.setAdapter(wishlistClosetAdapter);
+        loadItems();
 
         //spinnerArray.xml에서 생성한 item을 String 배열로 가져오기
         String[] str_category=getResources().getStringArray(R.array.spinnerArray_category);
@@ -107,12 +115,50 @@ public class WishlistClosetFragment extends Fragment {
         return rootView;
     }
 
-    // 등록된 item 정보를 만드는 함수
-    public void make_item_list(){
-        item_list.add(new ClosetItem("티셔츠","니트","2019/10/20","육육걸즈","AR"));
-        item_list.add(new ClosetItem("하의","슬랙스","2019/10/21","고고싱","직접 입력"));
-        item_list.add(new ClosetItem("하의","청바지","2019/10/22","유니클로","신체 비교"));
+
+    public void GetClosetList(Integer page_num){
+        String authorization="bearer "+MainActivity.access_token;
+        String accept="application/json";
+
+        APIInterface.GetClosetListService getClosetListService=ServiceGenerator.createService(APIInterface.GetClosetListService.class);
+        retrofit2.Call<ClosetResponse> request= getClosetListService.GetClosetList(page_num,10,"id,desc",authorization,accept);
+        request.enqueue(new Callback<ClosetResponse>() {
+            @Override
+            public void onResponse(Call<ClosetResponse> call, Response<ClosetResponse> response) {
+                if(response.code()==200){
+                    ClosetResponse closetResponse=response.body();
+                    for(int i=0; i<closetResponse.getSize();i++){
+                        ClosetResponse.WardrobeResponse wardrobeResponse=closetResponse.getWardrobeResponses().get(i);
+                        item_list.add(new ClosetItem(wardrobeResponse.getImage(),wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
+                                wardrobeResponse.getCreateDt(),wardrobeResponse.getShopmallName(),"AR",wardrobeResponse.getId().toString()));
+                    }
+                    wishlistClosetAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ClosetResponse> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
+
     }
+
+    /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
+    public void loadItems() {
+        page_num=1;
+        GetClosetList(page_num);
+        closet_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if(!closet_recyclerView.canScrollVertically(1)){
+                    page_num=page_num+1;
+                    GetClosetList(page_num);
+                }
+            }
+        });
+    }
+
 
     public void getBodyInfo(){
         String authorization="";

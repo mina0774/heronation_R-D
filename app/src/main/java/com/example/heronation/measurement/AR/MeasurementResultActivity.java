@@ -159,12 +159,14 @@ public class MeasurementResultActivity extends AppCompatActivity {
 
         APIInterface.UploadImageFileService uploadImageFileService=ServiceGenerator.createService(APIInterface.UploadImageFileService.class);
         retrofit2.Call<String> request=uploadImageFileService.UploadImageFile(authorization,accept,content_type,body);
+
         new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
                     Response<String> temp_file_name=request.execute();
                     temp_file=temp_file_name.body();
+                    Log.d("템프",temp_file);
                 }catch (IOException e){
                 }
                 return null;

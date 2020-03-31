@@ -5,20 +5,15 @@ import java.io.Serializable;
 /* Serializable은 intent로 데이터를 넘겨줄 때
 * 객체를 직렬화 시키기 위함 */
 public class ClosetItem implements Serializable {
-    String category;
-    String item_name;
-    String date;
-    String shop_name;
-    String measurement_type;
+    String image_url="";
+    String category="";
+    String item_name="";
+    String date="";
+    String shop_name="";
+    String measurement_type="";
+    String id="";
     Boolean delete_check;
 
-    public ClosetItem(String category, String item_name, String date, String shop_name, String measurement_type) {
-        this.category = category;
-        this.item_name = item_name;
-        this.date = date;
-        this.shop_name = shop_name;
-        this.measurement_type = measurement_type;
-    }
 
     public ClosetItem(String category, String item_name, String date, String shop_name, String measurement_type, Boolean delete_check) {
         this.category = category;
@@ -28,6 +23,19 @@ public class ClosetItem implements Serializable {
         this.measurement_type = measurement_type;
         this.delete_check = delete_check;
     }
+
+
+    public ClosetItem(String image_url, String category, String item_name, String date, String shop_name, String measurement_type,String id) {
+        this.image_url = image_url;
+        this.category = category;
+        this.item_name = item_name;
+        this.date = date;
+        this.shop_name = shop_name;
+        this.measurement_type=measurement_type;
+        this.id=id;
+    }
+
+    public String getImage_url() { return image_url; }
 
     public String getCategory() {
         return category;
@@ -52,4 +60,7 @@ public class ClosetItem implements Serializable {
     public Boolean getDelete_check() {
         return delete_check;
     }
+
+    public String getId() { return id; }
+
 }

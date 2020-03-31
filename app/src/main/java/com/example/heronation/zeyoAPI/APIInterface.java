@@ -7,6 +7,7 @@ import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
 import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
+import com.example.heronation.wishlist.dataClass.ClosetResponse;
 
 import org.json.JSONObject;
 
@@ -164,5 +165,15 @@ public interface APIInterface {
                                                        @Header("Accept") String accept,
                                                        @Header("Content-Type") String content_type,
                                                        @Body RequestBody requestBody);
+    }
+
+    /* 측정한 옷 목록을 불러오는 인터페이스 */
+    public interface GetClosetListService{
+        @GET("api/wardrobes")
+        retrofit2.Call<ClosetResponse> GetClosetList(@Query("page") Integer page,
+                                                     @Query("size") Integer size,
+                                                     @Query("sort") String sort,
+                                                     @Header("authorization") String authorization,
+                                                     @Header("Accept") String accept);
     }
 }

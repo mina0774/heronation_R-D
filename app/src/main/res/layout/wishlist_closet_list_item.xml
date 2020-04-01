@@ -20,23 +20,37 @@
                 android:src="@drawable/shop_item_example_img"
                 android:scaleType="centerCrop" />
 
-
+<LinearLayout
+    android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:orientation="horizontal">
         <ImageButton
             android:id="@+id/favorite_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="#ffffff"
+            android:padding="4dp"
+            android:layout_margin="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/selector_star" />
+
+        <ImageButton
+            android:id="@+id/delete_button"
             android:background="#ffffff"
             android:layout_margin="4dp"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:padding="4dp"
             android:scaleType="centerInside"
-            android:src="@drawable/selector_star"
-            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_delete_clothes"
             />
+</LinearLayout>
 
         <LinearLayout
+            android:layout_below="@id/button"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/wishlist_closet_item"
-            android:layout_below="@id/favorite_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">

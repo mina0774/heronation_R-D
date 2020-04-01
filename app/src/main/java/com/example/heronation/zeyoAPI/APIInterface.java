@@ -183,4 +183,13 @@ public interface APIInterface {
                                                                  @Header("authorization") String authorization,
                                                                  @Header("Accept") String accept);
     }
+
+    /* 옷장에서 특정 옷 아이템을 삭제하는 인터페이스 */
+    public interface DeleteClosetItemService{
+        @DELETE("api/wardrobes/{item_id}")
+        retrofit2.Call<String> DeleteClosetItem(@Path("item_id") Integer item_id,
+                                                @Header("Authorization") String authorization,
+                                                @Header("Accept") String accept,
+                                                @Header("Content-Type") String content_type);
+    }
 }

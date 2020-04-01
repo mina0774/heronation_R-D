@@ -120,15 +120,6 @@
             android:layout_alignParentRight="true"
             android:orientation="horizontal">
 
-        <ImageButton
-            android:background="#f3f3f3"
-            android:id="@+id/closet_delete"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_favorite_trash"/>
-
     <Spinner
 
         android:id="@+id/wishlist_closet_spinner_category"
@@ -141,6 +132,7 @@
         />
         </LinearLayout>
 
+
     </RelativeLayout>
 
 
@@ -150,5 +142,11 @@
         android:layout_height="wrap_content"/>
 </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/snackbar_view"/>
 
 </FrameLayout>

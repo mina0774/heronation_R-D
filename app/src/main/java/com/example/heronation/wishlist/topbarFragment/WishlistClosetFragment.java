@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,10 +26,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
-import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.wishlist.dataClass.ClosetResponse;
@@ -34,8 +34,8 @@ import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.WishlistClosetAdapter;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.ClosetItem;
-import com.example.heronation.wishlist.WishlistClosetDeleteActivity;
 import com.example.heronation.wishlist.WishlistClosetEditBodyActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,17 +55,18 @@ public class WishlistClosetFragment extends Fragment {
     @BindView(R.id.wishlist_closet_spinner_category) Spinner spinner_category;
     /* 체형 수정 버튼 */
     @BindView(R.id.wishlist_closet_edit_button) Button edit_button;
-    /* 옷장 아이템 삭제 버튼 */
-    @BindView(R.id.closet_delete) ImageButton delete_button;
     /* 상품 목록 등록 */
-    private ArrayList<ClosetItem> item_list;
+    public static ArrayList<ClosetItem> item_list;
     @BindView(R.id.closet_body_gender) TextView closet_body_gender;
     @BindView(R.id.closet_body_age) TextView closet_body_age;
     @BindView(R.id.closet_body_height) TextView closet_body_height;
     @BindView(R.id.closet_body_weight) TextView closet_body_weight;
+    @BindView(R.id.snackbar_view) CoordinatorLayout snackbar_view;
 
-    WishlistClosetAdapter wishlistClosetAdapter;
+    public static WishlistClosetAdapter wishlistClosetAdapter;
     Integer page_num; // 동적 로딩을 위한 page number
+    public static Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class WishlistClosetFragment extends Fragment {
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_wishlist_closet, container,false);
         ButterKnife.bind(this,rootView);
 
+        context=getActivity();
         item_list=new ArrayList<>();
 
         getBodyInfo();
@@ -98,16 +100,6 @@ public class WishlistClosetFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(), WishlistClosetEditBodyActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        /* 옷장 아이템 삭제 버튼 */
-        delete_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getContext(), WishlistClosetDeleteActivity.class);
-                intent.putExtra("closet item",item_list);
                 startActivity(intent);
             }
         });
@@ -190,7 +182,7 @@ public class WishlistClosetFragment extends Fragment {
                 public void onFailure(Call<UserMyInfo> call, Throwable t) {
                 }
             });
-        }else {//비회원 사용자일 때
+        }else { //비회원 사용자일 때
         }
     }
 
@@ -207,7 +199,6 @@ public class WishlistClosetFragment extends Fragment {
     }
 
 
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -219,7 +210,6 @@ public class WishlistClosetFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

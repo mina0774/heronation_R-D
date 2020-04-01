@@ -110,21 +110,21 @@ public class WishlistClosetItemDetailActivity extends AppCompatActivity {
                     String accept="application/json";
                     String content_type="application/json";
                     APIInterface.EditClosetItemService editClosetItemService=ServiceGenerator.createService(APIInterface.EditClosetItemService.class);
-                    retrofit2.Call<String> request=editClosetItemService.EditClosetItem(authorization,accept,content_type,requestBody);
+                    retrofit2.Call<JSONObject> request=editClosetItemService.EditClosetItem(authorization,accept,content_type,requestBody);
 
-                    request.enqueue(new Callback<String>() {
+                    final int[] val = {0};
+                    request.enqueue(new Callback<JSONObject>() {
                         @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
+                        public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                            Log.d("로그",response.code()+"");
                             if(response.code()==400){
                                 backgroundThreadShortToast(WishlistClosetItemDetailActivity.this,"범위에 벗어났습니다.");
-                            }else{
-                                backgroundThreadShortToast(WishlistClosetItemDetailActivity.this,"수정이 완료되었습니다."); // 왜 안뜸?
+                            }else if (response.code()==200){
+                                backgroundThreadShortToast(WishlistClosetItemDetailActivity.this, "수정이 완료되었습니다.");
                             }
                         }
-
                         @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-
+                        public void onFailure(Call<JSONObject> call, Throwable t) {
                         }
                     });
                 }catch (JSONException e){ }

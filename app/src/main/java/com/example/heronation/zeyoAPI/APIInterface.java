@@ -196,7 +196,7 @@ public interface APIInterface {
     /* 옷장에서 특정 옷 아이템을 수정하는 인터페이스 */
     public interface EditClosetItemService{
         @POST("api/wardrobes")
-        retrofit2.Call<String> EditClosetItem(@Header("Authorization") String authorization,
+        retrofit2.Call<JSONObject> EditClosetItem(@Header("Authorization") String authorization,
                                                            @Header("Accept") String accept,
                                                            @Header("Content-Type") String content_type,
                                                            @Body RequestBody requestBody);

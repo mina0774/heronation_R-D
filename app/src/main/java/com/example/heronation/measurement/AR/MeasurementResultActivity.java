@@ -92,13 +92,16 @@ public class MeasurementResultActivity extends AppCompatActivity {
             result_measure_item[i]=new TextView(this);
             result_distance[i]=new TextView(this);
             result_cm[i]=new TextView(this);
+
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.gravity= Gravity.CENTER;
+
             result_measure_item[i].setLayoutParams(layoutParams);
             result_measure_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             result_measure_item[i].setTextSize(16);
             result_measure_item[i].setText(MeasureItem.get(i) + "\n");
             result_measure_item[i].setTextColor(Color.parseColor("#1d1d1d"));
+
             result_distance[i].setLayoutParams(layoutParams);
             result_distance[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             result_distance[i].setTextSize(16);
@@ -106,11 +109,13 @@ public class MeasurementResultActivity extends AppCompatActivity {
             result_distance[i].setText(distanceString + "\n");
             result_distance[i].setTextAppearance(BOLD);
             result_distance[i].setTextColor(Color.parseColor("#3464ff"));
+
             result_cm[i].setLayoutParams(layoutParams);
             result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             result_cm[i].setTextSize(16);
             result_cm[i].setText("cm\n");
             result_cm[i].setTextColor(Color.parseColor("#777777"));
+
             measurement_result_item.addView(result_measure_item[i]);
             measurement_result_distance.addView(result_distance[i]);
             measurement_result_cm.addView(result_cm[i]);
@@ -167,7 +172,6 @@ public class MeasurementResultActivity extends AppCompatActivity {
             protected Void doInBackground(Void... voids) {
                 try {
                     Response<String> temp_file_name=request.execute();
-                    Log.d("템프",temp_file_name.body()+" "+temp_file_name.message());
                     temp_file=temp_file_name.body();
                 }catch (IOException e){
                 }
@@ -186,7 +190,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
     public void SaveMeasurementItem_JSONObejct(){
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", 0); // ???????? id가 무슨 역할 ???????
+            jsonObject.put("id", 0);
             jsonObject.put("name",MeasurementArFragment.clothName);
             jsonObject.put("subCategoryId",MeasurementArFragment.category_select_id);
             jsonObject.put("registerType","D");

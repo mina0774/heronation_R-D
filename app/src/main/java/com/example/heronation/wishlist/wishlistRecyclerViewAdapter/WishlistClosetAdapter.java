@@ -19,11 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.main.MainActivity;
-import com.example.heronation.measurement.AR.MeasurementArFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.ClosetItem;
 import com.example.heronation.R;
-import com.example.heronation.wishlist.WishlistClosetItemEditActivity;
+import com.example.heronation.wishlist.WishlistClosetItemDetailActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
@@ -180,7 +179,7 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
                 public void onClick(View view) {
                     int position=getAdapterPosition();
                     if(position!=RecyclerView.NO_POSITION){
-                        Intent intent=new Intent(context, WishlistClosetItemEditActivity.class);
+                        Intent intent=new Intent(context, WishlistClosetItemDetailActivity.class);
                         intent.putExtra("image",item_list.get(position).getImage_url());
                         intent.putExtra("category",item_list.get(position).getCategory());
                         intent.putExtra("item_name",item_list.get(position).getItem_name());

@@ -69,7 +69,7 @@ public interface APIInterface {
     }
 
     /* 로그인 서비스 */
-    public interface LoginService{
+    public interface LoginService {
         @FormUrlEncoded
         @POST("oauth/token")
         retrofit2.Call<UserLoginInfo> LoginInfo(@Header("Accept") String accept,
@@ -83,7 +83,7 @@ public interface APIInterface {
     }
 
     /* 회원가입 서비스 */
-    public interface RegisterService{
+    public interface RegisterService {
         @FormUrlEncoded
         @POST("api/consumers/registry")
         Call<String> postInfo(@Header("Authorization") String authorization,
@@ -106,7 +106,7 @@ public interface APIInterface {
     public interface ModifyUserInfoService {
         @PATCH("api/consumers")
         retrofit2.Call<String> ModifyUserInfo(@Header("Authorization") String authorization,
-                                              @Header("Accept")  String accept,
+                                              @Header("Accept") String accept,
                                               @Header("ShopContent-Type") String content_type,
                                               @Body UserModifyInfo userModifyInfo);
     }
@@ -117,57 +117,57 @@ public interface APIInterface {
      */
     public interface StyleRecommendationBasedUserService {
         @GET("api/items/style-tags/{style_tag_id}/user-base")
-    retrofit2.Call<ArrayList<StyleRecommendation>> ShopItemInfo(@Path("style_tag_id") String style_tag_id,
-                                                               @Header("authorization") String authorization,
-                                                               @Header("Accept") String accept);
-}
+        retrofit2.Call<ArrayList<StyleRecommendation>> ShopItemInfo(@Path("style_tag_id") String style_tag_id,
+                                                                    @Header("authorization") String authorization,
+                                                                    @Header("Accept") String accept);
+    }
 
     /* 타사용자 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/
     public interface StyleRecommendationBasedOtherService {
         @GET("api/items/others-user-base")
         retrofit2.Call<ArrayList<StyleRecommendation>> ShopItemInfo(@Header("authorization") String authorization,
-                                                         @Header("Accept") String accept);
+                                                                    @Header("Accept") String accept);
     }
 
     /* 체형 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/
     public interface BodyRecommendationService {
         @GET("api/items/body-type")
         retrofit2.Call<ArrayList<StyleRecommendation>> ShopItemInfo(@Header("authorization") String authorization,
-                                                        @Header("Accept") String accept);
+                                                                    @Header("Accept") String accept);
     }
 
     /* 옷 종류 카테고리를 받아주는 인터페이스 */
-    public interface GetClothCategoryService{
+    public interface GetClothCategoryService {
         @GET("api/v2_categorys")
         retrofit2.Call<List<SubCategoryResponse>> GetCategory(@Header("authorization") String authorization);
     }
 
     /* 옷 종류에 따른 측정 목록을 받아오는 인터페이스 */
-    public interface GetMeasurementIndexService{
+    public interface GetMeasurementIndexService {
         @GET("api/measure_items/subcateorys/{id}")
         retrofit2.Call<List<MeasureItemResponse>> GetMeasurementIndex(@Path("id") String id,
                                                                       @Header("authorization") String authorization);
     }
 
     /* 옷 측정할 때, 업로드한 사진을 저장하는 인터페이스 */
-    public interface UploadImageFileService{
+    public interface UploadImageFileService {
         @POST("commons/temp/upload")
         @Multipart
         Call<String> UploadImageFile(@Header("Authorization") String authorization,
-                                               @Part MultipartBody.Part File);
+                                     @Part MultipartBody.Part File);
     }
 
     /* 옷 측정시, 수치를 저장하는 인터페이스 */
     public interface UploadMeasurementResultService {
         @POST("api/wardrobes")
         retrofit2.Call<JSONObject> UploadMeasurementResult(@Header("Authorization") String authorization,
-                                                       @Header("Accept") String accept,
-                                                       @Header("Content-Type") String content_type,
-                                                       @Body RequestBody requestBody);
+                                                           @Header("Accept") String accept,
+                                                           @Header("Content-Type") String content_type,
+                                                           @Body RequestBody requestBody);
     }
 
     /* 측정한 옷 목록을 불러오는 인터페이스 */
-    public interface GetClosetListService{
+    public interface GetClosetListService {
         @GET("api/wardrobes")
         retrofit2.Call<ClosetResponse> GetClosetList(@Query("page") Integer page,
                                                      @Query("size") Integer size,
@@ -177,7 +177,7 @@ public interface APIInterface {
     }
 
     /* 측정한 특정 옷의 구체적인 정보를 받아오는 인터페이스 */
-    public interface GetClosetDetailInfoService{
+    public interface GetClosetDetailInfoService {
         @GET("api/wardrobes/{item_id}")
         retrofit2.Call<ClosetDetailResponse> GetClosetDetailInfo(@Path("item_id") Integer item_id,
                                                                  @Header("authorization") String authorization,
@@ -185,11 +185,22 @@ public interface APIInterface {
     }
 
     /* 옷장에서 특정 옷 아이템을 삭제하는 인터페이스 */
-    public interface DeleteClosetItemService{
+    public interface DeleteClosetItemService {
         @DELETE("api/wardrobes/{item_id}")
         retrofit2.Call<String> DeleteClosetItem(@Path("item_id") Integer item_id,
                                                 @Header("Authorization") String authorization,
                                                 @Header("Accept") String accept,
                                                 @Header("Content-Type") String content_type);
     }
+
+    /* 옷장에서 특정 옷 아이템을 수정하는 인터페이스 */
+    public interface EditClosetItemService{
+        @POST("api/wardrobes")
+        retrofit2.Call<String> EditClosetItem(@Header("Authorization") String authorization,
+                                                           @Header("Accept") String accept,
+                                                           @Header("Content-Type") String content_type,
+                                                           @Body RequestBody requestBody);
+
+    }
+
 }

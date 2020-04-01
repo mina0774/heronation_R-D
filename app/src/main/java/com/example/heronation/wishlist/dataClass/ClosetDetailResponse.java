@@ -13,8 +13,8 @@ public class ClosetDetailResponse {
     private String subCategoryId="";
     private String subCategoryName="";
     private String registerType="";
-
     public List<wardrobeScmmValueResponses> wardrobeScmmValueResponses = new ArrayList<>();
+
     public String getId(){
         return id;
     }

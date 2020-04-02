@@ -53,7 +53,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MeasurementArInfoActivity extends AppCompatActivity {
-    @BindView(R.id.ar_back_btn) ImageButton ar_back_btn; //뒤로 가기 버튼
     @BindView(R.id.ar_add_cloth_btn) ImageButton ar_add_cloth_btn; // 사진 등록 버튼
     @BindView(R.id.ar_start_measure) Button ar_start_measure; // 측정 시작 버튼
     @BindView(R.id.ar_cloth_name_et) EditText ar_cloth_name_et; // 등록 아이템의 이름 설정
@@ -93,14 +92,6 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
 
         /* 사진 등록 위한 카메라 접근 권한 */
         cameraPermission();
-
-        /* 뒤로가기 버튼을 눌렀을 때 */
-        ar_back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         /* 옷 사진 등록 버튼을 눌렀을 때 - 사진을 받아올 경로를 선택하도록 알림창을 띄워줌 */
         ar_add_cloth_btn.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +140,11 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /* 뒤로가기 버튼을 눌렀을 때 */
+    public void click_back_button(View view){
+        finish();
     }
 
     /* 측정할 옷 종류 카테고리 받아오는 함수 */

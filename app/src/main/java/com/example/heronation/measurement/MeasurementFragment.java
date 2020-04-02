@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.example.heronation.R;
 import com.example.heronation.measurement.AR.MeasurementArInfoActivity;
+import com.example.heronation.measurement.Style.MeasurementStyleActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +35,15 @@ public class MeasurementFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MeasurementArInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        /* 스타일 버튼 클릭시 스타일 선택 화면으로 이동 */
+        measurement_style_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MeasurementStyleActivity.class);
                 startActivity(intent);
             }
         });

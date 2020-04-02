@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mypage.UserModifyActivity"></activity>
+        <activity android:name=".measurement.Style.MeasurementStyleActivity"></activity>
+        <activity android:name=".mypage.UserModifyActivity" />
         <activity android:name=".measurement.AR.MeasurementArInfoActivity" />
         <activity android:name=".measurement.AR.InnerGuide.InnerGuideViewPager" />
         <activity android:name=".measurement.AR.MeasurementResultActivity" />

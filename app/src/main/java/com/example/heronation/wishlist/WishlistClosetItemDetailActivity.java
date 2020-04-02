@@ -112,11 +112,9 @@ public class WishlistClosetItemDetailActivity extends AppCompatActivity {
                     APIInterface.EditClosetItemService editClosetItemService=ServiceGenerator.createService(APIInterface.EditClosetItemService.class);
                     retrofit2.Call<JSONObject> request=editClosetItemService.EditClosetItem(authorization,accept,content_type,requestBody);
 
-                    final int[] val = {0};
                     request.enqueue(new Callback<JSONObject>() {
                         @Override
                         public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-                            Log.d("로그",response.code()+"");
                             if(response.code()==400){
                                 backgroundThreadShortToast(WishlistClosetItemDetailActivity.this,"범위에 벗어났습니다.");
                             }else if (response.code()==200){

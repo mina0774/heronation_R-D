@@ -1,26 +1,23 @@
 package com.example.heronation.mypage;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.DatePickerDialog;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.heronation.login_register.DatePickerFragment;
-import com.example.heronation.login_register.loginPageActivity;
-import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.login_register.DatePickerFragment;
+import com.example.heronation.login_register.dataClass.UserMyInfo;
+import com.example.heronation.main.MainActivity;
+import com.example.heronation.mypage.dataClass.UserModifyInfo;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
-import com.example.heronation.mypage.dataClass.UserModifyInfo;
-import com.example.heronation.login_register.dataClass.UserMyInfo;
 
 import java.util.Calendar;
 
@@ -29,20 +26,20 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Body;
-import retrofit2.http.Header;
-import retrofit2.http.PATCH;
 
-public class UserModifyFragment extends Fragment{
-    @BindView(R.id.textView_modify_datepicker) TextView modify_datepicker;
+public class UserModifyActivity extends AppCompatActivity {
+    @BindView(R.id.textView_modify_datepicker)
+    TextView modify_datepicker;
     @BindView(R.id.userModify_edit_btn) TextView userModify_edit_btn;
     @BindView(R.id.userModify_id_text) TextView userModify_id_text;
     @BindView(R.id.userModify_present_pw_et) TextView userModify_present_pw_et;
     @BindView(R.id.userModify_email_text) TextView userModify_email_text;
-    @BindView(R.id.userModify_name_text) EditText userModify_name_text;
+    @BindView(R.id.userModify_name_text)
+    EditText userModify_name_text;
     @BindView(R.id.userModify_female) TextView userModify_female;
     @BindView(R.id.userModify_male) TextView userModify_male;
-    @BindView(R.id.userModify_ad_check) CheckBox userModify_ad_check;
+    @BindView(R.id.userModify_ad_check)
+    CheckBox userModify_ad_check;
     @BindView(R.id.userModify_hi_nickname_text) TextView userModify_hi_nickname_text;
 
     Integer modify_year;
@@ -52,12 +49,12 @@ public class UserModifyFragment extends Fragment{
     String termsAdvertisement;
     String user_name;
 
-    /*생년월일 TextView클릭시 showDatePicker가 실행됨*/
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_user_modify, container, false);
-        ButterKnife.bind(this,rootView);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_modify);
+
+        ButterKnife.bind(this);
 
         // 현재 유저 정보를 받아와 화면에 표시
         getCurrentUserInfo();
@@ -88,14 +85,18 @@ public class UserModifyFragment extends Fragment{
             }
         });
 
-        // 수정 버튼을 눌렀을 때ㅜ
+        // 수정 버튼을 눌렀을 때
         userModify_edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 modifyUserInfo(); //회원 정보 수정
             }
         });
-        return rootView;
+    }
+
+    // 뒤로가기 버튼을 눌렀을 경우
+    public void click_back_button(View view){
+        finish();
     }
 
     //회원 정보를 수정
@@ -116,17 +117,15 @@ public class UserModifyFragment extends Fragment{
         retrofit2.Call<String> request=modifyUserInfoService.ModifyUserInfo(authorization,accept,content_type,userModifyInfo);
         request.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String>  response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if(response.code()==204) { //정상적으로 로그인이 되었을 때
                     Bundle bundle1=new Bundle();
                     bundle1.putString("access_token", MainActivity.access_token);
-                    MainActivity.backgroundThreadShortToast(getActivity(), "수정되었습니다.");
-                    MypageConnectingFragment mypageConnectingFragment=new MypageConnectingFragment();
-                    mypageConnectingFragment.setArguments(bundle1);
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, mypageConnectingFragment).commit();
+                    MainActivity.backgroundThreadShortToast(UserModifyActivity.this, "수정되었습니다.");
+                    finish();
                 }
                 else{ //토큰 만료기한이 끝나, 재로그인이 필요할 때
-                   MainActivity.backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다.");
+                    MainActivity.backgroundThreadShortToast(UserModifyActivity.this, "세션이 만료되어 재로그인이 필요합니다.");
                 }
             }
             @Override
@@ -173,7 +172,7 @@ public class UserModifyFragment extends Fragment{
                 }
                 /*토큰 만료기한이 끝나, 재로그인이 필요할 때*/
                 else {
-                    MainActivity.backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다.");
+                    MainActivity.backgroundThreadShortToast(UserModifyActivity.this, "세션이 만료되어 재로그인이 필요합니다.");
                 }
             }
             @Override
@@ -200,7 +199,7 @@ public class UserModifyFragment extends Fragment{
          * Set Call back to capture selected date
          */
         date.setCallBack(ondate);
-        date.show(getFragmentManager(), "Date Picker");
+        date.show(getSupportFragmentManager(), "Date Picker");
     }
 
     /*입력 받은것 출력*/
@@ -209,22 +208,11 @@ public class UserModifyFragment extends Fragment{
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
 
-            TextView textView_modify_datepicker = (TextView) getView().findViewById(R.id.textView_modify_datepicker);
+            TextView textView_modify_datepicker = (TextView)findViewById(R.id.textView_modify_datepicker);
             modify_year=year;
             modify_month=monthOfYear+1;
             modify_date=dayOfMonth;
             textView_modify_datepicker.setText(modify_year + "-" + modify_month + "-" + modify_date);
         }
     };
-
-
-    /* Acitivity와 Fragment가 통신할 때, OnFragmentInteractionListener를 사용함.
-     * 프래그먼트에서 액티비티로 통신(데이터 주고 받는 것)이 있을 수도 있기 때문에
-     * MainActivity 에서 이를 implement한 후 오버라이딩 시켜줄 것이다. (임시로)
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
 }

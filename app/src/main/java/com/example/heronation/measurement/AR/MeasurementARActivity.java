@@ -145,7 +145,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         ButterKnife.bind(this);
         displayRotationHelper = new DisplayRotationHelper(/*context=*/ this);
 
-        measurement_item_size=MeasurementArFragment.Measure_item.size(); // 전체 측정 항목의 개수
+        measurement_item_size=MeasurementArInfoActivity.Measure_item.size(); // 전체 측정 항목의 개수
         measurement_count=0; // 현재 측정된 항목의 개수
         measurement_items_distance=new Double[20];
         mPoints=new float[2][3]; // anchor의 좌표를 저장하는 배열, 2개의 anchor, x,y,z 좌표
@@ -188,14 +188,14 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
 
         showLoadingMessage(this); //처음 gif 로딩 화면을 띄워줌
 
-        measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count)); //첫 측정 항목 설정
+        measureItemTextview.setText(MeasurementArInfoActivity.Measure_item.get(measurement_count)); //첫 측정 항목 설정
 
         // 왼쪽 상단 가이드 버튼을 눌렀을 경우
         measurement_item_guide_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 measurement_item_guide_layout.setVisibility(View.VISIBLE);
-                Glide.with(getApplicationContext()).load(MeasurementArFragment.Image_item.get(measurement_count)).into(measurement_item_guide_imageview);
+                Glide.with(getApplicationContext()).load(MeasurementArInfoActivity.Image_item.get(measurement_count)).into(measurement_item_guide_imageview);
             }
         });
 
@@ -233,7 +233,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                         public void run() {
                             // 측정 항목에 해당하는 anchor 거리 설정, 측정 항목 설정
                             distanceTextview.setText(String.format(Locale.getDefault(),"%d",Math.round(measurement_items_distance[measurement_count]*100)+"cm"));
-                            measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
+                            measureItemTextview.setText(MeasurementArInfoActivity.Measure_item.get(measurement_count));
                         }
                     });
                     outOfRange=0;
@@ -261,7 +261,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                     measurement_count++;
 
                     distanceTextview.setText("점을 찍어주세요.");
-                    measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
+                    measureItemTextview.setText(MeasurementArInfoActivity.Measure_item.get(measurement_count));
                     nowTouchingPointIndex=DEFAULT_VALUE;
                     outOfRange=0;
                 }
@@ -279,7 +279,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                         public void run() {
                             // 측정 항목에 해당하는 anchor 거리 설정, 측정 항목 설정
                             distanceTextview.setText(String.format(Locale.getDefault(),"%d",Math.round(measurement_items_distance[measurement_count]*100)+"cm"));
-                            measureItemTextview.setText(MeasurementArFragment.Measure_item.get(measurement_count));
+                            measureItemTextview.setText(MeasurementArInfoActivity.Measure_item.get(measurement_count));
                             nowTouchingPointIndex=DEFAULT_VALUE;
                             outOfRange=0;
                         }
@@ -693,8 +693,8 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                min_scope = Integer.parseInt(MeasurementArFragment.min_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최소값
-                max_scope = Integer.parseInt(MeasurementArFragment.max_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최대값
+                min_scope = Integer.parseInt(MeasurementArInfoActivity.min_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최소값
+                max_scope = Integer.parseInt(MeasurementArInfoActivity.max_scope.get(measurement_count)); // 해당 측정 항목의 거리의 최대값
                 double distance = 0.0;
                 distance = Math.sqrt((start[0] - end[0]) * (start[0] - end[0]) + (start[1] - end[1]) * (start[1] - end[1]) + (start[2] - end[2]) * (start[2] - end[2])); // 거리 구하기
                 String distanceString = String.format(Locale.getDefault(), "%d", Math.round(distance * 100)) + "cm";

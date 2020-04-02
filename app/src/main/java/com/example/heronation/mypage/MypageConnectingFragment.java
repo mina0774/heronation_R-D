@@ -1,5 +1,6 @@
 package com.example.heronation.mypage;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,8 +42,8 @@ public class MypageConnectingFragment extends Fragment {
         mypage_userModify_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserModifyFragment userModifyFragment=new UserModifyFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, userModifyFragment).commit();
+                Intent intent=new Intent(getActivity(),UserModifyActivity.class);
+                startActivity(intent);
             }
         });
 

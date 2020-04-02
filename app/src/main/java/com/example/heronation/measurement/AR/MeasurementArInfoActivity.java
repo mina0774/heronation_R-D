@@ -1,5 +1,9 @@
 package com.example.heronation.measurement.AR;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,19 +13,12 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
-
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,9 +52,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.app.Activity.RESULT_OK;
-
-public class MeasurementArFragment extends Fragment {
+public class MeasurementArInfoActivity extends AppCompatActivity {
     @BindView(R.id.ar_back_btn) ImageButton ar_back_btn; //뒤로 가기 버튼
     @BindView(R.id.ar_add_cloth_btn) ImageButton ar_add_cloth_btn; // 사진 등록 버튼
     @BindView(R.id.ar_start_measure) Button ar_start_measure; // 측정 시작 버튼
@@ -80,12 +75,16 @@ public class MeasurementArFragment extends Fragment {
     public String cameraFilePath; // 카메라에서 촬영한 사진 경로
 
     MeasurementFragment measurementFragment;
+    public static MeasurementArInfoActivity measurementArInfoActivity;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_measurement_ar,container,false);
-        ButterKnife.bind(this,rootView);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_measurement_ar_info);
+
+        measurementArInfoActivity=this;
+
+        ButterKnife.bind(this);
         measurementFragment=new MeasurementFragment();
         cloth_category_list=new ArrayList<>();
 
@@ -99,7 +98,7 @@ public class MeasurementArFragment extends Fragment {
         ar_back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, measurementFragment).commit();
+                finish();
             }
         });
 
@@ -109,7 +108,7 @@ public class MeasurementArFragment extends Fragment {
             public void onClick(View view) {
                 String title_text="선택";
                 final CharSequence[] image_path_pick = {"앨범에서 선택", "카메라 촬영"};
-                AlertDialog.Builder dialogBuilder= new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder dialogBuilder= new AlertDialog.Builder(MeasurementArInfoActivity.this);
                 ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#353535"));
                 SpannableStringBuilder spannableStringBuilder=new SpannableStringBuilder(title_text);
                 spannableStringBuilder.setSpan(foregroundColorSpan,0,title_text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -120,11 +119,11 @@ public class MeasurementArFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if(i==0){ // 앨범에서 선택을 누른 경우
                             if(isPermission) gotoAlbum();
-                            else Toast.makeText(getActivity(), "사진 및 파일을 저장하기 위해선 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                            else Toast.makeText(MeasurementArInfoActivity.this, "사진 및 파일을 저장하기 위해선 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                         }
                         else if(i==1){ // 카메라 촬영을 누른 경우
                             if(isPermission) takePhoto();
-                            else Toast.makeText(getActivity(), "사진 및 파일을 저장하기 위해선 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                            else Toast.makeText(MeasurementArInfoActivity.this, "사진 및 파일을 저장하기 위해선 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -138,20 +137,18 @@ public class MeasurementArFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(ar_cloth_name_et.getText().toString().length() == 0){ //이름이 비었는지 확인
-                    Toast.makeText(getActivity(),"이름을 입력해주세요.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeasurementArInfoActivity.this,"이름을 입력해주세요.",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else if(file == null){ //사진이 비었는지 확인
-                    Toast.makeText(getActivity(),"사진을 등록해주세요.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeasurementArInfoActivity.this,"사진을 등록해주세요.",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 clothName=ar_cloth_name_et.getText().toString();
-                Intent intent = new Intent(getActivity(), MeasurementARActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MeasurementARActivity.class);
                 startActivity(intent);
             }
         });
-
-        return rootView;
     }
 
     /* 측정할 옷 종류 카테고리 받아오는 함수 */
@@ -169,8 +166,8 @@ public class MeasurementArFragment extends Fragment {
                     category.put(subCategoryResponses.get(i).getName(), subCategoryResponses.get(i).getId()); //뽑아낸 이름과 ID를 해쉬맵에 넣는다.
                 }
                 /* 옷 카테고리 리스트를 선택할 수 있는 스피너 어댑터 설정 */
-                if(getActivity()!=null) {
-                    spinner_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, cloth_category_list);
+                if(getApplicationContext()!=null) {
+                    spinner_adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, cloth_category_list);
                     spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     ar_spinner_select_category.setAdapter(spinner_adapter);
                     /*스피너에 옷 카테고리 아이템 추가 */
@@ -273,7 +270,7 @@ public class MeasurementArFragment extends Fragment {
                 isPermission = false;
             }
         };
-        TedPermission.with(getActivity())
+        TedPermission.with(getApplicationContext())
                 .setPermissionListener(permissionListener)
                 .setRationaleMessage("사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.")
                 .setDeniedMessage("[설정] > [권한] 에서 권한을 허용할 수 있습니다.")
@@ -294,12 +291,12 @@ public class MeasurementArFragment extends Fragment {
         try {
             tempFile = createImageFile(); //카메라 촬영 후 이미지 파일을 생성하는 함수
         } catch (IOException e) {
-            Toast.makeText(getActivity(), "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
         if(tempFile != null){
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                Uri photoUri = FileProvider.getUriForFile(getActivity(),"com.example.heronation.provider", tempFile);
+                Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),"com.example.heronation.provider", tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
             } else {
@@ -332,12 +329,12 @@ public class MeasurementArFragment extends Fragment {
         File file = new File(cameraFilePath);
         Uri contentUri = Uri.fromFile(file);
         mediaScanIntent.setData(contentUri);
-        getActivity().sendBroadcast(mediaScanIntent);
+        getApplicationContext().sendBroadcast(mediaScanIntent);
     }
 
     /* 받아온 이미지를 이미지뷰에 뿌려주는 함수 */
     private void setImage(){
-        Glide.with(getActivity()).load(file.getAbsolutePath()).into(ar_add_cloth_btn);
+        Glide.with(getApplicationContext()).load(file.getAbsolutePath()).into(ar_add_cloth_btn);
     }
 
     /* 앨범, 카메라에서 받아온 사진 파일 처리 */
@@ -350,7 +347,7 @@ public class MeasurementArFragment extends Fragment {
             try {
                 String[] proj = {MediaStore.Images.Media.DATA};
                 assert photoUri != null;
-                cursor = getActivity().getContentResolver().query(photoUri, proj, null, null, null);
+                cursor = getApplicationContext().getContentResolver().query(photoUri, proj, null, null, null);
                 assert cursor != null;
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 cursor.moveToFirst();

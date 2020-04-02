@@ -23,13 +23,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
-import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
-import com.example.heronation.measurement.AR.MeasurementARActivity;
-import com.example.heronation.measurement.AR.MeasurementArFragment;
 import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
@@ -76,7 +72,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_measurement_result);
         ButterKnife.bind(this);
 
-        MeasureItem= MeasurementArFragment.Measure_item; // 측정 항목을 받아옴
+        MeasureItem= MeasurementArInfoActivity.Measure_item; // 측정 항목을 받아옴
         measurement_items_distance=MeasurementARActivity.measurement_items_distance; // 측정 항목의 거리를 받아옴
 
         TextView result_measure_item[]=new TextView[MeasureItem.size()];
@@ -85,7 +81,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
 
 
         // 측정 시작 시에 촬영한 사진 or 갤러리에서 받아온 사진을 띄워줌
-        Glide.with(this).load(MeasurementArFragment.file.getAbsolutePath()).into(measurement_result_imageview);
+        Glide.with(this).load(MeasurementArInfoActivity.file.getAbsolutePath()).into(measurement_result_imageview);
 
         // 측정 결과값을 예쁘게 출력하기 위한 작업
         for(int i=0;i<MeasureItem.size();i++){
@@ -150,7 +146,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
     // 사진 파일 저장하는 함수
     public void saveImageFile(){
         File compressedImageFile = null;
-        File file=new File(MeasurementArFragment.file.getAbsolutePath());
+        File file=new File(MeasurementArInfoActivity.file.getAbsolutePath());
         try {
             compressedImageFile = new Compressor(getApplicationContext()).compressToFile(file);
         } catch (IOException e) {
@@ -160,7 +156,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
         RequestBody requestFile=RequestBody.create(MediaType.parse("multipart/form-data"),compressedImageFile);
         MultipartBody.Part body=MultipartBody.Part.createFormData("file",file.getName(),requestFile);
 
-        String authorization="bearer "+MainActivity.access_token;
+        String authorization="bearer "+ MainActivity.access_token;
         String accept="application/json";
         String content_type="multipart/form-data";
 
@@ -191,13 +187,13 @@ public class MeasurementResultActivity extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", 0);
-            jsonObject.put("name",MeasurementArFragment.clothName);
-            jsonObject.put("subCategoryId",MeasurementArFragment.category_select_id);
+            jsonObject.put("name",MeasurementArInfoActivity.clothName);
+            jsonObject.put("subCategoryId",MeasurementArInfoActivity.category_select_id);
             jsonObject.put("registerType","D");
 
             JSONObject fileObject=new JSONObject();
             fileObject.put("temp_name",temp_file);
-            fileObject.put("real_name",MeasurementArFragment.file.getName());
+            fileObject.put("real_name",MeasurementArInfoActivity.file.getName());
             JSONArray attachFile=new JSONArray();
             attachFile.put(fileObject);
             jsonObject.put("attachFile",attachFile);
@@ -206,7 +202,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
             JSONArray wardrobe=new JSONArray();
             for (int i=0; i< MeasureItem.size(); i++){
                 measurementObject=new JSONObject();
-                measurementObject.put("measureItemId",MeasurementArFragment.measureItemId.get(i));
+                measurementObject.put("measureItemId",MeasurementArInfoActivity.measureItemId.get(i));
                 measurementObject.put("value",Math.round(measurement_items_distance[i]*100));
                 wardrobe.put(measurementObject);
             }
@@ -231,7 +227,8 @@ public class MeasurementResultActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // finish하고 main activity로 돌아갔을 때, main activity에서 어떤 작업을 해줘야하는지를 나타내는 변수
                                     MainActivity.control_closet_to_activity=0;
-                                    finish();
+                                   finish();
+                                   MeasurementArInfoActivity.measurementArInfoActivity.finish();
                                 }
                             });
                     builder.setPositiveButton("옷장으로",
@@ -240,6 +237,7 @@ public class MeasurementResultActivity extends AppCompatActivity {
                                     // finish하고 main activity로 돌아갔을 때, main activity에서 어떤 작업을 해줘야하는지를 나타내는 변수
                                     MainActivity.control_closet_to_activity=1;
                                     finish();
+                                    MeasurementArInfoActivity.measurementArInfoActivity.finish();
                                 }
                             });
                     builder.show();

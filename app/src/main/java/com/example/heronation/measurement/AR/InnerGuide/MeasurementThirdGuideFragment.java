@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
-import com.example.heronation.measurement.AR.MeasurementArFragment;
+import com.example.heronation.measurement.AR.MeasurementArInfoActivity;
 
 
 public class MeasurementThirdGuideFragment extends Fragment {
@@ -45,7 +45,7 @@ public class MeasurementThirdGuideFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_measurement_third_guide, container, false);
         ImageView imageView = view.findViewById(R.id.measurement_guide_result_image);
-        Glide.with(getActivity()).load(MeasurementArFragment.file.getAbsolutePath()).into(imageView);
+        Glide.with(getActivity()).load(MeasurementArInfoActivity.file.getAbsolutePath()).into(imageView);
         return view;
     }
 }

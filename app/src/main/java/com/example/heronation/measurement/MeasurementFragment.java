@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.example.heronation.R;
 import com.example.heronation.measurement.AR.MeasurementArInfoActivity;
+import com.example.heronation.measurement.Body.MeasurementBodyActivity;
 import com.example.heronation.measurement.Style.MeasurementStyleActivity;
 
 import butterknife.BindView;
@@ -44,6 +45,15 @@ public class MeasurementFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MeasurementStyleActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        /* 신체 비교 버튼 클릭시 신체 정보 입력 화면으로 이동 */
+        measurement_body_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MeasurementBodyActivity.class);
                 startActivity(intent);
             }
         });

@@ -25,7 +25,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Style AI"
+                android:text="스타일"
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
                 />

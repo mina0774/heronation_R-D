@@ -66,7 +66,6 @@ import retrofit2.http.Header;
  * MainActivity 에서 이를 implement한 후 오버라이딩 (임시로)
  */
 
-// TODO: 2020-02-06 세션 처리 어떻게 할지 고민하기... 현재 드로워에서 사용자 정보 출력 방식과, 마이페이지 정보 출력 방식에서 코드가 반복되는 경우가 많은데 두가지의 방법을 통일시킬 방안 생각해보기 
 public class MainActivity extends AppCompatActivity
         implements
         WishlistFragment.OnFragmentInteractionListener,
@@ -124,6 +123,7 @@ public class MainActivity extends AppCompatActivity
 
     public static String access_token;
     public static Integer control_closet_to_activity=-1;
+    public static MainActivity mainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-            access_token = getIntent().getStringExtra("access_token");
+        mainActivity=this;
+        access_token = getIntent().getStringExtra("access_token");
 
         backPressCloseHandler=new BackPressCloseHandler(this);
         /* BottomNavigation view를 선언해주고, bottomNavigationView의 객체를 생성한 후,

@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
@@ -29,6 +31,7 @@ import retrofit2.Response;
 public class MypageConnectingFragment extends Fragment {
     @BindView(R.id.mypage_userModify_btn) ImageButton mypage_userModify_btn;
     @BindView(R.id.mypage_ninkname_text) TextView mypage_ninkname_text;
+    @BindView(R.id.mypage_logout_btn) Button mypage_logout_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +47,16 @@ public class MypageConnectingFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),UserModifyActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        /*로그아웃 버튼을 눌렀을 때, intro 홈페이지로 이동 */
+        mypage_logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IntroActivity.class);
+                startActivity(intent);
+                MainActivity.mainActivity.finish();
             }
         });
 

@@ -62,6 +62,7 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<FavoriteItemAdapte
         /* Glide를 통해 URL로 받아온 이미지를 로드해서 뷰홀더에 있는 이미지뷰에 뿌려줌 */
         Glide.with(context).load(itemList.get(item_position).getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
         holder.item_name.setText(itemList.get(item_position).getName());
+        holder.item_price.setText(itemList.get(item_position).getPrice().toString());
 
         /* 이미 찜한 아이템이므로 하트 빨간색으로 설정 */
         holder.isSongLikedClicked = true;
@@ -194,6 +195,7 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<FavoriteItemAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView item_image;
         private TextView item_name;
+        private TextView item_price;
         private LottieAnimationView heart_button;
         // 좋아요 클릭 여부
         private boolean isSongLikedClicked = false;
@@ -202,6 +204,7 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<FavoriteItemAdapte
             super(view);
             item_image = view.findViewById(R.id.recycler_view_item_best_item_image);
             item_name = view.findViewById(R.id.recycler_view_item_best_item_name);
+            item_price=view.findViewById(R.id.recycler_view_item_best_original_price);
             heart_button = view.findViewById(R.id.heart_button);
         }
 

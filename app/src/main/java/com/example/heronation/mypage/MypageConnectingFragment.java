@@ -18,6 +18,8 @@ import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.measurement.Body.MeasurementBodyActivity;
+import com.example.heronation.measurement.Style.MeasurementStyleActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
@@ -32,6 +34,8 @@ public class MypageConnectingFragment extends Fragment {
     @BindView(R.id.mypage_userModify_btn) ImageButton mypage_userModify_btn;
     @BindView(R.id.mypage_ninkname_text) TextView mypage_ninkname_text;
     @BindView(R.id.mypage_logout_btn) Button mypage_logout_btn;
+    @BindView(R.id.mypage_mysize_btn) Button mypage_mysize_btn;
+    @BindView(R.id.mypage_mystyle_btn) Button mypage_mystyle_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +61,24 @@ public class MypageConnectingFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), IntroActivity.class);
                 startActivity(intent);
                 MainActivity.mainActivity.finish();
+            }
+        });
+
+        /* mysize 버튼을 눌렀을 경우 */
+        mypage_mysize_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MeasurementBodyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        /* mystyle 버튼을 눌렀을 경우 */
+        mypage_mystyle_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MeasurementStyleActivity.class);
+                startActivity(intent);
             }
         });
 

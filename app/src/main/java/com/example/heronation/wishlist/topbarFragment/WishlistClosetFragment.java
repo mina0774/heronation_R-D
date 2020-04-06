@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
 import com.example.heronation.wishlist.dataClass.ClosetResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
@@ -40,6 +42,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +70,8 @@ public class WishlistClosetFragment extends Fragment {
     public static WishlistClosetAdapter wishlistClosetAdapter;
     Integer page_num; // 동적 로딩을 위한 page number
     public static Context context;
+    private List<String> cloth_category_list; //옷 카테고리를 담는 변수
+    private ArrayAdapter<String> spinner_adapter; // 스피너 어댑터
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,7 +84,9 @@ public class WishlistClosetFragment extends Fragment {
         context=getActivity();
         item_list=new ArrayList<>();
 
+        getClothCategory();
         getBodyInfo();
+
         /* 리사이클러뷰 객체 생성 */
         wishlistClosetAdapter=new WishlistClosetAdapter(getActivity(),item_list);
         /* 레이아웃 매니저 수평으로 지정 */
@@ -86,14 +94,6 @@ public class WishlistClosetFragment extends Fragment {
         /* 리사이클러뷰에 어댑터 지정 */
         closet_recyclerView.setAdapter(wishlistClosetAdapter);
         loadItems();
-
-        //spinnerArray.xml에서 생성한 item을 String 배열로 가져오기
-        String[] str_category=getResources().getStringArray(R.array.spinnerArray_category);
-
-        //item_new_spinner_item과 str_category, str_order를 인자로 어댑터를 생성하고, 어댑터를 설정
-        ArrayAdapter<String> adapter_category=new ArrayAdapter<String>(getContext(), R.layout.item_new_spinner_item,str_category);
-        adapter_category.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinner_category.setAdapter(adapter_category);
 
         /* 체형 수정 버튼 */
         edit_button.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +105,45 @@ public class WishlistClosetFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    /* 옷 종류 카테고리 받아오는 함수 */
+    public void getClothCategory(){
+        String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
+        APIInterface.GetClothCategoryService getClothCategoryService= ServiceGenerator.createService(APIInterface.GetClothCategoryService.class);
+        retrofit2.Call<List<SubCategoryResponse>> request=getClothCategoryService.GetCategory(authorization);
+        request.enqueue(new Callback<List<SubCategoryResponse>>() {
+            @Override
+            public void onResponse(Call<List<SubCategoryResponse>> call, Response<List<SubCategoryResponse>> response) {
+                if(response.isSuccessful()) {
+                    List<SubCategoryResponse> subCategoryResponses = response.body();
+                    for (int i = 0; i < subCategoryResponses.size(); i++) {
+                        cloth_category_list.add(subCategoryResponses.get(i).getName()); //해당 리스트는 옷 카테고리 리스트를 볼 수 있는 spinner의 아이템이 된다.
+                    }
+                    /* 옷 카테고리 리스트를 선택할 수 있는 스피너 어댑터 설정 */
+                    if (getActivity() != null) {
+                        spinner_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, cloth_category_list);
+                        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner_category.setAdapter(spinner_adapter);
+                        /*스피너에 옷 카테고리 아이템 추가 */
+                        spinner_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                int pos = spinner_category.getSelectedItemPosition();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+                            }
+                        });
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<List<SubCategoryResponse>> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
     }
 
 

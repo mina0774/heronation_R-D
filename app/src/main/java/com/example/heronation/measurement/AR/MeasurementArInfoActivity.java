@@ -155,33 +155,35 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
         request.enqueue(new Callback<List<SubCategoryResponse>>() {
             @Override
             public void onResponse(Call<List<SubCategoryResponse>> call, Response<List<SubCategoryResponse>> response) {
-                List<SubCategoryResponse> subCategoryResponses = response.body();
-                HashMap<String, String> category = new HashMap<>();
-                for (int i = 0; i < subCategoryResponses.size(); i++) {
-                    cloth_category_list.add(subCategoryResponses.get(i).getName()); //해당 리스트는 옷 카테고리 리스트를 볼 수 있는 spinner의 아이템이 된다.
-                    category.put(subCategoryResponses.get(i).getName(), subCategoryResponses.get(i).getId()); //뽑아낸 이름과 ID를 해쉬맵에 넣는다.
-                }
-                /* 옷 카테고리 리스트를 선택할 수 있는 스피너 어댑터 설정 */
-                if(getApplicationContext()!=null) {
-                    spinner_adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, cloth_category_list);
-                    spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    ar_spinner_select_category.setAdapter(spinner_adapter);
-                    /*스피너에 옷 카테고리 아이템 추가 */
-                    ar_spinner_select_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            int pos = ar_spinner_select_category.getSelectedItemPosition();
-                            String temp_id = subCategoryResponses.get(pos).getId();
-                            setClothCategoryImageView(temp_id); //스피너에 선택된 옷 카테고리에 따라 이미지 뷰 설정
-                            category_select_id = category.get(cloth_category_list.get(pos)); //선택된 카테고리 id 설정
-                            /* 선택된 옷 카테고리에 따른 측정 목록을 받아오는 함수 */
-                            getMeasurementIndex(category_select_id);
-                        }
+                if(response.isSuccessful()) {
+                    List<SubCategoryResponse> subCategoryResponses = response.body();
+                    HashMap<String, String> category = new HashMap<>();
+                    for (int i = 0; i < subCategoryResponses.size(); i++) {
+                        cloth_category_list.add(subCategoryResponses.get(i).getName()); //해당 리스트는 옷 카테고리 리스트를 볼 수 있는 spinner의 아이템이 된다.
+                        category.put(subCategoryResponses.get(i).getName(), subCategoryResponses.get(i).getId()); //뽑아낸 이름과 ID를 해쉬맵에 넣는다.
+                    }
+                    /* 옷 카테고리 리스트를 선택할 수 있는 스피너 어댑터 설정 */
+                    if (getApplicationContext() != null) {
+                        spinner_adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, cloth_category_list);
+                        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        ar_spinner_select_category.setAdapter(spinner_adapter);
+                        /*스피너에 옷 카테고리 아이템 추가 */
+                        ar_spinner_select_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                int pos = ar_spinner_select_category.getSelectedItemPosition();
+                                String temp_id = subCategoryResponses.get(pos).getId();
+                                setClothCategoryImageView(temp_id); //스피너에 선택된 옷 카테고리에 따라 이미지 뷰 설정
+                                category_select_id = category.get(cloth_category_list.get(pos)); //선택된 카테고리 id 설정
+                                /* 선택된 옷 카테고리에 따른 측정 목록을 받아오는 함수 */
+                                getMeasurementIndex(category_select_id);
+                            }
 
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-                        }
-                    });
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+                            }
+                        });
+                    }
                 }
             }
             @Override

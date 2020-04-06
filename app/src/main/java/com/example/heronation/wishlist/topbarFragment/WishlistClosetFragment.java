@@ -84,7 +84,7 @@ public class WishlistClosetFragment extends Fragment {
         context=getActivity();
         item_list=new ArrayList<>();
 
-        getClothCategory();
+       // getClothCategory();
         getBodyInfo();
 
         /* 리사이클러뷰 객체 생성 */
@@ -107,7 +107,7 @@ public class WishlistClosetFragment extends Fragment {
         return rootView;
     }
 
-    /* 옷 종류 카테고리 받아오는 함수 */
+    /* 옷 종류 카테고리 받아오는 함수 - 수정 */
     public void getClothCategory(){
         String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
         APIInterface.GetClothCategoryService getClothCategoryService= ServiceGenerator.createService(APIInterface.GetClothCategoryService.class);

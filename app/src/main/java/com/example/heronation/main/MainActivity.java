@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         WishlistClosetNotLoginFragment.OnFragmentInteractionListener
 {
     /*
-    * Fragment Manager 선언 -- Acitivity 내에서 Fragment를 관리해주기 위해서는 FragmentManager를 사용해야함
+    * Fragment Manager 선언 -- Activity 내에서 Fragment를 관리해주기 위해서는 FragmentManager를 사용해야함
     *
     * 각각의 Fragment를 선언하고, Fragment 객체 생성
     */

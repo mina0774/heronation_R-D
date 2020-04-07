@@ -121,20 +121,16 @@
             android:orientation="horizontal">
 
     <Spinner
-
         android:id="@+id/wishlist_closet_spinner_category"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
         android:gravity="center"
         android:layout_width="104dp"
         android:layout_height="32dp"
-        android:background="@drawable/button_background"
-        />
+        android:background="@drawable/button_background" />
         </LinearLayout>
 
-
     </RelativeLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_wishilist_closet"

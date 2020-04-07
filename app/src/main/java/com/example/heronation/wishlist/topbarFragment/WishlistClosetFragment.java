@@ -83,8 +83,9 @@ public class WishlistClosetFragment extends Fragment {
 
         context=getActivity();
         item_list=new ArrayList<>();
+        cloth_category_list=new ArrayList<>();
 
-       // getClothCategory();
+        getClothCategory();
         getBodyInfo();
 
         /* 리사이클러뷰 객체 생성 */
@@ -93,7 +94,7 @@ public class WishlistClosetFragment extends Fragment {
         closet_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         /* 리사이클러뷰에 어댑터 지정 */
         closet_recyclerView.setAdapter(wishlistClosetAdapter);
-        loadItems();
+        loadItems("전체");
 
         /* 체형 수정 버튼 */
         edit_button.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +118,7 @@ public class WishlistClosetFragment extends Fragment {
             public void onResponse(Call<List<SubCategoryResponse>> call, Response<List<SubCategoryResponse>> response) {
                 if(response.isSuccessful()) {
                     List<SubCategoryResponse> subCategoryResponses = response.body();
+                    cloth_category_list.add("전체");
                     for (int i = 0; i < subCategoryResponses.size(); i++) {
                         cloth_category_list.add(subCategoryResponses.get(i).getName()); //해당 리스트는 옷 카테고리 리스트를 볼 수 있는 spinner의 아이템이 된다.
                     }
@@ -125,15 +127,16 @@ public class WishlistClosetFragment extends Fragment {
                         spinner_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, cloth_category_list);
                         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner_category.setAdapter(spinner_adapter);
-                        /*스피너에 옷 카테고리 아이템 추가 */
+                        /* 스피너의 옷 카테고리에 따라 측정 리스트를 다르게 뿌려줌 */
                         spinner_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                int pos = spinner_category.getSelectedItemPosition();
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    item_list.clear();
+                                    loadItems(cloth_category_list.get(position));
                             }
-
                             @Override
-                            public void onNothingSelected(AdapterView<?> adapterView) {
+                            public void onNothingSelected(AdapterView<?> parent) {
+
                             }
                         });
                     }
@@ -147,7 +150,7 @@ public class WishlistClosetFragment extends Fragment {
     }
 
 
-    public void GetClosetList(Integer page_num){
+    public void GetClosetList(Integer page_num, String cloth_category){
         String authorization="bearer "+MainActivity.access_token;
         String accept="application/json";
 
@@ -159,9 +162,14 @@ public class WishlistClosetFragment extends Fragment {
                 if(response.code()==200){
                     ClosetResponse closetResponse=response.body();
                     for(int i=0; i<closetResponse.getSize();i++){
-                        ClosetResponse.WardrobeResponse wardrobeResponse=closetResponse.getWardrobeResponses().get(i);
-                        item_list.add(new ClosetItem(wardrobeResponse.getImage(),wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
-                                wardrobeResponse.getCreateDt(),wardrobeResponse.getShopmallName(),"AR",wardrobeResponse.getId().toString()));
+                        ClosetResponse.WardrobeResponse wardrobeResponse = closetResponse.getWardrobeResponses().get(i);
+                        if(cloth_category.equals("전체")) {
+                            item_list.add(new ClosetItem(wardrobeResponse.getImage(), wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
+                                    wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
+                        }else if(cloth_category.equals(wardrobeResponse.getSubCategoryName())){
+                            item_list.add(new ClosetItem(wardrobeResponse.getImage(), wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
+                                    wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
+                        }
                     }
                     wishlistClosetAdapter.notifyDataSetChanged();
                 }
@@ -175,16 +183,18 @@ public class WishlistClosetFragment extends Fragment {
 
     }
 
-    /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
-    public void loadItems() {
+    /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식,
+     * cloth category는 현재 스피너가 선택한 옷 카테고리가 어떤 것인지 알려주는 매개변수 **/
+    public void loadItems(String cloth_category) {
+    //    item_list=new ArrayList<>();
         page_num=1;
-        GetClosetList(page_num);
+        GetClosetList(page_num,cloth_category);
         closet_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if(!closet_recyclerView.canScrollVertically(1)){
                     page_num=page_num+1;
-                    GetClosetList(page_num);
+                    GetClosetList(page_num,cloth_category);
                 }
             }
         });

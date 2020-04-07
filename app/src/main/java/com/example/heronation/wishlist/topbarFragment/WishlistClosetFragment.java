@@ -94,7 +94,6 @@ public class WishlistClosetFragment extends Fragment {
         closet_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         /* 리사이클러뷰에 어댑터 지정 */
         closet_recyclerView.setAdapter(wishlistClosetAdapter);
-        loadItems("전체");
 
         /* 체형 수정 버튼 */
         edit_button.setOnClickListener(new View.OnClickListener() {

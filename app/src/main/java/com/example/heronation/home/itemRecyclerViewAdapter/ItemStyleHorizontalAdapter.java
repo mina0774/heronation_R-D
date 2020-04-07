@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,6 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
                     holder.isSongLikedClicked = false;
                     DeleteItem(styleRecommendation.get(holder.getAdapterPosition()).getItemId());
                 }
-
             }
         });
     }
@@ -191,6 +191,14 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
             item_name=view.findViewById(R.id.recycler_view_item_best_item_name);
             originalPrice=view.findViewById(R.id.recycler_view_item_best_original_price);
             heart_button=view.findViewById(R.id.heart_button);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position=getAdapterPosition();
+                    Log.d("위치",position+"");
+                }
+            });
         }
     }
 }

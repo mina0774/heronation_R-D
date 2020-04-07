@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity
     public static String access_token;
     public static Integer control_closet_to_activity=-1;
     public static MainActivity mainActivity;
+    private Integer mMenuItem; // 현재 선택된 하단 메뉴 아이디
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +183,13 @@ public class MainActivity extends AppCompatActivity
     /* 뒤로가기 버튼을 눌렀을 경우 */
     @Override
     public void onBackPressed(){
-        backPressCloseHandler.onBackPressed();
+        MenuItem homeItem = bottomNavigationView.getMenu().getItem(0);
+
+        if(mMenuItem!=homeItem.getItemId()){
+            go_to_item();
+        }else {
+            backPressCloseHandler.onBackPressed();
+        }
     }
 
     // MeasurementResultActivity에서 측정한 옷 정보를 저장한 후 finish를 했을 때, 메인으로 돌아갈지, 옷장으로 돌아갈지에 대한 작업을 처리함
@@ -367,6 +374,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
+            mMenuItem=menuItem.getItemId();
             switch(menuItem.getItemId()){
                 case R.id.menuitem_bottombar_item:
                     transaction.replace(R.id.fragment_container, itemFragment).commit();
@@ -390,28 +398,33 @@ public class MainActivity extends AppCompatActivity
 
     public void go_to_measurement(){
         bottomNavigationView.setSelectedItemId(R.id.menuitem_bottombar_measurement);
+        mMenuItem=bottomNavigationView.getSelectedItemId();
         FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
         transaction.replace(R.id.fragment_container, measurementFragment).commit();
     }
 
     public void go_to_mypage_connecting(UserMyInfo userMyInfo){
+        mMenuItem=bottomNavigationView.getSelectedItemId();
         FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
         transaction.replace(R.id.fragment_container, mypageConnectingFragment).commit();
     }
 
     public void go_to_mypage_noconnecting(){
+        mMenuItem=bottomNavigationView.getSelectedItemId();
         FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
         transaction.replace(R.id.fragment_container, mypageNoConnectingFragment).commit();
     }
 
     public void go_to_wishlist(){
         bottomNavigationView.setSelectedItemId(R.id.menuitem_bottombar_wishlist);
+        mMenuItem=bottomNavigationView.getSelectedItemId();
         FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
         transaction.replace(R.id.fragment_container, wishlistFragment).commit();
     }
 
     public void go_to_item(){
         bottomNavigationView.setSelectedItemId(R.id.menuitem_bottombar_item);
+        mMenuItem=bottomNavigationView.getSelectedItemId();
         FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
         transaction.replace(R.id.fragment_container, itemFragment).commit();
     }

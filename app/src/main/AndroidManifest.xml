@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".measurement.Body.MeasurementBodyActivity"></activity>
+        <activity android:name=".home.ItemDetailActivity"></activity>
+        <activity android:name=".measurement.Body.MeasurementBodyActivity" />
         <activity android:name=".measurement.Style.MeasurementStyleActivity" />
         <activity android:name=".mypage.UserModifyActivity" />
         <activity android:name=".measurement.AR.MeasurementArInfoActivity" />
@@ -33,7 +34,6 @@
         <activity android:name=".measurement.AR.MeasurementResultActivity" />
         <activity android:name=".measurement.AR.MeasurementARActivity" />
         <activity android:name=".login_register.RegisterAiActivity" />
-        <activity android:name=".wishlist.WishlistClosetDeleteActivity" />
         <activity android:name=".login_register.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

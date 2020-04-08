@@ -2,6 +2,7 @@ package com.example.heronation.home.itemRecyclerViewAdapter;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
@@ -197,6 +199,9 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
                 public void onClick(View v) {
                     int position=getAdapterPosition();
                     Log.d("위치",position+"");
+                    Intent intent=new Intent(context, ItemDetailActivity.class);
+                    context.startActivity(intent);
+
                 }
             });
         }

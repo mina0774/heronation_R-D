@@ -59,4 +59,5 @@ dependencies {
     implementation 'de.javagl:obj:0.3.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     implementation 'id.zelory:compressor:2.1.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
 }

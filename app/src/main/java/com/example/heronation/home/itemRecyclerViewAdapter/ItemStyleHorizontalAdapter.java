@@ -201,10 +201,12 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
                 @Override
                 public void onClick(View v) {
                     int position=getAdapterPosition();
-                    Log.d("위치",position+"");
                     Intent intent=new Intent(context, ItemDetailActivity.class);
+                    intent.putExtra("item_image",styleRecommendation.get(position).getShopImage());
+                    intent.putExtra("item_name",styleRecommendation.get(position).getItemName());
+                    intent.putExtra("price",styleRecommendation.get(position).getPrice());
+                    intent.putExtra("item_id",styleRecommendation.get(position).getItemId().toString());
                     context.startActivity(intent);
-
                 }
             });
         }

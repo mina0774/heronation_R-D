@@ -64,6 +64,7 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
         Glide.with(context).load(styleRecommendation.get(item_position).getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
         holder.item_name.setText(styleRecommendation.get(item_position).getItemName());
         holder.originalPrice.setText(styleRecommendation.get(item_position).getPrice().toString());
+        holder.item_id.setText(styleRecommendation.get(item_position).getItemId().toString());
         holder.heart_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,6 +185,7 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
         private TextView item_name;
         private TextView originalPrice;
         private LottieAnimationView heart_button;
+        private TextView item_id;
         // 좋아요 클릭 여부
         private boolean isSongLikedClicked = false;
 
@@ -193,6 +195,7 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
             item_name=view.findViewById(R.id.recycler_view_item_best_item_name);
             originalPrice=view.findViewById(R.id.recycler_view_item_best_original_price);
             heart_button=view.findViewById(R.id.heart_button);
+            item_id=view.findViewById(R.id.recycler_view_item_item_id);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

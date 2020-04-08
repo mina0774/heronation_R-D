@@ -60,11 +60,7 @@ public class ItemHorizontalAdapter extends RecyclerView.Adapter<ItemHorizontalAd
         /* Glide를 통해 URL로 받아온 이미지를 로드해서 뷰홀더에 있는 이미지뷰에 뿌려줌 */
         Glide.with(context).load(itemList.get(item_position).getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
         holder.item_name.setText(itemList.get(item_position).getName());
-      //  holder.shop_name.setText(itemList.get(item_position).getShopName());
-      //    holder.originalPrice.setText(itemList.get(item_position).getOriginalPrice().toString());
-      //  holder.salePrice.setText(itemList.get(item_position).getSalePrice().toString());
-
-
+        holder.item_id.setText(itemList.get(item_position).getId().toString());
         holder.heart_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,10 +180,8 @@ public class ItemHorizontalAdapter extends RecyclerView.Adapter<ItemHorizontalAd
     public class HorizontalViewHolder extends RecyclerView.ViewHolder{
         private ImageView item_image;
         private TextView item_name;
-//        private TextView shop_name;
- //       private TextView originalPrice;
- //       private TextView salePrice;
         private LottieAnimationView heart_button;
+        private TextView item_id;
         // 좋아요 클릭 여부
         private boolean isSongLikedClicked = false;
 
@@ -195,10 +189,8 @@ public class ItemHorizontalAdapter extends RecyclerView.Adapter<ItemHorizontalAd
             super(view);
             item_image=view.findViewById(R.id.recycler_view_item_best_item_image);
             item_name=view.findViewById(R.id.recycler_view_item_best_item_name);
-    //        shop_name=view.findViewById(R.id.recycler_view_item_best_shop_name);
-    //        originalPrice=view.findViewById(R.id.recycler_view_item_best_original_price);
-    //        salePrice=view.findViewById(R.id.recycler_view_item_best_sale_price);
             heart_button=view.findViewById(R.id.heart_button);
+            item_id=view.findViewById(R.id.recycler_view_item_item_id);
         }
     }
 }

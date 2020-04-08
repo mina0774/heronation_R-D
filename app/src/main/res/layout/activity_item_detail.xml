@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.5"
+        android:background="#353535"
         android:orientation="horizontal">
 
         <ImageButton
@@ -18,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_close_black_24dp"
+            android:src="@drawable/ic_close_white_24dp"
             android:background="#00000000"/>
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_marginLeft="24dp"
             android:text="상품 정보"
             android:textSize="18sp"
+            android:textColor="#f3f3f3"
             android:layout_gravity="center_vertical"
             />
     </LinearLayout>

@@ -56,6 +56,12 @@
                 android:textColor="#FF0000"
                 android:textSize="12sp" />
 
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/recycler_view_item_item_id"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
 
         </LinearLayout>
     </LinearLayout>

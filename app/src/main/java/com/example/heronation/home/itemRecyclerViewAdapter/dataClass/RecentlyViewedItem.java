@@ -13,12 +13,6 @@ public class RecentlyViewedItem {
         this.item_price = item_price;
     }
 
-    public RecentlyViewedItem(String item_id, String image_url, String item_name) {
-        this.item_id = item_id;
-        this.image_url = image_url;
-        this.item_name = item_name;
-    }
-
     public String getItem_id() {
         return item_id;
     }

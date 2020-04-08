@@ -37,9 +37,11 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         String item_info="";
         RecentlyViewedItem recentlyViewedItem=new RecentlyViewedItem(item_id,item_image,item_name,item_price);
-        item_image=gson.toJson(recentlyViewedItem,RecentlyViewedItem.class);
+        item_info=gson.toJson(recentlyViewedItem,RecentlyViewedItem.class);
 
-
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(item_id,item_info);
+        editor.commit();
 
         // 닫는 버튼을 눌렀을 때
         item_detail_close_button.setOnClickListener(new View.OnClickListener() {

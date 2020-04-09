@@ -37,7 +37,7 @@ public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyView
     @Override
     public RecentlyViewedItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         /* 아이템 하나를 나타내는 xml파일을 뷰에 바인딩 */
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shopitem_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recently_viewed_item, parent, false);
         /* 뷰홀더 객체 생성 */
         RecentlyViewedItemAdapter.ViewHolder holder = new RecentlyViewedItemAdapter.ViewHolder(view);
         return holder;
@@ -47,11 +47,10 @@ public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyView
     @Override
     public void onBindViewHolder(@NonNull final RecentlyViewedItemAdapter.ViewHolder holder, int position) {
         int item_position = position;
-        /* Glide를 통해 URL로 받아온 이미지를 로드해서 뷰홀더에 있는 이미지뷰에 뿌려줌 */
-        Glide.with(context).load(itemList.get(item_position).getImage_url()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
         holder.item_name.setText(itemList.get(item_position).getItem_name());
         holder.item_price.setText(itemList.get(item_position).getItem_price());
         holder.item_id.setText(itemList.get(item_position).getItem_id());
+        Glide.with(context).load(itemList.get(item_position).getImage_url()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
     }
 
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.

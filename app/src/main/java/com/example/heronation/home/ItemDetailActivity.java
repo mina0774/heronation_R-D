@@ -28,7 +28,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         String item_id=getIntent().getStringExtra("item_id");
         String item_image=getIntent().getStringExtra("item_image");
         String item_name=getIntent().getStringExtra("item_name");
-        String item_price=getIntent().getStringExtra("price");
+        String item_price=getIntent().getStringExtra("item_price");
 
         // SharedPreferences 생성
         SharedPreferences sharedPreferences=getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE);

@@ -200,7 +200,8 @@ public interface APIInterface {
                                                            @Header("Accept") String accept,
                                                            @Header("Content-Type") String content_type,
                                                            @Body RequestBody requestBody);
-
     }
+
+    /* 특정 옷 아이템의 상세 사이즈를 받아오는 인터페이스 */
 
 }

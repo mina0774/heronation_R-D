@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,8 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.heronation.R;
-import com.example.heronation.login_register.dataClass.StyleTagResponse;
-import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.topbarFragment.ItemAiFragment;
@@ -48,16 +45,11 @@ import com.example.heronation.wishlist.topbarFragment.WishlistItemFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
 
 /*
  * implements~ 를 한 이유
@@ -452,7 +444,7 @@ public class MainActivity extends AppCompatActivity
 
         /* 필터 PopUp창 띄우기 */
         final PopupWindow mPopupWindow;
-        View popupView = getLayoutInflater().inflate(R.layout.activity_filter_pop_up, null);
+        View popupView = getLayoutInflater().inflate(R.layout.filter_pop_up, null);
         mPopupWindow = new PopupWindow(popupView);
         mPopupWindow.setWindowLayoutMode(WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT);

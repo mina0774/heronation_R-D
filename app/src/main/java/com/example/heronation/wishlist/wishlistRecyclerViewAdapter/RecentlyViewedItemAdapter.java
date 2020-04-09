@@ -2,6 +2,7 @@ package com.example.heronation.wishlist.wishlistRecyclerViewAdapter;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -17,8 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.RecentlyViewedItem;
+import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
+import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyViewedItemAdapter.ViewHolder> {
     private List<RecentlyViewedItem> itemList=new ArrayList<>();
@@ -47,10 +53,29 @@ public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyView
     @Override
     public void onBindViewHolder(@NonNull final RecentlyViewedItemAdapter.ViewHolder holder, int position) {
         int item_position = position;
+        Glide.with(context).load(itemList.get(item_position).getImage_url()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
         holder.item_name.setText(itemList.get(item_position).getItem_name());
         holder.item_price.setText(itemList.get(item_position).getItem_price());
         holder.item_id.setText(itemList.get(item_position).getItem_id());
-        Glide.with(context).load(itemList.get(item_position).getImage_url()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
+
+        //휴지통 버튼을 눌렀을 때, shared preference에서 해당 아이템을 삭제
+        holder.delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // SharedPreferences 생성
+                SharedPreferences sharedPreferences=context.getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.remove(itemList.get(item_position).getItem_id());
+
+                // 실시간으로 잘 지워졌음을 확인시켜주기 위해 임의로 리사이클러뷰에서 삭제
+                WishlistRecentlyViewedItemFragment.item_list.remove(position);
+                WishlistRecentlyViewedItemFragment.recentlyViewedItemAdapter.notifyItemRemoved(position);
+                WishlistRecentlyViewedItemFragment.recentlyViewedItemAdapter.notifyItemRangeChanged(position,WishlistClosetFragment.item_list.size());
+                editor.commit();
+            }
+        });
+
+
     }
 
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
@@ -78,8 +103,6 @@ public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyView
         private TextView item_price;
         private TextView item_id;
         private ImageButton delete_button;
-        // 좋아요 클릭 여부
-        private boolean isSongLikedClicked = false;
 
         public ViewHolder(View view) {
             super(view);

@@ -34,8 +34,8 @@ import static android.view.View.VISIBLE;
 
 
 public class WishlistRecentlyViewedItemFragment extends Fragment {
-    private ArrayList<RecentlyViewedItem> item_list;
-    private RecentlyViewedItemAdapter recentlyViewedItemAdapter;
+    public static ArrayList<RecentlyViewedItem> item_list;
+    public static RecentlyViewedItemAdapter recentlyViewedItemAdapter;
     @BindView(R.id.have_not_item) RelativeLayout have_not_recently_viewed_item;
     @BindView(R.id.recycler_view_recently_viewed_item) RecyclerView recycler_view_recently_viewed_item;
 

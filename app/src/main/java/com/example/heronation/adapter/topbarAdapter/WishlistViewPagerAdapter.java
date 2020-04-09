@@ -7,14 +7,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetNotLoginFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistItemFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistItemNotLoginFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
-import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemNotLoginFragment;
 
 public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
     private int mPageCount;
@@ -49,13 +47,9 @@ public class WishlistViewPagerAdapter extends FragmentPagerAdapter {
                     return wishlistItemFragment;
                 }
             case 2:
-                if (MainActivity.access_token==null) {
-                    WishlistRecentlyViewedItemNotLoginFragment wishlisttRecentlyViewedItemNotLoginFragment = new WishlistRecentlyViewedItemNotLoginFragment();
-                    return wishlisttRecentlyViewedItemNotLoginFragment;
-                } else {
                     WishlistRecentlyViewedItemFragment wishlistRecentlyViewedItemFragment = new WishlistRecentlyViewedItemFragment();
                     return wishlistRecentlyViewedItemFragment;
-                }
+
         }
         return null;
     }

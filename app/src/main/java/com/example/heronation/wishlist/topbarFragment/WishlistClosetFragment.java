@@ -179,7 +179,6 @@ public class WishlistClosetFragment extends Fragment {
                 System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
-
     }
 
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식,

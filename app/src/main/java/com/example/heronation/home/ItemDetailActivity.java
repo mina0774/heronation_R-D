@@ -17,7 +17,10 @@ import android.widget.RelativeLayout;
 import com.example.heronation.R;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.RecentlyViewedItem;
+import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
+import com.example.heronation.wishlist.dataClass.ClosetResponse;
+import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.ClosetItem;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.google.gson.Gson;
@@ -38,11 +41,19 @@ public class ItemDetailActivity extends AppCompatActivity {
     private String item_name;
     private String item_price;
 
+    // popup view를 나타냄
     PopupWindow mPopupWindow;
     View popupViewMeasurement;
     // 측정의 popup view에 해당하는 레이아웃 요소들
     RelativeLayout popup_no_size_info_in_item;
     Button popup_shopping_button;
+
+    ItemSizeInfo itemSizeInfo; // 해당 상품의 사이즈 정보를 담는 변수
+
+    // 해당 아이템 사이즈 정보, 신체 사이즈 정보, 기존에 측정한 옷 사이즈 정보의 여부를 확인하는 변수
+    Boolean item_size_info=false;
+    Boolean body_size_info=false;
+    Boolean measurement_cloth_size_info=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,11 +127,12 @@ public class ItemDetailActivity extends AppCompatActivity {
         popup_no_size_info_in_item=popupViewMeasurement.findViewById(R.id.popup_no_size_info_in_item);
         popup_shopping_button=popupViewMeasurement.findViewById(R.id.popup_shopping_button);
 
-        get_item_size_info();
+        getItemSizeInfo();
+
 
     }
 
-    public void get_item_size_info(){
+    public void getItemSizeInfo(){
         String authorization="bearer "+ MainActivity.access_token;
         String accept="application/json";
 
@@ -129,10 +141,14 @@ public class ItemDetailActivity extends AppCompatActivity {
         request.enqueue(new Callback<ItemSizeInfo>() {
             @Override
             public void onResponse(Call<ItemSizeInfo> call, Response<ItemSizeInfo> response) {
-                if(response.isSuccessful()){
+                if(response.isSuccessful()){ // 아이템에 대한 사이즈 정보가 있을 때
+                    item_size_info=true;
                     popup_no_size_info_in_item.setVisibility(View.GONE);
 
-                }else if(!response.isSuccessful()){
+                    itemSizeInfo = response.body();
+
+                }else if(!response.isSuccessful()){ // 아이템에 대한 사이즈 정보가 없을 때
+                    item_size_info=false;
                     popup_no_size_info_in_item.setVisibility(View.VISIBLE);
                     popup_shopping_button.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -140,7 +156,6 @@ public class ItemDetailActivity extends AppCompatActivity {
                             mPopupWindow.dismiss();
                         }
                     });
-
                 }
             }
 
@@ -149,6 +164,60 @@ public class ItemDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    public void getBodyInfo(){
+        String authorization="";
+        String accept="application/json";
+
+        if(!MainActivity.access_token.matches("null")) { //회원 사용자일 때
+            authorization="bearer " +MainActivity.access_token;
+            APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
+            retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
+            request.enqueue(new Callback<UserMyInfo>() {
+                @Override
+                public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                    if(response.isSuccessful()) { //정상적으로 로그인이 되었을 때
+                        UserMyInfo userMyInfo=response.body();
+                        if(userMyInfo.getBodyResponses().size()!=0){ // 신체 정보가 있을 때
+                            body_size_info=true;
+                        }else{ // 신체 정보가 없을 때
+                            body_size_info=false;
+                        }
+                    }
+
+                }
+                @Override
+                public void onFailure(Call<UserMyInfo> call, Throwable t) {
+                }
+            });
+        }
+    }
+
+    public void getMeasurementClothInfo(){
+        String authorization="bearer "+MainActivity.access_token;
+        String accept="application/json";
+
+        APIInterface.GetClosetListService getClosetListService=ServiceGenerator.createService(APIInterface.GetClosetListService.class);
+        retrofit2.Call<ClosetResponse> request= getClosetListService.GetClosetList(1,200,"id,desc",authorization,accept);
+        request.enqueue(new Callback<ClosetResponse>() {
+            @Override
+            public void onResponse(Call<ClosetResponse> call, Response<ClosetResponse> response) {
+                if(response.isSuccessful()){
+                    ClosetResponse closetResponse=response.body();
+                    if(closetResponse.getSize()!=0){ // 기존에 측정한 옷의 정보가 있을 때
+                        measurement_cloth_size_info=true;
+
+                    }else{ // 기존에 측정한 옷의 정보가 없을 때
+                        measurement_cloth_size_info=false;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ClosetResponse> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
     }
 }

@@ -4,17 +4,38 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:padding="32dp"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_gravity="bottom"
         android:background="@drawable/round_rectangle"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="32dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="사이즈 정보"/>
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/popup_no_size_info_in_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="160dp"
+                android:text="해당하는 상품의\n사이즈 정보가 없습니다."
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/popup_shopping_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_click_background"
+                android:text="쇼핑 계속하기"
+                android:textColor="#ffffff" />
+
+        </RelativeLayout>
 
 
     </LinearLayout>

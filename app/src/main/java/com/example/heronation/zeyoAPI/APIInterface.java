@@ -1,5 +1,6 @@
 package com.example.heronation.zeyoAPI;
 
+import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
@@ -203,5 +204,11 @@ public interface APIInterface {
     }
 
     /* 특정 옷 아이템의 상세 사이즈를 받아오는 인터페이스 */
+    public interface GetItemSizeInfoService{
+        @GET("api/goods/items/{item_id}")
+        retrofit2.Call<ItemSizeInfo> GetItemSizeInfo(@Path("item_id") Integer item_id,
+                                                     @Header("authorization") String authorization,
+                                                     @Header("Accept") String accept);
+    }
 
 }

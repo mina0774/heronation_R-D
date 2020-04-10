@@ -9,19 +9,40 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+
 import com.example.heronation.R;
+import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.RecentlyViewedItem;
+import com.example.heronation.main.MainActivity;
+import com.example.heronation.zeyoAPI.APIInterface;
+import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ItemDetailActivity extends AppCompatActivity {
     @BindView(R.id.item_detail_close_button) ImageButton item_detail_close_button;
     @BindView(R.id.item_detail_size_button) ImageButton item_detail_size_button;
+
+    private String item_id;
+    private String item_image;
+    private String item_name;
+    private String item_price;
+
+    PopupWindow mPopupWindow;
+    View popupViewMeasurement;
+    // 측정의 popup view에 해당하는 레이아웃 요소들
+    RelativeLayout popup_no_size_info_in_item;
+    Button popup_shopping_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +50,14 @@ public class ItemDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_detail);
         ButterKnife.bind(this);
 
-        String item_id=getIntent().getStringExtra("item_id");
-        String item_image=getIntent().getStringExtra("item_image");
-        String item_name=getIntent().getStringExtra("item_name");
-        String item_price=getIntent().getStringExtra("item_price");
+        item_id=getIntent().getStringExtra("item_id");
+        item_image=getIntent().getStringExtra("item_image");
+        item_name=getIntent().getStringExtra("item_name");
+        item_price=getIntent().getStringExtra("item_price");
 
-        // SharedPreferences 생성
-        SharedPreferences sharedPreferences=getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE);
-        // GSON 생성
-        Gson gson=new GsonBuilder().create();
+        /* 최근 본 상품 목록을 만들기 위해 해당 아이템의 정보를 SharedPreferences에 저장함 */
+        SharedPreferences sharedPreferences=getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE); // SharedPreferences 생성
+        Gson gson=new GsonBuilder().create(); // GSON 생성
 
         String item_info="";
         RecentlyViewedItem recentlyViewedItem=new RecentlyViewedItem(item_id,item_image,item_name,item_price);
@@ -66,9 +86,8 @@ public class ItemDetailActivity extends AppCompatActivity {
 
     public void open_measurement_panel(){
         /* 필터 PopUp창 띄우기 */
-        final PopupWindow mPopupWindow;
-        View popupView = getLayoutInflater().inflate(R.layout.measurement_pop_up, null);
-        mPopupWindow = new PopupWindow(popupView);
+        popupViewMeasurement = getLayoutInflater().inflate(R.layout.measurement_pop_up, null);
+        mPopupWindow = new PopupWindow(popupViewMeasurement);
         mPopupWindow.setWindowLayoutMode(WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT);
         //팝업 터치 가능
@@ -77,17 +96,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         mPopupWindow.setOutsideTouchable(true);
         //외부터치 인식을 위한 추가 설정 : 미 설정시 외부는 null로 생각하고 터치 인식 X
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //애니메이션 활성화
-
         // PopUp 창 띄우기
-        mPopupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
-
-        /* 블러 처리 -- 대체 코드 있으면 대체하기 (불안정함)
-         *  ViewGroup.LayoutParams를 WindowManager.LayoutParams에 캐스팅하기 위함인데,
-         * 버전에 따라 ViewGroup의 자식인 다른 예를 들면 FrameLayout.LayoutParams를 가리키기도 함.
-         * 하지만, WindowManager.LayoutParams에 FrameLayout.LayoutParams는 캐스팅 되지 않으므로 오류가 발생함
-         * 이를 처리하기 위해서 if문으로 분기를 해주었으나, 불안정한 코드라서 대체 방법이 있다면 대체해야할 것 같음.
-         * */
+        mPopupWindow.showAtLocation(popupViewMeasurement, Gravity.BOTTOM, 0, 0);
+        // 블러 처리
         View container;
         if (android.os.Build.VERSION.SDK_INT > 22) {
             container = (View) mPopupWindow.getContentView().getParent().getParent();
@@ -100,5 +111,44 @@ public class ItemDetailActivity extends AppCompatActivity {
         p.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         p.dimAmount = 0.6f;
         wm.updateViewLayout(container, p);
+
+        // 레이아웃 요소
+        popup_no_size_info_in_item=popupViewMeasurement.findViewById(R.id.popup_no_size_info_in_item);
+        popup_shopping_button=popupViewMeasurement.findViewById(R.id.popup_shopping_button);
+
+        get_item_size_info();
+
+    }
+
+    public void get_item_size_info(){
+        String authorization="bearer "+ MainActivity.access_token;
+        String accept="application/json";
+
+        APIInterface.GetItemSizeInfoService itemSizeInfoService= ServiceGenerator.createService(APIInterface.GetItemSizeInfoService.class);
+        retrofit2.Call<ItemSizeInfo> request=itemSizeInfoService.GetItemSizeInfo(Integer.parseInt(item_id),authorization,accept);
+        request.enqueue(new Callback<ItemSizeInfo>() {
+            @Override
+            public void onResponse(Call<ItemSizeInfo> call, Response<ItemSizeInfo> response) {
+                if(response.isSuccessful()){
+                    popup_no_size_info_in_item.setVisibility(View.GONE);
+
+                }else if(!response.isSuccessful()){
+                    popup_no_size_info_in_item.setVisibility(View.VISIBLE);
+                    popup_shopping_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mPopupWindow.dismiss();
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ItemSizeInfo> call, Throwable t) {
+
+            }
+        });
+
     }
 }

@@ -20,8 +20,11 @@ import com.example.heronation.R;
 import com.example.heronation.home.dataClass.RecentlyViewedItem;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -58,23 +61,30 @@ public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyView
         holder.item_price.setText(itemList.get(item_position).getItem_price());
         holder.item_id.setText(itemList.get(item_position).getItem_id());
 
-        /*
+
         //휴지통 버튼을 눌렀을 때, shared preference에서 해당 아이템을 삭제
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // SharedPreferences 생성
                 SharedPreferences sharedPreferences=context.getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE);
+                Gson gson=new GsonBuilder().create();
+                LinkedHashMap linkedHashMap=gson.fromJson(sharedPreferences.getString("items",""),LinkedHashMap.class);
+                linkedHashMap.remove(itemList.get(item_position).getItem_id());
+
+                String items_info=gson.toJson(linkedHashMap,LinkedHashMap.class);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
-                editor.remove(itemList.get(item_position).getItem_id());
+
+                editor.putString("items",items_info);
 
                 // 실시간으로 잘 지워졌음을 확인시켜주기 위해 임의로 리사이클러뷰에서 삭제
                 WishlistRecentlyViewedItemFragment.item_list.remove(position);
                 WishlistRecentlyViewedItemFragment.recentlyViewedItemAdapter.notifyItemRemoved(position);
                 WishlistRecentlyViewedItemFragment.recentlyViewedItemAdapter.notifyItemRangeChanged(position,WishlistClosetFragment.item_list.size());
+
                 editor.commit();
             }
-        }); */
+        });
 
 
     }

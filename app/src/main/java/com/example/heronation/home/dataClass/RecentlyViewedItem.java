@@ -1,14 +1,14 @@
 package com.example.heronation.home.dataClass;
 
 public class RecentlyViewedItem {
-    String item_id;
     String image_url;
+    String item_id;
     String item_name;
     String item_price;
 
-    public RecentlyViewedItem(String item_id, String image_url, String item_name, String item_price) {
-        this.item_id = item_id;
+    public RecentlyViewedItem(String image_url, String item_id, String item_name, String item_price) {
         this.image_url = image_url;
+        this.item_id = item_id;
         this.item_name = item_name;
         this.item_price = item_price;
     }

@@ -35,7 +35,11 @@
         <activity android:name=".measurement.AR.MeasurementARActivity" />
         <activity android:name=".login_register.RegisterAiActivity" />
         <activity android:name=".login_register.IntroActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".login_register.RegisterBodyActivity" />
         <activity android:name=".wishlist.WishlistClosetItemDetailActivity" />
@@ -44,13 +48,7 @@
         <activity android:name=".login_register.RegisterActivity" />
         <activity android:name=".home.ItemSearchActivity" />
         <activity android:name=".login_register.loginPageActivity" />
-        <activity android:name=".main.MainActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+        <activity android:name=".main.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

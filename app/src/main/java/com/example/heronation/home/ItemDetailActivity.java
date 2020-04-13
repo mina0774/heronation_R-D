@@ -73,16 +73,16 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         String items_info = "";
         String item_info = "";
-        RecentlyViewedItem recentlyViewedItem = new RecentlyViewedItem(item_id, item_image, item_name, item_price);
+        RecentlyViewedItem recentlyViewedItem = new RecentlyViewedItem(item_image, item_id, item_name, item_price);
         item_info = gson.toJson(recentlyViewedItem, RecentlyViewedItem.class);
         LinkedHashMap linkedHashMap=new LinkedHashMap();
 
         if(sharedPreferences.getAll().isEmpty()) { // 최근 본 상품이 비어있을 때
-            linkedHashMap.put(item_id,recentlyViewedItem);
+            linkedHashMap.put(item_id,item_info);
             items_info=gson.toJson(linkedHashMap,LinkedHashMap.class);
         } else{ // 최근 본 상품이 있을 때
             linkedHashMap=gson.fromJson(sharedPreferences.getString("items",""),LinkedHashMap.class);
-            linkedHashMap.put(item_id,recentlyViewedItem);
+            linkedHashMap.put(item_id,item_info);
             items_info=gson.toJson(linkedHashMap,LinkedHashMap.class);
         }
 

@@ -12,14 +12,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.heronation.login_register.dataClass.BodyResponse;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +38,8 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+
+import static java.lang.Integer.parseInt;
 
 public class  loginPageActivity extends AppCompatActivity {
     @BindView(R.id.login_id_et) EditText login_id_et;
@@ -48,12 +58,26 @@ public class  loginPageActivity extends AppCompatActivity {
 
         login_id_et.setText( getIntent().getStringExtra("user_id") );
 
+        /* 로그인 버튼을 클릭했을 때 */
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Login();
             }
         });
+
+        /* 파이어베이스 구독 설정 */
+        // Topic 방식
+        FirebaseMessaging.getInstance().subscribeToTopic("rnd")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("FCM Log", "getInstanceId failed", task.getException());
+                            return;
+                        }
+                    }
+                });
     }
 
     public void Login(){
@@ -71,14 +95,13 @@ public class  loginPageActivity extends AppCompatActivity {
             @Override
             public void onResponse(retrofit2.Call<UserLoginInfo> call, retrofit2.Response<UserLoginInfo> response) {
                 UserLoginInfo userLoginInfo=response.body();
-                GetStyleTagInfo(userLoginInfo.access_token);
-
-
                 if(response.code()!=200){
                     backgroundThreadShortToast(getApplicationContext(), "등록되지 않은 아이디거나 아이디 또는 비밀번호가 일치하지 않습니다.");
                     return;
                 }
                 else if(response.code()==200){
+                    GetUserInfo(userLoginInfo.access_token);
+
                     //JSON 파일의 값이 이렇게 Parsing 되어 값이 나옴
                     System.out.println("Response" + userLoginInfo.access_token+","+userLoginInfo.refresh_token+","+userLoginInfo.member_id+","+userLoginInfo.member_name);
                     backgroundThreadShortToast(getApplicationContext(), "로그인이 완료되었습니다.");
@@ -116,8 +139,8 @@ public class  loginPageActivity extends AppCompatActivity {
         }
     }
 
-    /* 사용자 스타일 태그 정보 받아오기 */
-    public void GetStyleTagInfo(String access_token) {
+    /* 사용자 스타일 태그 정보, 체형 정보 받아와서 구독하기 */
+    public void GetUserInfo(String access_token) {
         String authorization = "";
         String accept = "application/json";
         authorization = "bearer " + access_token;
@@ -126,13 +149,33 @@ public class  loginPageActivity extends AppCompatActivity {
         request.enqueue(new Callback<UserMyInfo>() {
             @Override
             public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
-                style_tag_id = "";
                 UserMyInfo userMyInfo = response.body();
-                for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
-                    style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
-                    if (i == userMyInfo.getStyleTagResponses().size() - 1) {
-                        style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
+
+                // TODO: 2020-04-13  현재 스타일 태그 정보를 회원가입에서 받지 않아서, 스타일 태그 정보가 없으면 로그인이 이뤄지지 않음 계속 널값 오류
+                //스타일 태그 받기
+                style_tag_id = "";
+                if(!userMyInfo.getStyleTagResponses().isEmpty()) {
+                    for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
+                        style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
+                        if (i == userMyInfo.getStyleTagResponses().size() - 1) {
+                            style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
+                        }
                     }
+                }
+
+                // 체형 정보가 있을 시에 구독하기
+                if(userMyInfo.getBodyResponses().size()!=0){
+                    userMyInfo.getGender();
+                    long shoulder_value = Math.round(userMyInfo.getBodyResponses().get(0).getValue()); // 어깨 너비 - 43
+                    long waist_value =  Math.round(userMyInfo.getBodyResponses().get(4).getValue()); // 허리 둘레 - 80
+
+                    String topic1=userMyInfo.getGender()+"_T_"+shoulder_value;
+                    String topic2=userMyInfo.getGender()+"_B_"+waist_value;
+                    String topic3=userMyInfo.getGender()+"_A_"+shoulder_value+"_"+waist_value;
+
+                    FirebaseMessaging.getInstance().subscribeToTopic(topic1);
+                    FirebaseMessaging.getInstance().subscribeToTopic(topic2);
+                    FirebaseMessaging.getInstance().subscribeToTopic(topic3);
                 }
             }
 

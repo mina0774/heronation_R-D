@@ -85,8 +85,6 @@ public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyView
                 editor.commit();
             }
         });
-
-
     }
 
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.

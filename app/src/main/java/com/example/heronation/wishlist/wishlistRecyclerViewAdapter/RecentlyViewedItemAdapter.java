@@ -1,6 +1,5 @@
 package com.example.heronation.wishlist.wishlistRecyclerViewAdapter;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -17,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.RecentlyViewedItem;
+import com.example.heronation.home.dataClass.RecentlyViewedItem;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
 

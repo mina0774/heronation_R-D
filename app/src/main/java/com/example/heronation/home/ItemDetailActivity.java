@@ -16,15 +16,16 @@ import android.widget.RelativeLayout;
 
 import com.example.heronation.R;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.RecentlyViewedItem;
+import com.example.heronation.home.dataClass.RecentlyViewedItem;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.wishlist.dataClass.ClosetResponse;
-import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.ClosetItem;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.LinkedHashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,12 +71,23 @@ public class ItemDetailActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences=getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE); // SharedPreferences 생성
         Gson gson=new GsonBuilder().create(); // GSON 생성
 
-        String item_info="";
-        RecentlyViewedItem recentlyViewedItem=new RecentlyViewedItem(item_id,item_image,item_name,item_price);
-        item_info=gson.toJson(recentlyViewedItem,RecentlyViewedItem.class);
+        String items_info = "";
+        String item_info = "";
+        RecentlyViewedItem recentlyViewedItem = new RecentlyViewedItem(item_id, item_image, item_name, item_price);
+        item_info = gson.toJson(recentlyViewedItem, RecentlyViewedItem.class);
+        LinkedHashMap linkedHashMap=new LinkedHashMap();
+
+        if(sharedPreferences.getAll().isEmpty()) { // 최근 본 상품이 비어있을 때
+            linkedHashMap.put(item_id,recentlyViewedItem);
+            items_info=gson.toJson(linkedHashMap,LinkedHashMap.class);
+        } else{ // 최근 본 상품이 있을 때
+            linkedHashMap=gson.fromJson(sharedPreferences.getString("items",""),LinkedHashMap.class);
+            linkedHashMap.put(item_id,recentlyViewedItem);
+            items_info=gson.toJson(linkedHashMap,LinkedHashMap.class);
+        }
 
         SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString(item_id,item_info);
+        editor.putString("items",items_info);
         editor.commit();
 
         // 닫는 버튼을 눌렀을 때

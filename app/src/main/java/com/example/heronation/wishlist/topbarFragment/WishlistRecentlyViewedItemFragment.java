@@ -1,6 +1,5 @@
 package com.example.heronation.wishlist.topbarFragment;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,10 +15,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.heronation.R;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.RecentlyViewedItem;
-import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.FavoriteItemAdapter;
+import com.example.heronation.home.dataClass.RecentlyViewedItem;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.RecentlyViewedItemAdapter;
-import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.FavoriteItem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -60,18 +57,19 @@ public class WishlistRecentlyViewedItemFragment extends Fragment {
             have_not_recently_viewed_item.setVisibility(View.INVISIBLE);
             recycler_view_recently_viewed_item.setVisibility(VISIBLE);
 
+            /*
             Map<String,?> keys= sharedPreferences.getAll();
             Gson gson=new GsonBuilder().create();
 
             for(Map.Entry<String,?> entry : keys.entrySet()){
                 Log.d("shared",entry.getValue().toString()+"");
-                RecentlyViewedItem recentlyViewedItem=gson.fromJson(entry.getValue().toString(),RecentlyViewedItem.class); //각 데이터를 shared preference로부터 모두 받아와서
+                RecentlyViewedItem recentlyViewedItem=entry.getValue().toString(),RecentlyViewedItem.class); //각 데이터를 shared preference로부터 모두 받아와서
                 item_list.add(recentlyViewedItem); // 아이템 리스트에 추가함
                 recycler_view_recently_viewed_item.setLayoutManager(new GridLayoutManager(getActivity(),2, GridLayoutManager.VERTICAL,false));
                 recentlyViewedItemAdapter=new RecentlyViewedItemAdapter(item_list,getActivity()); //Adapter 안에 horizontal adapter를 선언하여 이에 대한 레이아웃을 Grid로 지정
-                /* 레이아웃 매니저 수직으로 지정 */
+
                 recycler_view_recently_viewed_item.setAdapter(recentlyViewedItemAdapter);
-            }
+            } */
 
         }
 

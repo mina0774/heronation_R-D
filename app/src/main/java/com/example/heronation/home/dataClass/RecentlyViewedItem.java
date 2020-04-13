@@ -1,4 +1,4 @@
-package com.example.heronation.home.itemRecyclerViewAdapter.dataClass;
+package com.example.heronation.home.dataClass;
 
 public class RecentlyViewedItem {
     String item_id;

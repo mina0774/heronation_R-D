@@ -71,7 +71,8 @@ public class  loginPageActivity extends AppCompatActivity {
             @Override
             public void onResponse(retrofit2.Call<UserLoginInfo> call, retrofit2.Response<UserLoginInfo> response) {
                 UserLoginInfo userLoginInfo=response.body();
-                 GetStyleTagInfo(userLoginInfo.access_token);
+                GetStyleTagInfo(userLoginInfo.access_token);
+
 
                 if(response.code()!=200){
                     backgroundThreadShortToast(getApplicationContext(), "등록되지 않은 아이디거나 아이디 또는 비밀번호가 일치하지 않습니다.");

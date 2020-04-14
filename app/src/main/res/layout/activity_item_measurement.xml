@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.ItemMeasurementActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            android:background="#00000000"
+            android:layout_gravity="center_vertical"
+            android:onClick="click_back_button"
+            android:src="@drawable/ic_back_button_24dp" />
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사이즈 정보"
+            android:textColor="#000000"
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+
+    <!-- 첫번째 화면 -->
+    <LinearLayout
+        android:id="@+id/size_info_in_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginRight="11.3dp"
+            android:layout_marginLeft="11.3dp"
+            android:layout_marginTop="6.7dp"
+            android:layout_marginBottom="6.7dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/card"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginLeft="12dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/gray_24dp"
+                android:layout_gravity="center_vertical" />
+
+            <LinearLayout
+                android:layout_marginLeft="7dp"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="현재 보고 있는 상품"
+                    android:textSize="15sp"
+                    android:lineHeight="11.3sp"
+                    android:letterSpacing="-0.1"
+                    android:textColor="#2f2f30"/>
+
+                <TextView
+                    android:layout_marginTop="3.3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="히어로네이션"
+                    android:lineHeight="10sp"
+                    android:textColor="#acacac"
+                    android:letterSpacing="-0.08"
+                    android:textSize="13sp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginRight="11.3dp"
+            android:layout_marginLeft="11.3dp"
+            android:layout_marginTop="6.7dp"
+            android:layout_marginBottom="6.7dp"
+            android:background="@drawable/cloth_card"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/body_compare_button"
+                android:layout_margin="8dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_button"
+                android:text="내 체형과 비교하기"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/item_compare_button"
+                android:layout_margin="8dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_button"
+                android:text="등록한 상품과 비교하기"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/no_size_info_in_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="280dp"
+            android:layout_centerHorizontal="true"
+            android:text="해당하는 상품의\n사이즈 정보가 없습니다."
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <Button
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/button_click_background"
+            android:text="쇼핑 계속하기"
+            android:onClick="click_shop_button"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+
+</LinearLayout>

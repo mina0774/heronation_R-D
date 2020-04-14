@@ -163,7 +163,7 @@ public class  loginPageActivity extends AppCompatActivity {
                     }
                 }
 
-                // TODO: 2020-04-13 한 번 구독하면, 기기에서 계속 기억하고 있기 때문에, 다른 아이디로 로그인을 하더라도 전에 구독한 topic이 기록에 남음 / 현재 세션은 토큰값이 시간이 지나면 무효화됨 / 로그아웃이 되었는데, 알림이 간다? 
+                // TODO: 2020-04-13 한 번 구독하면, 기기에서 계속 기억하고 있기 때문에, 다른 아이디로 로그인을 하더라도 전에 구독한 topic이 기록에 남음 / 현재 세션은 토큰값이 시간이 지나면 무효화됨 / 로그아웃이 되었는데, 알림이 간다?
                 // 체형 정보가 있을 시에 구독하기
                 if(userMyInfo.getBodyResponses().size()!=0){
                     userMyInfo.getGender();

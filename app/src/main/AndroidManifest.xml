@@ -25,7 +25,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".home.ItemDetailActivity"></activity>
+        <activity android:name=".home.ItemCompareItemSizeActivity"></activity>
+        <activity android:name=".home.ItemCompareBodySizeActivity" />
+        <activity android:name=".home.ItemMeasurementActivity" />
+        <activity android:name=".home.ItemDetailActivity" />
         <activity android:name=".measurement.Body.MeasurementBodyActivity" />
         <activity android:name=".measurement.Style.MeasurementStyleActivity" />
         <activity android:name=".mypage.UserModifyActivity" />

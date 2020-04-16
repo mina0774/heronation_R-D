@@ -37,7 +37,7 @@
 
     <!-- 신체와 비교하기 -->
     <LinearLayout
-        android:id="@+id/compare_size_body"
+        android:id="@+id/have_body_size_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -72,5 +72,30 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/have_not_body_size_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="280dp"
+            android:layout_centerHorizontal="true"
+            android:text="고객님의 신체에 대한\n사이즈 정보가 없습니다."
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <Button
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/button_click_background"
+            android:text="신체 사이즈 등록하기"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
 
 </LinearLayout>

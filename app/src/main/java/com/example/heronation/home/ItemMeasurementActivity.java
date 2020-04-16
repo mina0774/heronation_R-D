@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.heronation.R;
@@ -31,6 +32,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
 
     String item_id; // 현재 보고 있는 상품의 아이템명
 
+    @BindView(R.id.size_info_in_item) LinearLayout size_info_in_item;
     @BindView(R.id.no_size_info_in_item) RelativeLayout no_size_info_in_item;
     @BindView(R.id.body_compare_button) Button body_compare_button;
     @BindView(R.id.item_compare_button) Button item_compare_button;
@@ -42,6 +44,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         item_id=getIntent().getStringExtra("item_id");
+        getItemSizeInfo();
 
         // 신체와 비교하기 버튼 눌렀을 때
         body_compare_button.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +86,15 @@ public class ItemMeasurementActivity extends AppCompatActivity {
             public void onResponse(Call<ItemSizeInfo> call, Response<ItemSizeInfo> response) {
                 if(response.isSuccessful()){ // 아이템에 대한 사이즈 정보가 있을 때
                     item_size_info=true;
+                    size_info_in_item.setVisibility(View.VISIBLE);
+                    no_size_info_in_item.setVisibility(View.GONE);
+
+                    ItemSizeInfo itemSizeInfo=response.body();
+
                 }else if(!response.isSuccessful()){ // 아이템에 대한 사이즈 정보가 없을 때
                     item_size_info=false;
+                    size_info_in_item.setVisibility(View.GONE);
+                    no_size_info_in_item.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -95,58 +105,4 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         });
     }
 
-    public void getBodyInfo(){
-        String authorization="";
-        String accept="application/json";
-
-        if(!MainActivity.access_token.matches("null")) { //회원 사용자일 때
-            authorization="bearer " +MainActivity.access_token;
-            APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
-            retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
-            request.enqueue(new Callback<UserMyInfo>() {
-                @Override
-                public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
-                    if(response.isSuccessful()) { //정상적으로 로그인이 되었을 때
-                        UserMyInfo userMyInfo=response.body();
-                        if(userMyInfo.getBodyResponses().size()!=0){ // 신체 정보가 있을 때
-                            body_size_info=true;
-                        }else{ // 신체 정보가 없을 때
-                            body_size_info=false;
-                        }
-                    }
-
-                }
-                @Override
-                public void onFailure(Call<UserMyInfo> call, Throwable t) {
-                }
-            });
-        }
-    }
-
-    public void getMeasurementClothInfo(){
-        String authorization="bearer "+ MainActivity.access_token;
-        String accept="application/json";
-
-        APIInterface.GetClosetListService getClosetListService= ServiceGenerator.createService(APIInterface.GetClosetListService.class);
-        retrofit2.Call<ClosetResponse> request= getClosetListService.GetClosetList(1,200,"id,desc",authorization,accept);
-        request.enqueue(new Callback<ClosetResponse>() {
-            @Override
-            public void onResponse(Call<ClosetResponse> call, Response<ClosetResponse> response) {
-                if(response.isSuccessful()){
-                    ClosetResponse closetResponse=response.body();
-                    if(closetResponse.getSize()!=0){ // 기존에 측정한 옷의 정보가 있을 때
-                        measurement_cloth_size_info=true;
-
-                    }else{ // 기존에 측정한 옷의 정보가 없을 때
-                        measurement_cloth_size_info=false;
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ClosetResponse> call, Throwable t) {
-                System.out.println("error + Connect Server Error is " + t.toString());
-            }
-        });
-    }
 }

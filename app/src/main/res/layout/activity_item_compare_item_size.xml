@@ -35,7 +35,7 @@
 
     <!--등록된 상품과 비교하기 -->
     <LinearLayout
-        android:id="@+id/compare_size_item"
+        android:id="@+id/have_item_size_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -128,6 +128,33 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/have_not_item_size_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="280dp"
+            android:layout_centerHorizontal="true"
+            android:text="등록된 상품의\n사이즈 정보가 없습니다."
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <Button
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/button_click_background"
+            android:text="상품 사이즈 측정하기"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>

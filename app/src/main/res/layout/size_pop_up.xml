@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:padding="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/round_rectangle"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GENDER"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/shop_filter_gender_male"
+                android:layout_marginLeft="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:background="@drawable/selector_selected"
+                android:text="남자"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/shop_filter_gender_female"
+                android:layout_marginLeft="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:background="@drawable/selector_selected"
+                android:text="여자"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999999" />
+
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AGE"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/shop_ranking_search_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="20대 중반"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:max="6"
+                android:progress="2" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#999999" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CATEGORY"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/shop_filter_category_cloth"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="의류"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/shop_filter_category_acc"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="잡화"
+                    android:textSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/shop_filter_category_bag"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="가방"
+                    android:textSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/shop_filter_category_shoes"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="슈즈"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#999999" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STYLE"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/shop_filter_style_feminine"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="페미닌"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/shop_filter_style_modern"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="모던시크"
+                    android:textSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/shop_filter_style_simple"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="심플베이직"
+                    android:textSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/shop_filter_style_lovely"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="러블리"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/shop_filter_style_unique"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="유니크"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/shop_filter_style_missy"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="미시스타일"
+                    android:textSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/shop_filter_style_campus"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="캠퍼스룩"
+                    android:textSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/shop_filter_style_vintage"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="빈티지"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/shop_filter_style_sexy"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="섹시글램"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/shop_filter_style_school"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="스쿨룩"
+                    android:textSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/shop_filter_style_romantic"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="로맨틱"
+                    android:textSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/shop_filter_style_office"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/selector_selected"
+                    android:text="오피스룩"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#999999" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/shop_filter_return"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="32dp"
+            android:background="@drawable/round_rectange_color"
+            android:layout_marginRight="4dp"
+            android:text="초기화"
+            android:textSize="12sp"
+            android:textColor="#ffffff"/>
+
+            <Button
+                android:id="@+id/shop_filter_finish"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="4dp"
+                android:layout_height="32dp"
+                android:background="@drawable/round_rectange_color"
+                android:text="선택완료"
+                android:textSize="12sp"
+                android:textColor="#ffffff"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

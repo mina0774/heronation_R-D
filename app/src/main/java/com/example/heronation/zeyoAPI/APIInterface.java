@@ -7,6 +7,7 @@ import com.example.heronation.login_register.dataClass.UserLoginInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
 import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
+import com.example.heronation.measurement.Body.dataClass.BodySizeLevel;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 import com.example.heronation.wishlist.dataClass.ClosetDetailResponse;
 import com.example.heronation.wishlist.dataClass.ClosetResponse;
@@ -209,6 +210,17 @@ public interface APIInterface {
         retrofit2.Call<ItemSizeInfo> GetItemSizeInfo(@Path("item_id") Integer item_id,
                                                      @Header("authorization") String authorization,
                                                      @Header("Accept") String accept);
+    }
+
+    /* 키, 몸무게를 바탕으로 측정 default값 받기 */
+    public interface GetMeasurementDefaultValueService{
+        @GET("api/compares/bodyLevel")
+        retrofit2.Call<BodySizeLevel> GetMeasurementDefaultValue(@Query("gender") String gender,
+                                                                 @Query("age") String age,
+                                                                 @Query("height") String height,
+                                                                 @Query("weight") String weight,
+                                                                 @Header("Authorization") String authorization,
+                                                                 @Header("Accept") String accept);
     }
 
 }

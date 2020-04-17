@@ -62,7 +62,7 @@
     <RelativeLayout
         android:layout_marginLeft="17dp"
         android:layout_marginRight="17dp"
-        android:layout_marginTop="135dp"
+        android:layout_marginTop="140dp"
         android:layout_width="match_parent"
         android:layout_height="394dp"
         android:background="@drawable/btn_background">
@@ -187,10 +187,10 @@
     </RelativeLayout>
 
     <Button
-        android:background="@drawable/rectangle_button"
+        android:background="@drawable/rectangle_blue"
         android:layout_marginRight="25dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="549dp"
+        android:layout_marginTop="553dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="다음"

@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".measurement.Body.MeasurementBodySizeInfoActivity"></activity>
+        <activity android:name=".measurement.Body.MeasurementBodySizeDetailInfoActivity"></activity>
+        <activity android:name=".measurement.Body.MeasurementBodySizeInfoActivity" />
         <activity android:name=".home.ItemCompareItemSizeActivity" />
         <activity android:name=".home.ItemCompareBodySizeActivity" />
         <activity android:name=".home.ItemMeasurementActivity" />

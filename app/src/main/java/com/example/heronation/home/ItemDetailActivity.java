@@ -43,13 +43,6 @@ public class ItemDetailActivity extends AppCompatActivity {
     private String item_name;
     private String item_price;
 
-    // popup view를 나타냄
-    PopupWindow mPopupWindow;
-    View popupViewMeasurement;
-    // 측정의 popup view에 해당하는 레이아웃 요소들
-    RelativeLayout popup_no_size_info_in_item;
-    Button popup_shopping_button;
-
     ItemSizeInfo itemSizeInfo; // 해당 상품의 사이즈 정보를 담는 변수
 
     @Override

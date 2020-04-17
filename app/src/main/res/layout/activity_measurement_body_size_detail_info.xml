@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".measurement.Body.MeasurementBodySizeDetailInfoActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitCenter"
+            android:background="#00000000"
+            android:layout_gravity="center_vertical"
+            android:onClick="click_back_button"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내 체형"
+            android:layout_gravity="center_vertical"
+            android:textColor="#2f2f30"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_background"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="각 부위를 탭해 신체 치수를 입력해주세요"
+            android:textSize="13sp"
+            android:textColor="#2f2f30"/>
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="등록된 체형정보는 언제든 수정할 수 있으며 비교 데이터로 활용됩니다."
+            android:gravity="center"
+            android:textSize="11sp"
+            android:textColor="#acacac"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="140dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_background">
+
+        <ImageView
+            android:layout_marginTop="25.5dp"
+            android:layout_marginLeft="74.5dp"
+            android:layout_marginBottom="25.4dp"
+            android:layout_width="239.6dp"
+            android:layout_height="397.1dp"
+            android:src="@drawable/img_body"/>
+
+        <ImageButton
+        android:id="@+id/add_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="320dp"
+        android:layout_marginTop="392dp"
+        android:src="@drawable/ic_popup"
+        android:background="#00000000" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="146dp"
+            android:layout_marginTop="47dp"
+            android:src="@drawable/shoulder_size"/>
+
+        <TextView
+            android:layout_marginTop="35.5dp"
+            android:layout_marginLeft="161.5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background_purple"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="4dp"
+            android:textColor="#656aed"
+            android:letterSpacing="-0.77sp"
+            android:textSize="11sp"
+            android:text="어깨 너비"/>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="155dp"
+            android:layout_marginTop="87dp"
+            android:src="@drawable/shoulder_size"/>
+
+        <TextView
+            android:layout_marginTop="75.5dp"
+            android:layout_marginLeft="160.5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background_purple"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="4dp"
+            android:textColor="#656aed"
+            android:letterSpacing="-0.77sp"
+            android:textSize="11sp"
+            android:text="가슴 둘레"/>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="154.1dp"
+            android:layout_marginTop="180.4dp"
+            android:src="@drawable/shoulder_size"/>
+
+        <TextView
+            android:layout_marginTop="169.5dp"
+            android:layout_marginLeft="160.5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background_purple"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="4dp"
+            android:textColor="#656aed"
+            android:letterSpacing="-0.77sp"
+            android:textSize="11sp"
+            android:text="허리 둘레"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
+            android:layout_marginTop="47.4dp"
+            android:src="@drawable/vertical_size"/>
+
+        <TextView
+            android:layout_marginTop="103.5dp"
+            android:layout_marginLeft="21.5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background_purple"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="4dp"
+            android:textColor="#656aed"
+            android:letterSpacing="-0.77sp"
+            android:textSize="11sp"
+            android:text="상체 길이"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
+            android:layout_marginTop="182dp"
+            android:src="@drawable/vertical_size2"/>
+
+        <TextView
+            android:layout_marginTop="281.5dp"
+            android:layout_marginLeft="21.5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background_purple"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="4dp"
+            android:textColor="#656aed"
+            android:letterSpacing="-0.77sp"
+            android:textSize="11sp"
+            android:text="하체 길이"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="136.5dp"
+            android:layout_marginTop="237.5dp"
+            android:background="@drawable/btn_background_purple"
+            android:letterSpacing="-0.77sp"
+            android:paddingLeft="12dp"
+            android:paddingTop="5dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="4dp"
+            android:text="허벅지둘레"
+            android:textColor="#656aed"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_marginTop="371.5dp"
+            android:layout_marginLeft="152.5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background_purple"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="4dp"
+            android:textColor="#656aed"
+            android:letterSpacing="-0.77sp"
+            android:textSize="11sp"
+            android:text="발목"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="249.6dp"
+            android:layout_marginTop="55dp"
+            android:src="@drawable/arm_size"/>
+
+        <TextView
+            android:layout_marginTop="89.5dp"
+            android:layout_marginLeft="255.5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background_purple"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="4dp"
+            android:textColor="#656aed"
+            android:letterSpacing="-0.77sp"
+            android:textSize="11sp"
+            android:text="팔 길이"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:background="@drawable/rectangle_blue"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="613dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="체형정보 저장하기"
+        android:textSize="21sp"
+        android:textColor="#ffffff"/>
+
+
+
+</RelativeLayout>

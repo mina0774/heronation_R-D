@@ -40,10 +40,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginRight="11.3dp"
-            android:layout_marginLeft="11.3dp"
-            android:layout_marginTop="6.7dp"
-            android:layout_marginBottom="6.7dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="17dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
@@ -56,7 +56,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:src="@drawable/gray_24dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:layout_gravity="center_vertical" />
 
             <LinearLayout
@@ -91,14 +91,102 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginRight="11.3dp"
-            android:layout_marginLeft="11.3dp"
-            android:layout_marginTop="6.7dp"
-            android:layout_marginBottom="6.7dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginBottom="21dp"
             android:background="@drawable/cloth_card"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_weight="6">
+
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:orientation="horizontal">
+                
+                <Button
+                    android:id="@+id/measurement_size_S"
+                    android:layout_marginRight="10.7dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35.3dp"
+                    android:background="@drawable/button_background_purple"
+                    android:text="S"
+                    android:textColor="#656aed"
+                    android:textStyle="bold"
+                    android:textSize="15sp"/>
+
+                <Button
+                    android:id="@+id/measurement_size_M"
+                    android:layout_marginRight="10.7dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35.3dp"
+                    android:background="@drawable/button_background"
+                    android:text="M"
+                    android:textStyle="bold"
+                    android:textColor="#dddddd"
+                    android:textSize="15sp"/>
+
+                <Button
+                    android:id="@+id/measurement_size_L"
+                    android:layout_marginRight="10.7dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35.3dp"
+                    android:background="@drawable/button_background"
+                    android:text="L"
+                    android:textStyle="bold"
+                    android:textColor="#dddddd"
+                    android:textSize="15sp"/>
+
+                <Button
+                    android:id="@+id/measurement_size_XL"
+                    android:layout_marginRight="10.7dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35.3dp"
+                    android:background="@drawable/button_background"
+                    android:text="XL"
+                    android:textStyle="bold"
+                    android:textColor="#dddddd"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="35.7dp"
+                android:layout_marginLeft="20.5dp"
+                android:layout_marginRight="20.5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="37.5dp">
+
+                <LinearLayout
+                    android:id="@+id/measurement_result_item"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"/>
+                <LinearLayout
+                    android:id="@+id/measurement_result_distance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp"/>
+
+                <LinearLayout
+                    android:id="@+id/measurement_result_cm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"/>
+
+
+
+            </LinearLayout>
 
         </LinearLayout>
 

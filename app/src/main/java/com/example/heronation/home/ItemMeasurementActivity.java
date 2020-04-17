@@ -3,12 +3,18 @@ package com.example.heronation.home;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
@@ -19,6 +25,7 @@ import com.example.heronation.zeyoAPI.ServiceGenerator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,12 +37,16 @@ public class ItemMeasurementActivity extends AppCompatActivity {
     Boolean body_size_info=false;
     Boolean measurement_cloth_size_info=false;
 
-    String item_id; // 현재 보고 있는 상품의 아이템명
+    String item_id; // 현재 보고 있는 상품의 아이템 아이디
+    String item_name; // 현재 보고 있는 상품의 아이템명
+    String item_image; // 현재 보고 있는 상품의 이미지 URL
 
     @BindView(R.id.size_info_in_item) LinearLayout size_info_in_item;
     @BindView(R.id.no_size_info_in_item) RelativeLayout no_size_info_in_item;
     @BindView(R.id.body_compare_button) Button body_compare_button;
     @BindView(R.id.item_compare_button) Button item_compare_button;
+    @BindView(R.id.measurement_item_name) TextView measurement_item_name;
+    @BindView(R.id.measurement_item_image) ImageView measurement_item_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +55,12 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         item_id=getIntent().getStringExtra("item_id");
+        item_name=getIntent().getStringExtra("item_name");
+        measurement_item_name.setText(item_name);
+        item_image=getIntent().getStringExtra("item_image");
+        measurement_item_image.setBackground(new ShapeDrawable(new OvalShape()));
+        measurement_item_image.setClipToOutline(true);
+        Glide.with(getApplicationContext()).load(item_image).error(R.drawable.shop_item_example_img_2).crossFade().into(measurement_item_image);
         getItemSizeInfo();
 
         // 신체와 비교하기 버튼 눌렀을 때

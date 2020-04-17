@@ -103,7 +103,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="4dp"
             android:textColor="#656aed"
-            android:letterSpacing="-0.77sp"
+            android:letterSpacing="-0.1"
             android:textSize="11sp"
             android:text="어깨 너비"/>
 
@@ -125,7 +125,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="4dp"
             android:textColor="#656aed"
-            android:letterSpacing="-0.77sp"
+            android:letterSpacing="-0.1"
             android:textSize="11sp"
             android:text="가슴 둘레"/>
 
@@ -147,7 +147,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="4dp"
             android:textColor="#656aed"
-            android:letterSpacing="-0.77sp"
+            android:letterSpacing="-0.1"
             android:textSize="11sp"
             android:text="허리 둘레"/>
 
@@ -169,7 +169,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="4dp"
             android:textColor="#656aed"
-            android:letterSpacing="-0.77sp"
+            android:letterSpacing="-0.1"
             android:textSize="11sp"
             android:text="상체 길이"/>
 
@@ -191,7 +191,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="4dp"
             android:textColor="#656aed"
-            android:letterSpacing="-0.77sp"
+            android:letterSpacing="-0.1"
             android:textSize="11sp"
             android:text="하체 길이"/>
 
@@ -201,7 +201,7 @@
             android:layout_marginLeft="136.5dp"
             android:layout_marginTop="237.5dp"
             android:background="@drawable/btn_background_purple"
-            android:letterSpacing="-0.77sp"
+            android:letterSpacing="-0.1"
             android:paddingLeft="12dp"
             android:paddingTop="5dp"
             android:paddingRight="12dp"
@@ -221,7 +221,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="4dp"
             android:textColor="#656aed"
-            android:letterSpacing="-0.77sp"
+            android:letterSpacing="-0.1"
             android:textSize="11sp"
             android:text="발목"/>
 
@@ -243,7 +243,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="4dp"
             android:textColor="#656aed"
-            android:letterSpacing="-0.77sp"
+            android:letterSpacing="-0.1"
             android:textSize="11sp"
             android:text="팔 길이"/>
 

@@ -3,6 +3,7 @@ package com.example.heronation.measurement.Body;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -40,6 +41,11 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
 
     public void click_back_button(View view){
         finish();
+    }
+
+    public void click_next_button(View view){
+        Intent intent=new Intent(MeasurementBodySizeInfoActivity.this,MeasurementBodySizeDetailInfoActivity.class);
+        startActivity(intent);
     }
 
     public void open_panel() {

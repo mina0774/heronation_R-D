@@ -92,6 +92,8 @@ public class ItemDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ItemDetailActivity.this,ItemMeasurementActivity.class);
+                intent.putExtra("item_name",item_name);
+                intent.putExtra("item_image",item_image);
                 intent.putExtra("item_id",item_id);
                 startActivity(intent);
             }

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.example.heronation.R;
 import com.example.heronation.home.MeasurementBodyActivity;
@@ -26,6 +29,9 @@ import com.example.heronation.measurement.Body.dataClass.UserBodySizeDetail;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -34,8 +40,11 @@ import retrofit2.Response;
 
 public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
     @BindView(R.id.add_button) ImageButton add_button;
+    @BindView(R.id.finish_button) Button activity_finish_button;
 
     /* 팝업창 */
+    PopupWindow mPopupWindow;
+
     Button top_size_button;
     Button bottom_size_button;
     LinearLayout top_size_layout;
@@ -50,7 +59,7 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
     EditText measure_item_id_9_et;
     EditText measure_item_id_11_et;
     EditText measure_item_id_12_et;
-
+    Button finish_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +73,13 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
                 open_panel();
             }
         });
+
+        activity_finish_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void click_back_button(View view) {
@@ -73,7 +89,6 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
     public void open_panel() {
 
         /* 필터 PopUp창 띄우기 */
-        final PopupWindow mPopupWindow;
         View popupView = getLayoutInflater().inflate(R.layout.size_detail_pop_up, null);
         mPopupWindow = new PopupWindow(popupView);
         mPopupWindow.setWindowLayoutMode(WindowManager.LayoutParams.MATCH_PARENT,
@@ -108,6 +123,9 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
         p.dimAmount = 0.6f;
         wm.updateViewLayout(container, p);
 
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.update();
+
         top_size_button=popupView.findViewById(R.id.top_size_button);
         bottom_size_button=popupView.findViewById(R.id.bottom_size_button);
         top_size_layout=popupView.findViewById(R.id.top_size_layout);
@@ -122,6 +140,7 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
         measure_item_id_9_et=popupView.findViewById(R.id.measure_item_id_9_et);
         measure_item_id_11_et=popupView.findViewById(R.id.measure_item_id_11_et);
         measure_item_id_12_et=popupView.findViewById(R.id.measure_item_id_12_et);
+        finish_button=popupView.findViewById(R.id.finish_button);
 
         get_body_size_detail_info(); // 기존 저장된 체형 정보 나타내기
 
@@ -146,6 +165,13 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
                 top_size_button.setTextColor(Color.parseColor("#acacac"));
                 bottom_size_layout.setVisibility(View.VISIBLE);
                 top_size_layout.setVisibility(View.GONE);
+            }
+        });
+
+        finish_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    modify_body_size_detail_info();
             }
         });
     }
@@ -176,7 +202,6 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
                                 case 9: measure_item_id_9_et.setText(userBodySizeDetail.getBodyResponses().get(i).getValue().toString()); break;
                                 case 11: measure_item_id_11_et.setText(userBodySizeDetail.getBodyResponses().get(i).getValue().toString()); break;
                                 case 12: measure_item_id_12_et.setText(userBodySizeDetail.getBodyResponses().get(i).getValue().toString()); break;
-
                             }
                         }
                     }
@@ -188,7 +213,65 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    public void modify_body_size_detail_info(){
+        /* 현재 EditText에 입력 되어있는 정보를 이용하여 치수를 담는 리스트를 만듦 */
+        BodySizeDetail bodySizeDetail2=new BodySizeDetail(2,measure_item_id_2_et.getText().toString());
+        BodySizeDetail bodySizeDetail3=new BodySizeDetail(3,measure_item_id_3_et.getText().toString());
+        BodySizeDetail bodySizeDetail4=new BodySizeDetail(4,measure_item_id_4_et.getText().toString());
+        BodySizeDetail bodySizeDetail5=new BodySizeDetail(5,measure_item_id_5_et.getText().toString());
+        BodySizeDetail bodySizeDetail6=new BodySizeDetail(6,measure_item_id_6_et.getText().toString());
+        BodySizeDetail bodySizeDetail7=new BodySizeDetail(7,measure_item_id_7_et.getText().toString());
+        BodySizeDetail bodySizeDetail8=new BodySizeDetail(8,measure_item_id_8_et.getText().toString());
+        BodySizeDetail bodySizeDetail9=new BodySizeDetail(9,measure_item_id_9_et.getText().toString());
+        BodySizeDetail bodySizeDetail11=new BodySizeDetail(11,measure_item_id_11_et.getText().toString());
+        BodySizeDetail bodySizeDetail12=new BodySizeDetail(12,measure_item_id_12_et.getText().toString());
+
+        List<BodySizeDetail> bodySizeDetailList=new ArrayList<>();
+        bodySizeDetailList.clear();
+
+        bodySizeDetailList.add(bodySizeDetail2); bodySizeDetailList.add(bodySizeDetail3);
+        bodySizeDetailList.add(bodySizeDetail4); bodySizeDetailList.add(bodySizeDetail5);
+        bodySizeDetailList.add(bodySizeDetail6); bodySizeDetailList.add(bodySizeDetail7);
+        bodySizeDetailList.add(bodySizeDetail8); bodySizeDetailList.add(bodySizeDetail9);
+        bodySizeDetailList.add(bodySizeDetail11); bodySizeDetailList.add(bodySizeDetail12);
+
+        String authorization="bearer "+ MainActivity.access_token;
+        String accept="application/json";
+        String content_type="application/json";
+
+        APIInterface.ModifyBodySizeDetailInfoService modifyBodySizeDetailInfoService=ServiceGenerator.createService(APIInterface.ModifyBodySizeDetailInfoService.class);
+        retrofit2.Call<String> request=modifyBodySizeDetailInfoService.ModifyBodySizeDetailInfo(authorization,accept,content_type,bodySizeDetailList);
+        request.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()){
+                    backgroundThreadShortToast(getApplicationContext(),"체형 정보 변경이 완료되었습니다.");
+                    mPopupWindow.dismiss();
+                }
+                else{
+                    backgroundThreadShortToast(getApplicationContext(),"올바른 형식으로 입력해주세요.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
+    public static void backgroundThreadShortToast(final Context context, final String msg) {
+        if (context != null && msg != null) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 }

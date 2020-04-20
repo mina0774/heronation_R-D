@@ -2,7 +2,12 @@ package com.example.heronation.measurement.Body.dataClass;
 
 public class BodySizeDetail {
     private Integer measureItemId;
-    private Integer value;
+    private String value;
+
+    public BodySizeDetail(Integer measureItemId, String value) {
+        this.measureItemId = measureItemId;
+        this.value = value;
+    }
 
     public Integer getMeasureItemId() {
         return measureItemId;
@@ -12,11 +17,11 @@ public class BodySizeDetail {
         this.measureItemId = measureItemId;
     }
 
-    public Integer getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(String value) {
         this.value = value;
     }
 }

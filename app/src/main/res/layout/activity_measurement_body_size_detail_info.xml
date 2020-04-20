@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="각 부위를 탭해 신체 치수를 입력해주세요"
+            android:text="추가 버튼을 탭해 신체 치수를 입력해주세요"
             android:textSize="13sp"
             android:textColor="#2f2f30"/>
 
@@ -80,7 +80,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:scaleType="centerCrop"
-        android:layout_marginLeft="320dp"
+        android:layout_marginLeft="302dp"
         android:layout_marginTop="392dp"
         android:src="@drawable/ic_popup"
         android:background="#00000000" />
@@ -250,13 +250,14 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/finish_button"
         android:background="@drawable/rectangle_blue"
         android:layout_marginRight="25dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="613dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="체형정보 저장하기"
+        android:text="완료하기"
         android:textSize="21sp"
         android:textColor="#ffffff"/>
 

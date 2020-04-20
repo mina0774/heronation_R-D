@@ -1,4 +1,4 @@
-package com.example.heronation.measurement.Body.dataClass;
+package com.example.heronation.home.dataClass;
 
 import java.io.Serializable;
 

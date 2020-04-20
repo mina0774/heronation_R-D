@@ -14,8 +14,7 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
 import com.example.heronation.R;
-import com.example.heronation.measurement.Body.MeasurementBodySizeDetailInfoActivity;
-import com.example.heronation.measurement.Body.dataClass.BodySizeLevel;
+import com.example.heronation.home.dataClass.BodySizeLevel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -7,14 +7,15 @@ import com.example.heronation.login_register.dataClass.UserLoginInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
 import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
-import com.example.heronation.measurement.Body.dataClass.BodySizeLevel;
+import com.example.heronation.home.dataClass.BodySizeLevel;
+import com.example.heronation.measurement.Body.dataClass.BodySizeDetail;
+import com.example.heronation.measurement.Body.dataClass.UserBodySizeDetail;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 import com.example.heronation.wishlist.dataClass.ClosetDetailResponse;
 import com.example.heronation.wishlist.dataClass.ClosetResponse;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -220,6 +221,20 @@ public interface APIInterface {
                                                                  @Query("height") String height,
                                                                  @Query("weight") String weight,
                                                                  @Header("Authorization") String authorization,
+                                                                 @Header("Accept") String accept);
+    }
+
+    public interface ModifyBodySizeDetailInfoService{
+        @PATCH("api/consumers/body")
+        retrofit2.Call<String> ModifyBodySizeDetailInfo(@Header("Authorization") String authorization,
+                                              @Header("Accept") String accept,
+                                              @Header("Content-Type") String content_type,
+                                              @Body List<BodySizeDetail> bodySizeDetailList);
+    }
+
+    public interface GetBodySizeDetailInfoService{
+        @GET("api/consumers/body")
+        retrofit2.Call<UserBodySizeDetail> GetBodySizeDetailInfo(@Header("authorization") String authorization,
                                                                  @Header("Accept") String accept);
     }
 

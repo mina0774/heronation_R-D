@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/top_size_button"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
                 android:textSize="17sp" />
 
             <Button
+                android:id="@+id/bottom_size_button"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -55,10 +57,12 @@
                     android:textColor="#2f2f30"/>
                 
                <EditText
+                   android:id="@+id/measure_item_id_2_et"
                    android:layout_marginLeft="30.6dp"
                    android:layout_width="0dp"
                    android:layout_weight="2"
                    android:layout_height="wrap_content"
+                   android:textAlignment="center"
                    android:textSize="16sp"/>
 
                 <TextView
@@ -90,10 +94,49 @@
                     android:textColor="#2f2f30"/>
 
                 <EditText
+                    android:id="@+id/measure_item_id_4_et"
                     android:layout_marginLeft="30.6dp"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="cm"
+                    android:textSize="15sp"
+                    android:textColor="#2f2f30"/>
+            </LinearLayout>
+
+            <View
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:background="#29000000"/>
+
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="암홀          :"
+                    android:textSize="17sp"
+                    android:textColor="#2f2f30"/>
+
+                <EditText
+                    android:id="@+id/measure_item_id_12_et"
+                    android:layout_marginLeft="30.6dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -125,45 +168,12 @@
                     android:textColor="#2f2f30"/>
 
                 <EditText
+                    android:id="@+id/measure_item_id_3_et"
                     android:layout_marginLeft="30.6dp"
                     android:layout_width="0dp"
                     android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="cm"
-                    android:textSize="15sp"
-                    android:textColor="#2f2f30"/>
-            </LinearLayout>
-
-            <View
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="#29000000"/>
-
-            <LinearLayout
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="암홀           :"
-                    android:textSize="17sp"
-                    android:textColor="#2f2f30"/>
-
-                <EditText
-                    android:layout_marginLeft="30.6dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -195,10 +205,12 @@
                     android:textColor="#2f2f30"/>
 
                 <EditText
+                    android:id="@+id/measure_item_id_5_et"
                     android:layout_marginLeft="30.6dp"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -233,10 +245,49 @@
                     android:textColor="#2f2f30"/>
 
                 <EditText
+                    android:id="@+id/measure_item_id_6_et"
                     android:layout_marginLeft="30.6dp"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="cm"
+                    android:textSize="15sp"
+                    android:textColor="#2f2f30"/>
+            </LinearLayout>
+
+            <View
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:background="#29000000"/>
+
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="엉덩이 둘레:"
+                    android:textSize="17sp"
+                    android:textColor="#2f2f30"/>
+
+                <EditText
+                    android:id="@+id/measure_item_id_7_et"
+                    android:layout_marginLeft="30.6dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -268,10 +319,12 @@
                     android:textColor="#2f2f30"/>
 
                 <EditText
+                    android:id="@+id/measure_item_id_8_et"
                     android:layout_marginLeft="30.6dp"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -298,15 +351,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="발목              :"
+                    android:text="발목            :"
                     android:textSize="17sp"
                     android:textColor="#2f2f30"/>
 
                 <EditText
+                    android:id="@+id/measure_item_id_11_et"
                     android:layout_marginLeft="30.6dp"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -338,10 +393,12 @@
                     android:textColor="#2f2f30"/>
 
                 <EditText
+                    android:id="@+id/measure_item_id_9_et"
                     android:layout_marginLeft="30.6dp"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:textSize="16sp"/>
 
                 <TextView

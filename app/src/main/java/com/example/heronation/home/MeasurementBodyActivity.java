@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.heronation.R;
-import com.example.heronation.measurement.Body.dataClass.BodySizeLevel;
+import com.example.heronation.home.dataClass.BodySizeLevel;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 

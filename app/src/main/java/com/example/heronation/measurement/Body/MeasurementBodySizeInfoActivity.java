@@ -4,15 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
 import com.example.heronation.R;
+import com.example.heronation.measurement.Body.dataClass.BodySizeLevel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,17 +28,43 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
     @BindView(R.id.check_button_hip) ImageButton check_button_hip;
     @BindView(R.id.check_button_thigh) ImageButton check_button_thigh;
 
+    /* 지정된 부위별 사이즈 레벨 민감도 */
+    Integer shoulder_sensibility_level;
+    Integer chest_sensibility_level;
+    Integer waist_sensibility_level;
+    Integer hip_sensibility_level;
+    Integer thigh_sensibility_level;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement_body_size_info);
         ButterKnife.bind(this);
+        BodySizeLevel bodySizeLevel=(BodySizeLevel)getIntent().getSerializableExtra("body_size_default_level");
 
         add_button_all.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                open_panel();
-            }
+            public void onClick(View v) { open_panel(); }
+        });
+        check_button_shoulder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { open_panel(); }
+        });
+        check_button_chest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { open_panel(); }
+        });
+        check_button_waist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { open_panel(); }
+        });
+        check_button_hip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { open_panel(); }
+        });
+        check_button_thigh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { open_panel(); }
         });
     }
 
@@ -85,5 +114,341 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
         p.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         p.dimAmount = 0.6f;
         wm.updateViewLayout(container, p);
+
+        /* 각 부위별 사이즈 레벨 버튼 */
+        Button shoulder_level_size_1=(Button)popupView.findViewById(R.id.shoulder_level_size_1);
+        Button shoulder_level_size_2=(Button)popupView.findViewById(R.id.shoulder_level_size_2);
+        Button shoulder_level_size_3=(Button)popupView.findViewById(R.id.shoulder_level_size_3);
+        Button shoulder_level_size_4=(Button)popupView.findViewById(R.id.shoulder_level_size_4);
+        Button shoulder_level_size_5=(Button)popupView.findViewById(R.id.shoulder_level_size_5);
+
+        Button chest_level_size_1=(Button)popupView.findViewById(R.id.chest_level_size_1);
+        Button chest_level_size_2=(Button)popupView.findViewById(R.id.chest_level_size_2);
+        Button chest_level_size_3=(Button)popupView.findViewById(R.id.chest_level_size_3);
+        Button chest_level_size_4=(Button)popupView.findViewById(R.id.chest_level_size_4);
+        Button chest_level_size_5=(Button)popupView.findViewById(R.id.chest_level_size_5);
+
+        Button waist_level_size_1=(Button)popupView.findViewById(R.id.waist_level_size_1);
+        Button waist_level_size_2=(Button)popupView.findViewById(R.id.waist_level_size_2);
+        Button waist_level_size_3=(Button)popupView.findViewById(R.id.waist_level_size_3);
+        Button waist_level_size_4=(Button)popupView.findViewById(R.id.waist_level_size_4);
+        Button waist_level_size_5=(Button)popupView.findViewById(R.id.waist_level_size_5);
+
+        Button hip_level_size_1=(Button)popupView.findViewById(R.id.hip_level_size_1);
+        Button hip_level_size_2=(Button)popupView.findViewById(R.id.hip_level_size_2);
+        Button hip_level_size_3=(Button)popupView.findViewById(R.id.hip_level_size_3);
+        Button hip_level_size_4=(Button)popupView.findViewById(R.id.hip_level_size_4);
+        Button hip_level_size_5=(Button)popupView.findViewById(R.id.hip_level_size_5);
+
+        Button thigh_level_size_1=(Button)popupView.findViewById(R.id.thigh_level_size_1);
+        Button thigh_level_size_2=(Button)popupView.findViewById(R.id.thigh_level_size_2);
+        Button thigh_level_size_3=(Button)popupView.findViewById(R.id.thigh_level_size_3);
+        Button thigh_level_size_4=(Button)popupView.findViewById(R.id.thigh_level_size_4);
+        Button thigh_level_size_5=(Button)popupView.findViewById(R.id.thigh_level_size_5);
+
+        Button finish_button=(Button)popupView.findViewById(R.id.finish_button);
+
+        shoulder_level_size_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shoulder_sensibility_level=1;
+                shoulder_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple));
+                shoulder_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        shoulder_level_size_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shoulder_sensibility_level=2;
+                shoulder_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple));
+                shoulder_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        shoulder_level_size_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shoulder_sensibility_level=3;
+                shoulder_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple));
+                shoulder_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        shoulder_level_size_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shoulder_sensibility_level=4;
+                shoulder_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple));
+                shoulder_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        shoulder_level_size_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shoulder_sensibility_level=5;
+                shoulder_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple));
+                shoulder_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                shoulder_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        chest_level_size_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chest_sensibility_level=1;
+                chest_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple));
+                chest_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        chest_level_size_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chest_sensibility_level=2;
+                chest_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple));
+                chest_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        chest_level_size_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chest_sensibility_level=3;
+                chest_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple));
+                chest_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        chest_level_size_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chest_sensibility_level=4;
+                chest_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple));
+                chest_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        chest_level_size_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chest_sensibility_level=5;
+                chest_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple));
+                chest_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                chest_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        waist_level_size_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                waist_sensibility_level=1;
+                waist_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple));
+                waist_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        waist_level_size_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                waist_sensibility_level=2;
+                waist_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple));
+                waist_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        waist_level_size_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                waist_sensibility_level=3;
+                waist_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple));
+                waist_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        waist_level_size_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                waist_sensibility_level=4;
+                waist_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple));
+                waist_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        waist_level_size_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                waist_sensibility_level=5;
+                waist_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple));
+                waist_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                waist_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        hip_level_size_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hip_sensibility_level=1;
+                hip_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple));
+                hip_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        hip_level_size_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hip_sensibility_level=2;
+                hip_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple));
+                hip_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        hip_level_size_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hip_sensibility_level=3;
+                hip_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple));
+                hip_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        hip_level_size_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hip_sensibility_level=4;
+                hip_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple));
+                hip_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        hip_level_size_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hip_sensibility_level=5;
+                hip_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple));
+                hip_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                hip_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+         thigh_level_size_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                thigh_sensibility_level=1;
+                thigh_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple));
+                thigh_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        thigh_level_size_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                thigh_sensibility_level=2;
+                thigh_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple));
+                thigh_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        thigh_level_size_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                thigh_sensibility_level=3;
+                thigh_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple));
+                thigh_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        thigh_level_size_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                thigh_sensibility_level=4;
+                thigh_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple));
+                thigh_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_5.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+        thigh_level_size_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                thigh_sensibility_level=5;
+                thigh_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple));
+                thigh_level_size_2.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_3.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_4.setBackground(getDrawable(R.drawable.button_background));
+                thigh_level_size_1.setBackground(getDrawable(R.drawable.button_background));
+            }
+        });
+
+
+
     }
 }

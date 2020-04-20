@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:padding="27dp"
         android:layout_width="match_parent"
@@ -27,31 +26,51 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/shoulder_level_size_1"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_1" />
+                android:text="좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/shoulder_level_size_2"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_2" />
+                android:text="조금좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
 
             <Button
+                android:id="@+id/shoulder_level_size_3"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_3" />
+                android:text="보통"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/shoulder_level_size_4"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_4" />
+                android:text="조금넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/shoulder_level_size_5"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_5" />
+                android:text="넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
         </LinearLayout>
 
         <TextView
@@ -68,31 +87,51 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/chest_level_size_1"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_1" />
+                android:text="좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/chest_level_size_2"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_2" />
+                android:text="조금좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
 
             <Button
+                android:id="@+id/chest_level_size_3"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_3" />
+                android:text="보통"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/chest_level_size_4"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_4" />
+                android:text="조금넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/chest_level_size_5"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_5" />
+                android:text="넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
         </LinearLayout>
 
         <TextView
@@ -109,31 +148,51 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/waist_level_size_1"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_1" />
+                android:text="좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/waist_level_size_2"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_2" />
+                android:text="조금좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
 
             <Button
+                android:id="@+id/waist_level_size_3"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_3" />
+                android:text="보통"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/waist_level_size_4"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_4" />
+                android:text="조금넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/waist_level_size_5"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_5" />
+                android:text="넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
         </LinearLayout>
 
         <TextView
@@ -145,36 +204,57 @@
             android:textColor="#2f2f30"/>
 
         <LinearLayout
+
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/hip_level_size_1"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_1" />
+                android:text="좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/hip_level_size_2"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_2" />
+                android:text="조금좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
 
             <Button
+                android:id="@+id/hip_level_size_3"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_3" />
+                android:text="보통"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/hip_level_size_4"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_4" />
+                android:text="조금넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/hip_level_size_5"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_5" />
+                android:text="넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
         </LinearLayout>
 
         <TextView
@@ -191,34 +271,55 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/thigh_level_size_1"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_1" />
+                android:text="좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/thigh_level_size_2"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_2" />
+                android:text="조금좁음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
 
             <Button
+                android:id="@+id/thigh_level_size_3"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_3" />
+                android:text="보통"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/thigh_level_size_4"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_4" />
+                android:text="조금넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
             <Button
+                android:id="@+id/thigh_level_size_5"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="35dp"
-                android:background="@drawable/size_5" />
+                android:text="넓음"
+                android:textColor="#6c6c6c"
+                android:textSize="12sp"
+                android:background="@drawable/button_background" />
         </LinearLayout>
 
         <Button
+            android:id="@+id/finish_button"
             android:layout_marginTop="27dp"
             android:layout_width="match_parent"
             android:layout_height="44dp"

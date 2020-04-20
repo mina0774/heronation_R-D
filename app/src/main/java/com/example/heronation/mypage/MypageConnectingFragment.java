@@ -1,7 +1,6 @@
 package com.example.heronation.mypage;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,10 +14,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.heronation.login_register.IntroActivity;
-import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
-import com.example.heronation.measurement.Body.MeasurementBodyActivity;
+import com.example.heronation.home.MeasurementBodyActivity;
 import com.example.heronation.measurement.Style.MeasurementStyleActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;

@@ -1,4 +1,4 @@
-package com.example.heronation.measurement.Body;
+package com.example.heronation.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,13 +11,10 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.heronation.R;
 import com.example.heronation.measurement.Body.dataClass.BodySizeLevel;
-import com.example.heronation.wishlist.dataClass.ClosetResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 

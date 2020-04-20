@@ -88,7 +88,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         body_compare_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ItemMeasurementActivity.this,ItemCompareBodySizeActivity.class);
+                Intent intent=new Intent(ItemMeasurementActivity.this,MeasurementBodyActivity.class);
                 startActivity(intent);
             }
         });

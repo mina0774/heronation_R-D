@@ -26,12 +26,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".measurement.Body.MeasurementBodySizeDetailInfoActivity"></activity>
-        <activity android:name=".measurement.Body.MeasurementBodySizeInfoActivity" />
+        <activity android:name=".home.MeasurementBodySizeInfoActivity" />
         <activity android:name=".home.ItemCompareItemSizeActivity" />
         <activity android:name=".home.ItemCompareBodySizeActivity" />
         <activity android:name=".home.ItemMeasurementActivity" />
         <activity android:name=".home.ItemDetailActivity" />
-        <activity android:name=".measurement.Body.MeasurementBodyActivity" />
+        <activity android:name=".home.MeasurementBodyActivity" />
         <activity android:name=".measurement.Style.MeasurementStyleActivity" />
         <activity android:name=".mypage.UserModifyActivity" />
         <activity android:name=".measurement.AR.MeasurementArInfoActivity" />

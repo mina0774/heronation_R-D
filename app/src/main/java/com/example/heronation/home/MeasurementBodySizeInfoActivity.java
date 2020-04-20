@@ -1,10 +1,9 @@
-package com.example.heronation.measurement.Body;
+package com.example.heronation.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
 import com.example.heronation.R;
+import com.example.heronation.measurement.Body.MeasurementBodySizeDetailInfoActivity;
 import com.example.heronation.measurement.Body.dataClass.BodySizeLevel;
 
 import butterknife.BindView;
@@ -73,7 +73,7 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
     }
 
     public void click_next_button(View view){
-        Intent intent=new Intent(MeasurementBodySizeInfoActivity.this,MeasurementBodySizeDetailInfoActivity.class);
+        Intent intent=new Intent(MeasurementBodySizeInfoActivity.this, ItemCompareBodySizeActivity.class);
         startActivity(intent);
     }
 
@@ -148,6 +148,55 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
 
         Button finish_button=(Button)popupView.findViewById(R.id.finish_button);
 
+        /* 팝업창을 열었을 때, sensibility의 입력 기록이 있다면 */
+        if(shoulder_sensibility_level!=null){
+            switch (shoulder_sensibility_level) {
+                case 1:  shoulder_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  shoulder_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  shoulder_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  shoulder_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  shoulder_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+        }
+        if(chest_sensibility_level!=null){
+            switch (chest_sensibility_level) {
+                case 1:  chest_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  chest_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  chest_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  chest_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  chest_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+        }
+        if(waist_sensibility_level!=null){
+            switch (waist_sensibility_level) {
+                case 1:  waist_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  waist_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  waist_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  waist_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  waist_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+        }
+        if(hip_sensibility_level!=null){
+            switch (hip_sensibility_level) {
+                case 1:  hip_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  hip_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  hip_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  hip_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  hip_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+
+        }
+        if(thigh_sensibility_level!=null){
+            switch (thigh_sensibility_level) {
+                case 1:  thigh_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  thigh_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  thigh_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  thigh_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  thigh_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+        }
+
+        /* 각각의 부위별 사이즈 버튼 입력 이벤트 */
         shoulder_level_size_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -448,6 +497,27 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
             }
         });
 
+        finish_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(shoulder_sensibility_level!=null){
+                    check_button_shoulder.setImageDrawable(getDrawable(R.drawable.ic_check));
+                }
+                if(chest_sensibility_level!=null){
+                    check_button_chest.setImageDrawable(getDrawable(R.drawable.ic_check));
+                }
+                if(waist_sensibility_level!=null){
+                    check_button_waist.setImageDrawable(getDrawable(R.drawable.ic_check));
+                }
+                if(hip_sensibility_level!=null){
+                    check_button_hip.setImageDrawable(getDrawable(R.drawable.ic_check));
+                }
+                if(thigh_sensibility_level!=null){
+                    check_button_thigh.setImageDrawable(getDrawable(R.drawable.ic_check));
+                }
+                mPopupWindow.dismiss();
+            }
+        });
 
 
     }

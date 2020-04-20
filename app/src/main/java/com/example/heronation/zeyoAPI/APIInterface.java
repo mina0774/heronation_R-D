@@ -1,5 +1,6 @@
 package com.example.heronation.zeyoAPI;
 
+import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
@@ -213,7 +214,7 @@ public interface APIInterface {
                                                      @Header("Accept") String accept);
     }
 
-    /* 키, 몸무게를 바탕으로 측정 default값 받기 */
+    /* 키, 몸무게를 바탕으로 측정 default값 받아오는 인터페이스 */
     public interface GetMeasurementDefaultValueService{
         @GET("api/compares/bodyLevel")
         retrofit2.Call<BodySizeLevel> GetMeasurementDefaultValue(@Query("gender") String gender,
@@ -224,6 +225,7 @@ public interface APIInterface {
                                                                  @Header("Accept") String accept);
     }
 
+    /* 신체 부위별 수치 정보 변경하는 인터페이스 */
     public interface ModifyBodySizeDetailInfoService{
         @PATCH("api/consumers/body")
         retrofit2.Call<String> ModifyBodySizeDetailInfo(@Header("Authorization") String authorization,
@@ -232,10 +234,21 @@ public interface APIInterface {
                                               @Body List<BodySizeDetail> bodySizeDetailList);
     }
 
+    /* 신체 부위별 수치 정보 받아오는 인터페이스 */
     public interface GetBodySizeDetailInfoService{
         @GET("api/consumers/body")
         retrofit2.Call<UserBodySizeDetail> GetBodySizeDetailInfo(@Header("authorization") String authorization,
                                                                  @Header("Accept") String accept);
+    }
+
+    /* 신체 사이즈를 생성하는 인터페이스 */
+    public interface GenerateBodySizeInfoService{
+        @POST("api/consumers/body")
+        retrofit2.Call<String> GenerateBodySizeInfo(@Header("Authorization") String authorization,
+                                                    @Header("heronation-api-uniqId-key") String heronation_api_uniqId_key,
+                                                    @Header("Accept") String accept,
+                                                    @Header("Content-Type") String content_type,
+                                                    @Body BodySizeLevelForSizeInfo bodySizeLevelForSizeInfo);
     }
 
 }

@@ -136,6 +136,7 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
                     intent.putExtra("item_id",product_id);
                     startActivity(intent);
                 }else{
+                    progressDoalog.dismiss();
                     backgroundThreadShortToast(getApplicationContext(),"값을 모두 입력해주세요.");
                 }
             }

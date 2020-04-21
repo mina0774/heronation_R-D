@@ -2,7 +2,7 @@ package com.example.heronation.home.dataClass;
 
 import java.util.List;
 
-public class GoodsResponse {
+public class GoodsResponses {
     private Integer goodsId;
     private Integer sizeOptionId;
     private String sizeOptionName;

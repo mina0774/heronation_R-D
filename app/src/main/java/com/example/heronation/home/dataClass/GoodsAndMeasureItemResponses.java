@@ -3,14 +3,14 @@ package com.example.heronation.home.dataClass;
 import java.util.List;
 
 public class GoodsAndMeasureItemResponses {
-    private List<GoodsResponse> goodsResponses = null;
+    private List<GoodsResponses> goodsResponses = null;
     private List<MeasureItem> measureItems = null;
 
-    public List<GoodsResponse> getGoodsResponses() {
+    public List<GoodsResponses> getGoodsResponses() {
         return goodsResponses;
     }
 
-    public void setGoodsResponses(List<GoodsResponse> goodsResponses) {
+    public void setGoodsResponses(List<GoodsResponses> goodsResponses) {
         this.goodsResponses = goodsResponses;
     }
 

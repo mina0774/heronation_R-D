@@ -1,6 +1,7 @@
 package com.example.heronation.zeyoAPI;
 
 import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
+import com.example.heronation.home.dataClass.CompareWithBody;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
@@ -242,7 +243,7 @@ public interface APIInterface {
     }
 
     /* 신체 사이즈를 생성하는 인터페이스 */
-    public interface GenerateBodySizeInfoService{
+    public interface GenerateBodySizeInfoService {
         @POST("api/consumers/body")
         retrofit2.Call<String> GenerateBodySizeInfo(@Header("Authorization") String authorization,
                                                     @Header("heronation-api-uniqId-key") String heronation_api_uniqId_key,
@@ -252,7 +253,12 @@ public interface APIInterface {
     }
 
     /* 신체 vs 상품 사이즈 비교하는 인터페이스 */
-    public interface CompareProductSizeWithBodyService{
+    public interface CompareProductSizeWithBodyService {
+        @GET("api/compares/items/{item_id}/body")
+        retrofit2.Call<CompareWithBody> CompareProductSizeWithBody(@Path("item_id") Integer item_id,
+                                                                   @Header("authorization") String authorization,
+                                                                   @Header("Accept") String accept,
+                                                                   @Header("Content-Type") String content_type);
 
     }
 

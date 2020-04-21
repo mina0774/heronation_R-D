@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
-import com.example.heronation.home.dataClass.GoodsResponse;
+import com.example.heronation.home.dataClass.GoodsResponses;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -125,7 +125,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
                     no_size_info_in_item.setVisibility(View.GONE);
 
                     ItemSizeInfo itemSizeInfo=response.body();
-                    List<GoodsResponse> goodsResponses=itemSizeInfo.getGoodsResponses();
+                    List<GoodsResponses> goodsResponses=itemSizeInfo.getGoodsResponses();
 
                     /* 처음 값 S로 설정 */
                     TextView[]  result_item=new TextView[goodsResponses.get(0).getGoodsScmmValues().size()];

@@ -15,8 +15,13 @@ import android.widget.Toast;
 
 import com.example.heronation.R;
 import com.example.heronation.home.dataClass.BodySizeLevel;
+import com.example.heronation.login_register.dataClass.UserMyInfo;
+import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +50,9 @@ public class ItemMeasurementBodyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_measurement_body);
         ButterKnife.bind(this);
         item_id=getIntent().getStringExtra("item_id");
+
+        // 기존에 저장된 값을 불러옴
+        getUserInfo(MainActivity.access_token);
 
         /* 성별 - 여성을 클릭했을 때 */
         register_female.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +127,59 @@ public class ItemMeasurementBodyActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // 기존 회원정보를 받아옴
+    private void getUserInfo(String access_token){
+        String authorization="bearer " + access_token;
+        String accept="application/json";
+        APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                if (response.code()==200) {
+                    UserMyInfo userMyInfo = response.body();
+
+                    // 성별
+                    if(userMyInfo.getGender().equals("F")){
+                        gender="F";
+                        register_female.setBackground(getDrawable(R.drawable.btn_background_click));
+                        register_female.setTextColor(Color.parseColor("#ffffff"));
+                        register_male.setBackground(getDrawable(R.drawable.btn_background));
+                        register_male.setTextColor(Color.parseColor("#000000"));
+                    }
+                    else if(userMyInfo.getGender().equals("M")){
+                        gender="M";
+                        register_male.setBackground(getDrawable(R.drawable.btn_background_click));
+                        register_male.setTextColor(Color.parseColor("#ffffff"));
+                        register_female.setBackground(getDrawable(R.drawable.btn_background));
+                        register_female.setTextColor(Color.parseColor("#000000"));
+                    }
+
+                    // 나이
+                    Calendar cal=Calendar.getInstance();
+                    SimpleDateFormat formats = new SimpleDateFormat ( "yyyy");
+                    int current_time = Integer.parseInt(formats.format(cal.getTime()));
+                    editText_age.setText(Integer.toString(current_time-userMyInfo.getBirthYear()+1));
+
+                    // 키
+                    if(userMyInfo.getHeight()!=null){
+                        editText_height.setText(userMyInfo.getHeight().toString());
+                    }
+
+                    // 몸무게
+                    if(userMyInfo.getWeight()!=null){
+                        editText_weight.setText(userMyInfo.getWeight().toString());
+                    }
+
+                }
+            }
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
     }
 
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.

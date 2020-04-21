@@ -2,6 +2,7 @@ package com.example.heronation.measurement.Body;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,9 +21,13 @@ import com.example.heronation.R;
 import com.example.heronation.home.ItemCompareBodySizeActivity;
 import com.example.heronation.home.dataClass.BodySizeLevel;
 import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
+import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,14 +56,19 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
     String weight;
     BodySizeLevel bodySizeLevel;
 
+    UserMyInfo userMyInfo;
+
     public static MeasurementBodySizeInfoActivity measurementBodySizeInfoActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement_body_size_info);
         measurementBodySizeInfoActivity=MeasurementBodySizeInfoActivity.this;
-
         ButterKnife.bind(this);
+
+        // 기존 회원정보를 받아옴
+        getUserInfo(MainActivity.access_token);
+
         bodySizeLevel=(BodySizeLevel)getIntent().getSerializableExtra("body_size_default_level");
         gender=getIntent().getStringExtra("gender");
         age=getIntent().getStringExtra("age");
@@ -128,6 +138,26 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
 
+            }
+        });
+    }
+
+    // 기존 회원정보를 받아옴
+    private void getUserInfo(String access_token){
+        String authorization="bearer " + access_token;
+        String accept="application/json";
+        APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                if (response.code()==200) {
+                    userMyInfo = response.body();
+                }
+            }
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
     }
@@ -213,6 +243,63 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
         Button thigh_level_size_5=(Button)popupView.findViewById(R.id.thigh_level_size_5);
 
         Button finish_button=(Button)popupView.findViewById(R.id.finish_button);
+
+        /* 기존 default 부위별 사이즈 레벨이 존재하면 그 값을 받아옴 */
+        if(userMyInfo.getShoulderLevel()!=0 && shoulder_sensibility_level==null){
+            shoulder_sensibility_level=userMyInfo.getShoulderLevel();
+            switch (userMyInfo.getShoulderLevel()) {
+                case 1:  shoulder_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  shoulder_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  shoulder_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  shoulder_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  shoulder_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+        }
+
+        if(userMyInfo.getChestLevel()!=0 && chest_sensibility_level==null){
+            chest_sensibility_level=userMyInfo.getChestLevel();
+            switch (userMyInfo.getChestLevel()) {
+                case 1:  chest_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  chest_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  chest_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  chest_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  chest_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+        }
+
+        if(userMyInfo.getHubLevel()!=0 && waist_sensibility_level==null){
+            waist_sensibility_level=userMyInfo.getHubLevel();
+            switch (userMyInfo.getHubLevel()) {
+                case 1:  waist_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  waist_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  waist_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  waist_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  waist_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+        }
+
+        if(userMyInfo.getHipLevel()!=0 && hip_sensibility_level==null){
+            hip_sensibility_level=userMyInfo.getHipLevel();
+            switch (userMyInfo.getHipLevel()) {
+                case 1:  hip_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  hip_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  hip_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  hip_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  hip_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+        }
+
+        if(userMyInfo.getThighLevel()!=0 && thigh_sensibility_level==null){
+            thigh_sensibility_level=userMyInfo.getThighLevel();
+            switch (userMyInfo.getChestLevel()) {
+                case 1:  thigh_level_size_1.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 2:  thigh_level_size_2.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 3:  thigh_level_size_3.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 4:  thigh_level_size_4.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+                case 5:  thigh_level_size_5.setBackground(getDrawable(R.drawable.button_background_purple)); break;
+            }
+        }
+
 
         /* 팝업창을 열었을 때, sensibility의 입력 기록이 있다면 */
         if(shoulder_sensibility_level!=null){

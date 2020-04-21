@@ -1,21 +1,15 @@
 package com.example.heronation.home.dataClass;
 
-public class GoodsScmmValue {
-    private Integer goodsScmmValueId;
+public class BodysResponse {
     private Integer measureItemId;
     private String measureItemName;
     private String measureMethod;
+    private Integer minScope;
+    private Integer maxScope;
     private String code;
-    private Double value;
-    private Integer fitLevel;
-
-    public Integer getGoodsScmmValueId() {
-        return goodsScmmValueId;
-    }
-
-    public void setGoodsScmmValueId(Integer goodsScmmValueId) {
-        this.goodsScmmValueId = goodsScmmValueId;
-    }
+    private Float value;
+    private String partKind;
+    private Boolean selected;
 
     public Integer getMeasureItemId() {
         return measureItemId;
@@ -41,6 +35,22 @@ public class GoodsScmmValue {
         this.measureMethod = measureMethod;
     }
 
+    public Integer getMinScope() {
+        return minScope;
+    }
+
+    public void setMinScope(Integer minScope) {
+        this.minScope = minScope;
+    }
+
+    public Integer getMaxScope() {
+        return maxScope;
+    }
+
+    public void setMaxScope(Integer maxScope) {
+        this.maxScope = maxScope;
+    }
+
     public String getCode() {
         return code;
     }
@@ -49,19 +59,27 @@ public class GoodsScmmValue {
         this.code = code;
     }
 
-    public Double getValue() {
+    public Float getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(Float value) {
         this.value = value;
     }
 
-    public Integer getFitLevel() {
-        return fitLevel;
+    public String getPartKind() {
+        return partKind;
     }
 
-    public void setFitLevel(Integer fitLevel) {
-        this.fitLevel = fitLevel;
+    public void setPartKind(String partKind) {
+        this.partKind = partKind;
+    }
+
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
     }
 }

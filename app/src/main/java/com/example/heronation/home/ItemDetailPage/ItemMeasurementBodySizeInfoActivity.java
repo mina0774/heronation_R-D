@@ -133,6 +133,7 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
                     progressDoalog.dismiss();
                     backgroundThreadShortToast(getApplicationContext(),"입력하신 값이 반영되었습니다.");
                     Intent intent=new Intent(ItemMeasurementBodySizeInfoActivity.this, ItemCompareBodySizeActivity.class);
+                    intent.putExtra("item_id",product_id);
                     startActivity(intent);
                 }else{
                     backgroundThreadShortToast(getApplicationContext(),"값을 모두 입력해주세요.");

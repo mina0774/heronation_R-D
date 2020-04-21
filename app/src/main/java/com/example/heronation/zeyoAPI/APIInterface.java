@@ -251,4 +251,9 @@ public interface APIInterface {
                                                     @Body BodySizeLevelForSizeInfo bodySizeLevelForSizeInfo);
     }
 
+    /* 신체 vs 상품 사이즈 비교하는 인터페이스 */
+    public interface CompareProductSizeWithBodyService{
+
+    }
+
 }

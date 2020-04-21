@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import com.example.heronation.R;
 import com.example.heronation.measurement.AR.MeasurementArInfoActivity;
-import com.example.heronation.home.MeasurementBodyActivity;
+import com.example.heronation.measurement.Body.MeasurementBodyActivity;
 import com.example.heronation.measurement.Body.MeasurementBodySizeDetailInfoActivity;
 import com.example.heronation.measurement.Style.MeasurementStyleActivity;
 
@@ -54,7 +54,7 @@ public class MeasurementFragment extends Fragment {
         measurement_body_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MeasurementBodySizeDetailInfoActivity.class);
+                Intent intent = new Intent(getActivity(), MeasurementBodyActivity.class);
                 startActivity(intent);
             }
         });

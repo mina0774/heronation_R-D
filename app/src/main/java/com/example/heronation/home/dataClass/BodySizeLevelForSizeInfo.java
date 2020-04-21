@@ -19,6 +19,26 @@ public class BodySizeLevelForSizeInfo {
     private Integer hipSensibilityLevel;
     private Integer thighSensibilityLevel;
 
+    public BodySizeLevelForSizeInfo(String shopId, String shopType, String productId, String gender, Integer age, Integer height, Integer weight, Integer shoulderLevel, Integer chestLevel, Integer hubLevel, Integer hipLevel, Integer thighLevel, Integer shoulderSensibilityLevel, Integer chestSensibilityLevel, Integer hubSensibilityLevel, Integer hipSensibilityLevel, Integer thighSensibilityLevel) {
+        this.shopId = shopId;
+        this.shopType = shopType;
+        this.productId = productId;
+        this.gender = gender;
+        this.age = age;
+        this.height = height;
+        this.weight = weight;
+        this.shoulderLevel = shoulderLevel;
+        this.chestLevel = chestLevel;
+        this.hubLevel = hubLevel;
+        this.hipLevel = hipLevel;
+        this.thighLevel = thighLevel;
+        this.shoulderSensibilityLevel = shoulderSensibilityLevel;
+        this.chestSensibilityLevel = chestSensibilityLevel;
+        this.hubSensibilityLevel = hubSensibilityLevel;
+        this.hipSensibilityLevel = hipSensibilityLevel;
+        this.thighSensibilityLevel = thighSensibilityLevel;
+    }
+
     public String getShopId() {
         return shopId;
     }

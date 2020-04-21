@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
-import com.example.heronation.home.MeasurementBodyActivity;
+import com.example.heronation.measurement.Body.MeasurementBodyActivity;
 import com.example.heronation.measurement.Body.MeasurementBodySizeDetailInfoActivity;
 import com.example.heronation.measurement.Style.MeasurementStyleActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -67,7 +67,7 @@ public class MypageConnectingFragment extends Fragment {
         mypage_mysize_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MeasurementBodySizeDetailInfoActivity.class);
+                Intent intent = new Intent(getActivity(), MeasurementBodyActivity.class);
                 startActivity(intent);
             }
         });

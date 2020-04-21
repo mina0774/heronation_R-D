@@ -24,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MeasurementBodyActivity extends AppCompatActivity {
+public class ItemMeasurementBodyActivity extends AppCompatActivity {
     @BindView(R.id.register_Female) Button register_female;
     @BindView(R.id.register_Male) Button register_male;
     @BindView(R.id.editText_age) EditText editText_age;
@@ -35,6 +35,7 @@ public class MeasurementBodyActivity extends AppCompatActivity {
     String age="";
     String height="";
     String weight="";
+    String item_id;
 
     BodySizeLevel bodySizeLevel;
 
@@ -43,6 +44,7 @@ public class MeasurementBodyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement_body);
         ButterKnife.bind(this);
+        item_id=getIntent().getStringExtra("item_id");
 
         /* 성별 - 여성을 클릭했을 때 */
         register_female.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +85,7 @@ public class MeasurementBodyActivity extends AppCompatActivity {
         if(!age.equals("") && !gender.equals("") && !height.equals("") && !weight.equals("") ) {
             get_measurement_default_value();
         }else{
-            Toast.makeText(MeasurementBodyActivity.this, "정보를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ItemMeasurementBodyActivity.this, "정보를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -98,8 +100,13 @@ public class MeasurementBodyActivity extends AppCompatActivity {
             public void onResponse(Call<BodySizeLevel> call, Response<BodySizeLevel> response) {
                 if(response.isSuccessful()) {
                     bodySizeLevel = response.body();
-                    Intent intent = new Intent(MeasurementBodyActivity.this, MeasurementBodySizeInfoActivity.class);
+                    Intent intent = new Intent(ItemMeasurementBodyActivity.this, ItemMeasurementBodySizeInfoActivity.class);
                     intent.putExtra("body_size_default_level",bodySizeLevel);
+                    intent.putExtra("gender",gender);
+                    intent.putExtra("age",age);
+                    intent.putExtra("height",height);
+                    intent.putExtra("weight",weight);
+                    intent.putExtra("item_id",item_id);
                     startActivity(intent);
                 }else{ // 입력 형식이 잘못 되었을 때
                     backgroundThreadShortToast(getApplicationContext(),"형식에 맞게 입력해주세요.");

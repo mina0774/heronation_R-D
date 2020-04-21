@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -22,18 +21,14 @@ import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.home.dataClass.GoodsResponse;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
-import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
-import com.example.heronation.wishlist.dataClass.ClosetResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,7 +83,8 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         body_compare_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ItemMeasurementActivity.this,MeasurementBodyActivity.class);
+                Intent intent=new Intent(ItemMeasurementActivity.this, ItemMeasurementBodyActivity.class);
+                intent.putExtra("item_id",item_id);
                 startActivity(intent);
             }
         });
@@ -98,6 +94,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(ItemMeasurementActivity.this,ItemCompareItemSizeActivity.class);
+                intent.putExtra("item_id",item_id);
                 startActivity(intent);
             }
         });

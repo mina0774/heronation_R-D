@@ -3,7 +3,6 @@ package com.example.heronation.measurement.Body;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -20,9 +19,6 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.example.heronation.R;
-import com.example.heronation.home.MeasurementBodyActivity;
-import com.example.heronation.home.MeasurementBodySizeInfoActivity;
-import com.example.heronation.home.dataClass.BodySizeLevel;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.measurement.Body.dataClass.BodySizeDetail;
 import com.example.heronation.measurement.Body.dataClass.UserBodySizeDetail;

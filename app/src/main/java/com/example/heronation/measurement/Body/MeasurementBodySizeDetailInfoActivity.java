@@ -2,6 +2,7 @@ package com.example.heronation.measurement.Body;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -74,6 +75,8 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                MeasurementBodySizeInfoActivity.measurementBodySizeInfoActivity.finish();
+                MeasurementBodyActivity.measurementBodyActivity.finish();
             }
         });
     }

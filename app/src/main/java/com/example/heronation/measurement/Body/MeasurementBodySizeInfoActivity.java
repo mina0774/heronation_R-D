@@ -51,10 +51,13 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
     String weight;
     BodySizeLevel bodySizeLevel;
 
+    public static MeasurementBodySizeInfoActivity measurementBodySizeInfoActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement_body_size_info);
+        measurementBodySizeInfoActivity=MeasurementBodySizeInfoActivity.this;
+
         ButterKnife.bind(this);
         bodySizeLevel=(BodySizeLevel)getIntent().getSerializableExtra("body_size_default_level");
         gender=getIntent().getStringExtra("gender");

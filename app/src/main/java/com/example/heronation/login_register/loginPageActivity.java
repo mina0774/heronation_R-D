@@ -151,10 +151,9 @@ public class  loginPageActivity extends AppCompatActivity {
             public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
                 UserMyInfo userMyInfo = response.body();
 
-                // TODO: 2020-04-13  현재 스타일 태그 정보를 회원가입에서 받지 않아서, 스타일 태그 정보가 없으면 로그인이 이뤄지지 않음 계속 널값 오류
                 //스타일 태그 받기
                 style_tag_id = "";
-                if(!userMyInfo.getStyleTagResponses().isEmpty()) {
+                if(userMyInfo.getStyleTagResponses()!=null) {
                     for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
                         style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
                         if (i == userMyInfo.getStyleTagResponses().size() - 1) {

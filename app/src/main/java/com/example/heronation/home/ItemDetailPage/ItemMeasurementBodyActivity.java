@@ -1,4 +1,4 @@
-package com.example.heronation.home;
+package com.example.heronation.home.ItemDetailPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 

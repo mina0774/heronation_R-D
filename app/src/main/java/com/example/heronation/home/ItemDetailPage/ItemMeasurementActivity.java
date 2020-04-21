@@ -1,4 +1,4 @@
-package com.example.heronation.home;
+package com.example.heronation.home.ItemDetailPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -93,7 +93,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         item_compare_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ItemMeasurementActivity.this,ItemCompareItemSizeActivity.class);
+                Intent intent=new Intent(ItemMeasurementActivity.this, ItemCompareItemSizeActivity.class);
                 intent.putExtra("item_id",item_id);
                 startActivity(intent);
             }

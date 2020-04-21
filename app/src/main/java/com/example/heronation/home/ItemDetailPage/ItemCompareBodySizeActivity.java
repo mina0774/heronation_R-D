@@ -1,4 +1,4 @@
-package com.example.heronation.home;
+package com.example.heronation.home.ItemDetailPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,12 +7,12 @@ import android.view.View;
 
 import com.example.heronation.R;
 
-public class ItemCompareItemSizeActivity extends AppCompatActivity {
+public class ItemCompareBodySizeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_compare_item_size);
+        setContentView(R.layout.activity_item_compare_body_size);
     }
 
     public void click_back_button(View view){

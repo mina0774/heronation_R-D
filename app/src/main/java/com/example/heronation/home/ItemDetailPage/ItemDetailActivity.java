@@ -1,28 +1,16 @@
-package com.example.heronation.home;
+package com.example.heronation.home.ItemDetailPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 
 import com.example.heronation.R;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.home.dataClass.RecentlyViewedItem;
-import com.example.heronation.login_register.dataClass.UserMyInfo;
-import com.example.heronation.main.MainActivity;
-import com.example.heronation.wishlist.dataClass.ClosetResponse;
-import com.example.heronation.zeyoAPI.APIInterface;
-import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -30,9 +18,6 @@ import java.util.LinkedHashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ItemDetailActivity extends AppCompatActivity {
     @BindView(R.id.item_detail_close_button) ImageButton item_detail_close_button;
@@ -91,7 +76,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         item_detail_size_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ItemDetailActivity.this,ItemMeasurementActivity.class);
+                Intent intent = new Intent(ItemDetailActivity.this, ItemMeasurementActivity.class);
                 intent.putExtra("item_name",item_name);
                 intent.putExtra("item_image",item_image);
                 intent.putExtra("item_id",item_id);

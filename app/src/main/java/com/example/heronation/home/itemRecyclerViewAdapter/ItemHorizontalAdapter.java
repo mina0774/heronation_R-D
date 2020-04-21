@@ -17,10 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
-import com.example.heronation.home.ItemDetailActivity;
+import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent;
 import com.example.heronation.R;
-import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;

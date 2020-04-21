@@ -1,7 +1,8 @@
-package com.example.heronation.home;
+package com.example.heronation.home.ItemDetailPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,6 +22,7 @@ import com.example.heronation.home.dataClass.BodySizeLevel;
 import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
+import com.example.heronation.measurement.Body.MeasurementBodySizeInfoActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
@@ -117,11 +119,19 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
         APIInterface.GenerateBodySizeInfoService generateBodySizeInfoService= ServiceGenerator.createService(APIInterface.GenerateBodySizeInfoService.class);
         retrofit2.Call<String> request=generateBodySizeInfoService.GenerateBodySizeInfo(authorization,heronation_api_uniqId_key,accept,content_type,bodySizeLevelForSizeInfo);
 
+        final ProgressDialog progressDoalog;
+        progressDoalog = new ProgressDialog(ItemMeasurementBodySizeInfoActivity.this);
+        progressDoalog.setCancelable(false);
+        progressDoalog.setMessage("잠시만 기다려주세요");
+        progressDoalog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
+
+        progressDoalog.show();
         request.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
-                    backgroundThreadShortToast(getApplicationContext(),"입력하신 값이 반영되었습니다. 잠시만 기다려주세요");
+                    progressDoalog.dismiss();
+                    backgroundThreadShortToast(getApplicationContext(),"입력하신 값이 반영되었습니다.");
                     Intent intent=new Intent(ItemMeasurementBodySizeInfoActivity.this, ItemCompareBodySizeActivity.class);
                     startActivity(intent);
                 }else{

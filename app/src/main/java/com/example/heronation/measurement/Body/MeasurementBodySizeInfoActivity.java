@@ -1,8 +1,8 @@
 package com.example.heronation.measurement.Body;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,16 +18,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.heronation.R;
-import com.example.heronation.home.ItemCompareBodySizeActivity;
 import com.example.heronation.home.dataClass.BodySizeLevel;
 import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,10 +119,18 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
         APIInterface.GenerateBodySizeInfoService generateBodySizeInfoService= ServiceGenerator.createService(APIInterface.GenerateBodySizeInfoService.class);
         Call<String> request=generateBodySizeInfoService.GenerateBodySizeInfo(authorization,heronation_api_uniqId_key,accept,content_type,bodySizeLevelForSizeInfo);
 
+        final ProgressDialog progressDoalog;
+        progressDoalog = new ProgressDialog(MeasurementBodySizeInfoActivity.this);
+        progressDoalog.setCancelable(false);
+        progressDoalog.setMessage("잠시만 기다려주세요");
+        progressDoalog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
+
+        progressDoalog.show();
         request.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
+                    progressDoalog.dismiss();
                     backgroundThreadShortToast(getApplicationContext(),"입력하신 값이 반영되었습니다.");
                     Intent intent=new Intent(MeasurementBodySizeInfoActivity.this, MeasurementBodySizeDetailInfoActivity.class);
                     startActivity(intent);

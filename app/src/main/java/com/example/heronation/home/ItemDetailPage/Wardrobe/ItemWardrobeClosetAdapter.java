@@ -1,6 +1,7 @@
 package com.example.heronation.home.ItemDetailPage.Wardrobe;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.ClosetItem;
+import com.google.android.material.card.MaterialCardView;
 
 
 import java.util.ArrayList;
@@ -67,6 +69,7 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
 
     /* 뷰홀더 데이터가 놓일 공간을 마련해준다. */
     public class Holder extends RecyclerView.ViewHolder{
+        public MaterialCardView closet_list_cardview;
         public ImageView image;
         public TextView category;
         public TextView item_name;
@@ -79,6 +82,7 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
 
         public Holder(View view){
             super(view);
+            closet_list_cardview=(MaterialCardView)view.findViewById(R.id.closet_list_cardview);
             image=(ImageView)view.findViewById(R.id.wishlist_closet_item);
             category=(TextView)view.findViewById(R.id.wishlist_closet_item_category);
             item_name=(TextView)view.findViewById(R.id.wishlist_closet_item_name);
@@ -88,6 +92,20 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
             favorite_button=(ImageButton)view.findViewById(R.id.favorite_button);
             delete_button=(ImageButton)view.findViewById(R.id.delete_button);
             id=(TextView)view.findViewById(R.id.wishlist_closet_item_measurement_id);
+
+            //특정 아이템이 클릭되었을 때 그 아이템을 비교 상품으로 선택
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getAdapterPosition();
+
+                    MaterialCardView materialCardView=(MaterialCardView)v;
+                    int clickedPos=((Integer)materialCardView.getTag()).intValue();
+
+                    closet_list_cardview.setStrokeColor(Color.parseColor("#656ead"));
+                    closet_list_cardview.setStrokeWidth(5);
+                }
+            });
         }
 
     }

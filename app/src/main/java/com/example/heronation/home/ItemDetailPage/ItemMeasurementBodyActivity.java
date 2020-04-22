@@ -44,11 +44,13 @@ public class ItemMeasurementBodyActivity extends AppCompatActivity {
 
     BodySizeLevel bodySizeLevel;
 
+    public static ItemMeasurementBodyActivity itemMeasurementBodyActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement_body);
         ButterKnife.bind(this);
+        itemMeasurementBodyActivity=this;
         item_id=getIntent().getStringExtra("item_id");
 
         // 기존에 저장된 값을 불러옴

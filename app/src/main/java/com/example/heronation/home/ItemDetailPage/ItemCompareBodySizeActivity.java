@@ -60,6 +60,12 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
         finish();
     }
 
+    public void click_close_button(View view){
+        finish();
+        ItemMeasurementBodySizeInfoActivity.itemMeasurementBodySizeInfoActivity.finish();
+        ItemMeasurementBodyActivity.itemMeasurementBodyActivity.finish();
+    }
+
     public void compare_product_size_with_body(){
         String authorization = "Bearer "+ MainActivity.access_token;
         String accept="application/json";

@@ -55,11 +55,13 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
     BodySizeLevel bodySizeLevel;
 
     UserMyInfo userMyInfo;
+    public static ItemMeasurementBodySizeInfoActivity itemMeasurementBodySizeInfoActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement_body_size_info);
         ButterKnife.bind(this);
+        itemMeasurementBodySizeInfoActivity=this;
 
         // 기존 저장된 값을 받아옴
         getUserInfo(MainActivity.access_token);

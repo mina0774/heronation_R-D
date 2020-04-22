@@ -1,4 +1,4 @@
-package com.example.heronation.home.ItemDetailPage;
+package com.example.heronation.home.ItemDetailPage.Wardrobe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,5 +17,9 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
 
     public void click_back_button(View view){
         finish();
+    }
+
+    public void click_close_button(View view){
+
     }
 }

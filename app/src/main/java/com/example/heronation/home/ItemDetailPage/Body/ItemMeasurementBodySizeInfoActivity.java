@@ -1,4 +1,4 @@
-package com.example.heronation.home.ItemDetailPage;
+package com.example.heronation.home.ItemDetailPage.Body;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +22,6 @@ import com.example.heronation.home.dataClass.BodySizeLevel;
 import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
-import com.example.heronation.measurement.Body.MeasurementBodySizeInfoActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 

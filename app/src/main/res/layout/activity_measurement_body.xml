@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".home.ItemDetailPage.ItemMeasurementBodyActivity">
+    tools:context=".home.ItemDetailPage.Body.ItemMeasurementBodyActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

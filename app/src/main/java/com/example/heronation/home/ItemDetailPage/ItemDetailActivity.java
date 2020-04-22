@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -27,6 +28,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private String item_image;
     private String item_name;
     private String item_price;
+    private String item_subcategory="";
 
     ItemSizeInfo itemSizeInfo; // 해당 상품의 사이즈 정보를 담는 변수
 
@@ -40,6 +42,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         item_image=getIntent().getStringExtra("item_image");
         item_name=getIntent().getStringExtra("item_name");
         item_price=getIntent().getStringExtra("item_price");
+        if(getIntent().hasExtra("item_subcategory")){
+            item_subcategory=getIntent().getStringExtra("item_subcategory");
+        }
 
         /* 최근 본 상품 목록을 만들기 위해 해당 아이템의 정보를 SharedPreferences에 저장함 */
         SharedPreferences sharedPreferences=getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE); // SharedPreferences 생성
@@ -80,6 +85,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 intent.putExtra("item_name",item_name);
                 intent.putExtra("item_image",item_image);
                 intent.putExtra("item_id",item_id);
+                intent.putExtra("item_subcategory",item_subcategory);
                 startActivity(intent);
             }
         });

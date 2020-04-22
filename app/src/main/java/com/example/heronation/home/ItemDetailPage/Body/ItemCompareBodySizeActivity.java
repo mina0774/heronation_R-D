@@ -1,4 +1,4 @@
-package com.example.heronation.home.ItemDetailPage;
+package com.example.heronation.home.ItemDetailPage.Body;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,13 +10,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailPage.Body.ItemMeasurementBodyActivity;
+import com.example.heronation.home.ItemDetailPage.Body.ItemMeasurementBodySizeInfoActivity;
 import com.example.heronation.home.dataClass.CompareWithBody;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;

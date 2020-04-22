@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailPage.Body.ItemMeasurementBodyActivity;
+import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemCompareItemSizeActivity;
+import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity;
 import com.example.heronation.home.dataClass.GoodsResponses;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.main.MainActivity;
@@ -45,6 +48,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
     String item_id; // 현재 보고 있는 상품의 아이템 아이디
     String item_name; // 현재 보고 있는 상품의 아이템명
     String item_image; // 현재 보고 있는 상품의 이미지 URL
+    String item_subcategory;
 
     @BindView(R.id.size_info_in_item) LinearLayout size_info_in_item;
     @BindView(R.id.no_size_info_in_item) RelativeLayout no_size_info_in_item;
@@ -70,6 +74,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_measurement);
         ButterKnife.bind(this);
 
+        item_subcategory=getIntent().getStringExtra("item_subcategory");
         item_id=getIntent().getStringExtra("item_id");
         item_name=getIntent().getStringExtra("item_name");
         measurement_item_name.setText(item_name);
@@ -77,6 +82,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         measurement_item_image.setBackground(new ShapeDrawable(new OvalShape()));
         measurement_item_image.setClipToOutline(true);
         Glide.with(getApplicationContext()).load(item_image).error(R.drawable.shop_item_example_img_2).crossFade().into(measurement_item_image);
+
         getItemSizeInfo();
 
         // 신체와 비교하기 버튼 눌렀을 때
@@ -93,8 +99,9 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         item_compare_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ItemMeasurementActivity.this, ItemCompareItemSizeActivity.class);
+                Intent intent=new Intent(ItemMeasurementActivity.this, ItemSelectItemForComparisonAcitivity.class);
                 intent.putExtra("item_id",item_id);
+                intent.putExtra("item_subcategory",item_subcategory);
                 startActivity(intent);
             }
         });
@@ -136,7 +143,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
                     for (int i = 0; i < goodsResponses.get(0).getGoodsScmmValues().size(); i++) {
 
                         result_item[i] = new TextView(getApplicationContext());
-                        result_distance[i] = new EditText(getApplicationContext());
+                        result_distance[i] = new TextView(getApplicationContext());
                         result_cm[i] = new TextView(getApplicationContext());
 
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -150,7 +157,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
 
                         result_distance[i].setLayoutParams(layoutParams);
                         result_distance[i].setTextSize(16);
-                        result_distance[i].setText(goodsResponses.get(0).getGoodsScmmValues().get(i).getValue().toString());
+                        result_distance[i].setText(goodsResponses.get(0).getGoodsScmmValues().get(i).getValue().toString()+ "\n");
                         result_distance[i].setTextAppearance(BOLD);
                         result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
 
@@ -192,7 +199,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
                                 for (int i = 0; i < goodsResponses.get(0).getGoodsScmmValues().size(); i++) {
 
                                     result_item[i] = new TextView(getApplicationContext());
-                                    result_distance[i] = new EditText(getApplicationContext());
+                                    result_distance[i] = new TextView(getApplicationContext());
                                     result_cm[i] = new TextView(getApplicationContext());
 
                                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -206,7 +213,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
 
                                     result_distance[i].setLayoutParams(layoutParams);
                                     result_distance[i].setTextSize(16);
-                                    result_distance[i].setText(goodsResponses.get(0).getGoodsScmmValues().get(i).getValue().toString());
+                                    result_distance[i].setText(goodsResponses.get(0).getGoodsScmmValues().get(i).getValue().toString()+ "\n");
                                     result_distance[i].setTextAppearance(BOLD);
                                     result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
 
@@ -252,7 +259,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
                                 for (int i = 0; i < goodsResponses.get(1).getGoodsScmmValues().size(); i++) {
 
                                     result_item[i] = new TextView(getApplicationContext());
-                                    result_distance[i] = new EditText(getApplicationContext());
+                                    result_distance[i] = new TextView(getApplicationContext());
                                     result_cm[i] = new TextView(getApplicationContext());
 
                                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -266,7 +273,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
 
                                     result_distance[i].setLayoutParams(layoutParams);
                                     result_distance[i].setTextSize(16);
-                                    result_distance[i].setText(goodsResponses.get(1).getGoodsScmmValues().get(i).getValue().toString());
+                                    result_distance[i].setText(goodsResponses.get(1).getGoodsScmmValues().get(i).getValue().toString()+ "\n");
                                     result_distance[i].setTextAppearance(BOLD);
                                     result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
 
@@ -310,7 +317,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
                                 for (int i = 0; i < goodsResponses.get(2).getGoodsScmmValues().size(); i++) {
 
                                     result_item[i] = new TextView(getApplicationContext());
-                                    result_distance[i] = new EditText(getApplicationContext());
+                                    result_distance[i] = new TextView(getApplicationContext());
                                     result_cm[i] = new TextView(getApplicationContext());
 
                                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -324,7 +331,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
 
                                     result_distance[i].setLayoutParams(layoutParams);
                                     result_distance[i].setTextSize(16);
-                                    result_distance[i].setText(goodsResponses.get(2).getGoodsScmmValues().get(i).getValue().toString());
+                                    result_distance[i].setText(goodsResponses.get(2).getGoodsScmmValues().get(i).getValue().toString()+ "\n");
                                     result_distance[i].setTextAppearance(BOLD);
                                     result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
 
@@ -368,7 +375,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
                                 for (int i = 0; i < goodsResponses.get(3).getGoodsScmmValues().size(); i++) {
 
                                     result_item[i] = new TextView(getApplicationContext());
-                                    result_distance[i] = new EditText(getApplicationContext());
+                                    result_distance[i] = new TextView(getApplicationContext());
                                     result_cm[i] = new TextView(getApplicationContext());
 
                                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -382,7 +389,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
 
                                     result_distance[i].setLayoutParams(layoutParams);
                                     result_distance[i].setTextSize(16);
-                                    result_distance[i].setText(goodsResponses.get(3).getGoodsScmmValues().get(i).getValue().toString());
+                                    result_distance[i].setText(goodsResponses.get(3).getGoodsScmmValues().get(i).getValue().toString()+ "\n");
                                     result_distance[i].setTextAppearance(BOLD);
                                     result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
 

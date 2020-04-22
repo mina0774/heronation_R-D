@@ -173,8 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:layout_gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="8dp"/>
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/measurement_result_cm"
@@ -212,7 +211,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_button"
-                android:text="상품과 비교하기"
+                android:text="내 옷장과 비교하기"
                 android:textColor="#ffffff" />
         </LinearLayout>
 

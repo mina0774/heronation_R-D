@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -204,6 +205,7 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
                     intent.putExtra("item_name",styleRecommendation.get(position).getItemName());
                     intent.putExtra("item_price",styleRecommendation.get(position).getPrice().toString());
                     intent.putExtra("item_id",styleRecommendation.get(position).getItemId().toString());
+                    intent.putExtra("item_subcategory",styleRecommendation.get(position).getSubCategoryId().toString());
                     context.startActivity(intent);
                 }
             });

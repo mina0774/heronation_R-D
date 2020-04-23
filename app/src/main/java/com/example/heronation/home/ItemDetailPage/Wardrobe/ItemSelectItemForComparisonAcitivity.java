@@ -69,7 +69,8 @@ public class ItemSelectItemForComparisonAcitivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(ItemWardrobeClosetAdapter.selectItemId!=null) {
                     Intent intent = new Intent(ItemSelectItemForComparisonAcitivity.this, ItemCompareItemSizeActivity.class);
-                    intent.putExtra("select_item_id", ItemWardrobeClosetAdapter.selectItemId);
+                    intent.putExtra("item_id",item_id);
+                    intent.putExtra("select_wardrobe_id", ItemWardrobeClosetAdapter.selectItemId);
                     intent.putExtra("image_url",ItemWardrobeClosetAdapter.imageURL);
                     intent.putExtra("item_name",ItemWardrobeClosetAdapter.itemName);
                     startActivity(intent);

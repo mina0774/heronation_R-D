@@ -2,6 +2,7 @@ package com.example.heronation.home.ItemDetailPage.Wardrobe;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,15 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.internal.ListenerClass;
+
 
 public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobeClosetAdapter.Holder>{
-
     private Context context;
     private List<ClosetItem> item_list=new ArrayList<>();
-
+    private static MaterialCardView lastCardView=null;
+    private static int lastCardViewPos=0;
+    public static String selectItemId;
 
     public ItemWardrobeClosetAdapter(Context context, List<ClosetItem> item_list) {
         this.context = context;
@@ -58,6 +62,7 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
 
         /* 휴지통 버튼 삭제 */
         holder.delete_button.setVisibility(View.INVISIBLE);
+
     }
 
 
@@ -100,10 +105,19 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
                     getAdapterPosition();
 
                     MaterialCardView materialCardView=(MaterialCardView)v;
-                    int clickedPos=((Integer)materialCardView.getTag()).intValue();
+                    int clickedPos=getAdapterPosition();
+
+                    if(lastCardView!=null){
+                        lastCardView.setStrokeWidth(0);
+                    }
 
                     closet_list_cardview.setStrokeColor(Color.parseColor("#656ead"));
                     closet_list_cardview.setStrokeWidth(5);
+
+                    lastCardView=materialCardView;
+                    lastCardViewPos=clickedPos;
+                    selectItemId=id.getText().toString();
+                    Log.d("셀렉트",selectItemId);
                 }
             });
         }

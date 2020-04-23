@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.heronation.R;
 import com.example.heronation.main.MainActivity;
@@ -31,6 +33,7 @@ public class ItemSelectItemForComparisonAcitivity extends AppCompatActivity {
     /* 리사이클러뷰*/
     @BindView(R.id.closet_recyclerview) RecyclerView closet_recyclerView;
     @BindView(R.id.total_item_number_textview) TextView total_item_number_textview;
+    @BindView(R.id.compare_button) Button compare_button;
 
     String item_id;
     String item_subcategory_id;
@@ -39,11 +42,13 @@ public class ItemSelectItemForComparisonAcitivity extends AppCompatActivity {
     public static ArrayList<ClosetItem> item_list;
     public static ItemWardrobeClosetAdapter itemWardrobeClosetAdapter;
 
+    public static ItemSelectItemForComparisonAcitivity itemSelectItemForComparisonAcitivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_select_item_for_comparison_acitivity);
         ButterKnife.bind(this);
+        itemSelectItemForComparisonAcitivity=this;
 
         item_id=getIntent().getStringExtra("item_id");
         item_subcategory_id=getIntent().getStringExtra("item_subcategory");
@@ -58,6 +63,21 @@ public class ItemSelectItemForComparisonAcitivity extends AppCompatActivity {
         /* 리사이클러뷰에 어댑터 지정 */
         closet_recyclerView.setAdapter(itemWardrobeClosetAdapter);
 
+        /* 비교하기 버튼을 눌렀을 때 */
+        compare_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ItemWardrobeClosetAdapter.selectItemId!=null) {
+                    Intent intent = new Intent(ItemSelectItemForComparisonAcitivity.this, ItemCompareItemSizeActivity.class);
+                    intent.putExtra("select_item_id", ItemWardrobeClosetAdapter.selectItemId);
+                    intent.putExtra("image_url",ItemWardrobeClosetAdapter.imageURL);
+                    intent.putExtra("item_name",ItemWardrobeClosetAdapter.itemName);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),"아이템을 선택해주세요.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 

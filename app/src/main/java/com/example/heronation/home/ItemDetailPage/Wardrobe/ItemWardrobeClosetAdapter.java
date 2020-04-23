@@ -31,6 +31,8 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
     private static MaterialCardView lastCardView=null;
     private static int lastCardViewPos=0;
     public static String selectItemId;
+    public static String imageURL;
+    public static String itemName;
 
     public ItemWardrobeClosetAdapter(Context context, List<ClosetItem> item_list) {
         this.context = context;
@@ -102,8 +104,6 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getAdapterPosition();
-
                     MaterialCardView materialCardView=(MaterialCardView)v;
                     int clickedPos=getAdapterPosition();
 
@@ -115,9 +115,10 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
                     closet_list_cardview.setStrokeWidth(5);
 
                     lastCardView=materialCardView;
-                    lastCardViewPos=clickedPos;
+
                     selectItemId=id.getText().toString();
-                    Log.d("셀렉트",selectItemId);
+                    imageURL=item_list.get(clickedPos).getImage_url();
+                    itemName=item_list.get(clickedPos).getItem_name();
                 }
             });
         }

@@ -2,6 +2,7 @@ package com.example.heronation.zeyoAPI;
 
 import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
 import com.example.heronation.home.dataClass.CompareWithBody;
+import com.example.heronation.home.dataClass.CompareWithWardrobe;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
@@ -260,6 +261,15 @@ public interface APIInterface {
                                                                    @Header("Accept") String accept,
                                                                    @Header("Content-Type") String content_type);
 
+    }
+
+    /* 옷장 VS 상품 사이즈 비교하는 인터페이스 */
+    public interface CompareProductSizeWithWardrobeService{
+        @GET("api/compares/items/{item_id}/wardrobes/{wardrobe_id}")
+        retrofit2.Call<CompareWithWardrobe> CompareProductSizeWithWardrobe(@Path("item_id") Integer item_id,
+                                                                           @Path("wardrobe_id") Integer wardrobe_id,
+                                                                           @Header("authorization") String authorization,
+                                                                           @Header("Accept") String accept);
     }
 
 }

@@ -336,7 +336,7 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
             if (Double.parseDouble(distance) > 0) {
                 result_distance[i].setText("+" + distance + "\n");
             } else if (Double.parseDouble(distance) == 0) {
-                result_distance[i].setText("="+distance+"\n");
+                result_distance[i].setText("=" + distance+"\n");
             } else {
                 result_distance[i].setText(distance + "\n");
             }

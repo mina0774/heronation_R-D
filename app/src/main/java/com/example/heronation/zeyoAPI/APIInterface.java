@@ -78,11 +78,13 @@ public interface APIInterface {
     public interface LoginService {
         @FormUrlEncoded
         @POST("oauth/token")
-        retrofit2.Call<UserLoginInfo> LoginInfo(@Header("Accept") String accept,
-                                                @Header("ShopContent-Type") String content_type,
+        retrofit2.Call<UserLoginInfo> LoginInfo(@Header("authorization") String authorization,
+                                                @Header("Accept") String accept,
+                                                @Header("Content-Type") String content_type,
                                                 @Header("heronation-api-login-key") String heronation_api_login_key,
                                                 @Header("heronation-api-uniqId-key") String heronation_api_uniqId_key,
-                                                @Header("Authorization") String authorization,
+                                                @Header("heronation-api-comparedType-key") String heronation_api_comparedType_key,
+                                                @Header("heronation-api-comparedSubCategoryId-key") String heronation_api_comparedSubCategoryId_key,
                                                 @Field("username") String username,
                                                 @Field("password") String password,
                                                 @Field("grant_type") String grant_type);
@@ -270,6 +272,18 @@ public interface APIInterface {
                                                                            @Path("wardrobe_id") Integer wardrobe_id,
                                                                            @Header("authorization") String authorization,
                                                                            @Header("Accept") String accept);
+    }
+
+    /* refresh_token을 이용하여 새로운 토큰값을 받아오는 인터페이스 */
+    public interface RefreshLoginService {
+        @FormUrlEncoded
+        @POST("oauth/token")
+        retrofit2.Call<UserLoginInfo> RefreshLogin(@Header("authorization") String authorization,
+                                                   @Header("Accept") String accept,
+                                                   @Header("Content-Type") String content_type,
+                                                   @Header("heronation-api-login-key") String api_login_key,
+                                                   @Field("refresh_token") String refresh_token,
+                                                   @Field("grant_type") String grant_type);
     }
 
 }

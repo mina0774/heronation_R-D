@@ -2,6 +2,7 @@ package com.example.heronation.login_register;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Credentials;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,15 +83,20 @@ public class  loginPageActivity extends AppCompatActivity {
     }
 
     public void Login(){
+        String authorization = Credentials.basic("zeyo_user", "iamuser");
         String accept="application/json";
         String content_type="application/x-www-form-urlencoded";
         String heronation_api_login_key="66Gc6re4T1Prk5zsnKDsl5RaRVlU7J24VEU=";
-        String heronation_api_uniqId_key="jvvzfj7p";
-        String autorization= "Basic emV5b191c2VyOmlhbXVzZXI=";
+        String heronation_api_uniqId_key="1580197357282_xerh4r4k5xkpgbo";
+        String heronation_api_comparedType_key="brand";
+        String heronation_api_comparedSubCategoryId_key="";
 
         APIInterface.LoginService loginService= ServiceGenerator.createService(APIInterface.LoginService.class);
-        retrofit2.Call<UserLoginInfo> request=loginService.LoginInfo(accept,content_type,heronation_api_login_key,heronation_api_uniqId_key,autorization,
+        retrofit2.Call<UserLoginInfo> request=loginService.LoginInfo(authorization,accept,content_type,heronation_api_login_key,heronation_api_uniqId_key,
+                heronation_api_comparedType_key, heronation_api_comparedSubCategoryId_key,
                 login_id_et.getText().toString(),login_password_et.getText().toString(),"password");
+
+        SharedPreferences pref=getSharedPreferences("token_management",MODE_PRIVATE);
 
         request.enqueue(new retrofit2.Callback<UserLoginInfo>() {
             @Override
@@ -100,7 +107,13 @@ public class  loginPageActivity extends AppCompatActivity {
                     return;
                 }
                 else if(response.code()==200){
-                    GetUserInfo(userLoginInfo.access_token);
+
+                    // 로그인 세션 유지를 위해 SharedPreferences에 토큰값을 저장
+                    SharedPreferences.Editor editor=pref.edit();
+                    editor.putString("refresh_token",userLoginInfo.getRefresh_token());
+                    editor.commit();
+
+                    GetUserInfo(userLoginInfo.getAccess_token());
 
                     //JSON 파일의 값이 이렇게 Parsing 되어 값이 나옴
                     System.out.println("Response" + userLoginInfo.access_token+","+userLoginInfo.refresh_token+","+userLoginInfo.member_id+","+userLoginInfo.member_name);

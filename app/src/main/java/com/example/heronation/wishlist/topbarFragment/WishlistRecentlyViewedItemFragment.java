@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,15 +51,13 @@ public class WishlistRecentlyViewedItemFragment extends Fragment {
         item_list=new ArrayList<>();
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE);
-
-        if(sharedPreferences.getAll().isEmpty())
-        { // 최근 본 상품이 없을 때
-            recycler_view_recently_viewed_item.setVisibility(View.INVISIBLE);
+        
+        if(sharedPreferences.getString("items", null).equals("{}")) { // 최근 본 상품이 없을 때
+            recycler_view_recently_viewed_item.setVisibility(View.GONE);
             have_not_recently_viewed_item.setVisibility(VISIBLE);
         }
-        else if(!sharedPreferences.getAll().isEmpty())
-        { // 최근 본 상품이 있을 때
-            have_not_recently_viewed_item.setVisibility(View.INVISIBLE);
+        else { // 최근 본 상품이 있을 때
+            have_not_recently_viewed_item.setVisibility(View.GONE);
             recycler_view_recently_viewed_item.setVisibility(VISIBLE);
 
             Gson gson=new GsonBuilder().create();

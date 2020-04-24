@@ -86,23 +86,16 @@
                 android:id="@+id/closet_body_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="키: 168"
+                android:text="키: 입력된 정보가 없습니다."
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/closet_body_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="몸무게: 50"
+                android:text="몸무게: 입력된 정보가 없습니다."
                 android:textSize="12sp" />
 
-
-            <TextView
-                android:id="@+id/closet_body_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="체형: ① ② ③ ④ ⑤"
-                android:textSize="12sp" />
 
         </LinearLayout>
         </LinearLayout>
@@ -131,6 +124,15 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:id="@+id/have_no_closet_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="옷장에 아이템이 없습니다"
+        android:textAlignment="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_wishilist_closet"

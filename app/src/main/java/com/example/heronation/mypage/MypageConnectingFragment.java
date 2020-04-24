@@ -1,6 +1,7 @@
 package com.example.heronation.mypage;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -28,6 +29,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class MypageConnectingFragment extends Fragment {
     @BindView(R.id.mypage_userModify_btn) ImageButton mypage_userModify_btn;
@@ -57,6 +60,12 @@ public class MypageConnectingFragment extends Fragment {
         mypage_logout_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //refresh_token 값 비우기
+                SharedPreferences pref = getActivity().getSharedPreferences("token_management", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.clear();
+                editor.commit(); // commit changes
+
                 Intent intent = new Intent(getActivity(), IntroActivity.class);
                 startActivity(intent);
                 MainActivity.mainActivity.finish();

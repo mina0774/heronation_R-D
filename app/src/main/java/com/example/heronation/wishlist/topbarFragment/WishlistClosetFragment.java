@@ -67,6 +67,8 @@ public class WishlistClosetFragment extends Fragment {
     @BindView(R.id.closet_body_weight) TextView closet_body_weight;
     @BindView(R.id.snackbar_view) CoordinatorLayout snackbar_view;
 
+    @BindView(R.id.have_no_closet_item) TextView have_no_closet_item;
+
     public static WishlistClosetAdapter wishlistClosetAdapter;
     Integer page_num; // 동적 로딩을 위한 page number
     public static Context context;
@@ -160,6 +162,11 @@ public class WishlistClosetFragment extends Fragment {
             public void onResponse(Call<ClosetResponse> call, Response<ClosetResponse> response) {
                 if(response.code()==200){
                     ClosetResponse closetResponse=response.body();
+                    // 옷장에 아이템이 없을 때
+                    if(closetResponse.getSize()==0){
+                        have_no_closet_item.setVisibility(View.VISIBLE);
+                    }
+                    // 옷장에 아이템이 있을 때
                     for(int i=0; i<closetResponse.getSize();i++){
                         ClosetResponse.WardrobeResponse wardrobeResponse = closetResponse.getWardrobeResponses().get(i);
                         if(cloth_category.equals("전체")) {
@@ -218,8 +225,12 @@ public class WishlistClosetFragment extends Fragment {
                         SimpleDateFormat format=new SimpleDateFormat("yyyy");
                         Integer age=(Integer.parseInt(format.format(Calendar.getInstance().getTime()))-userMyInfo.getBirthYear()+1); //현재 년도에서 사용자의 태어난 년도를 뺀 후 1을 더한 값.
                         closet_body_age.setText("나이: "+ age.toString()+"세");
-                        closet_body_height.setText("키: "+userMyInfo.getHeight().toString()+"cm");
-                        closet_body_weight.setText("몸무게: "+userMyInfo.getWeight().toString()+"kg");
+                        if(userMyInfo.getHeight()!=null) {
+                            closet_body_height.setText("키: " + userMyInfo.getHeight().toString() + "cm");
+                        }
+                        if(userMyInfo.getWeight()!=null) {
+                            closet_body_weight.setText("몸무게: " + userMyInfo.getWeight().toString() + "kg");
+                        }
                     }
                     else{ //토큰 만료기한이 끝나, 재로그인이 필요할 때
                         backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다.");

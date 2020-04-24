@@ -31,7 +31,6 @@ public class IntroActivity extends AppCompatActivity {
         String refresh_token=pref.getString("refresh_token",null);
 
         if(refresh_token!=null){
-
             String authorization = Credentials.basic("zeyo_user", "iamuser");
             String accept="application/json";
             String content_type="application/x-www-form-urlencoded";

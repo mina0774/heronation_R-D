@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
@@ -59,7 +60,7 @@ public class ItemHomeFragment extends Fragment {
     @BindView(R.id.image_view_home) ViewPager viewPager;
 
     /* 검색창 */
-    @BindView(R.id.item_home_search_edittext) EditText search_item;
+    @BindView(R.id.item_home_search_edittext) TextView search_item;
 
     //아이템들의 묶음
     private ArrayList<ShopItemPackage> item_list;

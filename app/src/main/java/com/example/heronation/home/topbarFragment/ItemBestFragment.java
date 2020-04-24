@@ -36,9 +36,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ItemBestFragment extends Fragment {
-    @BindView(R.id.nested_item_best) NestedScrollView nested_item_best;
     @BindView(R.id.item_best_item_category) RecyclerView category_recyclerView;
-    @BindView(R.id.item_best_items) RecyclerView item_recyclerView;
+    public static RecyclerView item_recyclerView;
     private ItemBestCategoryAdapter itemBestCategoryAdapter;
     private ItemVerticalAdapter verticalAdapter;
     private ArrayList<ItemBestCategory> list;
@@ -58,6 +57,7 @@ public class ItemBestFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_item_best,container,false);
         ButterKnife.bind(this,rootView);
+        item_recyclerView=rootView.findViewById(R.id.item_best_items);
 
         //아이템 목록, 아이템 리스트 목록 초기화
         list=new ArrayList<>();
@@ -91,7 +91,7 @@ public class ItemBestFragment extends Fragment {
         package_name_list.add("상의 best");
         package_name_list.add("하의 best");
 
-        loadItems(nested_item_best,getActivity());
+        loadItems();
 
         /* 이미지 슬라이딩을 위해 뷰페이저를 이용했고, 이를 설정해주는 이미지 어댑터를 설정하여 슬라이딩 구현 */
         bannerAdapter =new bannerAdapter(getActivity());
@@ -133,22 +133,10 @@ public class ItemBestFragment extends Fragment {
 
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
-    public void loadItems(NestedScrollView nestedScrollView, final Context context) {
-       package_num=1;
+    public void loadItems() {
+        for(int package_num=1; package_num<=package_name_list.size(); package_num++)
         GetItemInfo(package_num,package_name_list.get(package_num-1));
-        package_num+=1;
-        GetItemInfo(package_num, package_name_list.get(package_num-1));
-        item_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                if(!item_recyclerView.canScrollVertically(1)){
-                    if(package_num<3) {
-                        package_num+=1;
-                        GetItemInfo(package_num, package_name_list.get(package_num-1));
-                    }
-                }
-            }
-        });
+
     }
 
 

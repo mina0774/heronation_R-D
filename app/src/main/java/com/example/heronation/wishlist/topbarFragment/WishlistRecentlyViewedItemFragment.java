@@ -51,7 +51,7 @@ public class WishlistRecentlyViewedItemFragment extends Fragment {
         item_list=new ArrayList<>();
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE);
-        
+
         if(sharedPreferences.getString("items", null).equals("{}")) { // 최근 본 상품이 없을 때
             recycler_view_recently_viewed_item.setVisibility(View.GONE);
             have_not_recently_viewed_item.setVisibility(VISIBLE);
@@ -73,7 +73,6 @@ public class WishlistRecentlyViewedItemFragment extends Fragment {
             recentlyViewedItemAdapter=new RecentlyViewedItemAdapter(item_list,getActivity()); //Adapter 안에 horizontal adapter를 선언하여 이에 대한 레이아웃을 Grid로 지정
             recycler_view_recently_viewed_item.setAdapter(recentlyViewedItemAdapter);
         }
-
 
         return rootView;
     }

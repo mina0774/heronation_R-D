@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity
          * bottomItemSelectedListener 클래스를, bottomNavigatioView 객체에 할당
          */
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomItemSelectedListener());
+        mMenuItem=bottomNavigationView.getMenu().getItem(0).getItemId();
 
        /* 첫 화면이 ItemFragment이므로, Transaction을 getSupportFragmentManager().beginTransaction()을 통해 가져온 후,
        * acitivity_main.xml에 있는 framelayout인 fragment_container의 화면을 shopFragment로 변경해준 후,
@@ -218,7 +219,10 @@ public class MainActivity extends AppCompatActivity
                     }
                     else{ //토큰 만료기한이 끝나, 재로그인이 필요할 때
                         backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
-                        go_to_mypage_noconnecting(); // MyPageFragment로 이동.
+                        Intent intent=new Intent(MainActivity.this,IntroActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
                     }
                 }
                 @Override
@@ -256,8 +260,11 @@ public class MainActivity extends AppCompatActivity
                     /*토큰 만료기한이 끝나, 재로그인이 필요할 때*/
                     else{
                     id_text.setText("로그인/회원가입");
-                    backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다.");
-                    DrawerGotoNoLoginConnect();
+                        backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다.");
+                        Intent intent = new Intent(MainActivity.this, IntroActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
                 }
             }
             @Override

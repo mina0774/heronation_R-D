@@ -113,6 +113,9 @@ public class MypageConnectingFragment extends Fragment {
                 /*토큰 만료기한이 끝나, 재로그인이 필요할 때*/
                 else {
                     MainActivity.backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다.");
+                    Intent intent=new Intent(getActivity(),IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
             @Override

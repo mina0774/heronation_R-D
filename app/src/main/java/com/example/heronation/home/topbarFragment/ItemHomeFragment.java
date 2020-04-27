@@ -87,7 +87,7 @@ public class ItemHomeFragment extends Fragment {
         verticalAdapter=new ItemStyleVerticalAdapter(item_list,getActivity());
         item_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         item_recyclerView.setAdapter(verticalAdapter);
-        loadItems(nested_item_home,getActivity());
+        loadItems();
 
         /*  검색창 클릭했을 때, 아이템 검색 액티비티로 이동 */
         search_item.setOnClickListener(new View.OnClickListener() {
@@ -198,7 +198,7 @@ public class ItemHomeFragment extends Fragment {
 
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
-    public void loadItems(NestedScrollView nestedScrollView, final Context context) {
+    public void loadItems() {
         package_num=0;
         GetItemInfoBody("사이즈 추천");
         GetItemInfoOther("비슷한 스타일 유저의 추천");

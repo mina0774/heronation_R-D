@@ -43,7 +43,6 @@ public class ItemBestCategoryAdapter extends RecyclerView.Adapter<ItemBestCatego
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.image_icon.setImageDrawable(category_list.get(position).getIcon_drawable());
         holder.category_name.setText(category_list.get(position).getItem_name());
-
     }
 
     /* 전체 아이템 개수를 return */

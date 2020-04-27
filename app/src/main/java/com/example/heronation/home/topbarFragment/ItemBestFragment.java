@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -106,7 +107,7 @@ public class ItemBestFragment extends Fragment {
         String accept = "application/json";
 
         APIInterface.ItemInfoService itemInfoService = ServiceGenerator.createService(APIInterface.ItemInfoService.class);
-        retrofit2.Call<ShopItemInfo> request = itemInfoService.ItemInfo(page_num,3,"id,asc","heronation","cafe24", authorization, accept);
+        Call<ShopItemInfo> request = itemInfoService.ItemInfo(page_num,3,"id,asc","heronation","cafe24", authorization, accept);
         request.enqueue(new Callback<ShopItemInfo>() {
             @Override
             public void onResponse(Call<ShopItemInfo> call, Response<ShopItemInfo> response) {

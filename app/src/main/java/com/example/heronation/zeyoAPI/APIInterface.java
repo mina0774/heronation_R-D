@@ -22,6 +22,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -47,13 +49,13 @@ public interface APIInterface {
     /* 아이템 정보를 서버에서 받아오는 인터페이스*/
     public interface ItemInfoService {
         @GET("api/items/test")
-        retrofit2.Call<ShopItemInfo> ItemInfo(@Query("page") Integer page,
-                                              @Query("size") Integer size,
-                                              @Query("sort") String sort,
-                                              @Query("storeId") String storeId,
-                                              @Query("storeType") String storeType,
-                                              @Header("authorization") String authorization,
-                                              @Header("Accept") String accept);
+        Call<ShopItemInfo> ItemInfo(@Query("page") Integer page,
+                                           @Query("size") Integer size,
+                                           @Query("sort") String sort,
+                                           @Query("storeId") String storeId,
+                                           @Query("storeType") String storeType,
+                                           @Header("authorization") String authorization,
+                                           @Header("Accept") String accept);
     }
 
     /* 아이템 찜 추가 */

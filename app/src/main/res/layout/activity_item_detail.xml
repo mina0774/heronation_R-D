@@ -65,25 +65,7 @@
             android:scaleY="0.5"
             android:src="@drawable/ruler" />
 
-        <ImageButton
-            android:id="@+id/item_detail_item_like_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:background="#00000000"
-            android:src="@drawable/heart"/>
 
-        <ImageButton
-            android:id="@+id/item_detail_shop_like_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:scaleX="0.9"
-            android:scaleY="0.9"
-            android:background="#00000000"
-            android:src="@drawable/star" />
     </LinearLayout>
 
 </LinearLayout>

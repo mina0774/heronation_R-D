@@ -6,27 +6,23 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.measurement.AR.dataClass.SubCategoryResponse;
@@ -36,13 +32,10 @@ import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.WishlistClosetAdapter;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.ClosetItem;
-import com.example.heronation.wishlist.WishlistClosetEditBodyActivity;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,8 +50,6 @@ public class WishlistClosetFragment extends Fragment {
     @BindView(R.id.recycler_view_wishilist_closet) RecyclerView closet_recyclerView;
     /* 스피너 */
     @BindView(R.id.wishlist_closet_spinner_category) Spinner spinner_category;
-    /* 체형 수정 버튼 */
-    @BindView(R.id.wishlist_closet_edit_button) Button edit_button;
     /* 상품 목록 등록 */
     public static ArrayList<ClosetItem> item_list;
     @BindView(R.id.closet_body_gender) TextView closet_body_gender;
@@ -96,15 +87,6 @@ public class WishlistClosetFragment extends Fragment {
         closet_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         /* 리사이클러뷰에 어댑터 지정 */
         closet_recyclerView.setAdapter(wishlistClosetAdapter);
-
-        /* 체형 수정 버튼 */
-        edit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getContext(), WishlistClosetEditBodyActivity.class);
-                startActivity(intent);
-            }
-        });
 
         return rootView;
     }
@@ -180,6 +162,11 @@ public class WishlistClosetFragment extends Fragment {
                         }
                         wishlistClosetAdapter.notifyDataSetChanged();
                     }
+                }else if(response.code()==401){
+                    backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(getActivity(), IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
 
@@ -234,8 +221,11 @@ public class WishlistClosetFragment extends Fragment {
                             closet_body_weight.setText("몸무게: " + userMyInfo.getWeight().toString() + "kg");
                         }
                     }
-                    else{ //토큰 만료기한이 끝나, 재로그인이 필요할 때
-                        backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다.");
+                    else if(response.code()==401){
+                        backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                        Intent intent=new Intent(getActivity(), IntroActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 }
                 @Override

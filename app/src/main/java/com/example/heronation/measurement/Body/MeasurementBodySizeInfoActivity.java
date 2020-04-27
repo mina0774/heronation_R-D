@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.heronation.R;
 import com.example.heronation.home.dataClass.BodySizeLevel;
 import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -134,7 +135,14 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
                     backgroundThreadShortToast(getApplicationContext(),"입력하신 값이 반영되었습니다.");
                     Intent intent=new Intent(MeasurementBodySizeInfoActivity.this, MeasurementBodySizeDetailInfoActivity.class);
                     startActivity(intent);
-                }else{
+                }else if(response.code()==401) {
+                    backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(MeasurementBodySizeInfoActivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
                     backgroundThreadShortToast(getApplicationContext(),"값을 모두 입력해주세요.");
                 }
             }

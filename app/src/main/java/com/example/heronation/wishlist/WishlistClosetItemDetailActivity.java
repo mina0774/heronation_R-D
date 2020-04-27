@@ -21,7 +21,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
+import com.example.heronation.mypage.UserModifyActivity;
 import com.example.heronation.wishlist.dataClass.ClosetDetailResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
@@ -119,6 +121,11 @@ public class WishlistClosetItemDetailActivity extends AppCompatActivity {
                                 backgroundThreadShortToast(WishlistClosetItemDetailActivity.this,"범위에 벗어났습니다.");
                             }else if (response.code()==200){
                                 backgroundThreadShortToast(WishlistClosetItemDetailActivity.this, "수정이 완료되었습니다.");
+                            }else if(response.code()==401){
+                                backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다.");
+                                Intent intent=new Intent(getApplicationContext(), IntroActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                             }
                         }
                         @Override

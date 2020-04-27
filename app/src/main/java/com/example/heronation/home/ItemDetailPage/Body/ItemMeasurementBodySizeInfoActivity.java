@@ -18,8 +18,10 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity;
 import com.example.heronation.home.dataClass.BodySizeLevel;
 import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -136,7 +138,13 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
                     Intent intent=new Intent(ItemMeasurementBodySizeInfoActivity.this, ItemCompareBodySizeActivity.class);
                     intent.putExtra("item_id",product_id);
                     startActivity(intent);
-                }else{
+                }else if(response.code()==401) {
+                    backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(ItemMeasurementBodySizeInfoActivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }else
+                {
                     progressDoalog.dismiss();
                     backgroundThreadShortToast(getApplicationContext(),"값을 모두 입력해주세요.");
                 }

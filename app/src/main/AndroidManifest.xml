@@ -51,8 +51,6 @@
         </activity>
         <activity android:name=".login_register.RegisterBodyActivity" />
         <activity android:name=".wishlist.WishlistClosetItemDetailActivity" />
-        <activity android:name=".wishlist.WishlistClosetEditBodyInfoActivity" />
-        <activity android:name=".wishlist.WishlistClosetEditBodyActivity" />
         <activity android:name=".login_register.RegisterActivity" />
         <activity android:name=".home.ItemSearchActivity" />
         <activity android:name=".login_register.loginPageActivity" />

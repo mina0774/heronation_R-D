@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.heronation.R;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.wishlist.dataClass.ClosetDetailResponse;
 import com.example.heronation.wishlist.dataClass.ClosetResponse;
@@ -109,6 +113,12 @@ public class ItemSelectItemForComparisonAcitivity extends AppCompatActivity {
                     itemWardrobeClosetAdapter.notifyDataSetChanged();
                     total_item_number_textview.setText("옷장에 "+total_item_number+"개 상품이 등록되어있습니다");
                 }
+                else if(response.code()==401){
+                    backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(ItemSelectItemForComparisonAcitivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -116,6 +126,18 @@ public class ItemSelectItemForComparisonAcitivity extends AppCompatActivity {
                 System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
+    }
+
+    //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
+    public static void backgroundThreadShortToast(final Context context, final String msg) {
+        if (context != null && msg != null) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 

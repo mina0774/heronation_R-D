@@ -111,7 +111,7 @@ public class MypageConnectingFragment extends Fragment {
                     mypage_ninkname_text.setText("안녕하세요!\n"+userMyInfo.getName()+"님\n"+userMyInfo.getEmail());
                 }
                 /*토큰 만료기한이 끝나, 재로그인이 필요할 때*/
-                else {
+                else if(response.code()==401) {
                     MainActivity.backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다.");
                     Intent intent=new Intent(getActivity(),IntroActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

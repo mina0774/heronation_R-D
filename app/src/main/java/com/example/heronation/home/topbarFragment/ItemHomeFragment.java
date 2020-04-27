@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
@@ -25,9 +28,11 @@ import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent
 import com.example.heronation.home.ItemSearchActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemVerticalAdapter;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
+import com.example.heronation.measurement.Body.MeasurementBodyActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
@@ -159,6 +164,11 @@ public class ItemHomeFragment extends Fragment {
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
                     verticalAdapter.notifyDataSetChanged();
+                }else if(response.code()==401){
+                    backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(getActivity(), IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
 
@@ -186,6 +196,11 @@ public class ItemHomeFragment extends Fragment {
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
                     verticalAdapter.notifyDataSetChanged();
+                }else if(response.code()==401){
+                    backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(getActivity(), IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
 
@@ -194,6 +209,18 @@ public class ItemHomeFragment extends Fragment {
                 System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
+    }
+
+    //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
+    public static void backgroundThreadShortToast(final Context context, final String msg) {
+        if (context != null && msg != null) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)

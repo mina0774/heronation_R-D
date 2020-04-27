@@ -35,16 +35,6 @@
         android:layout_height="24dp"
         android:text="내 체형"/>
 
-            <Button
-                android:id="@+id/wishlist_closet_edit_button"
-                android:layout_width="80dp"
-                android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/button_background_rectangle"
-                android:text="체형 수정"
-                android:textColor="#666666"
-                android:textSize="12sp" />
         </RelativeLayout>
 
         <LinearLayout

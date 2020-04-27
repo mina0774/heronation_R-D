@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.heronation.R;
 import com.example.heronation.home.dataClass.BodySizeLevel;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -174,7 +175,13 @@ public class MeasurementBodyActivity extends AppCompatActivity {
                     if(userMyInfo.getWeight()!=null){
                         editText_weight.setText(userMyInfo.getWeight().toString());
                     }
-
+                }
+                else if(response.code()==401){
+                    backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(MeasurementBodyActivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                 }
             }
            @Override

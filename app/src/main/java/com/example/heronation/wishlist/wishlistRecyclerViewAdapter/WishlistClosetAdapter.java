@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.ClosetItem;
@@ -115,6 +116,11 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
                                     WishlistClosetFragment.wishlistClosetAdapter.notifyItemRangeChanged(position,WishlistClosetFragment.item_list.size());
 
                                     backgroundThreadShortToast(context,"옷 삭제가 완료되었습니다.");
+                                }else if(response.code()==401){
+                                    backgroundThreadShortToast(context, "세션이 만료되어 재로그인이 필요합니다.");
+                                    Intent intent=new Intent(context, IntroActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    context.startActivity(intent);
                                 }
                             }
                             @Override

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.measurement.AR.dataClass.MeasureItemResponse;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -217,30 +218,37 @@ public class MeasurementResultActivity extends AppCompatActivity {
             request.enqueue(new Callback<JSONObject>() {
                 @Override
                 public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
-                   Log.d("저장",response.toString());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MeasurementResultActivity.this);
-                    progressDialog.dismiss();
-                    builder.setCancelable(false);
-                    builder.setMessage("내 옷장에 저장되었습니다.");
-                    builder.setNegativeButton("메인",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // finish하고 main activity로 돌아갔을 때, main activity에서 어떤 작업을 해줘야하는지를 나타내는 변수
-                                    MainActivity.control_closet_to_activity=0;
-                                   finish();
-                                   MeasurementArInfoActivity.measurementArInfoActivity.finish();
-                                }
-                            });
-                    builder.setPositiveButton("옷장으로",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // finish하고 main activity로 돌아갔을 때, main activity에서 어떤 작업을 해줘야하는지를 나타내는 변수
-                                    MainActivity.control_closet_to_activity=1;
-                                    finish();
-                                    MeasurementArInfoActivity.measurementArInfoActivity.finish();
-                                }
-                            });
-                    builder.show();
+                    if(response.isSuccessful()) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MeasurementResultActivity.this);
+                        progressDialog.dismiss();
+                        builder.setCancelable(false);
+                        builder.setMessage("내 옷장에 저장되었습니다.");
+                        builder.setNegativeButton("메인",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // finish하고 main activity로 돌아갔을 때, main activity에서 어떤 작업을 해줘야하는지를 나타내는 변수
+                                        MainActivity.control_closet_to_activity = 0;
+                                        finish();
+                                        MeasurementArInfoActivity.measurementArInfoActivity.finish();
+                                    }
+                                });
+                        builder.setPositiveButton("옷장으로",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // finish하고 main activity로 돌아갔을 때, main activity에서 어떤 작업을 해줘야하는지를 나타내는 변수
+                                        MainActivity.control_closet_to_activity = 1;
+                                        finish();
+                                        MeasurementArInfoActivity.measurementArInfoActivity.finish();
+                                    }
+                                });
+                        builder.show();
+                    }else if(response.code()==401){
+                        backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                        Intent intent=new Intent(MeasurementResultActivity.this, IntroActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
 
                 @Override

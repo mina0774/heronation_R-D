@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.example.heronation.R;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.measurement.Body.dataClass.BodySizeDetail;
 import com.example.heronation.measurement.Body.dataClass.UserBodySizeDetail;
@@ -204,6 +206,12 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
                             }
                         }
                     }
+                }else if(response.code()==401){
+                    backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(MeasurementBodySizeDetailInfoActivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                 }
             }
 

@@ -2,11 +2,14 @@ package com.example.heronation.home.ItemDetailPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
@@ -24,6 +28,7 @@ import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemCompareItemSizeAc
 import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity;
 import com.example.heronation.home.dataClass.GoodsResponses;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
@@ -407,8 +412,13 @@ public class ItemMeasurementActivity extends AppCompatActivity {
                         });
                     }
 
-
-                }else if(!response.isSuccessful()){ // 아이템에 대한 사이즈 정보가 없을 때
+                }else if(response.code()==401){ // 로그인 세션이 완료되었을 때
+                    backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(ItemMeasurementActivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                else{ // 아이템에 대한 사이즈 정보가 없을 때
                     item_size_info=false;
                     size_info_in_item.setVisibility(View.GONE);
                     no_size_info_in_item.setVisibility(View.VISIBLE);
@@ -420,6 +430,18 @@ public class ItemMeasurementActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
+    public static void backgroundThreadShortToast(final Context context, final String msg) {
+        if (context != null && msg != null) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 }

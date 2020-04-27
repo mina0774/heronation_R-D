@@ -1,5 +1,7 @@
 package com.example.heronation.wishlist.topbarFragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -7,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +20,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.FavoriteItemAdapter;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.FavoriteItem;
+import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
 import java.util.ArrayList;
@@ -81,22 +88,28 @@ public class WishlistItemFragment extends Fragment {
         String authorization = "Bearer " + MainActivity.access_token;
         String content_type = "application/json";
 
-        FavoriteItemInfoService favoriteItemInfoService = ServiceGenerator.createService(FavoriteItemInfoService.class);
+        APIInterface.FavoriteItemInfoService favoriteItemInfoService = ServiceGenerator.createService(APIInterface.FavoriteItemInfoService.class);
         retrofit2.Call<List<FavoriteItem>> request = favoriteItemInfoService.favoriteItemInfo(authorization, content_type);
         request.enqueue(new Callback<List<FavoriteItem>>() {
             @Override
             public void onResponse(Call<List<FavoriteItem>> call, Response<List<FavoriteItem>> response) {
-                System.out.println("Response" + response.code());
-                List<FavoriteItem> itemFavoritesListInfo=response.body();
-                if(itemFavoritesListInfo.size()!=0) {
-                    /* 찜 아이템 없을 시 화면 삭제 */
-                    have_not_item.setVisibility(View.GONE);
-                    /* 찜 화면 있을시 화면 보이게 하기 */
-                    have_item.setVisibility(View.VISIBLE);
-                    /*shop 목록을 생성*/
-                    make_item_list(itemFavoritesListInfo);
-                    wishlist_item_num.setText("찜한 상품 " + itemFavoritesListInfo.size() + "개");
-                    favoriteItemAdapter.notifyDataSetChanged();
+                if(response.isSuccessful()) {
+                    List<FavoriteItem> itemFavoritesListInfo = response.body();
+                    if (itemFavoritesListInfo.size() != 0) {
+                        /* 찜 아이템 없을 시 화면 삭제 */
+                        have_not_item.setVisibility(View.GONE);
+                        /* 찜 화면 있을시 화면 보이게 하기 */
+                        have_item.setVisibility(View.VISIBLE);
+                        /*shop 목록을 생성*/
+                        make_item_list(itemFavoritesListInfo);
+                        wishlist_item_num.setText("찜한 상품 " + itemFavoritesListInfo.size() + "개");
+                        favoriteItemAdapter.notifyDataSetChanged();
+                    }
+                }else if(response.code()==401){
+                    backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(getActivity(), IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
 
@@ -115,12 +128,16 @@ public class WishlistItemFragment extends Fragment {
         }
     }
 
-
-    /* 사용자 정보를 서버에서 받아오는 인터페이스*/
-    public interface FavoriteItemInfoService {
-        @GET("api/consumers/items/interest")
-        retrofit2.Call<List<FavoriteItem>> favoriteItemInfo(@Header("authorization") String authorization,
-                                                            @Header("Content-Type") String cotent_type);
+    //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
+    public static void backgroundThreadShortToast(final Context context, final String msg) {
+        if (context != null && msg != null) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     /**

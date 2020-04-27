@@ -3,6 +3,7 @@ package com.example.heronation.mypage;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity;
 import com.example.heronation.login_register.DatePickerFragment;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
@@ -124,8 +127,11 @@ public class UserModifyActivity extends AppCompatActivity {
                     MainActivity.backgroundThreadShortToast(UserModifyActivity.this, "수정되었습니다.");
                     finish();
                 }
-                else{ //토큰 만료기한이 끝나, 재로그인이 필요할 때
+                else if(response.code()==401){ //토큰 만료기한이 끝나, 재로그인이 필요할 때
                     MainActivity.backgroundThreadShortToast(UserModifyActivity.this, "세션이 만료되어 재로그인이 필요합니다.");
+                    Intent intent=new Intent(UserModifyActivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
             @Override
@@ -171,8 +177,11 @@ public class UserModifyActivity extends AppCompatActivity {
                     }
                 }
                 /*토큰 만료기한이 끝나, 재로그인이 필요할 때*/
-                else {
+                else if(response.code()==401) {
                     MainActivity.backgroundThreadShortToast(UserModifyActivity.this, "세션이 만료되어 재로그인이 필요합니다.");
+                    Intent intent=new Intent(UserModifyActivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
             @Override

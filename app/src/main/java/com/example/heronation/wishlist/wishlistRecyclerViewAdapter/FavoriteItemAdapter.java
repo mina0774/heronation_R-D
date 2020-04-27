@@ -2,6 +2,7 @@ package com.example.heronation.wishlist.wishlistRecyclerViewAdapter;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.home.topbarFragment.ItemHomeFragment;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.FavoriteItem;
@@ -130,6 +132,9 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<FavoriteItemAdapte
                 } else if (response.code() == 401) {
                     //로그인이 필요한 서비스입니다.
                     backgroundThreadShortToast(context, "로그인이 필요한 서비스입니다.");
+                    Intent intent=new Intent(context, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(intent);
                 } else if (response.code() == 500) {
                     //이미 찜목록에 등록되어있습니다.
                     backgroundThreadShortToast(context, "이미 찜 목록에 등록된 아이템입니다.");
@@ -162,6 +167,9 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<FavoriteItemAdapte
                 } else if (response.code() == 401) {
                     //로그인이 필요한 서비스입니다.
                     backgroundThreadShortToast(context, "로그인이 필요한 서비스입니다.");
+                    Intent intent=new Intent(context, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(intent);
                 }
             }
 

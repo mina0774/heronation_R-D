@@ -16,6 +16,7 @@ import com.example.heronation.measurement.Body.dataClass.UserBodySizeDetail;
 import com.example.heronation.mypage.dataClass.UserModifyInfo;
 import com.example.heronation.wishlist.dataClass.ClosetDetailResponse;
 import com.example.heronation.wishlist.dataClass.ClosetResponse;
+import com.example.heronation.wishlist.wishlistRecyclerViewAdapter.dataClass.FavoriteItem;
 
 import org.json.JSONObject;
 
@@ -74,6 +75,13 @@ public interface APIInterface {
                                           @Header("authorization") String authorization,
                                           @Header("Accept") String accept,
                                           @Header("Content-Type") String content_type);
+    }
+
+    /* 사용자 정보를 서버에서 받아오는 인터페이스*/
+    public interface FavoriteItemInfoService {
+        @GET("api/consumers/items/interest")
+        retrofit2.Call<List<FavoriteItem>> favoriteItemInfo(@Header("authorization") String authorization,
+                                                            @Header("Content-Type") String cotent_type);
     }
 
     /* 로그인 서비스 */

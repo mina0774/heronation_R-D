@@ -2,10 +2,14 @@ package com.example.heronation.home.ItemDetailPage.Body;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +17,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.home.ItemDetailPage.Body.ItemMeasurementBodyActivity;
 import com.example.heronation.home.ItemDetailPage.Body.ItemMeasurementBodySizeInfoActivity;
+import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity;
 import com.example.heronation.home.dataClass.CompareWithBody;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
@@ -77,64 +84,83 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
         request.enqueue(new Callback<CompareWithBody>() {
             @Override
             public void onResponse(Call<CompareWithBody> call, Response<CompareWithBody> response) {
-                CompareWithBody compareWithBody=response.body();
+                if(response.isSuccessful()) {
+                    CompareWithBody compareWithBody = response.body();
 
-                // 현재 보고있는 상품 정보 설정
-                measurement_item_name.setText(compareWithBody.getItemResponse().getName());
-                measurement_item_image.setBackground(new ShapeDrawable(new OvalShape()));
-                measurement_item_image.setClipToOutline(true);
-                Glide.with(getApplicationContext()).load(compareWithBody.getItemResponse().getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(measurement_item_image);
+                    // 현재 보고있는 상품 정보 설정
+                    measurement_item_name.setText(compareWithBody.getItemResponse().getName());
+                    measurement_item_image.setBackground(new ShapeDrawable(new OvalShape()));
+                    measurement_item_image.setClipToOutline(true);
+                    Glide.with(getApplicationContext()).load(compareWithBody.getItemResponse().getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(measurement_item_image);
 
-                // 사이즈 추천 값에 따라 첫화면 생성 - 일치 확률 최대값 찾기
-                Double max=compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(0).getCompareResultDerive();
-                Integer max_num=0;
-                for(int i=0; i<compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size(); i++){
-                    if(max< compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getCompareResultDerive()){
-                        max_num=i;
+                    // 사이즈 추천 값에 따라 첫화면 생성 - 일치 확률 최대값 찾기
+                    Double max = compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(0).getCompareResultDerive();
+                    Integer max_num = 0;
+                    for (int i = 0; i < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size(); i++) {
+                        if (max < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getCompareResultDerive()) {
+                            max_num = i;
+                        }
                     }
-                }
-                // max_num에 따라 처음 화면에 뿌려지는 수치값이 다름
-                switch(max_num){
-                    case 0: view_size_S(compareWithBody); recommendation_size_textview.setText("S size "); break;
-                    case 1: view_size_M(compareWithBody); recommendation_size_textview.setText("M size "); break;
-                    case 2: view_size_L(compareWithBody); recommendation_size_textview.setText("L size "); break;
-                    case 3: view_size_XL(compareWithBody); recommendation_size_textview.setText("XL size "); break;
-                }
+                    // max_num에 따라 처음 화면에 뿌려지는 수치값이 다름
+                    switch (max_num) {
+                        case 0:
+                            view_size_S(compareWithBody);
+                            recommendation_size_textview.setText("S size ");
+                            break;
+                        case 1:
+                            view_size_M(compareWithBody);
+                            recommendation_size_textview.setText("M size ");
+                            break;
+                        case 2:
+                            view_size_L(compareWithBody);
+                            recommendation_size_textview.setText("L size ");
+                            break;
+                        case 3:
+                            view_size_XL(compareWithBody);
+                            recommendation_size_textview.setText("XL size ");
+                            break;
+                    }
 
-                if(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size()>=1){ // S 사이즈 버튼 활성화
-                    comparison_size_S.setOnClickListener(new View.OnClickListener() {
+                    if (compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size() >= 1) { // S 사이즈 버튼 활성화
+                        comparison_size_S.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 view_size_S(compareWithBody);
                             }
-                    });
-                }
+                        });
+                    }
 
-                if(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size()>=2){ // M 사이즈 버튼 활성화
-                    comparison_size_M.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            view_size_M(compareWithBody);
-                        }
-                    });
-                }
+                    if (compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size() >= 2) { // M 사이즈 버튼 활성화
+                        comparison_size_M.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                view_size_M(compareWithBody);
+                            }
+                        });
+                    }
 
-                if(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size()>=3){ // L 사이즈 버튼 활성화
-                    comparison_size_L.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                           view_size_L(compareWithBody);
-                        }
-                    });
-                }
+                    if (compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size() >= 3) { // L 사이즈 버튼 활성화
+                        comparison_size_L.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                view_size_L(compareWithBody);
+                            }
+                        });
+                    }
 
-                if(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size()>=4){ // XL 사이즈 버튼 활성화
-                    comparison_size_XL.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                           view_size_XL(compareWithBody);
-                        }
-                    });
+                    if (compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size() >= 4) { // XL 사이즈 버튼 활성화
+                        comparison_size_XL.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                view_size_XL(compareWithBody);
+                            }
+                        });
+                    }
+                }else if(response.code()==401){
+                    backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(ItemCompareBodySizeActivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
 
@@ -143,6 +169,18 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
+    public static void backgroundThreadShortToast(final Context context, final String msg) {
+        if (context != null && msg != null) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     public void view_size_S(CompareWithBody compareWithBody){

@@ -163,21 +163,23 @@ public class WishlistClosetFragment extends Fragment {
                 if(response.code()==200){
                     ClosetResponse closetResponse=response.body();
                     // 옷장에 아이템이 없을 때
-                    if(closetResponse.getSize()==0){
+                    if(page_num==1&&closetResponse.getSize()==0){
                         have_no_closet_item.setVisibility(View.VISIBLE);
-                    }
-                    // 옷장에 아이템이 있을 때
-                    for(int i=0; i<closetResponse.getSize();i++){
-                        ClosetResponse.WardrobeResponse wardrobeResponse = closetResponse.getWardrobeResponses().get(i);
-                        if(cloth_category.equals("전체")) {
-                            item_list.add(new ClosetItem(wardrobeResponse.getImage(), wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
-                                    wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
-                        }else if(cloth_category.equals(wardrobeResponse.getSubCategoryName())){
-                            item_list.add(new ClosetItem(wardrobeResponse.getImage(), wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
-                                    wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
+                    }else {
+                        // 옷장에 아이템이 있을 때
+                        have_no_closet_item.setVisibility(View.GONE);
+                        for (int i = 0; i < closetResponse.getSize(); i++) {
+                            ClosetResponse.WardrobeResponse wardrobeResponse = closetResponse.getWardrobeResponses().get(i);
+                            if (cloth_category.equals("전체")) {
+                                item_list.add(new ClosetItem(wardrobeResponse.getImage(), wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
+                                        wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
+                            } else if (cloth_category.equals(wardrobeResponse.getSubCategoryName())) {
+                                item_list.add(new ClosetItem(wardrobeResponse.getImage(), wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
+                                        wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
+                            }
                         }
+                        wishlistClosetAdapter.notifyDataSetChanged();
                     }
-                    wishlistClosetAdapter.notifyDataSetChanged();
                 }
             }
 

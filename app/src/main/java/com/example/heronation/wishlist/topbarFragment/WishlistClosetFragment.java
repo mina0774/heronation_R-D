@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,9 +57,10 @@ public class WishlistClosetFragment extends Fragment {
     @BindView(R.id.closet_body_age) TextView closet_body_age;
     @BindView(R.id.closet_body_height) TextView closet_body_height;
     @BindView(R.id.closet_body_weight) TextView closet_body_weight;
-    @BindView(R.id.snackbar_view) CoordinatorLayout snackbar_view;
-
     @BindView(R.id.have_no_closet_item) TextView have_no_closet_item;
+
+    @BindView(R.id.log) Button log;
+    @BindView(R.id.log_textview) TextView log_textview;
 
     public static WishlistClosetAdapter wishlistClosetAdapter;
     Integer page_num; // 동적 로딩을 위한 page number
@@ -87,6 +89,7 @@ public class WishlistClosetFragment extends Fragment {
         closet_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         /* 리사이클러뷰에 어댑터 지정 */
         closet_recyclerView.setAdapter(wishlistClosetAdapter);
+
 
         return rootView;
     }
@@ -134,11 +137,12 @@ public class WishlistClosetFragment extends Fragment {
 
 
     public void GetClosetList(Integer page_num, String cloth_category){
+        long startTime=System.nanoTime(); // 시간 측정
         String authorization="bearer "+MainActivity.access_token;
         String accept="application/json";
 
         APIInterface.GetClosetListService getClosetListService=ServiceGenerator.createService(APIInterface.GetClosetListService.class);
-        retrofit2.Call<ClosetResponse> request= getClosetListService.GetClosetList(page_num,10,"id,desc",authorization,accept);
+        retrofit2.Call<ClosetResponse> request= getClosetListService.GetClosetList(page_num,100,"id,desc",authorization,accept);
         request.enqueue(new Callback<ClosetResponse>() {
             @Override
             public void onResponse(Call<ClosetResponse> call, Response<ClosetResponse> response) {
@@ -161,6 +165,14 @@ public class WishlistClosetFragment extends Fragment {
                             }
                         }
                         wishlistClosetAdapter.notifyDataSetChanged();
+                        long endTime=System.nanoTime(); // 시간 측정
+                        log.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                log_textview.setVisibility(View.VISIBLE);
+                                log_textview.setText("elapsedTime : "+ (double)(endTime-startTime)/1000000000 +"s");
+                            }
+                        });
                     }
                 }else if(response.code()==401){
                     backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
@@ -175,6 +187,7 @@ public class WishlistClosetFragment extends Fragment {
                 System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
+
     }
 
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식,
@@ -183,6 +196,7 @@ public class WishlistClosetFragment extends Fragment {
     //    item_list=new ArrayList<>();
         page_num=1;
         GetClosetList(page_num,cloth_category);
+        /*
         closet_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -192,6 +206,7 @@ public class WishlistClosetFragment extends Fragment {
                 }
             }
         });
+         */
     }
 
 

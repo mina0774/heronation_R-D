@@ -90,7 +90,7 @@ public class ItemAiFragment extends Fragment {
 
         APIInterface.StyleRecommendationBasedUserService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserService.class);
 
-        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(loginPageActivity.style_tag_id, authorization, accept); //사용자 정보 받아오기
+        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(MainActivity.style_tag_id, authorization, accept); //사용자 정보 받아오기
         request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
             @Override
             public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {

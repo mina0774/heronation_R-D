@@ -44,6 +44,7 @@ import com.example.heronation.wishlist.topbarFragment.WishlistClosetNotLoginFrag
 import com.example.heronation.wishlist.topbarFragment.WishlistItemFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity
     private BackPressCloseHandler backPressCloseHandler;
 
     public static String access_token;
+    public static String style_tag_id;
     public static Integer control_closet_to_activity=-1;
     public static MainActivity mainActivity;
     private Integer mMenuItem; // 현재 선택된 하단 메뉴 아이디
@@ -128,6 +130,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         mainActivity=this;
         access_token = getIntent().getStringExtra("access_token");
+        getStyleTagInfo();
 
         backPressCloseHandler=new BackPressCloseHandler(this);
         /* BottomNavigation view를 선언해주고, bottomNavigationView의 객체를 생성한 후,
@@ -197,6 +200,35 @@ public class MainActivity extends AppCompatActivity
             control_closet_to_activity=-1;
         }
     }
+
+    public void getStyleTagInfo(){
+        String authorization = "";
+        String accept = "application/json";
+        authorization = "bearer " + access_token;
+        APIInterface.UserInfoService userInfoService = ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request = userInfoService.UserInfo(authorization, accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                UserMyInfo userMyInfo = response.body();
+                //스타일 태그 받기
+                style_tag_id = "";
+                if(userMyInfo.getStyleTagResponses()!=null) {
+                    for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
+                        style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
+                        if (i == userMyInfo.getStyleTagResponses().size() - 1) {
+                            style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+            }
+        });
+    }
+
 
     /*마이페이지에서 사용자 정보 받아오는 함수*/
     public void myPageGetUserInfo(){

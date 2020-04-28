@@ -49,7 +49,6 @@ public class  loginPageActivity extends AppCompatActivity {
     @BindView(R.id.login_button) Button login_button;
     /* access token을 Package 내에서 공유 , access token은 로그인할 때 한번만 받음 */
     public String access_token;
-    public static String style_tag_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +151,7 @@ public class  loginPageActivity extends AppCompatActivity {
         }
     }
 
-    /* 사용자 스타일 태그 정보, 체형 정보 받아와서 구독하기 */
+    /* 사용자 체형 정보 받아와서 구독하기 */
     public void GetUserInfo(String access_token) {
         String authorization = "";
         String accept = "application/json";
@@ -164,18 +163,6 @@ public class  loginPageActivity extends AppCompatActivity {
             public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
                 UserMyInfo userMyInfo = response.body();
 
-                //스타일 태그 받기
-                style_tag_id = "";
-                if(userMyInfo.getStyleTagResponses()!=null) {
-                    for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
-                        style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
-                        if (i == userMyInfo.getStyleTagResponses().size() - 1) {
-                            style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
-                        }
-                    }
-                }
-
-                // TODO: 2020-04-13 한 번 구독하면, 기기에서 계속 기억하고 있기 때문에, 다른 아이디로 로그인을 하더라도 전에 구독한 topic이 기록에 남음 / 현재 세션은 토큰값이 시간이 지나면 무효화됨 / 로그아웃이 되었는데, 알림이 간다?
                 // 체형 정보가 있을 시에 구독하기
                 if(userMyInfo.getBodyResponses().size()!=0){
                     userMyInfo.getGender();

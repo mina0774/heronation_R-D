@@ -127,11 +127,10 @@ public class ItemHomeFragment extends Fragment {
 
         APIInterface.StyleRecommendationBasedUserService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserService.class);
 
-        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(loginPageActivity.style_tag_id, authorization, accept); //사용자 정보 받아오기
+        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(MainActivity.style_tag_id, authorization, accept); //사용자 정보 받아오기
         request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
             @Override
             public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
-                System.out.println("Response" + response.code());
                 if(response.code()==200) {
                     //아이템의 데이터를 받는 리스트
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();

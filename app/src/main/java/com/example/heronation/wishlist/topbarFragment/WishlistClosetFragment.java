@@ -59,14 +59,16 @@ public class WishlistClosetFragment extends Fragment {
     @BindView(R.id.closet_body_weight) TextView closet_body_weight;
     @BindView(R.id.have_no_closet_item) TextView have_no_closet_item;
 
-    @BindView(R.id.log) Button log;
-    @BindView(R.id.log_textview) TextView log_textview;
+    private Button log;
+    public static TextView log_textview;
 
     public static WishlistClosetAdapter wishlistClosetAdapter;
     Integer page_num; // 동적 로딩을 위한 page number
     public static Context context;
     private List<String> cloth_category_list; //옷 카테고리를 담는 변수
     private ArrayAdapter<String> spinner_adapter; // 스피너 어댑터
+
+    public static long startTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,12 +78,19 @@ public class WishlistClosetFragment extends Fragment {
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_wishlist_closet, container,false);
         ButterKnife.bind(this,rootView);
 
+        // 시간 측정 관련 로그
+        log=rootView.findViewById(R.id.log);
+        log_textview=rootView.findViewById(R.id.log_textview);
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                log_textview.setVisibility(View.VISIBLE);
+            }
+        });
+
         context=getActivity();
         item_list=new ArrayList<>();
         cloth_category_list=new ArrayList<>();
-
-        getClothCategory();
-        getBodyInfo();
 
         /* 리사이클러뷰 객체 생성 */
         wishlistClosetAdapter=new WishlistClosetAdapter(getActivity(),item_list);
@@ -90,6 +99,8 @@ public class WishlistClosetFragment extends Fragment {
         /* 리사이클러뷰에 어댑터 지정 */
         closet_recyclerView.setAdapter(wishlistClosetAdapter);
 
+        getClothCategory();
+        getBodyInfo();
 
         return rootView;
     }
@@ -137,7 +148,7 @@ public class WishlistClosetFragment extends Fragment {
 
 
     public void GetClosetList(Integer page_num, String cloth_category){
-        long startTime=System.nanoTime(); // 시간 측정
+        startTime=System.nanoTime(); // 시간 측정
         String authorization="bearer "+MainActivity.access_token;
         String accept="application/json";
 
@@ -165,14 +176,7 @@ public class WishlistClosetFragment extends Fragment {
                             }
                         }
                         wishlistClosetAdapter.notifyDataSetChanged();
-                        long endTime=System.nanoTime(); // 시간 측정
-                        log.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                log_textview.setVisibility(View.VISIBLE);
-                                log_textview.setText("elapsedTime : "+ (double)(endTime-startTime)/1000000000 +"s");
-                            }
-                        });
+
                     }
                 }else if(response.code()==401){
                     backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )

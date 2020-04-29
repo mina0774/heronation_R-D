@@ -212,7 +212,9 @@ public class ItemStyleHorizontalAdapter extends RecyclerView.Adapter<ItemStyleHo
                     intent.putExtra("item_name",styleRecommendation.get(position).getItemName());
                     intent.putExtra("item_price",styleRecommendation.get(position).getPrice().toString());
                     intent.putExtra("item_id",styleRecommendation.get(position).getItemId().toString());
-                    intent.putExtra("item_subcategory",styleRecommendation.get(position).getSubCategoryId().toString());
+                    if(styleRecommendation.get(position).getSubCategoryId()!=null) {
+                        intent.putExtra("item_subcategory", styleRecommendation.get(position).getSubCategoryId().toString());
+                    }
                     context.startActivity(intent);
                 }
             });

@@ -6,12 +6,15 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.heronation.adapter.topbarAdapter.ItemViewPagerAdapter;
 import com.example.heronation.R;
+import com.example.heronation.home.topbarFragment.ItemBestFragment;
+import com.example.heronation.home.topbarFragment.ItemHomeFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import butterknife.BindView;
@@ -65,6 +68,12 @@ public class ItemFragment extends Fragment {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             viewPager.setCurrentItem(tab.getPosition());
+
+            // 뷰페이저 화면 갱신될 때
+            ItemHomeFragment.log_textview.setVisibility(View.INVISIBLE);
+            ItemBestFragment.log_textview.setVisibility(View.INVISIBLE);
+            ItemHomeFragment.startTime=System.nanoTime();
+            ItemBestFragment.startTime=System.nanoTime();
         }
 
         @Override

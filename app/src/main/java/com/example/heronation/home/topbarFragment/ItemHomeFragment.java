@@ -81,6 +81,7 @@ public class ItemHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         startTime=System.nanoTime(); // 시간 측정
+
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_item_home,container,false);
         ButterKnife.bind(this,rootView);
@@ -134,7 +135,7 @@ public class ItemHomeFragment extends Fragment {
         return rootView;
     }
 
-    /* 스타일 추천 Item의 정보를 얻는 함수 */
+        /* 스타일 추천 Item의 정보를 얻는 함수 */
     public void GetItemInfoUser(String package_name) {
         String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
         String accept = "application/json";

@@ -6,12 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.heronation.home.topbarFragment.ItemAiFragment;
 import com.example.heronation.home.topbarFragment.ItemBestFragment;
 import com.example.heronation.home.topbarFragment.ItemHomeFragment;
 
-public class ItemViewPagerAdapter extends FragmentPagerAdapter {
+public class ItemViewPagerAdapter extends FragmentStatePagerAdapter {
     private int mPageCount;
 
     /*
@@ -40,7 +41,6 @@ public class ItemViewPagerAdapter extends FragmentPagerAdapter {
         }
         return null;
     }
-
 
     @Override
     public int getCount() {

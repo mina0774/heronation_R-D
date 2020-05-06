@@ -108,7 +108,6 @@ public class ItemBestFragment extends Fragment {
         package_name_list.add("All best");
         package_name_list.add("상의 best");
         package_name_list.add("하의 best");
-
         loadItems();
 
         /* 이미지 슬라이딩을 위해 뷰페이저를 이용했고, 이를 설정해주는 이미지 어댑터를 설정하여 슬라이딩 구현 */
@@ -152,9 +151,9 @@ public class ItemBestFragment extends Fragment {
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems() {
-        for(int package_num=1; package_num<=package_name_list.size(); package_num++)
-        GetItemInfo(package_num,package_name_list.get(package_num-1));
-
+        for(int package_num=1; package_num<=package_name_list.size(); package_num++) {
+            GetItemInfo(package_num, package_name_list.get(package_num - 1));
+        }
     }
 
 

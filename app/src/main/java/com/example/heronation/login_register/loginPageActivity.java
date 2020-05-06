@@ -128,6 +128,7 @@ public class  loginPageActivity extends AppCompatActivity {
 
                 access_token=userLoginInfo.access_token;
                 intent.putExtra("access_token",access_token);
+                intent.putExtra("style_tag_id",IntroActivity.style_tag_id);
                 startActivity(intent);
                 finish();
             }
@@ -151,7 +152,7 @@ public class  loginPageActivity extends AppCompatActivity {
         }
     }
 
-    /* 사용자 체형 정보 받아와서 구독하기 */
+    /* 스타일 태그 아이디 받아오기, 사용자 체형 정보 받아와서 구독하기 */
     public void GetUserInfo(String access_token) {
         String authorization = "";
         String accept = "application/json";
@@ -162,6 +163,15 @@ public class  loginPageActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
                 UserMyInfo userMyInfo = response.body();
+
+                if(userMyInfo.getStyleTagResponses()!=null) {
+                    for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
+                        IntroActivity.style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
+                        if (i == userMyInfo.getStyleTagResponses().size() - 1) {
+                            IntroActivity.style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
+                        }
+                    }
+                }
 
                 // 체형 정보가 있을 시에 구독하기
                 if(userMyInfo.getBodyResponses().size()!=0){

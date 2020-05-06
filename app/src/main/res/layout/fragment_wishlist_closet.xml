@@ -97,12 +97,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/log"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:background="#00000000" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,13 +131,22 @@
 </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-   <TextView
+    <Button
+        android:layout_gravity="end"
+        android:id="@+id/log"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:background="#00000000"
+   />
+
+    <TextView
        android:id="@+id/log_textview"
        android:visibility="invisible"
-       android:layout_width="240dp"
-       android:layout_height="120dp"
+       android:padding="16dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
        android:layout_gravity="center"
-       android:background="@drawable/card"
+       android:background="@drawable/cloth_card"
        android:textAlignment="center"/>
 
 </FrameLayout>

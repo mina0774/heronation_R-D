@@ -59,9 +59,6 @@ public class WishlistClosetFragment extends Fragment {
     @BindView(R.id.closet_body_weight) TextView closet_body_weight;
     @BindView(R.id.have_no_closet_item) TextView have_no_closet_item;
 
-    private Button log;
-    public static TextView log_textview;
-
     public static WishlistClosetAdapter wishlistClosetAdapter;
     Integer page_num; // 동적 로딩을 위한 page number
     public static Context context;
@@ -69,11 +66,13 @@ public class WishlistClosetFragment extends Fragment {
     private ArrayAdapter<String> spinner_adapter; // 스피너 어댑터
 
     public static long startTime;
+    private Button log;
+    public static TextView log_textview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        startTime=System.nanoTime(); // 시간 측정
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_wishlist_closet, container,false);
         ButterKnife.bind(this,rootView);
@@ -148,7 +147,6 @@ public class WishlistClosetFragment extends Fragment {
 
 
     public void GetClosetList(Integer page_num, String cloth_category){
-        startTime=System.nanoTime(); // 시간 측정
         String authorization="bearer "+MainActivity.access_token;
         String accept="application/json";
 

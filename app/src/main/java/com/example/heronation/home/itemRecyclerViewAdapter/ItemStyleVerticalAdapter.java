@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.heronation.R;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
+import com.example.heronation.home.topbarFragment.ItemHomeFragment;
+import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 
 import java.util.ArrayList;
 
 public class ItemStyleVerticalAdapter extends RecyclerView.Adapter<ItemStyleVerticalAdapter.VerticalViewHolder> {
     private ArrayList<ShopItemPackage> itemList_List;
     private Context context;
+    String log="\n";
 
     public ItemStyleVerticalAdapter(ArrayList<ShopItemPackage> itemList_List, Context context) {
         this.itemList_List = itemList_List;
@@ -53,6 +56,10 @@ public class ItemStyleVerticalAdapter extends RecyclerView.Adapter<ItemStyleVert
         holder.recyclerView.setAdapter(adapter);
         holder.packageName.setText(itemList_List.get(position).getPackageName());
 
+        // 시간 측정 로그값 나타내기
+        long endTime=System.nanoTime();
+        log="elapsed time: "+(double)(endTime- ItemHomeFragment.startTime)/1000000000.0;
+        ItemHomeFragment.log_textview.setText(log);
     }
 
     @Override

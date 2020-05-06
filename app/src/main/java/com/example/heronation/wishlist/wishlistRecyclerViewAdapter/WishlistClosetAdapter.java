@@ -39,7 +39,7 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
 
     private Context context;
     private List<ClosetItem> item_list=new ArrayList<>();
-    String log="";
+    String log="\n";
 
     public WishlistClosetAdapter(Context context, List<ClosetItem> item_list) {
         this.context = context;
@@ -68,9 +68,8 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
 
         // 시간 측정 로그값 나타내기
        long endTime=System.nanoTime();
-       log+="element elapsed time: "+(double)(endTime-WishlistClosetFragment.startTime)/1000000000.0+"\n";
+       log="elapsed time: "+(double)(endTime-WishlistClosetFragment.startTime)/1000000000.0;
         WishlistClosetFragment.log_textview.setText(log);
-        Log.d("DEBUG","element elapsed time: "+(double)(endTime-WishlistClosetFragment.startTime)/1000000000.0);
 
         /* 즐겨찾기 버튼 별 모양을 클릭했을 때,
         선택될 시에 사진을 노란색 별모양으로 설정

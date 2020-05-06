@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
+import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -20,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class IntroActivity extends AppCompatActivity {
+    public static String style_tag_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +48,13 @@ public class IntroActivity extends AppCompatActivity {
                     Log.d("response",response.isSuccessful()+"");
                     if(response.isSuccessful()){
                         UserLoginInfo userLoginInfo=response.body();
+
                         // 로그인 세션 유지를 위해 SharedPreferences에 토큰값을 저장
                         SharedPreferences.Editor editor=pref.edit();
                         editor.putString("refresh_token",userLoginInfo.getRefresh_token());
                         editor.commit();
 
-                        Intent intent = new Intent(IntroActivity.this,MainActivity.class);
-                        intent.putExtra("access_token",userLoginInfo.getAccess_token());
-                        startActivity(intent);
-                        finish();
+                        getStyleTagInfo(userLoginInfo.getAccess_token());
                     }
                 }
 
@@ -65,6 +65,41 @@ public class IntroActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    public void getStyleTagInfo(String access_token){
+        String authorization = "";
+        String accept = "application/json";
+        authorization = "bearer " + access_token;
+        APIInterface.UserInfoService userInfoService = ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request = userInfoService.UserInfo(authorization, accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                UserMyInfo userMyInfo = response.body();
+                //스타일 태그 받기
+                style_tag_id="";
+                if(userMyInfo.getStyleTagResponses()!=null) {
+                    for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
+                        style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
+                        if (i == userMyInfo.getStyleTagResponses().size() - 1) {
+                            style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
+                        }
+                    }
+                }
+                Log.d("스타일",style_tag_id);
+
+                Intent intent = new Intent(IntroActivity.this,MainActivity.class);
+                intent.putExtra("access_token",access_token);
+                intent.putExtra("style_tag_id",style_tag_id);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+            }
+        });
     }
 
     public void go_to_login(View view){

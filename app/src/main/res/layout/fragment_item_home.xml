@@ -91,5 +91,20 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    <Button
+        android:layout_gravity="end"
+        android:id="@+id/log"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:background="#00000000" />
 
+    <TextView
+        android:id="@+id/log_textview"
+        android:visibility="invisible"
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/cloth_card"
+        android:textAlignment="center"/>
 </FrameLayout>

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -71,16 +72,28 @@ public class ItemHomeFragment extends Fragment {
     private ArrayList<ShopItemPackage> item_list;
     /* 아이템 수평 리스트 담는 수직 어댑터*/
     private ItemStyleVerticalAdapter verticalAdapter;
-    private Integer package_num;
+
+    public static long startTime;
+    private Button log;
+    public static TextView log_textview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
+        startTime=System.nanoTime(); // 시간 측정
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_item_home,container,false);
         ButterKnife.bind(this,rootView);
+
+        // 시간 측정 관련 로그
+        log=rootView.findViewById(R.id.log);
+        log_textview=rootView.findViewById(R.id.log_textview);
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                log_textview.setVisibility(View.VISIBLE);
+            }
+        });
 
         // 리사이클러뷰에 들어있는 아이템을 초기화
         item_list=new ArrayList<>();
@@ -93,6 +106,7 @@ public class ItemHomeFragment extends Fragment {
         item_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         item_recyclerView.setAdapter(verticalAdapter);
         loadItems();
+
 
         /*  검색창 클릭했을 때, 아이템 검색 액티비티로 이동 */
         search_item.setOnClickListener(new View.OnClickListener() {
@@ -225,20 +239,9 @@ public class ItemHomeFragment extends Fragment {
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems() {
-        package_num=0;
         GetItemInfoBody("사이즈 추천");
         GetItemInfoOther("비슷한 스타일 유저의 추천");
-        item_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                if(!item_recyclerView.canScrollVertically(1)){
-                    package_num=package_num+1;
-                    if(package_num==1) {
-                        GetItemInfoUser("스타일 추천");
-                    }
-                }
-            }
-        });
+        GetItemInfoUser("스타일 추천");
     }
 
     public interface OnFragmentInteractionListener {

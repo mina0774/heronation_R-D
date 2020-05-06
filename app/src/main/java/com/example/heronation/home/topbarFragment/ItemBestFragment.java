@@ -15,6 +15,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.heronation.adapter.bannerAdapter.bannerAdapter;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemBestCategory;
@@ -52,13 +54,28 @@ public class ItemBestFragment extends Fragment {
     /* 상품 리스트 묶음 이름의 리스트 */
     private ArrayList<String> package_name_list=new ArrayList<>();
 
+    public static long startTime;
+    private Button log;
+    public static TextView log_textview;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        startTime=System.nanoTime(); // 시간 측정
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_item_best,container,false);
         ButterKnife.bind(this,rootView);
         item_recyclerView=rootView.findViewById(R.id.item_best_items);
+
+        // 시간 측정 관련 로그
+        log=rootView.findViewById(R.id.log);
+        log_textview=rootView.findViewById(R.id.log_textview);
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                log_textview.setVisibility(View.VISIBLE);
+            }
+        });
 
         //아이템 목록, 아이템 리스트 목록 초기화
         list=new ArrayList<>();

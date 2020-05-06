@@ -173,6 +173,9 @@ public class WishlistClosetFragment extends Fragment {
                                         wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
                             }
                         }
+                        if(item_list.size()==0){
+                            have_no_closet_item.setVisibility(View.VISIBLE);
+                        }
                         wishlistClosetAdapter.notifyDataSetChanged();
 
                     }

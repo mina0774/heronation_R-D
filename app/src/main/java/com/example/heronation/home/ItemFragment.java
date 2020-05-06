@@ -72,8 +72,6 @@ public class ItemFragment extends Fragment {
             // 뷰페이저 화면 갱신될 때
             ItemHomeFragment.log_textview.setVisibility(View.INVISIBLE);
             ItemBestFragment.log_textview.setVisibility(View.INVISIBLE);
-            ItemHomeFragment.startTime=System.nanoTime();
-            ItemBestFragment.startTime=System.nanoTime();
         }
 
         @Override

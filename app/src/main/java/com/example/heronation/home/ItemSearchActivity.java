@@ -66,7 +66,6 @@ public class ItemSearchActivity extends AppCompatActivity
             String keyword=(String)iterator.next();
 
             LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
             TextView tv=new TextView(this);
             tv.setText(keyword);
             tv.setPadding(8,8,8,8);
@@ -75,7 +74,6 @@ public class ItemSearchActivity extends AppCompatActivity
             tv.setBackground(getDrawable(R.drawable.button_background));
             recently_search_linear_layout.addView(tv);
         }
-
 
         item_list=new ArrayList<>();
         item_search_recycler_view.setLayoutManager(new GridLayoutManager(getApplicationContext(),2,GridLayoutManager.VERTICAL,false));
@@ -94,6 +92,25 @@ public class ItemSearchActivity extends AppCompatActivity
                 editor.putString(query,query);
                 editor.commit();
 
+                //최근 검색어가 있을 때 화면에 뿌려주기
+                recently_search_linear_layout.removeAllViews();
+                SharedPreferences pref=getSharedPreferences("searching_keyword",MODE_PRIVATE);
+                Collection<?> collection=pref.getAll().values();
+                Iterator<?> iterator=collection.iterator();
+
+                while(iterator.hasNext()){
+                    String keyword=(String)iterator.next();
+
+                    LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    TextView tv=new TextView(getApplicationContext());
+                    tv.setText(keyword);
+                    tv.setPadding(8,8,8,8);
+                    tv.setLayoutParams(layoutParams);
+                    layoutParams.leftMargin=8;
+                    tv.setBackground(getDrawable(R.drawable.button_background));
+                    recently_search_linear_layout.addView(tv);
+                }
+
                 return true;
             }
 
@@ -101,6 +118,18 @@ public class ItemSearchActivity extends AppCompatActivity
             public boolean onQueryTextChange(String newText) {
                 // 검색어가 변경되었을 때
                 return false;
+            }
+        });
+
+        // 지우기를 클릭했을 때
+        delete_recently_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 최근 검색어 모두 삭제
+                SharedPreferences.Editor editor=pref.edit();
+                editor.clear();
+                editor.commit();
+                recently_search_linear_layout.removeAllViews();
             }
         });
 

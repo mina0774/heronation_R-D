@@ -33,6 +33,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 
 public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.ViewHolder> {
     private List<SearchItemInfo> itemList=new ArrayList<>();
@@ -203,13 +205,12 @@ public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.Vi
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    Intent intent = new Intent(context, ItemDetailActivity.class);
-                    intent.putExtra("item_id", itemList.get(position).getId().toString());
-                    intent.putExtra("item_image", itemList.get(position).getShopImage());
-                    intent.putExtra("item_name", itemList.get(position).getName());
-                    intent.putExtra("item_price", "");
-                    context.startActivity(intent);
+                    int position=getAdapterPosition();
+                    Intent intent=new Intent(context, ItemDetailActivity.class);
+                    intent.putExtra("item_image",itemList.get(position).getShopImage());
+                    intent.putExtra("item_name",itemList.get(position).getName());
+                    intent.putExtra("item_id",itemList.get(position).getShopProductId());
+                    context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
                 }
             });
         }

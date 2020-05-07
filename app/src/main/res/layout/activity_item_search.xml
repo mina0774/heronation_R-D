@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:orientation="vertical"
     tools:context=".home.ItemSearchActivity">
 
     <LinearLayout
@@ -37,33 +36,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="60dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:padding="8dp"
         android:background="@drawable/round_rectangle_f3f3f3"
         android:orientation="horizontal">
 
-
-        <ImageButton
-            android:id="@+id/item_home_search_icon"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="24dp"
-            android:layout_gravity="center_vertical"
-            android:background="#f3f3f3"
-            android:src="@drawable/ic_search_black_24dp" />
-
-        <EditText
-            android:id="@+id/item_home_search_edittext"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/item_home_search"
             android:layout_width="0dp"
             android:layout_weight="10"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:padding="8dp"
-            android:background="@null"
-            android:hint="예쁜 옷을 검색해보세요."
-            android:textSize="12sp" />
+            android:layout_height="wrap_content" />
 
         <ImageButton
             android:id="@+id/item_home_search_mike"
@@ -76,6 +60,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="108dp"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:orientation="vertical">
@@ -113,62 +98,27 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:orientation="vertical">
-        <TextView
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="인기 검색어"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="16dp"
-                android:padding="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_background"
-                android:textSize="12sp"
-                android:text="양털 자켓"/>
-
-            <TextView
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:padding="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_background"
-                android:textSize="12sp"
-                android:text="목도리"/>
-        </LinearLayout>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/no_search_result"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="검색 결과가 없습니다."
+        android:layout_marginTop="192dp"
+        android:layout_centerHorizontal="true"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:paddingLeft="20dp"
+        android:id="@+id/item_search_recycler_view"
+        android:layout_marginTop="188dp"
         android:background="@android:color/transparent"
         android:layout_width="match_parent"
-        android:layout_height="240dp"/>
-
-    <Button
-        android:layout_marginTop="8dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="240dp"
-        android:layout_height="30dp"
-        android:background="@drawable/btn_background"
-        android:textColor="#808080"
-        android:text="스타일 추천받기"/>
+        android:layout_height="match_parent"/>
 
     <ImageButton
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="16dp"
-        android:layout_gravity="right"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:background="@drawable/button_background"
@@ -180,4 +130,4 @@
 
 
 
-</LinearLayout>
+</RelativeLayout>

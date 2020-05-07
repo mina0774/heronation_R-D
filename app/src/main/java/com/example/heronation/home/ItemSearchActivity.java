@@ -1,10 +1,15 @@
 package com.example.heronation.home;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.heronation.filter.DialogWindowFilterFragment;
 import com.example.heronation.filter.FilterCategoryFragment;
@@ -12,6 +17,19 @@ import com.example.heronation.filter.FilterPriceFragment;
 import com.example.heronation.filter.FilterSizeFragment;
 import com.example.heronation.R;
 import com.example.heronation.filter.FilterColorFragment;
+import com.example.heronation.home.dataClass.SearchItemInfo;
+import com.example.heronation.home.itemRecyclerViewAdapter.ItemSearchAdapter;
+import com.example.heronation.zeyoAPI.APIInterface;
+import com.example.heronation.zeyoAPI.ServiceGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ItemSearchActivity extends AppCompatActivity
         implements DialogWindowFilterFragment.OnFragmentInteractionListener,
@@ -20,11 +38,38 @@ public class ItemSearchActivity extends AppCompatActivity
         FilterPriceFragment.OnFragmentInteractionListener,
         FilterSizeFragment.OnFragmentInteractionListener {
     private DialogWindowFilterFragment dialogWindowFilterFragment;
+    private ItemSearchAdapter itemSearchAdapter;
+    private List<SearchItemInfo> item_list;
+    @BindView(R.id.item_home_search) SearchView item_home_search;
+    @BindView(R.id.item_search_recycler_view) RecyclerView item_search_recycler_view;
+    @BindView(R.id.no_search_result) TextView no_search_result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_search);
+        ButterKnife.bind(this);
+
+        item_list=new ArrayList<>();
+        item_search_recycler_view.setLayoutManager(new GridLayoutManager(getApplicationContext(),2,GridLayoutManager.VERTICAL,false));
+        itemSearchAdapter=new ItemSearchAdapter(item_list,getApplicationContext());
+        item_search_recycler_view.setAdapter(itemSearchAdapter);
+
+        item_home_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // 검색 버튼이 눌러졌을 때 이벤트 처리
+                item_list.clear();
+                search_item(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // 검색어가 변경되었을 때
+                return false;
+            }
+        });
 
     }
 
@@ -32,10 +77,39 @@ public class ItemSearchActivity extends AppCompatActivity
         finish();
     }
 
-    public void item_search_filter_button(View view){
+    public void item_search_filter_button(View view) {
         /* 필터 PopUp창 띄우기 */
-        dialogWindowFilterFragment=new DialogWindowFilterFragment();
+        dialogWindowFilterFragment = new DialogWindowFilterFragment();
         dialogWindowFilterFragment.show(getSupportFragmentManager(), "");
+    }
+
+    public void search_item(String search_item_name) {
+        String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
+        String accept = "application/json";
+
+        APIInterface.SearchItemService searchItemService = ServiceGenerator.createService(APIInterface.SearchItemService.class);
+        retrofit2.Call<List<SearchItemInfo>> request = searchItemService.SearchItem(search_item_name, authorization, accept);
+
+        request.enqueue(new Callback<List<SearchItemInfo>>() {
+            @Override
+            public void onResponse(Call<List<SearchItemInfo>> call, Response<List<SearchItemInfo>> response) {
+                List<SearchItemInfo> searchItemInfos=response.body();
+                for(int i=0; i<searchItemInfos.size(); i++){
+                    item_list.add(searchItemInfos.get(i));
+                }
+                itemSearchAdapter.notifyDataSetChanged();
+                if(item_list.size()==0){
+                    no_search_result.setVisibility(View.VISIBLE);
+                }else{
+                    no_search_result.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SearchItemInfo>> call, Throwable t) {
+
+            }
+        });
     }
 
     /*

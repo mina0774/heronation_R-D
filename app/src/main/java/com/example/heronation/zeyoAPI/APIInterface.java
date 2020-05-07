@@ -4,6 +4,7 @@ import com.example.heronation.home.dataClass.BodySizeLevelForSizeInfo;
 import com.example.heronation.home.dataClass.CompareWithBody;
 import com.example.heronation.home.dataClass.CompareWithWardrobe;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
+import com.example.heronation.home.dataClass.SearchItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
@@ -294,6 +295,14 @@ public interface APIInterface {
                                                    @Header("heronation-api-login-key") String api_login_key,
                                                    @Field("refresh_token") String refresh_token,
                                                    @Field("grant_type") String grant_type);
+    }
+
+    /* 검색 기능 */
+    public interface SearchItemService{
+        @GET("api/items/search")
+        retrofit2.Call<List<SearchItemInfo>> SearchItem(@Query("name") String name,
+                                                        @Header("authorization") String authorization,
+                                                        @Header("Accept") String accept);
     }
 
 }

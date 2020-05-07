@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,9 +52,7 @@ public class ItemAiFragment extends Fragment {
     /* 배너 슬라이딩을 위한 변수 */
     private bannerAdapter bannerAdapter;
     @BindView(R.id.image_view_ai) ViewPager viewPager;
-
-    /* 상품 리스트 묶음 번호 */
-    private Integer package_num;
+    @BindView(R.id.have_no_user_info) TextView have_no_user_info;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,6 +97,11 @@ public class ItemAiFragment extends Fragment {
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
                     verticalAdapter1.notifyDataSetChanged();
+                    if(item_list.size()==0){
+                        have_no_user_info.setVisibility(View.VISIBLE);
+                    }else if(item_list.size()!=0){
+                        have_no_user_info.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -125,6 +129,11 @@ public class ItemAiFragment extends Fragment {
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
                     verticalAdapter1.notifyDataSetChanged();
+                    if(item_list.size()==0){
+                        have_no_user_info.setVisibility(View.VISIBLE);
+                    }else if(item_list.size()!=0){
+                        have_no_user_info.setVisibility(View.GONE);
+                    }
                 }else if(response.code()==401){
                     backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
                     Intent intent=new Intent(getActivity(), IntroActivity.class);
@@ -157,6 +166,11 @@ public class ItemAiFragment extends Fragment {
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
                     verticalAdapter1.notifyDataSetChanged();
+                    if(item_list.size()==0){
+                        have_no_user_info.setVisibility(View.VISIBLE);
+                    }else if(item_list.size()!=0){
+                        have_no_user_info.setVisibility(View.GONE);
+                    }
                 }else if(response.code()==401){
                     backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
                     Intent intent=new Intent(getActivity(), IntroActivity.class);
@@ -187,20 +201,9 @@ public class ItemAiFragment extends Fragment {
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems(NestedScrollView nestedScrollView, final Context context) {
-        package_num=0;
         GetItemInfoBody("사이즈 추천");
         GetItemInfoOther("비슷한 스타일 유저의 추천");
-        item_recyclerView1.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                if(!item_recyclerView1.canScrollVertically(1)){
-                    package_num=package_num+1;
-                    if(package_num==1) {
-                        GetItemInfoUser("스타일 추천");
-                    }
-                }
-            }
-        });
+        GetItemInfoUser("스타일 추천");
     }
 
 

@@ -62,14 +62,14 @@
                 android:id="@+id/closet_body_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="성별: 여"
+                android:text="성별: 입력된 정보가 없습니다."
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/closet_body_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="나이: 25"
+                android:text="나이: 입력된 정보가 없습니다."
                 android:textSize="12sp" />
 
             <TextView

@@ -68,6 +68,8 @@ public class ItemHomeFragment extends Fragment {
     /* 검색창 */
     @BindView(R.id.item_home_search_edittext) TextView search_item;
 
+    @BindView(R.id.have_no_user_info) TextView have_no_user_info;
+
     //아이템들의 묶음
     private ArrayList<ShopItemPackage> item_list;
     /* 아이템 수평 리스트 담는 수직 어댑터*/
@@ -151,6 +153,11 @@ public class ItemHomeFragment extends Fragment {
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
                     verticalAdapter.notifyDataSetChanged();
+                    if(item_list.size()==0){
+                        have_no_user_info.setVisibility(View.VISIBLE);
+                    }else if(item_list.size()!=0){
+                        have_no_user_info.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -178,6 +185,11 @@ public class ItemHomeFragment extends Fragment {
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
                     verticalAdapter.notifyDataSetChanged();
+                    if(item_list.size()==0){
+                        have_no_user_info.setVisibility(View.VISIBLE);
+                    }else if(item_list.size()!=0){
+                        have_no_user_info.setVisibility(View.GONE);
+                    }
                 }else if(response.code()==401){
                     backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
                     Intent intent=new Intent(getActivity(), IntroActivity.class);
@@ -210,6 +222,11 @@ public class ItemHomeFragment extends Fragment {
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
                     verticalAdapter.notifyDataSetChanged();
+                    if(item_list.size()==0){
+                        have_no_user_info.setVisibility(View.VISIBLE);
+                    }else if(item_list.size()!=0){
+                        have_no_user_info.setVisibility(View.GONE);
+                    }
                 }else if(response.code()==401){
                     backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
                     Intent intent=new Intent(getActivity(), IntroActivity.class);
@@ -243,6 +260,7 @@ public class ItemHomeFragment extends Fragment {
         GetItemInfoBody("사이즈 추천");
         GetItemInfoOther("비슷한 스타일 유저의 추천");
         GetItemInfoUser("스타일 추천");
+
     }
 
     public interface OnFragmentInteractionListener {

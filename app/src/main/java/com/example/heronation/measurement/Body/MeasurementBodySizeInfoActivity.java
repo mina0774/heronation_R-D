@@ -122,7 +122,7 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
 
         final ProgressDialog progressDoalog;
         progressDoalog = new ProgressDialog(MeasurementBodySizeInfoActivity.this);
-        progressDoalog.setCancelable(false);
+        progressDoalog.setCancelable(true);
         progressDoalog.setMessage("잠시만 기다려주세요");
         progressDoalog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
 

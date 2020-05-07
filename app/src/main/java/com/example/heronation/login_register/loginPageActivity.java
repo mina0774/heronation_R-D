@@ -164,6 +164,7 @@ public class  loginPageActivity extends AppCompatActivity {
             public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
                 UserMyInfo userMyInfo = response.body();
 
+                IntroActivity.style_tag_id="";
                 if(userMyInfo.getStyleTagResponses()!=null) {
                     for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
                         IntroActivity.style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";

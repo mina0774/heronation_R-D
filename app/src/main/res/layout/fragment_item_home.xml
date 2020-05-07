@@ -83,6 +83,17 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:visibility="gone"
+                android:layout_marginTop="160dp"
+                android:id="@+id/have_no_user_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="신체 정보와 스타일을 등록하면 상품을 추천받을 수 있습니다."
+                android:textAlignment="center"
+                />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_home_recyclerViewVertical1"
                 android:layout_width="match_parent"

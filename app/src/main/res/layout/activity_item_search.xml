@@ -88,28 +88,13 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:id="@+id/recently_search_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <TextView
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="16dp"
-                android:padding="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_background"
-                android:textSize="12sp"
-                android:text="가디건"/>
 
-            <TextView
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:padding="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_background"
-                android:textSize="12sp"
-                android:text="코트"/>
         </LinearLayout>
 
     </LinearLayout>

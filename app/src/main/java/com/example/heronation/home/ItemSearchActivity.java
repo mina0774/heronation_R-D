@@ -5,9 +5,12 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,8 @@ import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,12 +48,34 @@ public class ItemSearchActivity extends AppCompatActivity
     @BindView(R.id.item_home_search) SearchView item_home_search;
     @BindView(R.id.item_search_recycler_view) RecyclerView item_search_recycler_view;
     @BindView(R.id.no_search_result) TextView no_search_result;
+    @BindView(R.id.recently_search_linear_layout) LinearLayout recently_search_linear_layout;
+    @BindView(R.id.delete_recently_search) TextView delete_recently_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_search);
         ButterKnife.bind(this);
+
+        //최근 검색어가 있을 때 화면에 뿌려주기
+        SharedPreferences pref=getSharedPreferences("searching_keyword",MODE_PRIVATE);
+        Collection<?> collection=pref.getAll().values();
+        Iterator<?> iterator=collection.iterator();
+
+        while(iterator.hasNext()){
+            String keyword=(String)iterator.next();
+
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            TextView tv=new TextView(this);
+            tv.setText(keyword);
+            tv.setPadding(8,8,8,8);
+            tv.setLayoutParams(layoutParams);
+            layoutParams.leftMargin=8;
+            tv.setBackground(getDrawable(R.drawable.button_background));
+            recently_search_linear_layout.addView(tv);
+        }
+
 
         item_list=new ArrayList<>();
         item_search_recycler_view.setLayoutManager(new GridLayoutManager(getApplicationContext(),2,GridLayoutManager.VERTICAL,false));
@@ -61,6 +88,12 @@ public class ItemSearchActivity extends AppCompatActivity
                 // 검색 버튼이 눌러졌을 때 이벤트 처리
                 item_list.clear();
                 search_item(query);
+
+                // 최근 검색어 모두 저장
+                SharedPreferences.Editor editor=pref.edit();
+                editor.putString(query,query);
+                editor.commit();
+
                 return true;
             }
 

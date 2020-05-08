@@ -1,6 +1,7 @@
 package com.example.heronation.wishlist.wishlistRecyclerViewAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
 import com.example.heronation.home.dataClass.RecentlyViewedItem;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
@@ -120,6 +122,19 @@ public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyView
             item_price=view.findViewById(R.id.recycler_view_recently_viewed_price);
             item_id=view.findViewById(R.id.recycler_view_recently_viewed_item_id);
             delete_button = view.findViewById(R.id.recently_viewed_delete_button);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position=getAdapterPosition();
+                    Intent intent=new Intent(context, ItemDetailActivity.class);
+                    intent.putExtra("item_image",itemList.get(position).getImage_url());
+                    intent.putExtra("item_name",itemList.get(position).getItem_name());
+                    intent.putExtra("item_price",itemList.get(position).getItem_price().toString());
+                    intent.putExtra("item_id",itemList.get(position).getItem_id().toString());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

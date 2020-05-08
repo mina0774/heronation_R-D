@@ -103,7 +103,11 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
     }
 
     public void click_next_button(View view){
-      generate_body_size_info();
+        if(shoulder_sensibility_level!=null&&chest_sensibility_level!=null&waist_sensibility_level!=null&&hip_sensibility_level!=null&&thigh_sensibility_level!=null) {
+            generate_body_size_info();
+        }else{
+            Toast.makeText(getApplicationContext(),"추가 버튼을 눌러 정보를 모두 입력해주세요.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void generate_body_size_info(){
@@ -141,9 +145,6 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
-                }
-                else {
-                    backgroundThreadShortToast(getApplicationContext(),"값을 모두 입력해주세요.");
                 }
             }
 

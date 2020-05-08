@@ -63,7 +63,6 @@ public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyView
         holder.item_price.setText(itemList.get(item_position).getItem_price());
         holder.item_id.setText(itemList.get(item_position).getItem_id());
 
-
         //휴지통 버튼을 눌렀을 때, shared preference에서 해당 아이템을 삭제
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override

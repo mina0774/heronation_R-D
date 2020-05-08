@@ -177,8 +177,8 @@ public class  loginPageActivity extends AppCompatActivity {
                 // 체형 정보가 있을 시에 구독하기
                 if(userMyInfo.getBodyResponses().size()!=0){
                     userMyInfo.getGender();
-                    long shoulder_value = Math.round(userMyInfo.getBodyResponses().get(0).getValue()); // 어깨 너비 - 43
-                    long waist_value =  Math.round(userMyInfo.getBodyResponses().get(4).getValue()); // 허리 둘레 - 80
+                    long shoulder_value = Math.round(userMyInfo.getBodyResponses().get(0).getValue()); // 어깨 너비
+                    long waist_value =  Math.round(userMyInfo.getBodyResponses().get(4).getValue()); // 허리 둘레 zd
 
                     String topic1=userMyInfo.getGender()+"_T_"+shoulder_value;
                     String topic2=userMyInfo.getGender()+"_B_"+waist_value;

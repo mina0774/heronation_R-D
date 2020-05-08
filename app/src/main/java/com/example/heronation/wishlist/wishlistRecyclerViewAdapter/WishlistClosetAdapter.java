@@ -71,24 +71,6 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
        log="elapsed time: "+(double)(endTime-WishlistClosetFragment.startTime)/1000000000.0;
         WishlistClosetFragment.log_textview.setText(log);
 
-        /* 즐겨찾기 버튼 별 모양을 클릭했을 때,
-        선택될 시에 사진을 노란색 별모양으로 설정
-        선택되지 않을 시에 사진을 검은색 별모양으로 설정
-        노란색 별모양일때 클릭하면 검은색 별모양
-        검은색 별모양일때 클릭하면 노란색 별모양
-        */
-        holder.favorite_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(holder.favorite_button.isSelected()==false) { //별이 선택되었을 경우
-                    holder.favorite_button.setSelected(true);
-                    Toast.makeText(context,"["+holder.category.getText().toString()+"]에 대표 사이즈로 설정합니다.", Toast.LENGTH_SHORT).show();
-                } else{
-                    holder.favorite_button.setSelected(false); //별이 선택되지 않았을 경우
-                }
-            }
-        });
-
         /* 휴지통 버튼을 클릭했을 때, 아이템 삭제 */
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +151,6 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
         public TextView date;
         public TextView shop_name;
         public TextView measurement_type;
-        public ImageButton favorite_button;
         public ImageButton delete_button;
         public TextView id;
 
@@ -181,7 +162,6 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
             date=(TextView)view.findViewById(R.id.wishlist_closet_item_date);
             shop_name=(TextView)view.findViewById(R.id.wishlist_closet_item_shop_name);
             measurement_type=(TextView)view.findViewById(R.id.wishlist_closet_item_measurement_type);
-            favorite_button=(ImageButton)view.findViewById(R.id.favorite_button);
             delete_button=(ImageButton)view.findViewById(R.id.delete_button);
             id=(TextView)view.findViewById(R.id.wishlist_closet_item_measurement_id);
 

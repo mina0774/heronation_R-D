@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
 import com.example.heronation.home.topbarFragment.ItemHomeFragment;
 import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.loginPageActivity;
@@ -207,6 +208,7 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<FavoriteItemAdapte
         private LottieAnimationView heart_button;
         // 좋아요 클릭 여부
         private boolean isSongLikedClicked = false;
+        private TextView item_id;
 
         public ViewHolder(View view) {
             super(view);
@@ -214,6 +216,20 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<FavoriteItemAdapte
             item_name = view.findViewById(R.id.recycler_view_item_best_item_name);
             item_price=view.findViewById(R.id.recycler_view_item_best_original_price);
             heart_button = view.findViewById(R.id.heart_button);
+            item_id=view.findViewById(R.id.recycler_view_item_item_id);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position=getAdapterPosition();
+                    Intent intent=new Intent(context, ItemDetailActivity.class);
+                    intent.putExtra("item_image",itemList.get(position).getShopImage());
+                    intent.putExtra("item_name",itemList.get(position).getName());
+                    intent.putExtra("item_price",itemList.get(position).getPrice().toString());
+                    intent.putExtra("item_id",itemList.get(position).getId().toString());
+                    context.startActivity(intent);
+                }
+            });
         }
 
     }

@@ -28,15 +28,6 @@
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
     android:orientation="horizontal">
-        <ImageButton
-            android:id="@+id/favorite_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="#ffffff"
-            android:padding="4dp"
-            android:layout_margin="4dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/selector_star" />
 
         <ImageButton
             android:id="@+id/delete_button"

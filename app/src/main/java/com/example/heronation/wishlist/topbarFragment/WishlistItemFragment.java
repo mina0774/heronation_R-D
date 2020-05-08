@@ -55,7 +55,6 @@ public class WishlistItemFragment extends Fragment {
     /* 찜한 아이템이 있을 시*/
     @BindView(R.id.have_item) LinearLayout have_item;
     @BindView(R.id.wishlist_item_num) TextView wishlist_item_num;
-    @BindView(R.id.favorite_folder) ImageButton favorite_folder;
     @BindView(R.id.recycler_view_item_favorites) RecyclerView recycler_view_item_favorites;
 
     @Override

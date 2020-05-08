@@ -33,14 +33,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
@@ -70,7 +70,7 @@
 
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="800dp"
+                android:layout_height="1680dp"
                 android:layout_marginTop="10dp"
                 android:stretchColumns="0,1">
 
@@ -80,19 +80,21 @@
 
                     <ImageButton
                         android:id="@+id/style_1"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_background"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/style_1" />
+                        android:src="@drawable/simplebasic" />
 
                     <ImageButton
                         android:id="@+id/style_2"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_background"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/style_4"/>
+                        android:src="@drawable/feminine"/>
                 </TableRow>
 
                 <TableRow
@@ -101,19 +103,21 @@
 
                     <ImageButton
                         android:id="@+id/style_3"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_background"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/style_3" />
+                        android:src="@drawable/lovely" />
 
                     <ImageButton
                         android:id="@+id/style_4"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_background"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/style_2" />
+                        android:src="@drawable/casual" />
                 </TableRow>
 
                 <TableRow
@@ -122,20 +126,116 @@
 
                     <ImageButton
                         android:id="@+id/style_5"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_background"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/style_1" />
+                        android:src="@drawable/sexyglam" />
 
                     <ImageButton
                         android:id="@+id/style_6"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_background"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/style_4"/>
+                        android:src="@drawable/chic"/>
                 </TableRow>
+
+                <TableRow
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/style_7"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/unique" />
+
+                    <ImageButton
+                        android:id="@+id/style_8"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/campuslook"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/style_9"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/officelook" />
+
+                    <ImageButton
+                        android:id="@+id/style_10"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/couplelook"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/style_11"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/romantic" />
+
+                    <ImageButton
+                        android:id="@+id/style_12"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/vintage"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/style_13"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/luxury" />
+
+                    <ImageButton
+                        android:id="@+id/style_14"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_background"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/street"/>
+                </TableRow>
+
+
             </TableLayout>
 
             <RelativeLayout

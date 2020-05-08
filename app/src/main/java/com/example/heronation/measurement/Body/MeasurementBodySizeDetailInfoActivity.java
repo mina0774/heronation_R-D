@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.example.heronation.FCM.FirebaseMessagingServiceTest;
 import com.example.heronation.R;
 import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
@@ -27,7 +28,11 @@ import com.example.heronation.measurement.Body.dataClass.BodySizeDetail;
 import com.example.heronation.measurement.Body.dataClass.UserBodySizeDetail;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -254,6 +259,8 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
+                    // TODO: 2020-05-08 FCM 기존 구독 정보를 삭제하고, 새로운 체형 정보를 바탕으로 구독을 해줌
+
                     backgroundThreadShortToast(getApplicationContext(),"체형 정보 변경이 완료되었습니다.");
                     mPopupWindow.dismiss();
                 }

@@ -49,6 +49,9 @@ public class  loginPageActivity extends AppCompatActivity {
     @BindView(R.id.login_button) Button login_button;
     /* access token을 Package 내에서 공유 , access token은 로그인할 때 한번만 받음 */
     public String access_token;
+    public String topic1="";
+    public String topic2="";
+    public String topic3="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,9 +183,9 @@ public class  loginPageActivity extends AppCompatActivity {
                     long shoulder_value = Math.round(userMyInfo.getBodyResponses().get(0).getValue()); // 어깨 너비
                     long waist_value =  Math.round(userMyInfo.getBodyResponses().get(4).getValue()); // 허리 둘레 zd
 
-                    String topic1=userMyInfo.getGender()+"_T_"+shoulder_value;
-                    String topic2=userMyInfo.getGender()+"_B_"+waist_value;
-                    String topic3=userMyInfo.getGender()+"_A_"+shoulder_value+"_"+waist_value;
+                    topic1=userMyInfo.getGender()+"_T_"+shoulder_value;
+                    topic2=userMyInfo.getGender()+"_B_"+waist_value;
+                    topic3=userMyInfo.getGender()+"_A_"+shoulder_value+"_"+waist_value;
 
                     FirebaseMessaging.getInstance().subscribeToTopic(topic1);
                     FirebaseMessaging.getInstance().subscribeToTopic(topic2);

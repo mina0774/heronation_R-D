@@ -6,6 +6,7 @@ public class Content {
     private String name;
     private String sizeInputStatusYn;
     private String subCategoryName;
+    private String shopImage;
     private String code;
     private String shopProductId;
     private String url;
@@ -42,6 +43,14 @@ public class Content {
 
     public void setSubCategoryName(String subCategoryName) {
         this.subCategoryName = subCategoryName;
+    }
+
+    public String getShopImage() {
+        return shopImage;
+    }
+
+    public void setShopImage(String shopImage) {
+        this.shopImage = shopImage;
     }
 
     public String getCode() {

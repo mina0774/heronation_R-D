@@ -61,7 +61,7 @@ public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull final ItemSearchAdapter.ViewHolder holder, int position) {
         int item_position = position;
-        Glide.with(context).load(itemList.get(item_position).getUrl()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
+        Glide.with(context).load(itemList.get(item_position).getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
         holder.item_name.setText(itemList.get(item_position).getName());
         holder.item_id.setText(itemList.get(item_position).getShopProductId());
 
@@ -208,9 +208,10 @@ public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.Vi
                 public void onClick(View v) {
                     int position=getAdapterPosition();
                     Intent intent=new Intent(context, ItemDetailActivity.class);
-                    intent.putExtra("item_image",itemList.get(position).getUrl());
+                    intent.putExtra("item_image",itemList.get(position).getShopImage());
                     intent.putExtra("item_name",itemList.get(position).getName());
                     intent.putExtra("item_id",itemList.get(position).getShopProductId());
+                    intent.putExtra("item_url",itemList.get(position).getUrl());
                     context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
                 }
             });

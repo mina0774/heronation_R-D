@@ -2,6 +2,7 @@ package com.example.heronation.measurement.Style;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -11,14 +12,30 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.heronation.R;
+import com.example.heronation.login_register.IntroActivity;
+import com.example.heronation.login_register.dataClass.UserMyInfo;
+import com.example.heronation.main.MainActivity;
+import com.example.heronation.mypage.UserModifyActivity;
+import com.example.heronation.mypage.dataClass.UserModifyInfo;
+import com.example.heronation.zeyoAPI.APIInterface;
+import com.example.heronation.zeyoAPI.ServiceGenerator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MeasurementStyleActivity extends AppCompatActivity {
     Boolean[] style=new Boolean[14];
+    String[] style_tag_name={"심플베이직","페미닌","러블리","캐주얼","섹시글램","시크","유니크","캠퍼스룩","오피스룩","커플룩","로맨틱","빈티지","럭셔리","스트릿"};
+
+    /* 순서대로
+    * 심플베이직 페미닌 러블리 캐주얼 섹시글램 시크 유니크 캠퍼스룩 오피스룩 커플룩 로맨틱 빈티지 럭셔리 스트릿 */
     @BindView(R.id.style_1) ImageButton style_1;
     @BindView(R.id.style_2) ImageButton style_2;
     @BindView(R.id.style_3) ImageButton style_3;
@@ -232,19 +249,83 @@ public class MeasurementStyleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 선택된 아이템이 2개인지 확인, 아니면 2개만 선택해달라는 Dialog를 띄움
                 int select_count=0;
-                for(Boolean style_bool: style){
-                    if(style_bool==true)
+
+                List<String> styleTags=new ArrayList<>();
+                styleTags.clear();
+
+                for(int i=0; i < style.length; i++){
+                    if(style[i]==true) {
+                        styleTags.add(style_tag_name[i]);
                         select_count++;
+                    }
                 }
 
                 if(select_count!=2){
                     Toast.makeText(getApplicationContext(),"아이템을 2개 선택해주세요.",Toast.LENGTH_SHORT).show();
                 }else{
-                    
+                    getUserInfo(styleTags);
                 }
            }
         });
 
+    }
+
+    public void getUserInfo(List<String> styleTags){
+        String authorization="bearer " + MainActivity.access_token;
+        String accept="application/json";
+        APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                /* 정상적으로 로그인이 되었을 때 */
+                if (response.code() == 200) {
+                    UserMyInfo userMyInfo = response.body();
+                    setStyleTagInfo(userMyInfo.getName(),userMyInfo.getBirthYear(),userMyInfo.getBirthMonth(),userMyInfo.getBirthDay(),userMyInfo.getGender(),styleTags);
+                }
+                /*토큰 만료기한이 끝나, 재로그인이 필요할 때*/
+                else if(response.code()==401) {
+                    MainActivity.backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다.");
+                    Intent intent=new Intent(getApplicationContext(), IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
+    }
+
+    public void setStyleTagInfo(String name,Integer year,Integer month, Integer day,String gender,List<String> styleTags){
+        UserModifyInfo userModifyInfo=new UserModifyInfo(name,year,month,day,gender,styleTags);
+
+        String authorization="bearer "+ MainActivity.access_token;
+        String accept="application/json";
+        String content_type="application/json";
+        APIInterface.ModifyUserInfoService modifyUserInfoService= ServiceGenerator.createService(APIInterface.ModifyUserInfoService.class);
+        retrofit2.Call<String> request=modifyUserInfoService.ModifyUserInfo(authorization,accept,content_type,userModifyInfo);
+        request.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.code()==204) { //정상적으로 로그인이 되었을 때
+                    Bundle bundle1=new Bundle();
+                    bundle1.putString("access_token", MainActivity.access_token);
+                    MainActivity.backgroundThreadShortToast(MeasurementStyleActivity.this, "스타일 정보가 등록되었습니다.");
+                    finish();
+                }
+                else if(response.code()==401){ //토큰 만료기한이 끝나, 재로그인이 필요할 때
+                    MainActivity.backgroundThreadShortToast(MeasurementStyleActivity.this, "세션이 만료되어 재로그인이 필요합니다.");
+                    Intent intent=new Intent(MeasurementStyleActivity.this, IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+            }
+        });
     }
 
     /* 뒤로가기 버튼을 눌렀을 때 */

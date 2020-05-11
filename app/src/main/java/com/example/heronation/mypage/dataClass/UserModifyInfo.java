@@ -1,6 +1,7 @@
 package com.example.heronation.mypage.dataClass;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserModifyInfo {
@@ -10,6 +11,7 @@ public class UserModifyInfo {
     private Integer birthDay;
     private String gender;
     private String termsAdvertisement;
+    private List<String> styleTags=null;
 
 
     public UserModifyInfo(String name, Integer birthYear, Integer birthMonth, Integer birthDay, String gender, String termsAdvertisement) {
@@ -19,6 +21,15 @@ public class UserModifyInfo {
         this.birthDay = birthDay;
         this.gender = gender;
         this.termsAdvertisement = termsAdvertisement;
+    }
+
+    public UserModifyInfo(String name, Integer birthYear, Integer birthMonth, Integer birthDay, String gender, List<String> styleTags) {
+        this.name = name;
+        this.birthYear = birthYear;
+        this.birthMonth = birthMonth;
+        this.birthDay = birthDay;
+        this.gender = gender;
+        this.styleTags = styleTags;
     }
 
 
@@ -68,5 +79,13 @@ public class UserModifyInfo {
 
     public void setTermsAdvertisement(String termsAdvertisement) {
         this.termsAdvertisement = termsAdvertisement;
+    }
+
+    public List<String> getStyleTags() {
+        return styleTags;
+    }
+
+    public void setStyleTags(List<String> styleTags) {
+        this.styleTags = styleTags;
     }
 }

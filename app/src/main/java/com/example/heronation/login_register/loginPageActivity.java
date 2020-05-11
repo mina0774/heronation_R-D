@@ -181,7 +181,7 @@ public class  loginPageActivity extends AppCompatActivity {
                 if(userMyInfo.getBodyResponses().size()!=0){
                     userMyInfo.getGender();
                     long shoulder_value = Math.round(userMyInfo.getBodyResponses().get(0).getValue()); // 어깨 너비
-                    long waist_value =  Math.round(userMyInfo.getBodyResponses().get(4).getValue()); // 허리 둘레 zd
+                    long waist_value =  Math.round(userMyInfo.getBodyResponses().get(4).getValue()); // 허리 둘레
 
                     topic1=userMyInfo.getGender()+"_T_"+shoulder_value;
                     topic2=userMyInfo.getGender()+"_B_"+waist_value;

@@ -1,5 +1,6 @@
 package com.example.heronation.measurement.Body;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -10,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,11 +25,14 @@ import android.widget.Toast;
 import com.example.heronation.FCM.FirebaseMessagingServiceTest;
 import com.example.heronation.R;
 import com.example.heronation.login_register.IntroActivity;
+import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.measurement.Body.dataClass.BodySizeDetail;
 import com.example.heronation.measurement.Body.dataClass.UserBodySizeDetail;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -259,7 +264,18 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
-                    // TODO: 2020-05-08 FCM 기존 구독 정보를 삭제하고, 새로운 체형 정보를 바탕으로 구독을 해줌
+                    // 기존 신체 정보 바탕 구독 정보 삭제
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                FirebaseInstanceId.getInstance().deleteInstanceId();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                    subscribeTopic(MainActivity.access_token);
 
                     backgroundThreadShortToast(getApplicationContext(),"체형 정보 변경이 완료되었습니다.");
                     mPopupWindow.dismiss();
@@ -272,6 +288,61 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
 
+            }
+        });
+    }
+
+    // 현재 체형 정보를 바탕으로 topic 구독
+    private void subscribeTopic(String access_token){
+        String authorization="bearer " + access_token;
+        String accept="application/json";
+        APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                if (response.code()==200) {
+                    UserMyInfo userMyInfo = response.body();
+                    userMyInfo.getGender();
+                    long shoulder_value = Math.round(userMyInfo.getBodyResponses().get(0).getValue()); // 어깨 너비
+                    long waist_value =  Math.round(userMyInfo.getBodyResponses().get(4).getValue()); // 허리 둘레
+
+                    String topic1=userMyInfo.getGender()+"_T_"+shoulder_value;
+                    String topic2=userMyInfo.getGender()+"_B_"+waist_value;
+                    String topic3=userMyInfo.getGender()+"_A_"+shoulder_value+"_"+waist_value;
+
+                    FirebaseMessaging.getInstance().subscribeToTopic(topic1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("FCM Log", "getInstanceId failed", task.getException());
+                                return;
+                            }
+                        }
+                    });
+                    FirebaseMessaging.getInstance().subscribeToTopic(topic2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("FCM Log", "getInstanceId failed", task.getException());
+                                return;
+                            }
+                        }
+                    });
+                    FirebaseMessaging.getInstance().subscribeToTopic(topic3).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("FCM Log", "getInstanceId failed", task.getException());
+                                return;
+                            }
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
     }

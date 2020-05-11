@@ -1,5 +1,6 @@
 package com.example.heronation.home.ItemDetailPage.Body;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -9,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +28,12 @@ import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -132,8 +140,22 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
         request.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if(response.isSuccessful()){
+                if(response.isSuccessful()){ // 여기서 값이 반영
                     progressDoalog.dismiss();
+
+                    // 기존 신체 정보 바탕 구독 정보 삭제
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                FirebaseInstanceId.getInstance().deleteInstanceId();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                    subscribeTopic(MainActivity.access_token);
+
                     backgroundThreadShortToast(getApplicationContext(),"입력하신 값이 반영되었습니다.");
                     Intent intent=new Intent(ItemMeasurementBodySizeInfoActivity.this, ItemCompareBodySizeActivity.class);
                     intent.putExtra("item_id",product_id);
@@ -149,7 +171,6 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
                     backgroundThreadShortToast(getApplicationContext(),"값을 모두 입력해주세요.");
                 }
             }
-
             @Override
             public void onFailure(Call<String> call, Throwable t) {
 
@@ -180,6 +201,61 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
             public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
                 if (response.code()==200) {
                     userMyInfo = response.body();
+                }
+            }
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
+    }
+
+    // 현재 체형 정보를 바탕으로 topic 구독
+    private void subscribeTopic(String access_token){
+        String authorization="bearer " + access_token;
+        String accept="application/json";
+        APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request=userInfoService.UserInfo(authorization,accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                if (response.code()==200) {
+                    userMyInfo = response.body();
+                    userMyInfo.getGender();
+                    long shoulder_value = Math.round(userMyInfo.getBodyResponses().get(0).getValue()); // 어깨 너비
+                    long waist_value =  Math.round(userMyInfo.getBodyResponses().get(4).getValue()); // 허리 둘레
+
+                    String topic1=userMyInfo.getGender()+"_T_"+shoulder_value;
+                    String topic2=userMyInfo.getGender()+"_B_"+waist_value;
+                    String topic3=userMyInfo.getGender()+"_A_"+shoulder_value+"_"+waist_value;
+
+                    FirebaseMessaging.getInstance().subscribeToTopic(topic1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("FCM Log", "getInstanceId failed", task.getException());
+                                return;
+                            }
+                        }
+                    });
+                    FirebaseMessaging.getInstance().subscribeToTopic(topic2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("FCM Log", "getInstanceId failed", task.getException());
+                                return;
+                            }
+                        }
+                    });
+                    FirebaseMessaging.getInstance().subscribeToTopic(topic3).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("FCM Log", "getInstanceId failed", task.getException());
+                                return;
+                            }
+                        }
+                    });
                 }
             }
             @Override

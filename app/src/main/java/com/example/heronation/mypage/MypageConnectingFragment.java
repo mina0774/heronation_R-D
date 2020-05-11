@@ -23,6 +23,9 @@ import com.example.heronation.measurement.Style.MeasurementStyleActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +68,18 @@ public class MypageConnectingFragment extends Fragment {
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
                 editor.commit(); // commit changes
+
+                // 기존 신체 정보 바탕 구독 정보 삭제
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            FirebaseInstanceId.getInstance().deleteInstanceId();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
 
                 Intent intent = new Intent(getActivity(), IntroActivity.class);
                 startActivity(intent);

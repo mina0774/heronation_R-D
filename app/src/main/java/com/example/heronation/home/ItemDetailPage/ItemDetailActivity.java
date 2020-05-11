@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 
 import com.example.heronation.R;
@@ -23,12 +27,14 @@ import butterknife.ButterKnife;
 public class ItemDetailActivity extends AppCompatActivity {
     @BindView(R.id.item_detail_close_button) ImageButton item_detail_close_button;
     @BindView(R.id.item_detail_size_button) ImageButton item_detail_size_button;
+    @BindView(R.id.webview) WebView webView;
 
     private String item_id;
     private String item_image;
     private String item_name;
     private String item_price;
     private String item_subcategory="";
+    private String item_url="";
 
     ItemSizeInfo itemSizeInfo; // 해당 상품의 사이즈 정보를 담는 변수
 
@@ -45,6 +51,15 @@ public class ItemDetailActivity extends AppCompatActivity {
         if(getIntent().hasExtra("item_subcategory")){
             item_subcategory=getIntent().getStringExtra("item_subcategory");
         }
+        if(getIntent().hasExtra("item_url")){
+            item_url=getIntent().getStringExtra("item_url");
+            item_url="http://"+item_url;
+            webView.setWebViewClient(new WebViewClient());
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.loadUrl(item_url);
+        }
+
+
 
         /* 최근 본 상품 목록을 만들기 위해 해당 아이템의 정보를 SharedPreferences에 저장함 */
         SharedPreferences sharedPreferences=getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE); // SharedPreferences 생성

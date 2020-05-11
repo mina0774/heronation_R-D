@@ -19,6 +19,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
+import com.example.heronation.home.dataClass.Content;
 import com.example.heronation.home.dataClass.SearchItemInfo;
 import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
@@ -37,10 +38,10 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 
 public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.ViewHolder> {
-    private List<SearchItemInfo> itemList=new ArrayList<>();
+    private List<Content> itemList=new ArrayList<>();
     private Context context;
 
-    public ItemSearchAdapter(List<SearchItemInfo> itemList, Context context) {
+    public ItemSearchAdapter(List<Content> itemList, Context context) {
         this.itemList = itemList;
         this.context = context;
     }
@@ -60,7 +61,7 @@ public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull final ItemSearchAdapter.ViewHolder holder, int position) {
         int item_position = position;
-        Glide.with(context).load(itemList.get(item_position).getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
+        Glide.with(context).load(itemList.get(item_position).getUrl()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.item_image);
         holder.item_name.setText(itemList.get(item_position).getName());
         holder.item_id.setText(itemList.get(item_position).getShopProductId());
 
@@ -207,7 +208,7 @@ public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.Vi
                 public void onClick(View v) {
                     int position=getAdapterPosition();
                     Intent intent=new Intent(context, ItemDetailActivity.class);
-                    intent.putExtra("item_image",itemList.get(position).getShopImage());
+                    intent.putExtra("item_image",itemList.get(position).getUrl());
                     intent.putExtra("item_name",itemList.get(position).getName());
                     intent.putExtra("item_id",itemList.get(position).getShopProductId());
                     context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));

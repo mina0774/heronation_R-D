@@ -298,9 +298,12 @@ public interface APIInterface {
     }
 
     /* 검색 기능 */
-    public interface SearchItemService{
+    public interface SearchItemService {
         @GET("api/items/search")
-        retrofit2.Call<List<SearchItemInfo>> SearchItem(@Query("name") String name,
+        retrofit2.Call<SearchItemInfo> SearchItem(@Query("page") Integer page,
+                                                        @Query("size") Integer size,
+                                                        @Query("sort") String sort,
+                                                        @Query("name") String name,
                                                         @Header("authorization") String authorization,
                                                         @Header("Accept") String accept);
     }

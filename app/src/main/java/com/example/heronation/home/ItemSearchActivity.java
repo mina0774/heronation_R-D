@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -20,6 +21,7 @@ import com.example.heronation.filter.FilterPriceFragment;
 import com.example.heronation.filter.FilterSizeFragment;
 import com.example.heronation.R;
 import com.example.heronation.filter.FilterColorFragment;
+import com.example.heronation.home.dataClass.Content;
 import com.example.heronation.home.dataClass.SearchItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemSearchAdapter;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -44,7 +46,7 @@ public class ItemSearchActivity extends AppCompatActivity
         FilterSizeFragment.OnFragmentInteractionListener {
     private DialogWindowFilterFragment dialogWindowFilterFragment;
     private ItemSearchAdapter itemSearchAdapter;
-    private List<SearchItemInfo> item_list;
+    private List<Content> item_list;
     @BindView(R.id.item_home_search) SearchView item_home_search;
     @BindView(R.id.item_search_recycler_view) RecyclerView item_search_recycler_view;
     @BindView(R.id.no_search_result) TextView no_search_result;
@@ -110,7 +112,6 @@ public class ItemSearchActivity extends AppCompatActivity
                     tv.setBackground(getDrawable(R.drawable.button_background));
                     recently_search_linear_layout.addView(tv);
                 }
-
                 return true;
             }
 
@@ -150,14 +151,14 @@ public class ItemSearchActivity extends AppCompatActivity
         String accept = "application/json";
 
         APIInterface.SearchItemService searchItemService = ServiceGenerator.createService(APIInterface.SearchItemService.class);
-        retrofit2.Call<List<SearchItemInfo>> request = searchItemService.SearchItem(search_item_name, authorization, accept);
+        retrofit2.Call<SearchItemInfo> request = searchItemService.SearchItem(1,20,"hit,desc",search_item_name, authorization, accept);
 
-        request.enqueue(new Callback<List<SearchItemInfo>>() {
+        request.enqueue(new Callback<SearchItemInfo>() {
             @Override
-            public void onResponse(Call<List<SearchItemInfo>> call, Response<List<SearchItemInfo>> response) {
-                List<SearchItemInfo> searchItemInfos=response.body();
-                for(int i=0; i<searchItemInfos.size(); i++){
-                    item_list.add(searchItemInfos.get(i));
+            public void onResponse(Call<SearchItemInfo> call, Response<SearchItemInfo> response) {
+                SearchItemInfo searchItemInfo=response.body();
+                for(int i=0; i<searchItemInfo.getContent().size(); i++){
+                    item_list.add(searchItemInfo.getContent().get(i));
                 }
                 itemSearchAdapter.notifyDataSetChanged();
                 if(item_list.size()==0){
@@ -168,7 +169,7 @@ public class ItemSearchActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<List<SearchItemInfo>> call, Throwable t) {
+            public void onFailure(Call<SearchItemInfo> call, Throwable t) {
 
             }
         });

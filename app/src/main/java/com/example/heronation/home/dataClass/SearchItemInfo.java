@@ -1,104 +1,53 @@
 package com.example.heronation.home.dataClass;
 
+
+import java.util.List;
+
 public class SearchItemInfo {
 
-    private Integer id;
-    private String name;
-    private String linkDt;
-    private String linkYn;
-    private String shopImage;
-    private String code;
-    private String shopProductId;
-    private String useYn;
-    private String createDt;
-    private String shopmallCreateDt;
-    private String shopmallUpdateDt;
+    private List<Content> content = null;
+    private Integer totalPages;
+    private Integer totalElements;
+    private Integer number;
+    private Integer size;
 
-    public Integer getId() {
-        return id;
+    public List<Content> getContent() {
+        return content;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setContent(List<Content> content) {
+        this.content = content;
     }
 
-    public String getName() {
-        return name;
+    public Integer getTotalPages() {
+        return totalPages;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
     }
 
-    public String getLinkDt() {
-        return linkDt;
+    public Integer getTotalElements() {
+        return totalElements;
     }
 
-    public void setLinkDt(String linkDt) {
-        this.linkDt = linkDt;
+    public void setTotalElements(Integer totalElements) {
+        this.totalElements = totalElements;
     }
 
-    public String getLinkYn() {
-        return linkYn;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setLinkYn(String linkYn) {
-        this.linkYn = linkYn;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
-    public String getShopImage() {
-        return shopImage;
+    public Integer getSize() {
+        return size;
     }
 
-    public void setShopImage(String shopImage) {
-        this.shopImage = shopImage;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getShopProductId() {
-        return shopProductId;
-    }
-
-    public void setShopProductId(String shopProductId) {
-        this.shopProductId = shopProductId;
-    }
-
-    public String getUseYn() {
-        return useYn;
-    }
-
-    public void setUseYn(String useYn) {
-        this.useYn = useYn;
-    }
-
-    public String getCreateDt() {
-        return createDt;
-    }
-
-    public void setCreateDt(String createDt) {
-        this.createDt = createDt;
-    }
-
-    public String getShopmallCreateDt() {
-        return shopmallCreateDt;
-    }
-
-    public void setShopmallCreateDt(String shopmallCreateDt) {
-        this.shopmallCreateDt = shopmallCreateDt;
-    }
-
-    public String getShopmallUpdateDt() {
-        return shopmallUpdateDt;
-    }
-
-    public void setShopmallUpdateDt(String shopmallUpdateDt) {
-        this.shopmallUpdateDt = shopmallUpdateDt;
+    public void setSize(Integer size) {
+        this.size = size;
     }
 }

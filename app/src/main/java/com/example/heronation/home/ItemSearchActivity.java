@@ -27,6 +27,8 @@ import com.example.heronation.home.itemRecyclerViewAdapter.ItemSearchAdapter;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -52,6 +54,8 @@ public class ItemSearchActivity extends AppCompatActivity
     @BindView(R.id.no_search_result) TextView no_search_result;
     @BindView(R.id.recently_search_linear_layout) LinearLayout recently_search_linear_layout;
     @BindView(R.id.delete_recently_search) TextView delete_recently_search;
+    TextView[] tv;
+    int a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +65,24 @@ public class ItemSearchActivity extends AppCompatActivity
 
         //최근 검색어가 있을 때 화면에 뿌려주기
         SharedPreferences pref=getSharedPreferences("searching_keyword",MODE_PRIVATE);
-        Collection<?> collection=pref.getAll().values();
-        Iterator<?> iterator=collection.iterator();
+        Collection<?> collection = pref.getAll().values();
+        Iterator<?> iterator = collection.iterator();
+        tv= new TextView[collection.size()];
 
-        while(iterator.hasNext()){
-            String keyword=(String)iterator.next();
+        int i = 0;
+        while (iterator.hasNext()) {
+            String keyword = (String) iterator.next();
 
-            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            TextView tv=new TextView(this);
-            tv.setText(keyword);
-            tv.setPadding(8,8,8,8);
-            tv.setLayoutParams(layoutParams);
-            layoutParams.leftMargin=8;
-            tv.setBackground(getDrawable(R.drawable.button_background));
-            recently_search_linear_layout.addView(tv);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            tv[i]=new TextView(this);
+            tv[i] .setText(keyword);
+            tv[i] .setPadding(8, 8, 8, 8);
+            tv[i] .setLayoutParams(layoutParams);
+            layoutParams.leftMargin = 8;
+            tv[i] .setBackground(getDrawable(R.drawable.button_background));
+            tv[i] .setId(i);
+            recently_search_linear_layout.addView(tv[i]);
+            i++;
         }
 
         item_list=new ArrayList<>();
@@ -98,19 +106,23 @@ public class ItemSearchActivity extends AppCompatActivity
                 recently_search_linear_layout.removeAllViews();
                 SharedPreferences pref=getSharedPreferences("searching_keyword",MODE_PRIVATE);
                 Collection<?> collection=pref.getAll().values();
+                tv= new TextView[collection.size()];
                 Iterator<?> iterator=collection.iterator();
 
+                int i=0;
                 while(iterator.hasNext()){
                     String keyword=(String)iterator.next();
 
                     LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    TextView tv=new TextView(getApplicationContext());
-                    tv.setText(keyword);
-                    tv.setPadding(8,8,8,8);
-                    tv.setLayoutParams(layoutParams);
+                    tv[i]=new TextView(getApplicationContext());
+                    tv[i].setText(keyword);
+                    tv[i] .setPadding(8,8,8,8);
+                    tv[i] .setLayoutParams(layoutParams);
                     layoutParams.leftMargin=8;
-                    tv.setBackground(getDrawable(R.drawable.button_background));
-                    recently_search_linear_layout.addView(tv);
+                    tv[i] .setBackground(getDrawable(R.drawable.button_background));
+                    tv[i].setId(i);
+                    recently_search_linear_layout.addView(tv[i]);
+                    i++;
                 }
                 return true;
             }
@@ -121,6 +133,24 @@ public class ItemSearchActivity extends AppCompatActivity
                 return false;
             }
         });
+
+        // 최근 검색어 목록을 클릭했을 때
+        recently_search_linear_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (a= 0; a < tv.length; a++) {
+                    v=recently_search_linear_layout.getChildAt(a);
+                    TextView tv=(TextView)v;
+                    tv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            item_home_search.setQuery(tv.getText().toString(), true);
+                        }
+                    });
+                }
+            }
+        });
+
 
         // 지우기를 클릭했을 때
         delete_recently_search.setOnClickListener(new View.OnClickListener() {

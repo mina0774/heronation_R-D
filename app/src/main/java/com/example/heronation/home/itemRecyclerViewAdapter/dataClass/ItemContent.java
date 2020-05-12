@@ -16,6 +16,7 @@ public class ItemContent {
     private String createDt;
     private String shopmallCreateDt;
     private String shopmallUpdateDt;
+    private String itemUrl; // 변경될 수 있음
 
     public Integer getId() {
         return id;
@@ -112,4 +113,13 @@ public class ItemContent {
     public void setShopmallUpdateDt(String shopmallUpdateDt) {
         this.shopmallUpdateDt = shopmallUpdateDt;
     }
+
+    public String getItemUrl() {
+        return itemUrl;
+    }
+
+    public void setItemUrl(String itemUrl) {
+        this.itemUrl = itemUrl;
+    }
+
 }

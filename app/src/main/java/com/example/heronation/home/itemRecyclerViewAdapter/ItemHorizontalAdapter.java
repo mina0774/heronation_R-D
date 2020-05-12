@@ -210,6 +210,9 @@ public class ItemHorizontalAdapter extends RecyclerView.Adapter<ItemHorizontalAd
                     intent.putExtra("item_name",itemList.get(position).getName());
                     intent.putExtra("item_price","");
                     intent.putExtra("item_subcategory",itemList.get(position).getSubCategoryName());
+                    if(itemList.get(position).getItemUrl()!=null) {
+                        intent.putExtra("item_url", itemList.get(position).getItemUrl().toString());
+                    }
                     context.startActivity(intent);
                 }
             });

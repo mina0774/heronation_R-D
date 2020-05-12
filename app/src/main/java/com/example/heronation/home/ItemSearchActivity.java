@@ -82,6 +82,7 @@ public class ItemSearchActivity extends AppCompatActivity
             tv[i] .setBackground(getDrawable(R.drawable.button_background));
             tv[i] .setId(i);
             recently_search_linear_layout.addView(tv[i]);
+
             i++;
         }
 
@@ -116,10 +117,10 @@ public class ItemSearchActivity extends AppCompatActivity
                     LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     tv[i]=new TextView(getApplicationContext());
                     tv[i].setText(keyword);
-                    tv[i] .setPadding(8,8,8,8);
-                    tv[i] .setLayoutParams(layoutParams);
+                    tv[i].setPadding(8,8,8,8);
+                    tv[i].setLayoutParams(layoutParams);
                     layoutParams.leftMargin=8;
-                    tv[i] .setBackground(getDrawable(R.drawable.button_background));
+                    tv[i].setBackground(getDrawable(R.drawable.button_background));
                     tv[i].setId(i);
                     recently_search_linear_layout.addView(tv[i]);
                     i++;

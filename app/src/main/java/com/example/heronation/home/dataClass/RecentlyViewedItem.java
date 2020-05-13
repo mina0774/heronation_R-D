@@ -5,6 +5,7 @@ public class RecentlyViewedItem {
     String item_id;
     String item_name;
     String item_price;
+    String item_url;
 
     public RecentlyViewedItem(String image_url, String item_id, String item_name, String item_price) {
         this.image_url = image_url;
@@ -45,4 +46,11 @@ public class RecentlyViewedItem {
         this.item_price = item_price;
     }
 
+    public String getItem_url() {
+        return item_url;
+    }
+
+    public void setItem_url(String item_url) {
+        this.item_url = item_url;
+    }
 }

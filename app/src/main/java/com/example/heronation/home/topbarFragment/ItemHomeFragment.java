@@ -152,7 +152,7 @@ public class ItemHomeFragment extends Fragment {
                     //아이템의 데이터를 받는 리스트
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
-                    verticalAdapter.notifyDataSetChanged();
+                    verticalAdapter.notifyItemChanged(1);
                     if(item_list.size()==0){
                         have_no_user_info.setVisibility(View.VISIBLE);
                     }else if(item_list.size()!=0){
@@ -184,7 +184,7 @@ public class ItemHomeFragment extends Fragment {
                     //아이템의 데이터를 받는 리스트
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
-                    verticalAdapter.notifyDataSetChanged();
+                    verticalAdapter.notifyItemChanged(2);
                     if(item_list.size()==0){
                         have_no_user_info.setVisibility(View.VISIBLE);
                     }else if(item_list.size()!=0){
@@ -221,7 +221,7 @@ public class ItemHomeFragment extends Fragment {
                     //아이템의 데이터를 받는 리스트
                     ArrayList<StyleRecommendation> shopItemInfo = response.body();
                     item_list.add(new ShopItemPackage(package_name,shopItemInfo));
-                    verticalAdapter.notifyDataSetChanged();
+                    verticalAdapter.notifyItemChanged(0);
                     if(item_list.size()==0){
                         have_no_user_info.setVisibility(View.VISIBLE);
                     }else if(item_list.size()!=0){
@@ -242,6 +242,44 @@ public class ItemHomeFragment extends Fragment {
         });
     }
 
+    /*인기 상품*/
+    public void GetItemInfo(String package_name) {
+        String authorization = "bearer "+MainActivity.access_token;
+        String accept = "application/json";
+
+        APIInterface.BodyRecommendationService itemInfoService = ServiceGenerator.createService(APIInterface.BodyRecommendationService.class);
+        //사용자 정보 받아오기
+        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(authorization, accept); //사용자 정보 받아오기
+        request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
+                System.out.println("Response" + response.code());
+                if(response.code()==200) {
+                    //아이템의 데이터를 받는 리스트
+                    ArrayList<StyleRecommendation> shopItemInfo = response.body();
+                    item_list.add(new ShopItemPackage(package_name,shopItemInfo));
+                    verticalAdapter.notifyItemChanged(3);
+                    if(item_list.size()==0){
+                        have_no_user_info.setVisibility(View.VISIBLE);
+                    }else if(item_list.size()!=0){
+                        have_no_user_info.setVisibility(View.GONE);
+                    }
+                }else if(response.code()==401){
+                    backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent=new Intent(getActivity(), IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
+                System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
+    }
+
+
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
     public static void backgroundThreadShortToast(final Context context, final String msg) {
         if (context != null && msg != null) {
@@ -258,9 +296,9 @@ public class ItemHomeFragment extends Fragment {
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems() {
         GetItemInfoBody("사이즈 추천");
-        GetItemInfoOther("비슷한 스타일 유저의 추천");
         GetItemInfoUser("스타일 추천");
-
+        GetItemInfoOther("비슷한 스타일 유저의 추천");
+        GetItemInfo("인기 상품");
     }
 
     public interface OnFragmentInteractionListener {

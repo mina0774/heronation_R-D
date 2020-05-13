@@ -59,9 +59,6 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
         holder.measurement_type.setText(item_list.get(position).getMeasurement_type());
         holder.id.setText(item_list.get(position).getId());
 
-        /* 즐겨찾기 버튼 삭제*/
-        holder.favorite_button.setVisibility(View.INVISIBLE);
-
         /* 휴지통 버튼 삭제 */
         holder.delete_button.setVisibility(View.INVISIBLE);
 
@@ -83,7 +80,6 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
         public TextView date;
         public TextView shop_name;
         public TextView measurement_type;
-        public ImageButton favorite_button;
         public ImageButton delete_button;
         public TextView id;
 
@@ -96,7 +92,6 @@ public class ItemWardrobeClosetAdapter extends RecyclerView.Adapter<ItemWardrobe
             date=(TextView)view.findViewById(R.id.wishlist_closet_item_date);
             shop_name=(TextView)view.findViewById(R.id.wishlist_closet_item_shop_name);
             measurement_type=(TextView)view.findViewById(R.id.wishlist_closet_item_measurement_type);
-            favorite_button=(ImageButton)view.findViewById(R.id.favorite_button);
             delete_button=(ImageButton)view.findViewById(R.id.delete_button);
             id=(TextView)view.findViewById(R.id.wishlist_closet_item_measurement_id);
 

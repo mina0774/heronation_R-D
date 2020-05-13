@@ -54,6 +54,7 @@ public class ItemSearchActivity extends AppCompatActivity
     @BindView(R.id.no_search_result) TextView no_search_result;
     @BindView(R.id.recently_search_linear_layout) LinearLayout recently_search_linear_layout;
     @BindView(R.id.delete_recently_search) TextView delete_recently_search;
+    @BindView(R.id.search_layout) LinearLayout search_layout;
     TextView[] tv;
     int a;
 
@@ -62,6 +63,8 @@ public class ItemSearchActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_search);
         ButterKnife.bind(this);
+        // 검색창 활성화 가능하게 하기
+        item_home_search.setFocusable(true);
 
         //최근 검색어가 있을 때 화면에 뿌려주기
         SharedPreferences pref=getSharedPreferences("searching_keyword",MODE_PRIVATE);
@@ -145,6 +148,7 @@ public class ItemSearchActivity extends AppCompatActivity
                     tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            item_home_search.setIconified(false);
                             item_home_search.setQuery(tv.getText().toString(), true);
                         }
                     });
@@ -162,6 +166,14 @@ public class ItemSearchActivity extends AppCompatActivity
                 editor.clear();
                 editor.commit();
                 recently_search_linear_layout.removeAllViews();
+            }
+        });
+
+        // 검색창을 클릭했을 때
+        search_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item_home_search.setIconified(false);
             }
         });
 

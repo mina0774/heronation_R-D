@@ -113,7 +113,11 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
     }
 
     public void click_next_button(View view){
-      generate_body_size_info();
+        if(shoulder_sensibility_level!=null&&chest_sensibility_level!=null&waist_sensibility_level!=null&&hip_sensibility_level!=null&&thigh_sensibility_level!=null) {
+            generate_body_size_info();
+        }else{
+            Toast.makeText(getApplicationContext(),"추가 버튼을 눌러 정보를 모두 입력해주세요.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void generate_body_size_info(){
@@ -142,6 +146,7 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){ // 여기서 값이 반영
                     progressDoalog.dismiss();
+                    backgroundThreadShortToast(getApplicationContext(),"입력하신 값이 반영되었습니다.");
 
                     // 기존 신체 정보 바탕 구독 정보 삭제
                     new Thread(new Runnable() {
@@ -156,7 +161,6 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
                     }).start();
                     subscribeTopic(MainActivity.access_token);
 
-                    backgroundThreadShortToast(getApplicationContext(),"입력하신 값이 반영되었습니다.");
                     Intent intent=new Intent(ItemMeasurementBodySizeInfoActivity.this, ItemCompareBodySizeActivity.class);
                     intent.putExtra("item_id",product_id);
                     startActivity(intent);

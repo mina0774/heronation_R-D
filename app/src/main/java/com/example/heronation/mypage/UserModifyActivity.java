@@ -170,10 +170,12 @@ public class UserModifyActivity extends AppCompatActivity {
                         userModify_male.setTextColor(Color.parseColor("#000000"));
                     }
                     termsAdvertisement=userMyInfo.getTermsAdvertisement();
-                    if(termsAdvertisement.matches("Y")){
-                        userModify_ad_check.setChecked(true);
-                    }else if(termsAdvertisement.matches("N")){
-                        userModify_ad_check.setChecked(false);
+                    if(termsAdvertisement!=null) {
+                        if (termsAdvertisement.matches("Y")) {
+                            userModify_ad_check.setChecked(true);
+                        } else if (termsAdvertisement.matches("N")) {
+                            userModify_ad_check.setChecked(false);
+                        }
                     }
                 }
                 /*토큰 만료기한이 끝나, 재로그인이 필요할 때*/

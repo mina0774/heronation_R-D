@@ -29,14 +29,12 @@ public class ItemDetailActivity extends AppCompatActivity {
     @BindView(R.id.item_detail_size_button) ImageButton item_detail_size_button;
     @BindView(R.id.webview) WebView webView;
 
-    private String item_id;
-    private String item_image;
-    private String item_name;
-    private String item_price;
+    private String item_id="";
+    private String item_image="";
+    private String item_name="";
+    private String item_price="-";
     private String item_subcategory="";
     private String item_url="";
-
-    ItemSizeInfo itemSizeInfo; // 해당 상품의 사이즈 정보를 담는 변수
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +45,21 @@ public class ItemDetailActivity extends AppCompatActivity {
         item_id=getIntent().getStringExtra("item_id");
         item_image=getIntent().getStringExtra("item_image");
         item_name=getIntent().getStringExtra("item_name");
-        item_price=getIntent().getStringExtra("item_price");
+        if(getIntent().hasExtra("item_price")) {
+            item_price = getIntent().getStringExtra("item_price");
+        }
         if(getIntent().hasExtra("item_subcategory")){
             item_subcategory=getIntent().getStringExtra("item_subcategory");
         }
         if(getIntent().hasExtra("item_url")){
             item_url=getIntent().getStringExtra("item_url");
-            item_url="http://"+item_url;
+            if(!item_url.contains("http")) {
+                item_url = "http://" + item_url;
+            }
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.loadUrl(item_url);
         }
-
-
 
         /* 최근 본 상품 목록을 만들기 위해 해당 아이템의 정보를 SharedPreferences에 저장함 */
         SharedPreferences sharedPreferences=getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE); // SharedPreferences 생성
@@ -67,7 +67,13 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         String items_info = "";
         String item_info = "";
-        RecentlyViewedItem recentlyViewedItem = new RecentlyViewedItem(item_image, item_id, item_name, item_price);
+        RecentlyViewedItem recentlyViewedItem;
+        if(getIntent().hasExtra("item_url")){
+            recentlyViewedItem=new RecentlyViewedItem(item_image, item_id, item_name, item_price, item_url);
+        }else{
+            recentlyViewedItem= new RecentlyViewedItem(item_image, item_id, item_name, item_price);
+        }
+
         item_info = gson.toJson(recentlyViewedItem, RecentlyViewedItem.class);
         LinkedHashMap linkedHashMap=new LinkedHashMap();
 

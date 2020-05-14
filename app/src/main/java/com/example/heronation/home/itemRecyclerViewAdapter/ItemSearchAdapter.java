@@ -211,6 +211,7 @@ public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.Vi
                     intent.putExtra("item_image",itemList.get(position).getShopImage());
                     intent.putExtra("item_name",itemList.get(position).getName());
                     intent.putExtra("item_id",itemList.get(position).getShopProductId());
+                    intent.putExtra("item_price","-");
                     intent.putExtra("item_url",itemList.get(position).getUrl());
                     context.startActivity(intent.addFlags(FLAG_ACTIVITY_NEW_TASK));
                 }

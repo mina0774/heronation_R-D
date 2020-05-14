@@ -14,6 +14,14 @@ public class RecentlyViewedItem {
         this.item_price = item_price;
     }
 
+    public RecentlyViewedItem(String image_url, String item_id, String item_name, String item_price, String item_url) {
+        this.image_url = image_url;
+        this.item_id = item_id;
+        this.item_name = item_name;
+        this.item_price = item_price;
+        this.item_url = item_url;
+    }
+
     public String getItem_id() {
         return item_id;
     }

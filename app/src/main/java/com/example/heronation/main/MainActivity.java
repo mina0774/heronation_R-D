@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity
     private BackPressCloseHandler backPressCloseHandler;
 
     public static String access_token;
-    public static String style_tag_id;
     public static Integer control_closet_to_activity=-1;
     public static MainActivity mainActivity;
     private Integer mMenuItem; // 현재 선택된 하단 메뉴 아이디
@@ -130,7 +129,6 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         mainActivity=this;
         access_token = getIntent().getStringExtra("access_token");
-        style_tag_id=getIntent().getStringExtra("style_tag_id");
 
         backPressCloseHandler=new BackPressCloseHandler(this);
         /* BottomNavigation view를 선언해주고, bottomNavigationView의 객체를 생성한 후,
@@ -200,8 +198,6 @@ public class MainActivity extends AppCompatActivity
             control_closet_to_activity=-1;
         }
     }
-
-
 
 
     /*마이페이지에서 사용자 정보 받아오는 함수*/

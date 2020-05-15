@@ -30,6 +30,7 @@ import com.example.heronation.home.ItemSearchActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemVerticalAdapter;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.login_register.IntroActivity;
+import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.R;
@@ -78,6 +79,7 @@ public class ItemHomeFragment extends Fragment {
     public static long startTime;
     private Button log;
     public static TextView log_textview;
+    public static String style_tag_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,7 +146,7 @@ public class ItemHomeFragment extends Fragment {
 
         APIInterface.StyleRecommendationBasedUserService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserService.class);
 
-        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(MainActivity.style_tag_id, authorization, accept); //사용자 정보 받아오기
+        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(style_tag_id, authorization, accept); //사용자 정보 받아오기
         request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
             @Override
             public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
@@ -160,7 +162,6 @@ public class ItemHomeFragment extends Fragment {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
                 System.out.println("error + Connect Server Error is " + t.toString());
@@ -279,6 +280,42 @@ public class ItemHomeFragment extends Fragment {
         });
     }
 
+    // 스타일 태그 받아와서 스타일 추천 리스트를 뿌려줌
+    public void GetUserInfo() {
+        String authorization = "bearer " + MainActivity.access_token;
+        String accept = "application/json";
+        APIInterface.UserInfoService userInfoService = ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request = userInfoService.UserInfo(authorization, accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                if (response.code() == 200) { //정상적으로 로그인이 되었을 때
+                    UserMyInfo userMyInfo = response.body(); // 사용자 정보를 받아온 후에
+                    if(userMyInfo.getStyleTagResponses()!=null) {
+                        style_tag_id="";
+                        for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
+                            style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
+                            if (i == userMyInfo.getStyleTagResponses().size() - 1) {
+                                style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
+                            }
+                        }
+                    }
+                    GetItemInfoUser("스타일 추천");
+                } else { //토큰 만료기한이 끝나, 재로그인이 필요할 때
+                    backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
+                    Intent intent = new Intent(getActivity(), IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+            }
+        });
+    }
+
 
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
     public static void backgroundThreadShortToast(final Context context, final String msg) {
@@ -295,8 +332,8 @@ public class ItemHomeFragment extends Fragment {
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems() {
+        GetUserInfo(); //스타일 추천
         GetItemInfoBody("사이즈 추천");
-        GetItemInfoUser("스타일 추천");
         GetItemInfoOther("비슷한 스타일 유저의 추천");
         GetItemInfo("인기 상품");
     }

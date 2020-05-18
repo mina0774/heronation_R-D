@@ -104,80 +104,67 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:stretchColumns="0,1,2">     <!-- 카테고리 종류가 바둑판 배열로 있는 테이블 레이아웃-->
+            android:layout_height="240dp"
+            android:stretchColumns="0,1">     <!-- 카테고리 종류가 바둑판 배열로 있는 테이블 레이아웃-->
 
             <TableRow
+                android:paddingTop="32dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1">
 
                 <Button
                     android:id="@+id/btn_category_1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    android:text="(이미지)\n티셔츠" />
+                    android:background="@drawable/img_tshirt"
+                    android:text="상의" />
 
                 <Button
                     android:id="@+id/btn_category_2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    android:text="(이미지)\n티셔츠" />
+                    android:background="@drawable/img_pants"
+                    android:text="하의" />
 
                 <Button
                     android:id="@+id/btn_category_3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    android:text="(이미지)\n티셔츠" />
+                    android:background="@drawable/img_jacket"
+                    android:text="아우터" />
             </TableRow>
 
             <TableRow
+                android:paddingBottom="32dp"
+                android:paddingRight="32dp"
+                android:paddingLeft="32dp"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1">
 
                 <Button
                     android:id="@+id/btn_category_4"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    android:text="(이미지)\n티셔츠" />
+                    android:background="@drawable/img_onepiece"
+                    android:text="원피스" />
 
                 <Button
                     android:id="@+id/btn_category_5"
                     android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    android:text="(이미지)\n티셔츠" />
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/img_skirt"
+                    android:text="치마" />
 
-                <Button
-                    android:id="@+id/btn_category_6"
-                    android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    android:text="(이미지)\n티셔츠" />
+
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <Button
-                    android:id="@+id/btn_category_7"
-                    android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    android:text="(이미지)\n티셔츠" />
-
-                <Button
-                    android:id="@+id/btn_category_8"
-                    android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    android:text="(이미지)\n티셔츠" />
-
-                <Button
-                    android:id="@+id/btn_category_9"
-                    android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    android:text="(이미지)\n티셔츠" />
-            </TableRow>
         </TableLayout>
 
     </LinearLayout>

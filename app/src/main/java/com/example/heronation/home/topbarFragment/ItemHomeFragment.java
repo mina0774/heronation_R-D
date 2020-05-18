@@ -70,7 +70,6 @@ public class ItemHomeFragment extends Fragment {
     @BindView(R.id.item_home_search_edittext) TextView search_item;
 
     @BindView(R.id.have_no_user_info) TextView have_no_user_info;
-
     //아이템들의 묶음
     private ArrayList<ShopItemPackage> item_list;
     /* 아이템 수평 리스트 담는 수직 어댑터*/
@@ -332,10 +331,9 @@ public class ItemHomeFragment extends Fragment {
     //package 넘버가 page 넘버 (임의로 이렇게 구현해둠 변경 필요)
     /** 동적 로딩을 위한 NestedScrollView의 아래 부분을 인식 **/
     public void loadItems() {
-        GetUserInfo(); //스타일 추천
         GetItemInfoBody("사이즈 추천");
         GetItemInfoOther("비슷한 스타일 유저의 추천");
-        GetItemInfo("인기 상품");
+        GetUserInfo();
     }
 
     public interface OnFragmentInteractionListener {

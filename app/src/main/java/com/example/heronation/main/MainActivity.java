@@ -349,6 +349,15 @@ public class MainActivity extends AppCompatActivity
                 transaction.replace(R.id.fragment_container, measurementFragment).commit();
             }
         });
+        btn_style_recommendation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawers();
+                bottomNavigationView.setSelectedItemId(R.id.menuitem_bottombar_item);
+                FragmentTransaction transaction=fragmentManager.beginTransaction(); //FragmentTransaction 가져오기
+                transaction.replace(R.id.fragment_container, itemFragment).commit();
+            }
+        });
     }
 
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.

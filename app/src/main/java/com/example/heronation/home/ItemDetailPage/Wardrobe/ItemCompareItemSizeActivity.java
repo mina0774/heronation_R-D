@@ -126,7 +126,9 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
                         measurement_size_button[i].setTextAppearance(BOLD);
 
                         size_button_linear_layout.addView(measurement_size_button[i]);
+                    }
 
+                    for(i=0;i<compareWithWardrobe.getGoodsResponses().size();i++){
                         size_button_onclick(compareWithWardrobe,i,compareWithWardrobe.getGoodsResponses().size());
                     }
 
@@ -212,6 +214,10 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
         measurement_size_button[num].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for(i=0;i<size;i++) {
+                    measurement_size_button[i].setTextColor(Color.parseColor("#dddddd"));
+                    measurement_size_button[i].setBackground(getDrawable(R.drawable.button_background));
+                }
                 measurement_size_button[num].setTextColor(Color.parseColor("#656aed"));
                 measurement_size_button[num].setBackground(getDrawable(R.drawable.button_background_purple));
 

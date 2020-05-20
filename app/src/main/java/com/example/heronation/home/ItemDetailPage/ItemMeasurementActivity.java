@@ -176,8 +176,21 @@ public class ItemMeasurementActivity extends AppCompatActivity {
                         measurement_result_distance.addView(result_distance[i]);
                         measurement_result_cm.addView(result_cm[i]);
                     }
-                    /* 처음 값 S로 설정 */
 
+                    if(goodsResponses.size()==1){
+                        measurement_size_S.setText("F");
+                        measurement_size_S.setPadding(4,4,4,4);
+                        measurement_size_M.setVisibility(View.GONE);
+                        measurement_size_L.setVisibility(View.GONE);
+                        measurement_size_XL.setVisibility(View.GONE);
+                    }else if(goodsResponses.size()==2){
+                        measurement_size_L.setVisibility(View.GONE);
+                        measurement_size_XL.setVisibility(View.GONE);
+                    }else if(goodsResponses.size()==3){
+                        measurement_size_XL.setVisibility(View.GONE);
+                    }
+
+                    /* 처음 값 S로 설정 */
                     if(goodsResponses.size()>=1) {
                         measurement_size_S.setOnClickListener(new View.OnClickListener() {
                             @Override

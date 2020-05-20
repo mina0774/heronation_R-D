@@ -121,6 +121,20 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
                             break;
                     }
 
+                    if(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size()==1){
+                        comparison_size_S.setText("F");
+                        comparison_size_M.setVisibility(View.GONE);
+                        comparison_size_L.setVisibility(View.GONE);
+                        comparison_size_XL.setVisibility(View.GONE);
+                        recommendation_size_textview.setText("Free size ");
+                    }else if(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size()==2){
+                        comparison_size_L.setVisibility(View.GONE);
+                        comparison_size_XL.setVisibility(View.GONE);
+                    }else if(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size()==3){
+                        comparison_size_XL.setVisibility(View.GONE);
+                    }
+
+
                     if (compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size() >= 1) { // S 사이즈 버튼 활성화
                         comparison_size_S.setOnClickListener(new View.OnClickListener() {
                             @Override

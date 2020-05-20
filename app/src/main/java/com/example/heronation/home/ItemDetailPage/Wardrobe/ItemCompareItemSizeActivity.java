@@ -41,12 +41,8 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
     @BindView(R.id.compare_item_image) ImageView compare_item_image;
     @BindView(R.id.compare_item_name) TextView compare_item_name;
 
-    @BindView(R.id.comparison_size_S) Button comparison_size_S;
-    @BindView(R.id.comparison_size_M) Button comparison_size_M;
-    @BindView(R.id.comparison_size_L) Button comparison_size_L;
-    @BindView(R.id.comparison_size_XL) Button comparison_size_XL;
     @BindView(R.id.recommendation_size_textview) TextView recommendation_size_textview;
-
+    @BindView(R.id.size_button_linear_layout) LinearLayout size_button_linear_layout;
     @BindView(R.id.measurement_result_item) LinearLayout measurement_result_item;
     @BindView(R.id.measurement_result_distance) LinearLayout measurement_result_distance;
     @BindView(R.id.measurement_result_cm) LinearLayout measurement_result_cm;
@@ -55,6 +51,10 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
     String selectWardrobeId;
     String imageURL;
     String itemName;
+
+    // 사이즈 버튼 이벤트 처리
+    int i;
+    Button[] measurement_size_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,74 +106,34 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
                             max_num = i;
                         }
                     }
+
+                    measurement_size_button=new Button[compareWithWardrobe.getGoodsResponses().size()];
+                    for(i=0;i<compareWithWardrobe.getGoodsResponses().size();i++){
+                        LinearLayout.LayoutParams lp= new LinearLayout.LayoutParams(100, 100);
+                        lp.setMarginEnd(30);
+
+                        measurement_size_button[i]=new Button(getApplicationContext());
+                        measurement_size_button[i].setLayoutParams(lp);
+                        if(i==0){
+                            measurement_size_button[i].setTextColor(Color.parseColor("#656aed"));
+                            measurement_size_button[i].setBackground(getDrawable(R.drawable.button_background_purple));
+                        }else {
+                            measurement_size_button[i].setTextColor(Color.parseColor("#dddddd"));
+                            measurement_size_button[i].setBackground(getDrawable(R.drawable.button_background));
+                        }
+                        measurement_size_button[i].setTextSize(11);
+                        measurement_size_button[i].setText(compareWithWardrobe.getGoodsResponses().get(i).getSizeOptionName());
+                        measurement_size_button[i].setTextAppearance(BOLD);
+
+                        size_button_linear_layout.addView(measurement_size_button[i]);
+
+                        size_button_onclick(compareWithWardrobe,i,compareWithWardrobe.getGoodsResponses().size());
+                    }
+
                     // max_num에 따라 처음 화면에 뿌려지는 수치값이 다름
-                    switch (max_num) {
-                        case 0:
-                            view_size_S(compareWithWardrobe);
-                            recommendation_size_textview.setText("S size ");
-                            break;
-                        case 1:
-                            view_size_M(compareWithWardrobe);
-                            recommendation_size_textview.setText("M size ");
-                            break;
-                        case 2:
-                            view_size_L(compareWithWardrobe);
-                            recommendation_size_textview.setText("L size ");
-                            break;
-                        case 3:
-                            view_size_XL(compareWithWardrobe);
-                            recommendation_size_textview.setText("XL size ");
-                            break;
-                    }
+                    recommendation_size_textview.setText(compareWithWardrobe.getGoodsResponses().get(max_num).getSizeOptionName()+" size ");
+                    recommend_size(compareWithWardrobe,max_num);
 
-                    if(compareWithWardrobe.getGoodsResponses().size()==1){
-                        comparison_size_S.setText("F");
-                        comparison_size_M.setVisibility(View.GONE);
-                        comparison_size_L.setVisibility(View.GONE);
-                        comparison_size_XL.setVisibility(View.GONE);
-                        recommendation_size_textview.setText("Free size ");
-                    }else if(compareWithWardrobe.getGoodsResponses().size()==2){
-                        comparison_size_L.setVisibility(View.GONE);
-                        comparison_size_XL.setVisibility(View.GONE);
-                    }else if(compareWithWardrobe.getGoodsResponses().size()==3){
-                        comparison_size_XL.setVisibility(View.GONE);
-                    }
-
-                    if (compareWithWardrobe.getGoodsResponses().size() >= 1) { // S 사이즈 버튼 활성화
-                        comparison_size_S.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                view_size_S(compareWithWardrobe);
-                            }
-                        });
-                    }
-
-                    if (compareWithWardrobe.getGoodsResponses().size() >= 2) { // M 사이즈 버튼 활성화
-                        comparison_size_M.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                view_size_M(compareWithWardrobe);
-                            }
-                        });
-                    }
-
-                    if (compareWithWardrobe.getGoodsResponses().size() >= 3) { // L 사이즈 버튼 활성화
-                        comparison_size_L.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                view_size_L(compareWithWardrobe);
-                            }
-                        });
-                    }
-
-                    if (compareWithWardrobe.getGoodsResponses().size() >= 4) { // XL 사이즈 버튼 활성화
-                        comparison_size_XL.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                view_size_XL(compareWithWardrobe);
-                            }
-                        });
-                    }
                 }else if(response.code()==401) {
                     backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
                     Intent intent=new Intent(ItemCompareItemSizeActivity.this, IntroActivity.class);
@@ -189,6 +149,131 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
         });
     }
 
+    public void recommend_size(CompareWithWardrobe compareWithWardrobe,int max_num){
+        measurement_size_button[max_num].setTextColor(Color.parseColor("#656aed"));
+        measurement_size_button[max_num].setBackground(getDrawable(R.drawable.button_background_purple));
+
+        measurement_result_item.removeAllViews();
+        measurement_result_distance.removeAllViews();
+        measurement_result_cm.removeAllViews();
+
+        // 동적으로 띄워줄 텍스트뷰 인덱스 값 할당
+        TextView[]  result_item=new TextView[compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().size()];
+        TextView[]  result_distance=new TextView[compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().size()];
+        TextView[]  result_cm=new TextView[compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().size()];
+
+        // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
+        for (int i = 0; i < compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().size(); i++) {
+
+            result_item[i] = new TextView(getApplicationContext());
+            result_distance[i] = new TextView(getApplicationContext());
+            result_cm[i] = new TextView(getApplicationContext());
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = Gravity.CENTER;
+
+            result_item[i].setLayoutParams(layoutParams);
+            result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
+            result_item[i].setTextSize(16);
+            result_item[i].setText(compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getMeasureItemName() + "\n");
+            result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
+
+            String distance = "";
+            for (int a = 0; a < compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().size(); a++) {
+                if (compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getMeasureItemId() == compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getMeasureItemId()) {
+                    distance = Double.toString(compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getValue() - compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
+                }
+            }
+            result_distance[i].setLayoutParams(layoutParams);
+            result_distance[i].setTextSize(16);
+            if (Double.parseDouble(distance) > 0) {
+                result_distance[i].setText("+" + distance + "\n");
+            } else if (Double.parseDouble(distance) == 0) {
+                result_distance[i].setText("=" + distance + "\n");
+            } else {
+                result_distance[i].setText(distance + "\n");
+            }
+            result_distance[i].setTextAppearance(BOLD);
+            result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
+
+            result_cm[i].setLayoutParams(layoutParams);
+            result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
+            result_cm[i].setTextSize(16);
+            result_cm[i].setText("cm\n");
+            result_cm[i].setTextColor(Color.parseColor("#777777"));
+
+            measurement_result_item.addView(result_item[i]);
+            measurement_result_distance.addView(result_distance[i]);
+            measurement_result_cm.addView(result_cm[i]);
+        }
+    }
+
+    public void size_button_onclick(CompareWithWardrobe compareWithWardrobe, int num, int size){
+        measurement_size_button[num].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                measurement_size_button[num].setTextColor(Color.parseColor("#656aed"));
+                measurement_size_button[num].setBackground(getDrawable(R.drawable.button_background_purple));
+
+                measurement_result_item.removeAllViews();
+                measurement_result_distance.removeAllViews();
+                measurement_result_cm.removeAllViews();
+
+                // 동적으로 띄워줄 텍스트뷰 인덱스 값 할당
+                TextView[]  result_item=new TextView[compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().size()];
+                TextView[]  result_distance=new TextView[compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().size()];
+                TextView[]  result_cm=new TextView[compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().size()];
+
+                // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
+                for (int i = 0; i < compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().size(); i++) {
+
+                    result_item[i] = new TextView(getApplicationContext());
+                    result_distance[i] = new TextView(getApplicationContext());
+                    result_cm[i] = new TextView(getApplicationContext());
+
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    layoutParams.gravity = Gravity.CENTER;
+
+                    result_item[i].setLayoutParams(layoutParams);
+                    result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    result_item[i].setTextSize(16);
+                    result_item[i].setText(compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().get(i).getMeasureItemName() + "\n");
+                    result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
+
+                    String distance = "";
+                    for (int a = 0; a < compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().size(); a++) {
+                        if (compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getMeasureItemId() == compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().get(i).getMeasureItemId()) {
+                            distance = Double.toString(compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().get(i).getValue() - compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
+                        }
+                    }
+                    result_distance[i].setLayoutParams(layoutParams);
+                    result_distance[i].setTextSize(16);
+                    if (Double.parseDouble(distance) > 0) {
+                        result_distance[i].setText("+" + distance + "\n");
+                    } else if (Double.parseDouble(distance) == 0) {
+                        result_distance[i].setText("=" + distance + "\n");
+                    } else {
+                        result_distance[i].setText(distance + "\n");
+                    }
+                    result_distance[i].setTextAppearance(BOLD);
+                    result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
+
+                    result_cm[i].setLayoutParams(layoutParams);
+                    result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    result_cm[i].setTextSize(16);
+                    result_cm[i].setText("cm\n");
+                    result_cm[i].setTextColor(Color.parseColor("#777777"));
+
+                    measurement_result_item.addView(result_item[i]);
+                    measurement_result_distance.addView(result_distance[i]);
+                    measurement_result_cm.addView(result_cm[i]);
+                }
+            }
+        });
+
+    }
+
+
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
     public static void backgroundThreadShortToast(final Context context, final String msg) {
         if (context != null && msg != null) {
@@ -201,276 +286,4 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
         }
     }
 
-
-    public void view_size_S(CompareWithWardrobe compareWithWardrobe){
-        // 기존 화면 삭제
-        measurement_result_item.removeAllViews();
-        measurement_result_distance.removeAllViews();
-        measurement_result_cm.removeAllViews();
-
-        // 버튼 색깔 설정
-        comparison_size_S.setTextColor(Color.parseColor("#656aed"));
-        comparison_size_S.setBackground(getDrawable(R.drawable.button_background_purple));
-
-        comparison_size_M.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_M.setBackground(getDrawable(R.drawable.button_background));
-        comparison_size_L.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_L.setBackground(getDrawable(R.drawable.button_background));
-        comparison_size_XL.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_XL.setBackground(getDrawable(R.drawable.button_background));
-
-        // 동적으로 띄워줄 텍스트뷰 인덱스 값 할당
-        TextView[]  result_item=new TextView[compareWithWardrobe.getGoodsResponses().get(0).getGoodsScmmValues().size()];
-        TextView[]  result_distance=new TextView[compareWithWardrobe.getGoodsResponses().get(0).getGoodsScmmValues().size()];
-        TextView[]  result_cm=new TextView[compareWithWardrobe.getGoodsResponses().get(0).getGoodsScmmValues().size()];
-
-        // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
-        for (int i = 0; i < compareWithWardrobe.getGoodsResponses().get(0).getGoodsScmmValues().size(); i++) {
-
-            result_item[i] = new TextView(getApplicationContext());
-            result_distance[i] = new TextView(getApplicationContext());
-            result_cm[i] = new TextView(getApplicationContext());
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.gravity = Gravity.CENTER;
-
-            result_item[i].setLayoutParams(layoutParams);
-            result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-            result_item[i].setTextSize(16);
-            result_item[i].setText(compareWithWardrobe.getGoodsResponses().get(0).getGoodsScmmValues().get(i).getMeasureItemName()+ "\n");
-            result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-            String distance="";
-            for(int a=0;a<compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().size();a++){
-                if(compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getMeasureItemId()==compareWithWardrobe.getGoodsResponses().get(0).getGoodsScmmValues().get(i).getMeasureItemId()){
-                    distance=Double.toString(compareWithWardrobe.getGoodsResponses().get(0).getGoodsScmmValues().get(i).getValue()-compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
-                }
-            }
-            result_distance[i].setLayoutParams(layoutParams);
-            result_distance[i].setTextSize(16);
-            if(Double.parseDouble(distance)>0) {
-                result_distance[i].setText("+"+distance+"\n");
-            }else if(Double.parseDouble(distance)==0){
-                result_distance[i].setText("="+distance+"\n");
-            }else{
-                result_distance[i].setText(distance+"\n");
-            }
-            result_distance[i].setTextAppearance(BOLD);
-            result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-            result_cm[i].setLayoutParams(layoutParams);
-            result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-            result_cm[i].setTextSize(16);
-            result_cm[i].setText("cm\n");
-            result_cm[i].setTextColor(Color.parseColor("#777777"));
-
-            measurement_result_item.addView(result_item[i]);
-            measurement_result_distance.addView(result_distance[i]);
-            measurement_result_cm.addView(result_cm[i]);
-        }
-    }
-
-    public void view_size_M(CompareWithWardrobe compareWithWardrobe){
-        // 기존 화면 삭제
-        measurement_result_item.removeAllViews();
-        measurement_result_distance.removeAllViews();
-        measurement_result_cm.removeAllViews();
-
-        // 버튼 색깔 설정
-        comparison_size_M.setTextColor(Color.parseColor("#656aed"));
-        comparison_size_M.setBackground(getDrawable(R.drawable.button_background_purple));
-
-        comparison_size_S.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_S.setBackground(getDrawable(R.drawable.button_background));
-        comparison_size_L.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_L.setBackground(getDrawable(R.drawable.button_background));
-        comparison_size_XL.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_XL.setBackground(getDrawable(R.drawable.button_background));
-
-        // 동적으로 띄워줄 텍스트뷰 인덱스 값 할당
-        TextView[]  result_item=new TextView[compareWithWardrobe.getGoodsResponses().get(1).getGoodsScmmValues().size()];
-        TextView[]  result_distance=new TextView[compareWithWardrobe.getGoodsResponses().get(1).getGoodsScmmValues().size()];
-        TextView[]  result_cm=new TextView[compareWithWardrobe.getGoodsResponses().get(1).getGoodsScmmValues().size()];
-
-        // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
-        for (int i = 0; i < compareWithWardrobe.getGoodsResponses().get(1).getGoodsScmmValues().size(); i++) {
-
-            result_item[i] = new TextView(getApplicationContext());
-            result_distance[i] = new TextView(getApplicationContext());
-            result_cm[i] = new TextView(getApplicationContext());
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.gravity = Gravity.CENTER;
-
-            result_item[i].setLayoutParams(layoutParams);
-            result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-            result_item[i].setTextSize(16);
-            result_item[i].setText(compareWithWardrobe.getGoodsResponses().get(1).getGoodsScmmValues().get(i).getMeasureItemName() + "\n");
-            result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-            String distance = "";
-            for (int a = 0; a < compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().size(); a++) {
-                if (compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getMeasureItemId() == compareWithWardrobe.getGoodsResponses().get(1).getGoodsScmmValues().get(i).getMeasureItemId()) {
-                    distance = Double.toString(compareWithWardrobe.getGoodsResponses().get(1).getGoodsScmmValues().get(i).getValue() - compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
-                }
-            }
-            result_distance[i].setLayoutParams(layoutParams);
-            result_distance[i].setTextSize(16);
-            if (Double.parseDouble(distance) > 0) {
-                result_distance[i].setText("+" + distance + "\n");
-            } else if (Double.parseDouble(distance) == 0) {
-                result_distance[i].setText("="+distance+"\n");
-            } else {
-                result_distance[i].setText(distance + "\n");
-            }
-            result_distance[i].setTextAppearance(BOLD);
-            result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-            result_cm[i].setLayoutParams(layoutParams);
-            result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-            result_cm[i].setTextSize(16);
-            result_cm[i].setText("cm\n");
-            result_cm[i].setTextColor(Color.parseColor("#777777"));
-
-            measurement_result_item.addView(result_item[i]);
-            measurement_result_distance.addView(result_distance[i]);
-            measurement_result_cm.addView(result_cm[i]);
-        }
-    }
-
-    public void view_size_L(CompareWithWardrobe compareWithWardrobe){
-        // 기존 화면 삭제
-        measurement_result_item.removeAllViews();
-        measurement_result_distance.removeAllViews();
-        measurement_result_cm.removeAllViews();
-
-        // 버튼 색깔 설정
-        comparison_size_L.setTextColor(Color.parseColor("#656aed"));
-        comparison_size_L.setBackground(getDrawable(R.drawable.button_background_purple));
-
-        comparison_size_M.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_M.setBackground(getDrawable(R.drawable.button_background));
-        comparison_size_S.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_S.setBackground(getDrawable(R.drawable.button_background));
-        comparison_size_XL.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_XL.setBackground(getDrawable(R.drawable.button_background));
-
-        // 동적으로 띄워줄 텍스트뷰 인덱스 값 할당
-        TextView[]  result_item=new TextView[compareWithWardrobe.getGoodsResponses().get(2).getGoodsScmmValues().size()];
-        TextView[]  result_distance=new TextView[compareWithWardrobe.getGoodsResponses().get(2).getGoodsScmmValues().size()];
-        TextView[]  result_cm=new TextView[compareWithWardrobe.getGoodsResponses().get(2).getGoodsScmmValues().size()];
-
-        // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
-        for (int i = 0; i < compareWithWardrobe.getGoodsResponses().get(2).getGoodsScmmValues().size(); i++) {
-
-            result_item[i] = new TextView(getApplicationContext());
-            result_distance[i] = new TextView(getApplicationContext());
-            result_cm[i] = new TextView(getApplicationContext());
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.gravity = Gravity.CENTER;
-
-            result_item[i].setLayoutParams(layoutParams);
-            result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-            result_item[i].setTextSize(16);
-            result_item[i].setText(compareWithWardrobe.getGoodsResponses().get(2).getGoodsScmmValues().get(i).getMeasureItemName() + "\n");
-            result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-            String distance = "";
-            for (int a = 0; a < compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().size(); a++) {
-                if (compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getMeasureItemId() == compareWithWardrobe.getGoodsResponses().get(2).getGoodsScmmValues().get(i).getMeasureItemId()) {
-                    distance = Double.toString(compareWithWardrobe.getGoodsResponses().get(2).getGoodsScmmValues().get(i).getValue() - compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
-                }
-            }
-            result_distance[i].setLayoutParams(layoutParams);
-            result_distance[i].setTextSize(16);
-            if (Double.parseDouble(distance) > 0) {
-                result_distance[i].setText("+" + distance + "\n");
-            } else if (Double.parseDouble(distance) == 0) {
-                result_distance[i].setText("=" + distance+"\n");
-            } else {
-                result_distance[i].setText(distance + "\n");
-            }
-            result_distance[i].setTextAppearance(BOLD);
-            result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-            result_cm[i].setLayoutParams(layoutParams);
-            result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-            result_cm[i].setTextSize(16);
-            result_cm[i].setText("cm\n");
-            result_cm[i].setTextColor(Color.parseColor("#777777"));
-
-            measurement_result_item.addView(result_item[i]);
-            measurement_result_distance.addView(result_distance[i]);
-            measurement_result_cm.addView(result_cm[i]);
-        }
-    }
-
-    public void view_size_XL(CompareWithWardrobe compareWithWardrobe){
-        // 기존 화면 삭제
-        measurement_result_item.removeAllViews();
-        measurement_result_distance.removeAllViews();
-        measurement_result_cm.removeAllViews();
-
-        // 버튼 색깔 설정
-        comparison_size_XL.setTextColor(Color.parseColor("#656aed"));
-        comparison_size_XL.setBackground(getDrawable(R.drawable.button_background_purple));
-
-        comparison_size_M.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_M.setBackground(getDrawable(R.drawable.button_background));
-        comparison_size_L.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_L.setBackground(getDrawable(R.drawable.button_background));
-        comparison_size_S.setTextColor(Color.parseColor("#dddddd"));
-        comparison_size_S.setBackground(getDrawable(R.drawable.button_background));
-
-        // 동적으로 띄워줄 텍스트뷰 인덱스 값 할당
-        TextView[]  result_item=new TextView[compareWithWardrobe.getGoodsResponses().get(3).getGoodsScmmValues().size()];
-        TextView[]  result_distance=new TextView[compareWithWardrobe.getGoodsResponses().get(3).getGoodsScmmValues().size()];
-        TextView[]  result_cm=new TextView[compareWithWardrobe.getGoodsResponses().get(3).getGoodsScmmValues().size()];
-
-        // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
-        for (int i = 0; i < compareWithWardrobe.getGoodsResponses().get(3).getGoodsScmmValues().size(); i++) {
-
-            result_item[i] = new TextView(getApplicationContext());
-            result_distance[i] = new TextView(getApplicationContext());
-            result_cm[i] = new TextView(getApplicationContext());
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.gravity = Gravity.CENTER;
-
-            result_item[i].setLayoutParams(layoutParams);
-            result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-            result_item[i].setTextSize(16);
-            result_item[i].setText(compareWithWardrobe.getGoodsResponses().get(3).getGoodsScmmValues().get(i).getMeasureItemName() + "\n");
-            result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-            String distance = "";
-            for (int a = 0; a < compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().size(); a++) {
-                if (compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getMeasureItemId() == compareWithWardrobe.getGoodsResponses().get(3).getGoodsScmmValues().get(i).getMeasureItemId()) {
-                    distance = Double.toString(compareWithWardrobe.getGoodsResponses().get(3).getGoodsScmmValues().get(i).getValue() - compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
-                }
-            }
-            result_distance[i].setLayoutParams(layoutParams);
-            result_distance[i].setTextSize(16);
-            if (Double.parseDouble(distance) > 0) {
-                result_distance[i].setText("+" + distance + "\n");
-            } else if (Double.parseDouble(distance) == 0) {
-                result_distance[i].setText("="+distance+"\n");
-            } else {
-                result_distance[i].setText(distance + "\n");
-            }
-            result_distance[i].setTextAppearance(BOLD);
-            result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-            result_cm[i].setLayoutParams(layoutParams);
-            result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-            result_cm[i].setTextSize(16);
-            result_cm[i].setText("cm\n");
-            result_cm[i].setTextColor(Color.parseColor("#777777"));
-
-            measurement_result_item.addView(result_item[i]);
-            measurement_result_distance.addView(result_distance[i]);
-            measurement_result_cm.addView(result_cm[i]);
-        }
-    }
 }

@@ -107,55 +107,13 @@
             android:layout_weight="6">
 
             <LinearLayout
+                android:id="@+id/size_button_linear_layout"
                 android:layout_marginTop="25dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/comparison_size_S"
-                    android:layout_marginRight="10.7dp"
-                    android:layout_width="35dp"
-                    android:layout_height="35.3dp"
-                    android:background="@drawable/button_background_purple"
-                    android:text="S"
-                    android:textColor="#656aed"
-                    android:textStyle="bold"
-                    android:textSize="15sp"/>
-
-                <Button
-                    android:id="@+id/comparison_size_M"
-                    android:layout_marginRight="10.7dp"
-                    android:layout_width="35dp"
-                    android:layout_height="35.3dp"
-                    android:background="@drawable/button_background"
-                    android:text="M"
-                    android:textStyle="bold"
-                    android:textColor="#dddddd"
-                    android:textSize="15sp"/>
-
-                <Button
-                    android:id="@+id/comparison_size_L"
-                    android:layout_marginRight="10.7dp"
-                    android:layout_width="35dp"
-                    android:layout_height="35.3dp"
-                    android:background="@drawable/button_background"
-                    android:text="L"
-                    android:textStyle="bold"
-                    android:textColor="#dddddd"
-                    android:textSize="15sp"/>
-
-                <Button
-                    android:id="@+id/comparison_size_XL"
-                    android:layout_marginRight="10.7dp"
-                    android:layout_width="35dp"
-                    android:layout_height="35.3dp"
-                    android:background="@drawable/button_background"
-                    android:text="XL"
-                    android:textStyle="bold"
-                    android:textColor="#dddddd"
-                    android:textSize="15sp"/>
             </LinearLayout>
 
             <LinearLayout

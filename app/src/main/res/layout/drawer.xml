@@ -118,30 +118,31 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="@drawable/img_tshirt"
-                    android:text="상의" />
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="티셔츠/맨투맨" />
 
                 <Button
                     android:id="@+id/btn_category_2"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="@drawable/img_pants"
-                    android:text="하의" />
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="가디건" />
 
                 <Button
                     android:id="@+id/btn_category_3"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="@drawable/img_jacket"
-                    android:text="아우터" />
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="코트" />
+
             </TableRow>
 
             <TableRow
-                android:paddingBottom="32dp"
-                android:paddingRight="32dp"
-                android:paddingLeft="32dp"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1">
@@ -151,18 +152,124 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="@drawable/img_onepiece"
-                    android:text="원피스" />
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="자켓" />
 
                 <Button
                     android:id="@+id/btn_category_5"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="셔츠/남방" />
+
+                <Button
+                    android:id="@+id/btn_category_6"
                     android:layout_height="match_parent"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:background="@drawable/img_skirt"
-                    android:text="치마" />
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="블라우스" />
+            </TableRow>
 
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
+                <Button
+                    android:id="@+id/btn_category_7"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="패딩/점퍼" />
+
+                <Button
+                    android:id="@+id/btn_category_8"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="조끼/베스트" />
+
+                <Button
+                    android:id="@+id/btn_category_9"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="후드" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btn_category_10"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="슬리브리스" />
+
+                <Button
+                    android:id="@+id/btn_category_11"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="원피스" />
+
+                <Button
+                    android:id="@+id/btn_category_12"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="팬츠/데님팬츠" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btn_category_13"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="숏팬츠" />
+
+                <Button
+                    android:id="@+id/btn_category_14"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textSize="11sp"
+                    android:text="스커트" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff" />
             </TableRow>
 
         </TableLayout>

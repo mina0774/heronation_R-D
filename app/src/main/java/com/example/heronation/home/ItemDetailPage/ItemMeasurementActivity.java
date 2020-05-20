@@ -64,14 +64,15 @@ public class ItemMeasurementActivity extends AppCompatActivity {
     @BindView(R.id.measurement_item_name) TextView measurement_item_name;
     @BindView(R.id.measurement_item_image) ImageView measurement_item_image;
 
-    @BindView(R.id.measurement_size_S) Button measurement_size_S;
-    @BindView(R.id.measurement_size_M) Button measurement_size_M;
-    @BindView(R.id.measurement_size_L) Button measurement_size_L;
-    @BindView(R.id.measurement_size_XL) Button measurement_size_XL;
+    @BindView(R.id.size_button_linear_layout) LinearLayout size_button_linear_layout;
 
     @BindView(R.id.measurement_result_item) LinearLayout measurement_result_item;
     @BindView(R.id.measurement_result_distance) LinearLayout measurement_result_distance;
     @BindView(R.id.measurement_result_cm) LinearLayout measurement_result_cm;
+
+    // 사이즈 버튼 이벤트 처리
+    int i;
+    Button[] measurement_size_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +147,6 @@ public class ItemMeasurementActivity extends AppCompatActivity {
 
                     // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
                     for (int i = 0; i < goodsResponses.get(0).getGoodsScmmValues().size(); i++) {
-
                         result_item[i] = new TextView(getApplicationContext());
                         result_distance[i] = new TextView(getApplicationContext());
                         result_cm[i] = new TextView(getApplicationContext());
@@ -177,252 +177,27 @@ public class ItemMeasurementActivity extends AppCompatActivity {
                         measurement_result_cm.addView(result_cm[i]);
                     }
 
-                    if(goodsResponses.size()==1){
-                        measurement_size_S.setText("F");
-                        measurement_size_S.setPadding(4,4,4,4);
-                        measurement_size_M.setVisibility(View.GONE);
-                        measurement_size_L.setVisibility(View.GONE);
-                        measurement_size_XL.setVisibility(View.GONE);
-                    }else if(goodsResponses.size()==2){
-                        measurement_size_L.setVisibility(View.GONE);
-                        measurement_size_XL.setVisibility(View.GONE);
-                    }else if(goodsResponses.size()==3){
-                        measurement_size_XL.setVisibility(View.GONE);
-                    }
+                    measurement_size_button=new Button[goodsResponses.size()];
+                    for(i=0;i<goodsResponses.size();i++){
+                        LinearLayout.LayoutParams lp= new LinearLayout.LayoutParams(100, 100);
+                        lp.setMarginEnd(30);
 
-                    /* 처음 값 S로 설정 */
-                    if(goodsResponses.size()>=1) {
-                        measurement_size_S.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) { // S를 클릭했을 때 버튼 이벤트 처리
-                                measurement_result_item.removeAllViews();
-                                measurement_result_distance.removeAllViews();
-                                measurement_result_cm.removeAllViews();
+                        measurement_size_button[i]=new Button(getApplicationContext());
+                        measurement_size_button[i].setLayoutParams(lp);
+                        if(i==0){
+                            measurement_size_button[i].setTextColor(Color.parseColor("#656aed"));
+                            measurement_size_button[i].setBackground(getDrawable(R.drawable.button_background_purple));
+                        }else {
+                            measurement_size_button[i].setTextColor(Color.parseColor("#dddddd"));
+                            measurement_size_button[i].setBackground(getDrawable(R.drawable.button_background));
+                        }
+                        measurement_size_button[i].setTextSize(11);
+                        measurement_size_button[i].setText(goodsResponses.get(i).getSizeOptionName());
+                        measurement_size_button[i].setTextAppearance(BOLD);
 
-                                measurement_size_S.setTextColor(Color.parseColor("#656aed"));
-                                measurement_size_S.setBackground(getDrawable(R.drawable.button_background_purple));
+                        size_button_linear_layout.addView(measurement_size_button[i]);
 
-                                measurement_size_M.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_M.setBackground(getDrawable(R.drawable.button_background));
-                                measurement_size_L.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_L.setBackground(getDrawable(R.drawable.button_background));
-                                measurement_size_XL.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_XL.setBackground(getDrawable(R.drawable.button_background));
-
-                                TextView[]  result_item=new TextView[goodsResponses.get(0).getGoodsScmmValues().size()];
-                                TextView[]  result_distance=new TextView[goodsResponses.get(0).getGoodsScmmValues().size()];
-                                TextView[]  result_cm=new TextView[goodsResponses.get(0).getGoodsScmmValues().size()];
-
-                                // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
-                                for (int i = 0; i < goodsResponses.get(0).getGoodsScmmValues().size(); i++) {
-
-                                    result_item[i] = new TextView(getApplicationContext());
-                                    result_distance[i] = new TextView(getApplicationContext());
-                                    result_cm[i] = new TextView(getApplicationContext());
-
-                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                    layoutParams.gravity = Gravity.CENTER;
-
-                                    result_item[i].setLayoutParams(layoutParams);
-                                    result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                    result_item[i].setTextSize(16);
-                                    result_item[i].setText(goodsResponses.get(0).getGoodsScmmValues().get(i).getMeasureItemName() + "\n");
-                                    result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-                                    result_distance[i].setLayoutParams(layoutParams);
-                                    result_distance[i].setTextSize(16);
-                                    result_distance[i].setText(goodsResponses.get(0).getGoodsScmmValues().get(i).getValue().toString()+ "\n");
-                                    result_distance[i].setTextAppearance(BOLD);
-                                    result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-                                    result_cm[i].setLayoutParams(layoutParams);
-                                    result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                    result_cm[i].setTextSize(16);
-                                    result_cm[i].setText("cm\n");
-                                    result_cm[i].setTextColor(Color.parseColor("#777777"));
-
-                                    measurement_result_item.addView(result_item[i]);
-                                    measurement_result_distance.addView(result_distance[i]);
-                                    measurement_result_cm.addView(result_cm[i]);
-                                }
-
-
-                            }
-                        });
-                    }
-
-                    if(goodsResponses.size()>=2) {
-                        measurement_size_M.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {  // M를 클릭했을 때 버튼 이벤트 처리
-                                measurement_result_item.removeAllViews();
-                                measurement_result_distance.removeAllViews();
-                                measurement_result_cm.removeAllViews();
-
-                                measurement_size_M.setTextColor(Color.parseColor("#656aed"));
-                                measurement_size_M.setBackground(getDrawable(R.drawable.button_background_purple));
-
-                                measurement_size_S.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_S.setBackground(getDrawable(R.drawable.button_background));
-                                measurement_size_L.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_L.setBackground(getDrawable(R.drawable.button_background));
-                                measurement_size_XL.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_XL.setBackground(getDrawable(R.drawable.button_background));
-
-                                TextView[]  result_item=new TextView[goodsResponses.get(1).getGoodsScmmValues().size()];
-                                TextView[]  result_distance=new TextView[goodsResponses.get(1).getGoodsScmmValues().size()];
-                                TextView[]  result_cm=new TextView[goodsResponses.get(1).getGoodsScmmValues().size()];
-
-                                // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
-                                for (int i = 0; i < goodsResponses.get(1).getGoodsScmmValues().size(); i++) {
-
-                                    result_item[i] = new TextView(getApplicationContext());
-                                    result_distance[i] = new TextView(getApplicationContext());
-                                    result_cm[i] = new TextView(getApplicationContext());
-
-                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                    layoutParams.gravity = Gravity.CENTER;
-
-                                    result_item[i].setLayoutParams(layoutParams);
-                                    result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                    result_item[i].setTextSize(16);
-                                    result_item[i].setText(goodsResponses.get(1).getGoodsScmmValues().get(i).getMeasureItemName() + "\n");
-                                    result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-                                    result_distance[i].setLayoutParams(layoutParams);
-                                    result_distance[i].setTextSize(16);
-                                    result_distance[i].setText(goodsResponses.get(1).getGoodsScmmValues().get(i).getValue().toString()+ "\n");
-                                    result_distance[i].setTextAppearance(BOLD);
-                                    result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-                                    result_cm[i].setLayoutParams(layoutParams);
-                                    result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                    result_cm[i].setTextSize(16);
-                                    result_cm[i].setText("cm\n");
-                                    result_cm[i].setTextColor(Color.parseColor("#777777"));
-
-                                    measurement_result_item.addView(result_item[i]);
-                                    measurement_result_distance.addView(result_distance[i]);
-                                    measurement_result_cm.addView(result_cm[i]);
-                                }
-                            }
-                        });
-                    }
-
-                    if(goodsResponses.size()>=3) {
-                        measurement_size_L.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {  // L를 클릭했을 때 버튼 이벤트 처리
-                                measurement_result_item.removeAllViews();
-                                measurement_result_distance.removeAllViews();
-                                measurement_result_cm.removeAllViews();
-
-                                measurement_size_L.setTextColor(Color.parseColor("#656aed"));
-                                measurement_size_L.setBackground(getDrawable(R.drawable.button_background_purple));
-
-                                measurement_size_M.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_M.setBackground(getDrawable(R.drawable.button_background));
-                                measurement_size_S.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_S.setBackground(getDrawable(R.drawable.button_background));
-                                measurement_size_XL.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_XL.setBackground(getDrawable(R.drawable.button_background));
-
-                                TextView[]  result_item=new TextView[goodsResponses.get(2).getGoodsScmmValues().size()];
-                                TextView[]  result_distance=new TextView[goodsResponses.get(2).getGoodsScmmValues().size()];
-                                TextView[]  result_cm=new TextView[goodsResponses.get(2).getGoodsScmmValues().size()];
-
-                                // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
-                                for (int i = 0; i < goodsResponses.get(2).getGoodsScmmValues().size(); i++) {
-
-                                    result_item[i] = new TextView(getApplicationContext());
-                                    result_distance[i] = new TextView(getApplicationContext());
-                                    result_cm[i] = new TextView(getApplicationContext());
-
-                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                    layoutParams.gravity = Gravity.CENTER;
-
-                                    result_item[i].setLayoutParams(layoutParams);
-                                    result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                    result_item[i].setTextSize(16);
-                                    result_item[i].setText(goodsResponses.get(2).getGoodsScmmValues().get(i).getMeasureItemName() + "\n");
-                                    result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-                                    result_distance[i].setLayoutParams(layoutParams);
-                                    result_distance[i].setTextSize(16);
-                                    result_distance[i].setText(goodsResponses.get(2).getGoodsScmmValues().get(i).getValue().toString()+ "\n");
-                                    result_distance[i].setTextAppearance(BOLD);
-                                    result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-                                    result_cm[i].setLayoutParams(layoutParams);
-                                    result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                    result_cm[i].setTextSize(16);
-                                    result_cm[i].setText("cm\n");
-                                    result_cm[i].setTextColor(Color.parseColor("#777777"));
-
-                                    measurement_result_item.addView(result_item[i]);
-                                    measurement_result_distance.addView(result_distance[i]);
-                                    measurement_result_cm.addView(result_cm[i]);
-                                }
-                            }
-                        });
-                    }
-
-                    if(goodsResponses.size()>=4) {
-                        measurement_size_XL.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {  // XL를 클릭했을 때 버튼 이벤트 처리
-                                measurement_result_item.removeAllViews();
-                                measurement_result_distance.removeAllViews();
-                                measurement_result_cm.removeAllViews();
-
-                                measurement_size_XL.setTextColor(Color.parseColor("#656aed"));
-                                measurement_size_XL.setBackground(getDrawable(R.drawable.button_background_purple));
-
-                                measurement_size_M.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_M.setBackground(getDrawable(R.drawable.button_background));
-                                measurement_size_L.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_L.setBackground(getDrawable(R.drawable.button_background));
-                                measurement_size_S.setTextColor(Color.parseColor("#dddddd"));
-                                measurement_size_S.setBackground(getDrawable(R.drawable.button_background));
-
-                                TextView[]  result_item=new TextView[goodsResponses.get(3).getGoodsScmmValues().size()];
-                                TextView[]  result_distance=new TextView[goodsResponses.get(3).getGoodsScmmValues().size()];
-                                TextView[]  result_cm=new TextView[goodsResponses.get(3).getGoodsScmmValues().size()];
-
-                                // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
-                                for (int i = 0; i < goodsResponses.get(3).getGoodsScmmValues().size(); i++) {
-
-                                    result_item[i] = new TextView(getApplicationContext());
-                                    result_distance[i] = new TextView(getApplicationContext());
-                                    result_cm[i] = new TextView(getApplicationContext());
-
-                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                    layoutParams.gravity = Gravity.CENTER;
-
-                                    result_item[i].setLayoutParams(layoutParams);
-                                    result_item[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                    result_item[i].setTextSize(16);
-                                    result_item[i].setText(goodsResponses.get(3).getGoodsScmmValues().get(i).getMeasureItemName() + "\n");
-                                    result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-                                    result_distance[i].setLayoutParams(layoutParams);
-                                    result_distance[i].setTextSize(16);
-                                    result_distance[i].setText(goodsResponses.get(3).getGoodsScmmValues().get(i).getValue().toString()+ "\n");
-                                    result_distance[i].setTextAppearance(BOLD);
-                                    result_distance[i].setTextColor(Color.parseColor("#1d1d1d"));
-
-                                    result_cm[i].setLayoutParams(layoutParams);
-                                    result_cm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                    result_cm[i].setTextSize(16);
-                                    result_cm[i].setText("cm\n");
-                                    result_cm[i].setTextColor(Color.parseColor("#777777"));
-
-                                    measurement_result_item.addView(result_item[i]);
-                                    measurement_result_distance.addView(result_distance[i]);
-                                    measurement_result_cm.addView(result_cm[i]);
-                                }
-                            }
-                        });
+                        size_button_onclick(goodsResponses,i,goodsResponses.size());
                     }
 
                 }else if(response.code()==401){ // 로그인 세션이 완료되었을 때
@@ -440,6 +215,58 @@ public class ItemMeasurementActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ItemSizeInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void size_button_onclick(List<GoodsResponses> goodsResponses,int num,int size){
+        measurement_size_button[num].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                measurement_size_button[num].setTextColor(Color.parseColor("#656aed"));
+                measurement_size_button[num].setBackground(getDrawable(R.drawable.button_background_purple));
+
+                measurement_result_item.removeAllViews();
+                measurement_result_distance.removeAllViews();
+                measurement_result_cm.removeAllViews();
+
+                TextView[]  result_item=new TextView[goodsResponses.get(num).getGoodsScmmValues().size()];
+                TextView[]  result_distance=new TextView[goodsResponses.get(num).getGoodsScmmValues().size()];
+                TextView[]  result_cm=new TextView[goodsResponses.get(num).getGoodsScmmValues().size()];
+
+                // 받아온 결과값을 화면에 예쁘게 뿌려주는 작업
+                for (int j = 0; j < goodsResponses.get(num).getGoodsScmmValues().size(); j++) {
+
+                    result_item[j] = new TextView(getApplicationContext());
+                    result_distance[j] = new TextView(getApplicationContext());
+                    result_cm[j] = new TextView(getApplicationContext());
+
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    layoutParams.gravity = Gravity.CENTER;
+
+                    result_item[j].setLayoutParams(layoutParams);
+                    result_item[j].setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    result_item[j].setTextSize(16);
+                    result_item[j].setText(goodsResponses.get(num).getGoodsScmmValues().get(j).getMeasureItemName() + "\n");
+                    result_item[j].setTextColor(Color.parseColor("#1d1d1d"));
+
+                    result_distance[j].setLayoutParams(layoutParams);
+                    result_distance[j].setTextSize(16);
+                    result_distance[j].setText(goodsResponses.get(num).getGoodsScmmValues().get(j).getValue().toString()+ "\n");
+                    result_distance[j].setTextAppearance(BOLD);
+                    result_distance[j].setTextColor(Color.parseColor("#1d1d1d"));
+
+                    result_cm[j].setLayoutParams(layoutParams);
+                    result_cm[j].setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    result_cm[j].setTextSize(16);
+                    result_cm[j].setText("cm\n");
+                    result_cm[j].setTextColor(Color.parseColor("#777777"));
+
+                    measurement_result_item.addView(result_item[j]);
+                    measurement_result_distance.addView(result_distance[j]);
+                    measurement_result_cm.addView(result_cm[j]);
+                }
 
             }
         });

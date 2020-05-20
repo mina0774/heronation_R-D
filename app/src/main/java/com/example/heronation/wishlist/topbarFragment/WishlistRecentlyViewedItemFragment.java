@@ -52,10 +52,6 @@ public class WishlistRecentlyViewedItemFragment extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RecentlyViewedItem",MODE_PRIVATE);
 
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString("items",null);
-        editor.commit();
-
         if(sharedPreferences.getString("items", null)==null||sharedPreferences.getString("items", null).equals("{}")) { // 최근 본 상품이 없을 때
             recycler_view_recently_viewed_item.setVisibility(View.GONE);
             have_not_recently_viewed_item.setVisibility(VISIBLE);

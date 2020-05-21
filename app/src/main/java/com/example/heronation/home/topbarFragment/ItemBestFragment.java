@@ -162,15 +162,20 @@ public class ItemBestFragment extends Fragment {
          *  여기서 카테고리 이름이나, 이미지 변경하면 됨
          */
         addItem(getResources().getDrawable(R.drawable.ic_item_all),"전체");
-        addItem(getResources().getDrawable(R.drawable.ic_all_tshirts),"상의");
-        addItem(getResources().getDrawable(R.drawable.ic_all_pants),"하의");
-        addItem(getResources().getDrawable(R.drawable.ic_all_outer),"아우터");
-        addItem(getResources().getDrawable(R.drawable.ic_all_onepiece),"원피스");
-        addItem(getResources().getDrawable(R.drawable.ic_all_skirt),"스커트");
-        addItem(getResources().getDrawable(R.drawable.ic_all_shoes),"슈즈");
-        addItem(getResources().getDrawable(R.drawable.ic_all_bag),"가방");
-        addItem(getResources().getDrawable(R.drawable.ic_all_acc),"액세서리");
-        addItem(getResources().getDrawable(R.drawable.ic_all_socks),"패션소품");
+        addItem(getResources().getDrawable(R.drawable.img_tshirt),"티셔츠/맨투맨");
+        addItem(getResources().getDrawable(R.drawable.img_cardigan),"가디건");
+        addItem(getResources().getDrawable(R.drawable.img_coat),"코트");
+        addItem(getResources().getDrawable(R.drawable.img_jacket),"자켓");
+        addItem(getResources().getDrawable(R.drawable.img_shirt),"셔츠/남방");
+        addItem(getResources().getDrawable(R.drawable.img_blouse),"블라우스");
+        addItem(getResources().getDrawable(R.drawable.img_padding),"패딩/점퍼");
+        addItem(getResources().getDrawable(R.drawable.img_vest),"조끼/베스트");
+        addItem(getResources().getDrawable(R.drawable.img_hood),"후드");
+        addItem(getResources().getDrawable(R.drawable.img_sleeveless),"슬리브리스");
+        addItem(getResources().getDrawable(R.drawable.img_onepiece),"원피스");
+        addItem(getResources().getDrawable(R.drawable.img_pants),"팬츠/데님팬츠");
+        addItem(getResources().getDrawable(R.drawable.img_short_pants),"숏팬츠");
+        addItem(getResources().getDrawable(R.drawable.img_skirt),"스커트");
     }
 
     public void addItem(Drawable icon, String name){

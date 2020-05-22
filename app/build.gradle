@@ -71,4 +71,11 @@ dependencies {
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+
+    // 카카오 로그인
+    implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.27.0'
+    // 카카오톡
+    implementation group: 'com.kakao.sdk', name: 'kakaotalk', version: '1.27.0'
+    // 카카오링크
+    implementation group: 'com.kakao.sdk', name: 'kakaolink', version: '1.27.0'
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +16,14 @@ import com.example.heronation.R;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
+import java.util.Set;
+
 import okhttp3.Credentials;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class IntroActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,9 @@ public class IntroActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(IntroActivity.this,MainActivity.class);
                         intent.putExtra("access_token",userLoginInfo.getAccess_token());
+                        if (getIntent().getData() != null) {
+                            intent.putExtra("kakao_share_data",getIntent().getData().toString());
+                        }
                         startActivity(intent);
                         finish();
                     }

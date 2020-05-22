@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.topbarFragment.ItemAiFragment;
@@ -45,6 +46,8 @@ import com.example.heronation.wishlist.topbarFragment.WishlistItemFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistRecentlyViewedItemFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.net.URI;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -129,6 +132,19 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         mainActivity=this;
         access_token = getIntent().getStringExtra("access_token");
+
+        // 카카오 공유를 통해 들어왔을 경우
+        if (getIntent().getStringExtra("kakao_share_data") != null) {
+            Uri uri= Uri.parse(getIntent().getStringExtra("kakao_share_data"));
+            Intent intent=new Intent(MainActivity.this, ItemDetailActivity.class);
+            intent.putExtra("item_id", uri.getQueryParameter("item_id"));
+            intent.putExtra("item_image", uri.getQueryParameter("item_image"));
+            intent.putExtra("item_name", uri.getQueryParameter("item_name"));
+            intent.putExtra("item_price", uri.getQueryParameter("item_price"));
+            intent.putExtra("item_subcategory", uri.getQueryParameter("item_subcategory"));
+            intent.putExtra("item_url", uri.getQueryParameter("item_url"));
+            startActivity(intent);
+        }
 
         backPressCloseHandler=new BackPressCloseHandler(this);
         /* BottomNavigation view를 선언해주고, bottomNavigationView의 객체를 생성한 후,

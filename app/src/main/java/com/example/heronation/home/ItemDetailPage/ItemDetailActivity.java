@@ -4,22 +4,38 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.heronation.R;
 import com.example.heronation.home.dataClass.ItemSizeInfo;
 import com.example.heronation.home.dataClass.RecentlyViewedItem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kakao.kakaolink.v2.KakaoLinkResponse;
+import com.kakao.kakaolink.v2.KakaoLinkService;
+import com.kakao.message.template.ButtonObject;
+import com.kakao.message.template.ContentObject;
+import com.kakao.message.template.FeedTemplate;
+import com.kakao.message.template.LinkObject;
+import com.kakao.network.ErrorResult;
+import com.kakao.network.callback.ResponseCallback;
+import com.kakao.util.helper.log.Logger;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +43,7 @@ import butterknife.ButterKnife;
 public class ItemDetailActivity extends AppCompatActivity {
     @BindView(R.id.item_detail_close_button) ImageButton item_detail_close_button;
     @BindView(R.id.item_detail_size_button) ImageButton item_detail_size_button;
+    @BindView(R.id.item_detail_share_button) ImageButton item_detail_share_button;
     @BindView(R.id.webview) WebView webView;
 
     private String item_id="";
@@ -41,19 +58,24 @@ public class ItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         ButterKnife.bind(this);
-
-        item_id=getIntent().getStringExtra("item_id");
-        item_image=getIntent().getStringExtra("item_image");
-        item_name=getIntent().getStringExtra("item_name");
-        if(getIntent().hasExtra("item_price")) {
+        if (getIntent().hasExtra("item_id")) {
+            item_id = getIntent().getStringExtra("item_id");
+        }
+        if (getIntent().hasExtra("item_image")) {
+            item_image = getIntent().getStringExtra("item_image");
+        }
+        if (getIntent().hasExtra("item_name")) {
+            item_name = getIntent().getStringExtra("item_name");
+        }
+        if (getIntent().hasExtra("item_price")) {
             item_price = getIntent().getStringExtra("item_price");
         }
-        if(getIntent().hasExtra("item_subcategory")){
-            item_subcategory=getIntent().getStringExtra("item_subcategory");
+        if (getIntent().hasExtra("item_subcategory")) {
+            item_subcategory = getIntent().getStringExtra("item_subcategory");
         }
-        if(getIntent().hasExtra("item_url")){
-            item_url=getIntent().getStringExtra("item_url");
-            if(!item_url.contains("http")) {
+        if (getIntent().hasExtra("item_url")) {
+            item_url = getIntent().getStringExtra("item_url");
+            if (!item_url.contains("http")) {
                 item_url = "http://" + item_url;
             }
             webView.setWebViewClient(new WebViewClient());
@@ -110,7 +132,42 @@ public class ItemDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 공유 버튼을 눌렀을 때
+        item_detail_share_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareKakao();
+            }
+        });
     }
 
+    public void shareKakao(){
+        FeedTemplate params = FeedTemplate
+                .newBuilder(ContentObject.newBuilder("히어로네이션",
+                        item_image,
+                        LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
+                                .setMobileWebUrl("https://developers.kakao.com").build())
+                        .setDescrption(item_name)
+                        .build())
+                .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
+                        .setWebUrl("https://developers.kakao.com")
+                        .setMobileWebUrl("https://developers.kakao.com")
+                        .setAndroidExecutionParams("item_id="+item_id+"&item_image="+item_image+"&item_name="+item_name+"&item_price="+item_price+"&item_subcategory="+item_subcategory+"&item_url="+item_url+"")
+                        .setIosExecutionParams("key1=value1")
+                        .build()))
+                .build();
+
+        KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback<KakaoLinkResponse>() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                Toast.makeText(getApplicationContext(),"카카오톡을 다운받거나 업데이트해주세요.",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(KakaoLinkResponse result) {
+            }
+        });
+    }
 
 }

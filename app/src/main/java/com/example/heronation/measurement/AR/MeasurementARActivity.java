@@ -232,7 +232,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                         @Override
                         public void run() {
                             // 측정 항목에 해당하는 anchor 거리 설정, 측정 항목 설정
-                            distanceTextview.setText(String.format(Locale.getDefault(),"%d",Math.round(measurement_items_distance[measurement_count]*100)+"cm"));
+                            distanceTextview.setText(String.format(Locale.getDefault(),"%d",Math.round(measurement_items_distance[measurement_count]*100))+"cm");
                             measureItemTextview.setText(MeasurementArInfoActivity.Measure_item.get(measurement_count));
                         }
                     });
@@ -278,7 +278,7 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
                         @Override
                         public void run() {
                             // 측정 항목에 해당하는 anchor 거리 설정, 측정 항목 설정
-                            distanceTextview.setText(String.format(Locale.getDefault(),"%d",Math.round(measurement_items_distance[measurement_count]*100)+"cm"));
+                            distanceTextview.setText(String.format(Locale.getDefault(),"%d",Math.round(measurement_items_distance[measurement_count]*100))+"cm");
                             measureItemTextview.setText(MeasurementArInfoActivity.Measure_item.get(measurement_count));
                             nowTouchingPointIndex=DEFAULT_VALUE;
                             outOfRange=0;

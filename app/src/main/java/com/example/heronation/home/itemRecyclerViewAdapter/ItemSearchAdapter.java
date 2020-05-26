@@ -21,6 +21,8 @@ import com.example.heronation.R;
 import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
 import com.example.heronation.home.dataClass.Content;
 import com.example.heronation.home.dataClass.SearchItemInfo;
+import com.example.heronation.home.topbarFragment.ItemBestFragment;
+import com.example.heronation.home.topbarFragment.ItemHomeFragment;
 import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
@@ -98,9 +100,9 @@ public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.Vi
                     holder.isSongLikedClicked = false;
                     DeleteItem(itemList.get(holder.getAdapterPosition()).getId());
                 }
-
             }
         });
+
     }
 
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.
@@ -218,4 +220,5 @@ public class ItemSearchAdapter extends RecyclerView.Adapter<ItemSearchAdapter.Vi
             });
         }
     }
+
 }

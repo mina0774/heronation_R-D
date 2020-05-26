@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,19 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.heronation.adapter.bannerAdapter.bannerAdapter;
-import com.example.heronation.home.ItemSearchActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemStyleVerticalAdapter;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ItemContent;
-import com.example.heronation.home.itemRecyclerViewAdapter.ItemVerticalAdapter;
 import com.example.heronation.R;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
 import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
-import com.example.heronation.login_register.loginPageActivity;
 import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
-import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemInfo;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
 
 import java.util.ArrayList;

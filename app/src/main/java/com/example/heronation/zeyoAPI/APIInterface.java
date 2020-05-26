@@ -308,4 +308,15 @@ public interface APIInterface {
                                                         @Header("Accept") String accept);
     }
 
+    /* 카테고리별 아이템 리스트 받아오기 */
+    public interface ItemSortByCategoryService{
+        @GET("api/items/search")
+        retrofit2.Call<SearchItemInfo> ItemInfo(@Query("page") Integer page,
+                                                  @Query("size") Integer size,
+                                                  @Query("sort") String sort,
+                                                  @Query("subCategoryId") Integer subCategoryId,
+                                                  @Header("authorization") String authorization,
+                                                  @Header("Accept") String accept);
+    }
+
 }

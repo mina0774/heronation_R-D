@@ -65,7 +65,11 @@ public class ItemBestCategoryAdapter extends RecyclerView.Adapter<ItemBestCatego
                 @Override
                 public void onClick(View v) {
                     Log.d("position", getAdapterPosition()+"");
-                    ItemBestFragment.item_recyclerView.scrollToPosition(getAdapterPosition());
+                    if(getAdapterPosition()==0){
+                        ItemBestFragment.GetItemInfo(null);
+                    }else {
+                        ItemBestFragment.GetItemInfo(getAdapterPosition() + 1);
+                    }
                 }
             });
         }

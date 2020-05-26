@@ -1,21 +1,22 @@
 package com.example.heronation.home.dataClass;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchItemInfo {
 
-    private List<Content> content = null;
+    private ArrayList<Content> content = null;
     private Integer totalPages;
     private Integer totalElements;
     private Integer number;
     private Integer size;
 
-    public List<Content> getContent() {
+    public ArrayList<Content> getContent() {
         return content;
     }
 
-    public void setContent(List<Content> content) {
+    public void setContent(ArrayList<Content> content) {
         this.content = content;
     }
 

@@ -16,11 +16,15 @@ import android.widget.Toast;
 
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.heronation.adapter.bannerAdapter.bannerAdapter;
+import com.example.heronation.home.dataClass.Content;
+import com.example.heronation.home.dataClass.SearchItemInfo;
+import com.example.heronation.home.itemRecyclerViewAdapter.ItemSearchAdapter;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemStyleVerticalAdapter;
 import com.example.heronation.home.ItemSearchActivity;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.StyleRecommendation;
@@ -33,6 +37,7 @@ import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +48,7 @@ import retrofit2.Response;
 
 public class ItemHomeFragment extends Fragment {
     @BindView(R.id.item_home_recyclerViewVertical1) RecyclerView item_recyclerView;
+    @BindView(R.id.item_home_best_recyclerView) RecyclerView item_home_best_recyclerView;
     @BindView(R.id.nested_item_home) NestedScrollView nested_item_home;
 
     /* 필터 버튼 */
@@ -58,8 +64,10 @@ public class ItemHomeFragment extends Fragment {
     @BindView(R.id.have_no_user_info) TextView have_no_user_info;
     //아이템들의 묶음
     private ArrayList<ShopItemPackage> item_list;
+    public static List<Content> item_best_list;
     /* 아이템 수평 리스트 담는 수직 어댑터*/
     private ItemStyleVerticalAdapter verticalAdapter;
+    private static ItemSearchAdapter itemSearchAdapter;
 
     public static long startTime;
     private Button log;
@@ -95,8 +103,15 @@ public class ItemHomeFragment extends Fragment {
         verticalAdapter=new ItemStyleVerticalAdapter(item_list,getActivity());
         item_recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         item_recyclerView.setAdapter(verticalAdapter);
-        loadItems();
 
+        /* 인기 상품 아이템 리스트 */
+        item_best_list=new ArrayList<>();
+        item_home_best_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
+        item_home_best_recyclerView.setPadding(50,0,0,0);
+        itemSearchAdapter=new ItemSearchAdapter(item_best_list,getActivity());
+        item_home_best_recyclerView.setAdapter(itemSearchAdapter);
+
+        loadItems();
 
         /*  검색창 클릭했을 때, 아이템 검색 액티비티로 이동 */
         search_item.setOnClickListener(new View.OnClickListener() {
@@ -228,38 +243,31 @@ public class ItemHomeFragment extends Fragment {
         });
     }
 
-    /*인기 상품*/
-    public void GetItemInfo(String package_name) {
-        String authorization = "bearer "+MainActivity.access_token;
+    /*Item의 정보를 얻는 함수*/
+    public void GetItemInfo(Integer subCategoryId) {
+        String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
         String accept = "application/json";
-
-        APIInterface.BodyRecommendationService itemInfoService = ServiceGenerator.createService(APIInterface.BodyRecommendationService.class);
-        //사용자 정보 받아오기
-        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(authorization, accept); //사용자 정보 받아오기
-        request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
+        APIInterface.ItemSortByCategoryService itemInfoService = ServiceGenerator.createService(APIInterface.ItemSortByCategoryService.class);
+        Call<SearchItemInfo> request = itemInfoService.ItemInfo(1,20,"hit,desc",subCategoryId, authorization, accept);
+        request.enqueue(new Callback<SearchItemInfo>() {
             @Override
-            public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
-                System.out.println("Response" + response.code());
+            public void onResponse(Call<SearchItemInfo> call, Response<SearchItemInfo> response) {
                 if(response.code()==200) {
-                    //아이템의 데이터를 받는 리스트
-                    ArrayList<StyleRecommendation> shopItemInfo = response.body();
-                    item_list.add(new ShopItemPackage(package_name,shopItemInfo));
-                    verticalAdapter.notifyItemChanged(3);
-                    if(item_list.size()==0){
-                        have_no_user_info.setVisibility(View.VISIBLE);
-                    }else if(item_list.size()!=0){
-                        have_no_user_info.setVisibility(View.GONE);
+                    SearchItemInfo shopItemInfo = response.body();
+                    /* Shop 목록을 생성함 */
+                    for(int i = 0; i<shopItemInfo.getContent().size(); i++){
+                        item_best_list.add(shopItemInfo.getContent().get(i));
                     }
-                }else if(response.code()==401){
-                    backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
-                    Intent intent=new Intent(getActivity(), IntroActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                 }
+                itemSearchAdapter.notifyDataSetChanged();
+                // 시간 측정
+                long endTime=System.nanoTime();
+                String log="elapsed time: "+(double)(endTime- ItemBestFragment.startTime)/1000000000.0;
+                ItemBestFragment.log_textview.setText(log);
             }
 
             @Override
-            public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
+            public void onFailure(Call<SearchItemInfo> call, Throwable t) {
                 System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
@@ -320,6 +328,8 @@ public class ItemHomeFragment extends Fragment {
         GetItemInfoBody("사이즈 추천");
         GetItemInfoOther("비슷한 스타일 유저의 추천");
         GetUserInfo();
+
+        GetItemInfo(null);
     }
 
     public interface OnFragmentInteractionListener {

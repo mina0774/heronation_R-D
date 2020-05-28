@@ -52,7 +52,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private String item_price="-";
     private String item_subcategory="";
     private String item_url="";
-
+    private String brand="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

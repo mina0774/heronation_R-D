@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("item_name",getIntent().getStringExtra("item_name"));
             intent.putExtra("item_price", getIntent().getStringExtra("item_price"));
             intent.putExtra("item_url", getIntent().getStringExtra("item_url"));
+            intent.putExtra("item_subcateogry",getIntent().getStringExtra("item_subcategory"));
             startActivity(intent);
         }
 

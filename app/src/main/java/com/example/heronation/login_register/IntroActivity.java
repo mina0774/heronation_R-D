@@ -79,6 +79,7 @@ public class IntroActivity extends AppCompatActivity {
                                 intent.putExtra("item_name", bundle.get("item_name").toString());
                                 intent.putExtra("item_price", bundle.get("item_price").toString());
                                 intent.putExtra("item_url", bundle.get("item_url").toString());
+                                intent.putExtra("item_subcateogry",bundle.get("item_subcategory").toString());
                             }
                         }
                         startActivity(intent);

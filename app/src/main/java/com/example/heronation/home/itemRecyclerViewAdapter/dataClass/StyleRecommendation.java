@@ -18,7 +18,9 @@ public class StyleRecommendation {
     private String genderAndAgeGroup;
     private String partKind;
     private String mensurations;
-    private String url; // 변경될 수 있음
+    private String url;
+    private String gender;
+    private String brand;
 
     public Integer getTargetStyleTagId() {
         return targetStyleTagId;
@@ -162,5 +164,21 @@ public class StyleRecommendation {
 
     public void setItemUrl(String itemUrl) {
         this.url = itemUrl;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }

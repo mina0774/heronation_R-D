@@ -12,6 +12,7 @@ public class Content {
     private String url;
     private String gender;
     private String createDt;
+    private String subCategoryId;
 
     public Integer getId() {
         return id;
@@ -91,5 +92,14 @@ public class Content {
 
     public void setCreateDt(String createDt) {
         this.createDt = createDt;
+    }
+
+
+    public String getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(String subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 }

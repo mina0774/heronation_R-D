@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ServiceGenerator {
-    private static final String URL = "http://rest.production.zeyo.co.kr/"; // 기본 BASE URL
+    private static final String URL = "https://restc.zeyo.co.kr/"; // 기본 BASE URL
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     //baseUrl은 어떤 서버로 네트워크 통신을 요청할 것인지에 대한 설정

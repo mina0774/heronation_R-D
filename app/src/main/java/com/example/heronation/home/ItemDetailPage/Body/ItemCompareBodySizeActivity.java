@@ -112,13 +112,10 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
 
                         measurement_size_button[i]=new Button(getApplicationContext());
                         measurement_size_button[i].setLayoutParams(lp);
-                        if(i==0){
-                            measurement_size_button[i].setTextColor(Color.parseColor("#656aed"));
-                            measurement_size_button[i].setBackground(getDrawable(R.drawable.button_background_purple));
-                        }else {
+
                             measurement_size_button[i].setTextColor(Color.parseColor("#dddddd"));
                             measurement_size_button[i].setBackground(getDrawable(R.drawable.button_background));
-                        }
+
                         measurement_size_button[i].setTextSize(11);
                         measurement_size_button[i].setText(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getSizeOptionName());
                         measurement_size_button[i].setTextAppearance(BOLD);

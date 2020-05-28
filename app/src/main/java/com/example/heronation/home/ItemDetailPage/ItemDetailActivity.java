@@ -78,6 +78,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             if (!item_url.contains("http")) {
                 item_url = "http://" + item_url;
             }
+            Log.d("url",item_url);
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.loadUrl(item_url);

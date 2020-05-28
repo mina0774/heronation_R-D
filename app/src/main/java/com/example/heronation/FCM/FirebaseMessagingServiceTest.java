@@ -49,8 +49,8 @@ public class FirebaseMessagingServiceTest extends FirebaseMessagingService {
             String item_id=remoteMessage.getData().get("item_id");
             String item_name=remoteMessage.getData().get("item_name");
             String item_image=remoteMessage.getData().get("item_image");
-            String item_price=remoteMessage.getData().get("item_name");
-            String item_url=remoteMessage.getData().get("item_name");
+            String item_price=remoteMessage.getData().get("item_price");
+            String item_url=remoteMessage.getData().get("item_url");
 
             Intent intent;
             intent = new Intent(this, IntroActivity.class);

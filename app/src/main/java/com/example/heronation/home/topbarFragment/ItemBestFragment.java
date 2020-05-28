@@ -49,7 +49,6 @@ public class ItemBestFragment extends Fragment {
     private bannerAdapter bannerAdapter;
     @BindView(R.id.image_view_best) ViewPager viewPager;
 
-
     public static long startTime;
     private Button log;
     public static TextView log_textview;
@@ -64,7 +63,6 @@ public class ItemBestFragment extends Fragment {
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_item_best,container,false);
         ButterKnife.bind(this,rootView);
 
-
         // 시간 측정 관련 로그
         log=rootView.findViewById(R.id.log);
         log_textview=rootView.findViewById(R.id.log_textview);
@@ -74,7 +72,6 @@ public class ItemBestFragment extends Fragment {
                 log_textview.setVisibility(View.VISIBLE);
             }
         });
-
 
         /* 카테고리 리스트에 아이템 추가
          *  여기서 카테고리 이름이나, 이미지 변경하면 됨*/

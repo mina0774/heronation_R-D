@@ -146,6 +146,16 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
+        if(getIntent().getStringExtra("firebase_push")!=null){
+            Intent intent=new Intent(MainActivity.this, ItemDetailActivity.class);
+            intent.putExtra("item_id", getIntent().getStringExtra("item_id"));
+            intent.putExtra("item_image", getIntent().getStringExtra("item_image"));
+            intent.putExtra("item_name",getIntent().getStringExtra("item_name"));
+            intent.putExtra("item_price", getIntent().getStringExtra("item_price"));
+            intent.putExtra("item_url", getIntent().getStringExtra("item_url"));
+            startActivity(intent);
+        }
+
         backPressCloseHandler=new BackPressCloseHandler(this);
         /* BottomNavigation view를 선언해주고, bottomNavigationView의 객체를 생성한 후,
          * bottomNavigationView에 activity_main.xml의 bottomnavigation_menu_bar를 할당해준 후,

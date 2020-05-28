@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.heronation.R;
+import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.main.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -45,14 +46,21 @@ public class FirebaseMessagingServiceTest extends FirebaseMessagingService {
 
             String msgTitle = remoteMessage.getNotification().getTitle();
             String msgBody = remoteMessage.getNotification().getBody();
-            String click_action = remoteMessage.getData().get("click_action"); // 푸시를 보낼 때, 어디로 이동할지
-            String image = remoteMessage.getData().get("image"); // 푸시에 나타낼 이모티콘
+            String item_id=remoteMessage.getData().get("item_id");
+            String item_name=remoteMessage.getData().get("item_name");
+            String item_image=remoteMessage.getData().get("item_image");
+            String item_price=remoteMessage.getData().get("item_name");
+            String item_url=remoteMessage.getData().get("item_name");
 
             Intent intent;
+            intent = new Intent(this, IntroActivity.class);
+            intent.putExtra("firebase_push","firebase_push");
+            intent.putExtra("item_id",item_id);
+            intent.putExtra("item_name",item_name);
+            intent.putExtra("item_image",item_image);
+            intent.putExtra("item_price",item_price);
+            intent.putExtra("item_url",item_url);
 
-            intent = new Intent(this, MainActivity.class);
-            intent.putExtra("click_action", click_action);
-            intent.putExtra("image", image);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 

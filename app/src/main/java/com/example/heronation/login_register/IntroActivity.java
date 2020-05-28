@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
 import com.example.heronation.login_register.dataClass.UserMyInfo;
 import com.example.heronation.main.MainActivity;
@@ -60,6 +61,14 @@ public class IntroActivity extends AppCompatActivity {
                         intent.putExtra("access_token",userLoginInfo.getAccess_token());
                         if (getIntent().getData() != null) {
                             intent.putExtra("kakao_share_data",getIntent().getData().toString());
+                        }
+                        if(getIntent().getStringExtra("firebase_push")!=null){
+                            intent.putExtra("firebase_push","firebase_push");
+                            intent.putExtra("item_id", getIntent().getStringExtra("item_id"));
+                            intent.putExtra("item_image", getIntent().getStringExtra("item_image"));
+                            intent.putExtra("item_name",getIntent().getStringExtra("item_name"));
+                            intent.putExtra("item_price", getIntent().getStringExtra("item_price"));
+                            intent.putExtra("item_url", getIntent().getStringExtra("item_url"));
                         }
                         startActivity(intent);
                         finish();

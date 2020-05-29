@@ -62,6 +62,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
     @BindView(R.id.item_compare_button) Button item_compare_button;
 
     @BindView(R.id.measurement_item_name) TextView measurement_item_name;
+    @BindView(R.id.measurement_brand_name) TextView measurement_brand_name;
     @BindView(R.id.measurement_item_image) ImageView measurement_item_image;
 
     @BindView(R.id.size_button_linear_layout) LinearLayout size_button_linear_layout;
@@ -87,6 +88,9 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         item_image=getIntent().getStringExtra("item_image");
         measurement_item_image.setBackground(new ShapeDrawable(new OvalShape()));
         measurement_item_image.setClipToOutline(true);
+        if(getIntent().hasExtra("brand")){
+            measurement_brand_name.setText(getIntent().getStringExtra("brand"));
+        }
         Glide.with(getApplicationContext()).load(item_image).error(R.drawable.shop_item_example_img_2).crossFade().into(measurement_item_image);
 
         getItemSizeInfo();

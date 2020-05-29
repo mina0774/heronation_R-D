@@ -77,6 +77,7 @@
                     android:textColor="#2f2f30"/>
 
                 <TextView
+                    android:id="@+id/measurement_brand_name"
                     android:layout_marginTop="3.3dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

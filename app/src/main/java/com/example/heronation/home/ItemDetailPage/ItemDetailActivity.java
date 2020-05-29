@@ -53,6 +53,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private String item_subcategory="";
     private String item_url="";
     private String brand="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +74,14 @@ public class ItemDetailActivity extends AppCompatActivity {
         if (getIntent().hasExtra("item_subcategory")) {
             item_subcategory = getIntent().getStringExtra("item_subcategory");
         }
+        if(getIntent().hasExtra("brand")){
+            brand=getIntent().getStringExtra("brand");
+        }
         if (getIntent().hasExtra("item_url")) {
             item_url = getIntent().getStringExtra("item_url");
             if (!item_url.contains("http")) {
                 item_url = "http://" + item_url;
             }
-            Log.d("url",item_url);
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.loadUrl(item_url);
@@ -130,6 +133,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 intent.putExtra("item_image",item_image);
                 intent.putExtra("item_id",item_id);
                 intent.putExtra("item_subcategory",item_subcategory);
+                intent.putExtra("brand",brand);
                 startActivity(intent);
             }
         });
@@ -154,7 +158,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
                         .setWebUrl("https://developers.kakao.com")
                         .setMobileWebUrl("https://developers.kakao.com")
-                        .setAndroidExecutionParams("item_id="+item_id+"&item_image="+item_image+"&item_name="+item_name+"&item_price="+item_price+"&item_subcategory="+item_subcategory+"&item_url="+item_url+"")
+                        .setAndroidExecutionParams("item_id="+item_id+"&item_image="+item_image+"&item_name="+item_name+"&item_price="+item_price+"&item_subcategory="+item_subcategory+"&item_url="+item_url+"&brand="+brand)
                         .setIosExecutionParams("key1=value1")
                         .build()))
                 .build();

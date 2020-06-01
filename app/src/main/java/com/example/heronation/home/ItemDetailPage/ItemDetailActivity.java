@@ -95,9 +95,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         String item_info = "";
         RecentlyViewedItem recentlyViewedItem;
         if(getIntent().hasExtra("item_url")){
-            recentlyViewedItem=new RecentlyViewedItem(item_image, item_id, item_name, item_price, item_url);
+            recentlyViewedItem=new RecentlyViewedItem(item_image, item_id, item_name, item_price, item_subcategory, item_url);
         }else{
-            recentlyViewedItem= new RecentlyViewedItem(item_image, item_id, item_name, item_price);
+            recentlyViewedItem= new RecentlyViewedItem(item_image, item_id, item_name,item_subcategory, item_price);
         }
 
         item_info = gson.toJson(recentlyViewedItem, RecentlyViewedItem.class);

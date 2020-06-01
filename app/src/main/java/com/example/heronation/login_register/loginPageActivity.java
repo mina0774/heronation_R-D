@@ -52,6 +52,7 @@ public class  loginPageActivity extends AppCompatActivity {
     public String topic1="";
     public String topic2="";
     public String topic3="";
+    public String topic4="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,10 +176,10 @@ public class  loginPageActivity extends AppCompatActivity {
                     topic1=userMyInfo.getGender()+"_T_"+shoulder_value;
                     topic2=userMyInfo.getGender()+"_B_"+waist_value;
                     topic3=userMyInfo.getGender()+"_A_"+shoulder_value+"_"+waist_value;
-
                     FirebaseMessaging.getInstance().subscribeToTopic(topic1);
                     FirebaseMessaging.getInstance().subscribeToTopic(topic2);
                     FirebaseMessaging.getInstance().subscribeToTopic(topic3);
+
                 }
             }
 
@@ -186,7 +187,8 @@ public class  loginPageActivity extends AppCompatActivity {
             public void onFailure(Call<UserMyInfo> call, Throwable t) {
             }
         });
-
+        topic4="All";
+        FirebaseMessaging.getInstance().subscribeToTopic(topic4);
     }
 
 }

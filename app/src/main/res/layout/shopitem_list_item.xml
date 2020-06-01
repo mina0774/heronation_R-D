@@ -57,10 +57,10 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:visibility="invisible"
                 android:id="@+id/recycler_view_item_item_id"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:textSize="10sp"
+                android:layout_height="16dp" />
 
 
         </LinearLayout>

@@ -6,20 +6,23 @@ public class RecentlyViewedItem {
     String item_name;
     String item_price;
     String item_url;
+    String item_subcategory;
 
-    public RecentlyViewedItem(String image_url, String item_id, String item_name, String item_price) {
+    public RecentlyViewedItem(String image_url, String item_id, String item_name, String item_price, String item_subcategory) {
         this.image_url = image_url;
         this.item_id = item_id;
         this.item_name = item_name;
         this.item_price = item_price;
+        this.item_subcategory=item_subcategory;
     }
 
-    public RecentlyViewedItem(String image_url, String item_id, String item_name, String item_price, String item_url) {
+    public RecentlyViewedItem(String image_url, String item_id, String item_name, String item_price, String item_subcategory, String item_url) {
         this.image_url = image_url;
         this.item_id = item_id;
         this.item_name = item_name;
         this.item_price = item_price;
         this.item_url = item_url;
+        this.item_subcategory=item_subcategory;
     }
 
     public String getItem_id() {
@@ -60,5 +63,13 @@ public class RecentlyViewedItem {
 
     public void setItem_url(String item_url) {
         this.item_url = item_url;
+    }
+
+    public String getItem_subcategory() {
+        return item_subcategory;
+    }
+
+    public void setItem_subcategory(String item_subcategory) {
+        this.item_subcategory = item_subcategory;
     }
 }

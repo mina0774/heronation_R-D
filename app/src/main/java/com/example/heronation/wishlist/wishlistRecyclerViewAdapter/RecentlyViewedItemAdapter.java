@@ -132,6 +132,9 @@ public class RecentlyViewedItemAdapter extends RecyclerView.Adapter<RecentlyView
                     if(itemList.get(position).getItem_price()!=null) {
                         intent.putExtra("item_price", itemList.get(position).getItem_price());
                     }
+                    if(itemList.get(position).getItem_subcategory()!=null) {
+                        intent.putExtra("item_subcategory", itemList.get(position).getItem_subcategory());
+                    }
                     if(itemList.get(position).getItem_url()!=null) {
                         intent.putExtra("item_url", itemList.get(position).getItem_url());
                     }

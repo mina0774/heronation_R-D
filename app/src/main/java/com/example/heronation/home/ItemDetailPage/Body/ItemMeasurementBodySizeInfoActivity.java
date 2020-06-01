@@ -267,6 +267,15 @@ public class ItemMeasurementBodySizeInfoActivity extends AppCompatActivity {
                 System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
+        FirebaseMessaging.getInstance().subscribeToTopic("All").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("FCM Log", "getInstanceId failed", task.getException());
+                    return;
+                }
+            }
+        });
     }
 
     public void open_panel() {

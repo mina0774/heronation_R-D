@@ -294,8 +294,15 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
 
     // 현재 체형 정보를 바탕으로 topic 구독
     private void subscribeTopic(String access_token){
-
-
+        FirebaseMessaging.getInstance().subscribeToTopic("All").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("FCM Log", "getInstanceId failed", task.getException());
+                    return;
+                }
+            }
+        });
         String authorization="bearer " + access_token;
         String accept="application/json";
         APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);
@@ -340,6 +347,7 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
                             }
                         }
                     });
+
                 }
             }
             @Override
@@ -347,15 +355,7 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
                 System.out.println("error + Connect Server Error is " + t.toString());
             }
         });
-        FirebaseMessaging.getInstance().subscribeToTopic("All").addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (!task.isSuccessful()) {
-                    Log.w("FCM Log", "getInstanceId failed", task.getException());
-                    return;
-                }
-            }
-        });
+
     }
 
     //Toast는 비동기 태스크 내에서 처리할 수 없으므로, 메인 쓰레드 핸들러를 생성하여 toast가 메인쓰레드에서 생성될 수 있도록 처리해준다.

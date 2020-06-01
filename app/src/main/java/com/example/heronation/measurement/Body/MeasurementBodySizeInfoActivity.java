@@ -199,6 +199,15 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
 
     // 현재 체형 정보를 바탕으로 topic 구독
     private void subscribeTopic(String access_token){
+        FirebaseMessaging.getInstance().subscribeToTopic("All").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("FCM Log", "getInstanceId failed", task.getException());
+                    return;
+                }
+            }
+        });
         String authorization="bearer " + access_token;
         String accept="application/json";
         APIInterface.UserInfoService userInfoService= ServiceGenerator.createService(APIInterface.UserInfoService.class);

@@ -157,6 +157,8 @@ public class  loginPageActivity extends AppCompatActivity {
 
     /* 사용자 체형 정보 받아와서 구독하기 */
     public void GetUserInfo(String access_token) {
+        topic4="All";
+        FirebaseMessaging.getInstance().subscribeToTopic(topic4);
         String authorization = "";
         String accept = "application/json";
         authorization = "bearer " + access_token;
@@ -187,8 +189,7 @@ public class  loginPageActivity extends AppCompatActivity {
             public void onFailure(Call<UserMyInfo> call, Throwable t) {
             }
         });
-        topic4="All";
-        FirebaseMessaging.getInstance().subscribeToTopic(topic4);
+
     }
 
 }

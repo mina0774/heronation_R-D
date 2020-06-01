@@ -25,15 +25,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity"></activity>
+        <activity android:name=".login_register.WebViewActivity"></activity>
+        <activity android:name=".home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity" />
         <activity android:name=".measurement.Body.MeasurementBodySizeDetailInfoActivity" />
         <activity android:name=".home.ItemDetailPage.Body.ItemMeasurementBodySizeInfoActivity" />
         <activity android:name=".home.ItemDetailPage.Wardrobe.ItemCompareItemSizeActivity" />
         <activity android:name=".home.ItemDetailPage.Body.ItemCompareBodySizeActivity" />
         <activity android:name=".home.ItemDetailPage.ItemMeasurementActivity" />
-        <activity android:name=".home.ItemDetailPage.ItemDetailActivity">
-
-        </activity>
+        <activity android:name=".home.ItemDetailPage.ItemDetailActivity"></activity>
         <activity android:name=".home.ItemDetailPage.Body.ItemMeasurementBodyActivity" />
         <activity android:name=".measurement.Style.MeasurementStyleActivity" />
         <activity android:name=".measurement.Body.MeasurementBodyActivity" />
@@ -47,20 +46,24 @@
         <activity android:name=".login_register.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name=".login_register.IntroActivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name=".login_register.IntroActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
-            <action android:name="android.intent.action.VIEW"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-            <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
 
-            <data android:scheme="kakao2c3c3e1e74bc93c23fa75e006897cbba"
-                android:host="kakaolink"/>
-        </intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="kakaolink"
+                    android:scheme="kakao2c3c3e1e74bc93c23fa75e006897cbba" />
+            </intent-filter>
         </activity>
         <activity android:name=".login_register.RegisterBodyActivity" />
         <activity android:name=".wishlist.WishlistClosetItemDetailActivity" />
@@ -95,7 +98,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="2c3c3e1e74bc93c23fa75e006897cbba" />

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.heronation.R;
+import com.example.heronation.home.dataClass.Content;
 import com.example.heronation.home.itemRecyclerViewAdapter.dataClass.ShopItemPackage;
 import com.example.heronation.home.topbarFragment.ItemHomeFragment;
 import com.example.heronation.wishlist.topbarFragment.WishlistClosetFragment;
@@ -42,20 +43,11 @@ public class ItemStyleVerticalAdapter extends RecyclerView.Adapter<ItemStyleVert
     /* position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시 */
     @Override
     public void onBindViewHolder(@NonNull ItemStyleVerticalAdapter.VerticalViewHolder holder, int position) {
-        if(position<3) {
             ItemStyleHorizontalAdapter adapter = new ItemStyleHorizontalAdapter(itemList_List.get(position).getShopItems(), context);
             holder.recyclerView.setHasFixedSize(true);
             holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
             holder.recyclerView.setAdapter(adapter);
             holder.packageName.setText(itemList_List.get(position).getPackageName());
-        }else{
-            ItemStyleHorizontalAdapter adapter = new ItemStyleHorizontalAdapter(itemList_List.get(position).getShopItems(), context);
-            holder.recyclerView.setHasFixedSize(true);
-            holder.recyclerView.setLayoutManager(new GridLayoutManager(context,2, GridLayoutManager.VERTICAL,false));
-            holder.recyclerView.setPadding(48,0,0,0);
-            holder.recyclerView.setAdapter(adapter);
-            holder.packageName.setText(itemList_List.get(position).getPackageName());
-        }
 
         // 시간 측정 로그값 나타내기
         long endTime=System.nanoTime();

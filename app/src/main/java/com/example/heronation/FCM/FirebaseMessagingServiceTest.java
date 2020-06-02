@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.heronation.R;
 import com.example.heronation.login_register.IntroActivity;
+import com.example.heronation.login_register.WebViewActivity;
 import com.example.heronation.main.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -46,20 +47,12 @@ public class FirebaseMessagingServiceTest extends FirebaseMessagingService {
 
             String msgTitle = remoteMessage.getNotification().getTitle();
             String msgBody = remoteMessage.getNotification().getBody();
-            String item_id=remoteMessage.getData().get("item_id");
-            String item_name=remoteMessage.getData().get("item_name");
-            String item_image=remoteMessage.getData().get("item_image");
-            String item_price=remoteMessage.getData().get("item_price");
-            String item_url=remoteMessage.getData().get("item_url");
+            String link=remoteMessage.getData().get("link");
 
             Intent intent;
-            intent = new Intent(this, IntroActivity.class);
-            intent.putExtra("firebase_push","firebase_push");
-            intent.putExtra("item_id",item_id);
-            intent.putExtra("item_name",item_name);
-            intent.putExtra("item_image",item_image);
-            intent.putExtra("item_price",item_price);
-            intent.putExtra("item_url",item_url);
+            intent = new Intent(this, WebViewActivity.class);
+            intent.putExtra("link",link);
+
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

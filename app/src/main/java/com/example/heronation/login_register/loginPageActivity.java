@@ -205,7 +205,8 @@ public class  loginPageActivity extends AppCompatActivity {
         // TODO: Implement this method to send token to your app server.
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder().add("Token", token).build();
-        Request request = new Request.Builder().url("http://rnd.zeyo.co.kr/fcm/register_token.php").post(body).build();
+
+        Request request = new Request.Builder().url("https://rnd.zeyo.co.kr/fcm/register_token.php").post(body).build();
 
             new Thread(){
                 public void run(){

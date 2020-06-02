@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,6 +25,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.heronation.adapter.bannerAdapter.bannerAdapter;
 import com.example.heronation.home.dataClass.Content;
 import com.example.heronation.home.dataClass.SearchItemInfo;
+import com.example.heronation.home.itemRecyclerViewAdapter.ItemBestCategoryAdapter;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemSearchAdapter;
 import com.example.heronation.home.itemRecyclerViewAdapter.ItemStyleVerticalAdapter;
 import com.example.heronation.home.ItemSearchActivity;
@@ -74,6 +76,7 @@ public class ItemHomeFragment extends Fragment {
     public static TextView log_textview;
     public static String style_tag_id;
 
+    int page_num=1; // 인기상품을 로드할 페이지 넘버
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -244,11 +247,11 @@ public class ItemHomeFragment extends Fragment {
     }
 
     /*Item의 정보를 얻는 함수*/
-    public void GetItemInfo(Integer subCategoryId) {
+    public void GetItemInfo(Integer subCategoryId,int page_num) {
         String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
         String accept = "application/json";
         APIInterface.ItemSortByCategoryService itemInfoService = ServiceGenerator.createService(APIInterface.ItemSortByCategoryService.class);
-        Call<SearchItemInfo> request = itemInfoService.ItemInfo(1,20,"hit,desc",subCategoryId, authorization, accept);
+        Call<SearchItemInfo> request = itemInfoService.ItemInfo(page_num,10,"hit,desc",subCategoryId, authorization, accept);
         request.enqueue(new Callback<SearchItemInfo>() {
             @Override
             public void onResponse(Call<SearchItemInfo> call, Response<SearchItemInfo> response) {
@@ -260,10 +263,6 @@ public class ItemHomeFragment extends Fragment {
                     }
                 }
                 itemSearchAdapter.notifyDataSetChanged();
-                // 시간 측정
-                long endTime=System.nanoTime();
-                String log="elapsed time: "+(double)(endTime- ItemBestFragment.startTime)/1000000000.0;
-                ItemBestFragment.log_textview.setText(log);
             }
 
             @Override
@@ -329,7 +328,16 @@ public class ItemHomeFragment extends Fragment {
         GetItemInfoOther("비슷한 스타일 유저의 추천");
         GetUserInfo();
 
-        GetItemInfo(null);
+        GetItemInfo(null,1);
+        item_home_best_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                page_num++;
+                if(!item_home_best_recyclerView.canScrollVertically(1)){
+                    GetItemInfo(null,page_num);
+                }
+            }
+        });
     }
 
     public interface OnFragmentInteractionListener {

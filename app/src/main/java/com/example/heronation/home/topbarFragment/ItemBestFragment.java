@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,12 +39,12 @@ import retrofit2.Response;
 
 public class ItemBestFragment extends Fragment {
     @BindView(R.id.item_best_item_category) RecyclerView category_recyclerView;
-    @BindView(R.id.item_best_items) RecyclerView item_recyclerView;
     private ItemBestCategoryAdapter itemBestCategoryAdapter;
     private ArrayList<ItemBestCategory> list;
 
-    private static ItemSearchAdapter itemSearchAdapter;
+    public static ItemSearchAdapter itemSearchAdapter;
     public static List<Content> item_list;
+    public static RecyclerView item_recyclerView;
 
     /* 배너 슬라이딩을 위한 변수 */
     private bannerAdapter bannerAdapter;
@@ -53,6 +54,7 @@ public class ItemBestFragment extends Fragment {
     private Button log;
     public static TextView log_textview;
 
+    int page_num=1; //상품을 로드할 페이지 넘버
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,6 +64,8 @@ public class ItemBestFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView=(ViewGroup)inflater.inflate(R.layout.fragment_item_best,container,false);
         ButterKnife.bind(this,rootView);
+
+        item_recyclerView=rootView.findViewById(R.id.item_best_items);
 
         // 시간 측정 관련 로그
         log=rootView.findViewById(R.id.log);
@@ -91,22 +95,23 @@ public class ItemBestFragment extends Fragment {
         itemSearchAdapter=new ItemSearchAdapter(item_list,getActivity());
         item_recyclerView.setAdapter(itemSearchAdapter);
         // 첫 화면 - 전체
-        GetItemInfo(null);
+        GetItemInfo(null,1);
 
         /* 이미지 슬라이딩을 위해 뷰페이저를 이용했고, 이를 설정해주는 이미지 어댑터를 설정하여 슬라이딩 구현 */
         bannerAdapter =new bannerAdapter(getActivity());
         viewPager.setAdapter(bannerAdapter);
 
+        load_item();
         return rootView;
     }
 
     /*Item의 정보를 얻는 함수*/
-    public static void GetItemInfo(Integer subCategoryId) {
+    public static void GetItemInfo(Integer subCategoryId,int pagenum) {
         String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
         String accept = "application/json";
-        item_list.clear();
+
         APIInterface.ItemSortByCategoryService itemInfoService = ServiceGenerator.createService(APIInterface.ItemSortByCategoryService.class);
-        Call<SearchItemInfo> request = itemInfoService.ItemInfo(1,20,"hit,desc",subCategoryId, authorization, accept);
+        Call<SearchItemInfo> request = itemInfoService.ItemInfo(pagenum,20,"hit,desc",subCategoryId, authorization, accept);
         request.enqueue(new Callback<SearchItemInfo>() {
             @Override
             public void onResponse(Call<SearchItemInfo> call, Response<SearchItemInfo> response) {
@@ -127,6 +132,22 @@ public class ItemBestFragment extends Fragment {
             @Override
             public void onFailure(Call<SearchItemInfo> call, Throwable t) {
                 System.out.println("error + Connect Server Error is " + t.toString());
+            }
+        });
+    }
+
+    public void load_item(){
+        ItemBestFragment.item_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                page_num++;
+                if(!ItemBestFragment.item_recyclerView.canScrollVertically(1)){
+                    if(ItemBestCategoryAdapter.position==0){
+                        ItemBestFragment.GetItemInfo(null,page_num);
+                    }else {
+                        ItemBestFragment.GetItemInfo(ItemBestCategoryAdapter.position + 1,page_num);
+                    }
+                }
             }
         });
     }

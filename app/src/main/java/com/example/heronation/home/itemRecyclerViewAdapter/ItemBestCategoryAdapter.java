@@ -23,6 +23,7 @@ public class ItemBestCategoryAdapter extends RecyclerView.Adapter<ItemBestCatego
 
     private Context context;
     private List<ItemBestCategory> category_list=new ArrayList<>();
+    public static int position;
 
     public ItemBestCategoryAdapter(Context context, List<ItemBestCategory> list) {
         this.context=context;
@@ -65,13 +66,17 @@ public class ItemBestCategoryAdapter extends RecyclerView.Adapter<ItemBestCatego
                 @Override
                 public void onClick(View v) {
                     Log.d("position", getAdapterPosition()+"");
+                    position=getAdapterPosition();
+                    ItemBestFragment.item_list.clear();
+                    ItemBestFragment.itemSearchAdapter.notifyDataSetChanged();
                     if(getAdapterPosition()==0){
-                        ItemBestFragment.GetItemInfo(null);
+                        ItemBestFragment.GetItemInfo(null,1);
                     }else {
-                        ItemBestFragment.GetItemInfo(getAdapterPosition() + 1);
+                        ItemBestFragment.GetItemInfo(getAdapterPosition() + 1,1);
                     }
                 }
             });
+
         }
     }
 

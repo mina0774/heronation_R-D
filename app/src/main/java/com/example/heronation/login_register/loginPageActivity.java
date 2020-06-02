@@ -3,6 +3,7 @@ package com.example.heronation.login_register;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,14 +26,21 @@ import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.login_register.dataClass.UserLoginInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Credentials;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -189,6 +197,25 @@ public class  loginPageActivity extends AppCompatActivity {
             public void onFailure(Call<UserMyInfo> call, Throwable t) {
             }
         });
+
+        sendRegistrationToServer(FirebaseInstanceId.getInstance().getToken());
+    }
+
+    private void sendRegistrationToServer(String token) {
+        // TODO: Implement this method to send token to your app server.
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = new FormBody.Builder().add("Token", token).build();
+        Request request = new Request.Builder().url("http://rnd.zeyo.co.kr/fcm/register_token.php").post(body).build();
+
+            new Thread(){
+                public void run(){
+                    try {
+                        client.newCall(request).execute();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
 
     }
 

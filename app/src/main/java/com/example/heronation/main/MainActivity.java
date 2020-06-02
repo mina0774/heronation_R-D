@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.heronation.R;
 import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
+import com.example.heronation.login_register.WebViewActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 import com.example.heronation.home.topbarFragment.ItemAiFragment;
@@ -146,14 +147,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
-        if(getIntent().getStringExtra("firebase_push")!=null){
-            Intent intent=new Intent(MainActivity.this, ItemDetailActivity.class);
-            intent.putExtra("item_id", getIntent().getStringExtra("item_id"));
-            intent.putExtra("item_image", getIntent().getStringExtra("item_image"));
-            intent.putExtra("item_name",getIntent().getStringExtra("item_name"));
-            intent.putExtra("item_price", getIntent().getStringExtra("item_price"));
-            intent.putExtra("item_url", getIntent().getStringExtra("item_url"));
-            intent.putExtra("item_subcateogry",getIntent().getStringExtra("item_subcategory"));
+        if(getIntent().getStringExtra("link")!=null){
+            Intent intent=new Intent(MainActivity.this, WebViewActivity.class);
+            intent.putExtra("link", getIntent().getStringExtra("link"));
             startActivity(intent);
         }
 

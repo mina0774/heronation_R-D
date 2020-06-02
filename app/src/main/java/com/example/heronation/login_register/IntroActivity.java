@@ -62,26 +62,11 @@ public class IntroActivity extends AppCompatActivity {
                         if (getIntent().getData() != null) {
                             intent.putExtra("kakao_share_data",getIntent().getData().toString());
                         }
-                        if(getIntent().getStringExtra("firebase_push")!=null){
-                            intent.putExtra("firebase_push","firebase_push");
-                            intent.putExtra("item_id", getIntent().getStringExtra("item_id"));
-                            intent.putExtra("item_image", getIntent().getStringExtra("item_image"));
-                            intent.putExtra("item_name",getIntent().getStringExtra("item_name"));
-                            intent.putExtra("item_price", getIntent().getStringExtra("item_price"));
-                            intent.putExtra("item_url", getIntent().getStringExtra("item_url"));
+
+                        if(getIntent().getStringExtra("link")!=null){
+                            Log.d("link",getIntent().getStringExtra("link"));
                         }
-                        if(getIntent().getExtras()!=null){
-                            Bundle bundle=getIntent().getExtras();
-                            if(bundle.get("firebase_push")!=null) {
-                                intent.putExtra("firebase_push", "firebase_push");
-                                intent.putExtra("item_id", bundle.get("item_id").toString());
-                                intent.putExtra("item_image", bundle.get("item_image").toString());
-                                intent.putExtra("item_name", bundle.get("item_name").toString());
-                                intent.putExtra("item_price", bundle.get("item_price").toString());
-                                intent.putExtra("item_url", bundle.get("item_url").toString());
-                                intent.putExtra("item_subcateogry",bundle.get("item_subcategory").toString());
-                            }
-                        }
+
                         startActivity(intent);
                         finish();
                     }

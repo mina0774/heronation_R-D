@@ -25,7 +25,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".login_register.WebViewActivity"></activity>
+        <activity android:name=".login_register.WebViewActivity">
+            <intent-filter>
+                <action android:name=".login_register.WebViewActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity" />
         <activity android:name=".measurement.Body.MeasurementBodySizeDetailInfoActivity" />
         <activity android:name=".home.ItemDetailPage.Body.ItemMeasurementBodySizeInfoActivity" />
@@ -48,11 +53,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name=".login_register.IntroActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

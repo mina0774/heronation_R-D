@@ -43,6 +43,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -270,12 +274,13 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 FirebaseInstanceId.getInstance().deleteInstanceId();
+                                subscribeTopic(MainActivity.access_token);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
                     }).start();
-                    subscribeTopic(MainActivity.access_token);
+
 
                     backgroundThreadShortToast(getApplicationContext(),"체형 정보 변경이 완료되었습니다.");
                     mPopupWindow.dismiss();

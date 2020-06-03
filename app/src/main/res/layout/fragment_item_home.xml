@@ -16,7 +16,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <!--배너 사진 스케일 타입 변경하려면 image_slider.xml에서 변경해야함 -->  ​
 
             <androidx.viewpager.widget.ViewPager

@@ -251,7 +251,7 @@ public class ItemHomeFragment extends Fragment {
         String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
         String accept = "application/json";
         APIInterface.ItemSortByCategoryService itemInfoService = ServiceGenerator.createService(APIInterface.ItemSortByCategoryService.class);
-        Call<SearchItemInfo> request = itemInfoService.ItemInfo(page_num,10,"hit,desc",subCategoryId, authorization, accept);
+        Call<SearchItemInfo> request = itemInfoService.ItemInfo(page_num,60,"hit,desc",subCategoryId, authorization, accept);
         request.enqueue(new Callback<SearchItemInfo>() {
             @Override
             public void onResponse(Call<SearchItemInfo> call, Response<SearchItemInfo> response) {
@@ -263,6 +263,9 @@ public class ItemHomeFragment extends Fragment {
                     }
                 }
                 itemSearchAdapter.notifyDataSetChanged();
+                long endTime=System.nanoTime();
+                String log="elapsed time: "+(double)(endTime- ItemHomeFragment.startTime)/1000000000.0;
+                ItemHomeFragment.log_textview.setText(log);
             }
 
             @Override
@@ -329,15 +332,6 @@ public class ItemHomeFragment extends Fragment {
         GetUserInfo();
 
         GetItemInfo(null,1);
-        item_home_best_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                page_num++;
-                if(!item_home_best_recyclerView.canScrollVertically(1)){
-                    GetItemInfo(null,page_num);
-                }
-            }
-        });
     }
 
     public interface OnFragmentInteractionListener {

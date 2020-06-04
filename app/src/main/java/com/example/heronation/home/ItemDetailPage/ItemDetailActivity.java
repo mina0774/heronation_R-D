@@ -85,6 +85,11 @@ public class ItemDetailActivity extends AppCompatActivity {
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.loadUrl(item_url);
+        }else{
+            item_url="https://rndshop.zeyo.co.kr/shop/itemphp?r=1&it_id="+item_id;
+            webView.setWebViewClient(new WebViewClient());
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.loadUrl(item_url);
         }
 
         /* 최근 본 상품 목록을 만들기 위해 해당 아이템의 정보를 SharedPreferences에 저장함 */

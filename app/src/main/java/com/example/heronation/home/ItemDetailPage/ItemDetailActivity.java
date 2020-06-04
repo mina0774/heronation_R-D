@@ -29,11 +29,7 @@ import com.kakao.message.template.FeedTemplate;
 import com.kakao.message.template.LinkObject;
 import com.kakao.network.ErrorResult;
 import com.kakao.network.callback.ResponseCallback;
-import com.kakao.util.helper.log.Logger;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -77,16 +73,14 @@ public class ItemDetailActivity extends AppCompatActivity {
         if(getIntent().hasExtra("brand")){
             brand=getIntent().getStringExtra("brand");
         }
-        if (getIntent().hasExtra("item_url")) {
-            item_url = getIntent().getStringExtra("item_url");
-            if (!item_url.contains("http")) {
-                item_url = "http://" + item_url;
-            }
+
+        if(getIntent().hasExtra("link")){
+            item_url=getIntent().getStringExtra("link");
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.loadUrl(item_url);
         }else{
-            item_url="https://rndshop.zeyo.co.kr/shop/itemphp?r=1&it_id="+item_id;
+            item_url="https://rndshop.zeyo.co.kr/shop/item.php?r=1&it_id="+item_id;
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.loadUrl(item_url);
@@ -99,14 +93,12 @@ public class ItemDetailActivity extends AppCompatActivity {
         String items_info = "";
         String item_info = "";
         RecentlyViewedItem recentlyViewedItem;
-        if(getIntent().hasExtra("item_url")){
-            recentlyViewedItem=new RecentlyViewedItem(item_image, item_id, item_name, item_price, item_subcategory, item_url);
-        }else{
-            recentlyViewedItem= new RecentlyViewedItem(item_image, item_id, item_name,item_subcategory, item_price);
-        }
+
+        recentlyViewedItem=new RecentlyViewedItem(item_image, item_id, item_name, item_price, item_subcategory, item_url);
 
         item_info = gson.toJson(recentlyViewedItem, RecentlyViewedItem.class);
         LinkedHashMap linkedHashMap=new LinkedHashMap();
+        Log.d("item_info",item_info);
 
         if(sharedPreferences.getAll().isEmpty()) { // 최근 본 상품이 비어있을 때
             linkedHashMap.put(item_id,item_info);

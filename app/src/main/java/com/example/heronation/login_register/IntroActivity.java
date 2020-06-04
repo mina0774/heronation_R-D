@@ -64,7 +64,13 @@ public class IntroActivity extends AppCompatActivity {
                         }
 
                         if(getIntent().getStringExtra("link")!=null){
-                            Log.d("link",getIntent().getStringExtra("link"));
+                            intent.putExtra("link",getIntent().getStringExtra("link"));
+                            intent.putExtra("item_id",getIntent().getStringExtra("item_id"));
+                            intent.putExtra("item_image",getIntent().getStringExtra("item_image"));
+                            intent.putExtra("item_name",getIntent().getStringExtra("item_name"));
+                            intent.putExtra("item_subcategory",getIntent().getStringExtra("item_subcategory"));
+                            intent.putExtra("brand",getIntent().getStringExtra("brand"));
+                            intent.putExtra("item_price",getIntent().getStringExtra("item_price"));
                         }
 
                         startActivity(intent);

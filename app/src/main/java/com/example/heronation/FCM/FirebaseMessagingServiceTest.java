@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
 import com.example.heronation.login_register.IntroActivity;
 import com.example.heronation.login_register.WebViewActivity;
 import com.example.heronation.main.MainActivity;
@@ -50,9 +51,14 @@ public class FirebaseMessagingServiceTest extends FirebaseMessagingService {
             String link=remoteMessage.getData().get("link");
 
             Intent intent;
-            intent = new Intent(this, WebViewActivity.class);
-            intent.putExtra("link",link);
-
+            intent = new Intent(this, ItemDetailActivity.class);
+            intent.putExtra("link",remoteMessage.getData().get("link"));
+            intent.putExtra("item_id",remoteMessage.getData().get("item_id"));
+            intent.putExtra("item_image",remoteMessage.getData().get("item_image"));
+            intent.putExtra("item_name",remoteMessage.getData().get("item_name"));
+            intent.putExtra("item_subcategory",remoteMessage.getData().get("item_subcategory"));
+            intent.putExtra("brand",remoteMessage.getData().get("brand"));
+            intent.putExtra("item_price",remoteMessage.getData().get("item_price"));
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

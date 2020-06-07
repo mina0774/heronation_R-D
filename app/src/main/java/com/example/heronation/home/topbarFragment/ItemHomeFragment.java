@@ -75,6 +75,7 @@ public class ItemHomeFragment extends Fragment {
     private Button log;
     public static TextView log_textview;
     public static String style_tag_id;
+    public String gender;
 
     int page_num=1; // 인기상품을 로드할 페이지 넘버
     @Override
@@ -149,7 +150,7 @@ public class ItemHomeFragment extends Fragment {
 
         APIInterface.StyleRecommendationBasedUserService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserService.class);
 
-        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(style_tag_id, authorization, accept); //사용자 정보 받아오기
+        retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(style_tag_id, authorization, accept,gender); //사용자 정보 받아오기
         request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
             @Override
             public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
@@ -295,6 +296,7 @@ public class ItemHomeFragment extends Fragment {
                             }
                         }
                     }
+                    gender=userMyInfo.getGender();
                     GetItemInfoUser("스타일 추천");
                 } else { //토큰 만료기한이 끝나, 재로그인이 필요할 때
                     backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )

@@ -31,6 +31,7 @@ import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -176,9 +177,10 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
             result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
 
             String distance="";
+            DecimalFormat df=new DecimalFormat("######0.00");
             for(int a=0;a<compareWithBody.getBodysResponses().size();a++){
                 if(compareWithBody.getBodysResponses().get(a).getMeasureItemId()==compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getMeasureItemId()){
-                    distance=Double.toString(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getValue()-compareWithBody.getBodysResponses().get(a).getValue());
+                    distance=df.format(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getValue()-compareWithBody.getBodysResponses().get(a).getValue());
                 }
             }
             result_distance[i].setLayoutParams(layoutParams);
@@ -242,9 +244,10 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
                     result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
 
                     String distance="";
+                    DecimalFormat df=new DecimalFormat("######0.00");
                     for(int a=0;a<compareWithBody.getBodysResponses().size();a++){
                         if(compareWithBody.getBodysResponses().get(a).getMeasureItemId()==compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(num).getGoodsScmmValues().get(i).getMeasureItemId()){
-                            distance=Double.toString(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(num).getGoodsScmmValues().get(i).getValue()-compareWithBody.getBodysResponses().get(a).getValue());
+                            distance=df.format(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(num).getGoodsScmmValues().get(i).getValue()-compareWithBody.getBodysResponses().get(a).getValue());
                         }
                     }
                     result_distance[i].setLayoutParams(layoutParams);

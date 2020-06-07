@@ -138,7 +138,8 @@ public interface APIInterface {
         @GET("api/items/style-tags/{style_tag_id}/user-base")
         retrofit2.Call<ArrayList<StyleRecommendation>> ShopItemInfo(@Path("style_tag_id") String style_tag_id,
                                                                     @Header("authorization") String authorization,
-                                                                    @Header("Accept") String accept);
+                                                                    @Header("Accept") String accept,
+                                                                    @Query("gender") String gender);
     }
 
     /* 타사용자 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/

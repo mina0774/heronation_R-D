@@ -29,6 +29,8 @@ import com.example.heronation.main.MainActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
 
+import java.text.DecimalFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -178,9 +180,10 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
             result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
 
             String distance = "";
+            DecimalFormat df=new DecimalFormat("######0.00");
             for (int a = 0; a < compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().size(); a++) {
                 if (compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getMeasureItemId() == compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getMeasureItemId()) {
-                    distance = Double.toString(compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getValue() - compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
+                    distance = df.format(compareWithWardrobe.getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getValue() - compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
                 }
             }
             result_distance[i].setLayoutParams(layoutParams);
@@ -244,9 +247,10 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
                     result_item[i].setTextColor(Color.parseColor("#1d1d1d"));
 
                     String distance = "";
+                    DecimalFormat df=new DecimalFormat("######0.00");
                     for (int a = 0; a < compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().size(); a++) {
                         if (compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getMeasureItemId() == compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().get(i).getMeasureItemId()) {
-                            distance = Double.toString(compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().get(i).getValue() - compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
+                            distance = df.format(compareWithWardrobe.getGoodsResponses().get(num).getGoodsScmmValues().get(i).getValue() - compareWithWardrobe.getWardrobeResponse().getWardrobeScmmValueResponses().get(a).getValue());
                         }
                     }
                     result_distance[i].setLayoutParams(layoutParams);

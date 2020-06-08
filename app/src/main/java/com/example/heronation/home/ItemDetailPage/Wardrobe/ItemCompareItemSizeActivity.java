@@ -85,6 +85,7 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
     public void click_close_button(View view){
         finish();
         ItemSelectItemForComparisonAcitivity.itemSelectItemForComparisonAcitivity.finish();
+        ItemMeasurementActivity.itemMeasurementActivity.finish();
     }
 
 

@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.heronation.R;
 import com.example.heronation.home.ItemDetailPage.Body.ItemMeasurementBodyActivity;
 import com.example.heronation.home.ItemDetailPage.Body.ItemMeasurementBodySizeInfoActivity;
+import com.example.heronation.home.ItemDetailPage.ItemMeasurementActivity;
 import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity;
 import com.example.heronation.home.dataClass.CompareWithBody;
 import com.example.heronation.home.dataClass.GoodsResponses;
@@ -76,6 +77,7 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
         finish();
         ItemMeasurementBodySizeInfoActivity.itemMeasurementBodySizeInfoActivity.finish();
         ItemMeasurementBodyActivity.itemMeasurementBodyActivity.finish();
+        ItemMeasurementActivity.itemMeasurementActivity.finish();
     }
 
     public void compare_product_size_with_body(){

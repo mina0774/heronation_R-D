@@ -75,10 +75,12 @@ public class ItemMeasurementActivity extends AppCompatActivity {
     int i;
     Button[] measurement_size_button;
 
+    public static ItemMeasurementActivity itemMeasurementActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_measurement);
+        itemMeasurementActivity=this;
         ButterKnife.bind(this);
 
         item_subcategory=getIntent().getStringExtra("item_subcategory");

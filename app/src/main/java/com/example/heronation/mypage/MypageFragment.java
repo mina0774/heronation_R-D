@@ -20,6 +20,9 @@ import butterknife.ButterKnife;
 
 public class MypageFragment extends Fragment {
     @BindView(R.id.mypage_signInUp_btn) Button mypage_signInUp_btn;
+    @BindView(R.id.mypage_notice_btn) Button mypage_notice_btn;
+    @BindView(R.id.mypage_service_btn) Button mypage_service_btn;
+    @BindView(R.id.mypage_personalinfo_btn) Button mypage_personalinfo_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +37,30 @@ public class MypageFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), loginPageActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+            }
+        });
+
+        mypage_notice_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NoticeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mypage_personalinfo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PolicyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mypage_service_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PolicyActivity.class);
+                startActivity(intent);
             }
         });
         return rootView;

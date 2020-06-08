@@ -41,6 +41,9 @@ public class MypageConnectingFragment extends Fragment {
     @BindView(R.id.mypage_logout_btn) Button mypage_logout_btn;
     @BindView(R.id.mypage_mysize_btn) Button mypage_mysize_btn;
     @BindView(R.id.mypage_mystyle_btn) Button mypage_mystyle_btn;
+    @BindView(R.id.mypage_notice_btn) Button mypage_notice_btn;
+    @BindView(R.id.mypage_service_btn) Button mypage_service_btn;
+    @BindView(R.id.mypage_personalinfo_btn) Button mypage_personalinfo_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,6 +108,29 @@ public class MypageConnectingFragment extends Fragment {
             }
         });
 
+        mypage_notice_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NoticeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mypage_personalinfo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PolicyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mypage_service_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PolicyActivity.class);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 

@@ -54,12 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btn_alarm"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_background_rectangle"
-                android:text="알림" />
+
 
 
             <Button

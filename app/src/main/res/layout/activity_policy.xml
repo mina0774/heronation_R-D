@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_back"/>
+
+        <TextView
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="서비스 운영 정책"
+            android:textSize="18sp" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_weight="617"
+        android:layout_width="match_parent"
+        android:layout_height="0px">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:weightSum="375">
+                <LinearLayout
+                    android:layout_weight="15"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"/>
+                <Button
+                    android:layout_weight="155"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:background="#00ff0000"
+                    android:text="서비스 이용약관"
+                    android:textColor="#1048ff"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:id="@+id/button_policy"/>
+                <LinearLayout
+                    android:layout_weight="20"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"></LinearLayout>
+                <Button
+                    android:layout_weight="155"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:background="#00ff0000"
+                    android:text="개인정보 취급 방침"
+                    android:textColor="#999999"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:id="@+id/button_privacy"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:weightSum="375">
+                <LinearLayout
+                    android:layout_weight="15"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"></LinearLayout>
+                <LinearLayout
+                    android:layout_weight="345"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/underline"></LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:weightSum="375">
+
+                <TextView
+                    android:id="@+id/textview_subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="서비스 이용약관"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="#1d1d1d"
+                    android:textSize="22dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="375">
+                <LinearLayout
+                    android:layout_weight="15"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"></LinearLayout>
+                <TextView
+                    android:layout_weight="345"
+                    android:layout_width="0px"
+                    android:textSize="13dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#1d1d1d"
+                    android:lineSpacingExtra ="5dp"
+                    android:text="@string/usingpolicy"
+                    android:id="@+id/textview_privacy"/>
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

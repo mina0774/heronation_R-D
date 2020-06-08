@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_back"/>
+
+        <TextView
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="공지사항"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="12"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:background="#eaeaea"></LinearLayout>
+    <LinearLayout
+        android:layout_weight="537"
+        android:layout_width="match_parent"
+        android:layout_height="0px">
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/exp_listview"
+            android:scrollbars="none"></ExpandableListView>
+    </LinearLayout>
+
+
+</LinearLayout>

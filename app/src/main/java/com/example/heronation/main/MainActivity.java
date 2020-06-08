@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.btn_close) Button btn_close;
     @BindView(R.id.btn_open) ImageButton btn_open;
     @BindView(R.id.text_id) TextView id_text;
-    @BindView(R.id.btn_alarm) Button btn_alarm;
     @BindView(R.id.btn_mypage) Button btn_mypage;
     @BindView(R.id.btn_style_recommendation) Button btn_style_recommendation;
     @BindView(R.id.btn_size_measurement) Button btn_size_measurement;
@@ -320,15 +319,7 @@ public class MainActivity extends AppCompatActivity
                 finish();
             }
         });
-        btn_alarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),IntroActivity.class);
-                Toast.makeText(getApplicationContext(),"로그인이 필요한 서비스입니다.",Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-                finish();
-            }
-        });
+
         btn_mypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

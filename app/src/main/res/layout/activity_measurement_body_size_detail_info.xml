@@ -63,6 +63,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/body_image_relativelayout"
         android:layout_marginLeft="17dp"
         android:layout_marginRight="17dp"
         android:layout_marginTop="140dp"
@@ -71,6 +72,7 @@
         android:background="@drawable/btn_background">
 
         <ImageView
+            android:id="@+id/body_image"
             android:layout_marginTop="25.5dp"
             android:layout_marginLeft="74.5dp"
             android:layout_marginBottom="25.4dp"

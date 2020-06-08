@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.heronation.FCM.FirebaseMessagingServiceTest;
@@ -54,6 +55,7 @@ import retrofit2.Response;
 public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
     @BindView(R.id.add_button) ImageButton add_button;
     @BindView(R.id.finish_button) Button activity_finish_button;
+    @BindView(R.id.body_image_relativelayout) RelativeLayout body_image_relativelayout;
 
     /* 팝업창 */
     PopupWindow mPopupWindow;
@@ -81,6 +83,13 @@ public class MeasurementBodySizeDetailInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                open_panel();
+            }
+        });
+
+        body_image_relativelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 open_panel();

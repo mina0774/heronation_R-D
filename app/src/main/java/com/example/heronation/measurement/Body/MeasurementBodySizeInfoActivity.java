@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
     @BindView(R.id.check_button_waist) ImageButton check_button_waist;
     @BindView(R.id.check_button_hip) ImageButton check_button_hip;
     @BindView(R.id.check_button_thigh) ImageButton check_button_thigh;
+    @BindView(R.id.body_image) ImageView body_image;
 
     /* 지정된 부위별 사이즈 레벨 민감도 */
     Integer shoulder_sensibility_level;
@@ -107,6 +109,12 @@ public class MeasurementBodySizeInfoActivity extends AppCompatActivity {
         check_button_thigh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { open_panel(); }
+        });
+        body_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                open_panel();
+            }
         });
     }
 

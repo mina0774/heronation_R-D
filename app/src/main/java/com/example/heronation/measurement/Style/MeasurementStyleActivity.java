@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.example.heronation.R;
@@ -31,10 +33,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MeasurementStyleActivity extends AppCompatActivity {
+    @BindView(R.id.table_layout_female) TableLayout table_layout_female;
+    @BindView(R.id.table_layout_male) TableLayout table_layout_male;
     Boolean[] style=new Boolean[14];
+    Boolean[] style_m=new Boolean[11];
     String[] style_tag_name={"심플베이직","페미닌","러블리","캐주얼","섹시글램","시크","유니크","캠퍼스룩","오피스룩","커플룩","로맨틱","빈티지","럭셔리","스트릿"};
+    String[] style_tag_name_m={"심플베이직","캐주얼","시크","유니크","캠퍼스룩","오피스룩","커플룩","빈티지","럭셔리","스트릿","댄디"};
 
-    /* 순서대로
+    public String gender;
+
+    /* 순서대로 - 여자
     * 심플베이직 페미닌 러블리 캐주얼 섹시글램 시크 유니크 캠퍼스룩 오피스룩 커플룩 로맨틱 빈티지 럭셔리 스트릿 */
     @BindView(R.id.style_1) ImageButton style_1;
     @BindView(R.id.style_2) ImageButton style_2;
@@ -51,6 +59,21 @@ public class MeasurementStyleActivity extends AppCompatActivity {
     @BindView(R.id.style_13) ImageButton style_13;
     @BindView(R.id.style_14) ImageButton style_14;
 
+    /* 순서대로 - 남자
+     * 심플베이직 캐주얼 시크 유니크 캠퍼스룩 오피스룩 커플룩 빈티지 럭셔리 스트릿 댄디 */
+    @BindView(R.id.style_1_m) ImageButton style_1_m;
+    @BindView(R.id.style_2_m) ImageButton style_2_m;
+    @BindView(R.id.style_3_m) ImageButton style_3_m;
+    @BindView(R.id.style_4_m) ImageButton style_4_m;
+    @BindView(R.id.style_5_m) ImageButton style_5_m;
+    @BindView(R.id.style_6_m) ImageButton style_6_m;
+    @BindView(R.id.style_7_m) ImageButton style_7_m;
+    @BindView(R.id.style_8_m) ImageButton style_8_m;
+    @BindView(R.id.style_9_m) ImageButton style_9_m;
+    @BindView(R.id.style_10_m) ImageButton style_10_m;
+    @BindView(R.id.style_11_m) ImageButton style_11_m;
+
+
     @BindView(R.id.measurement_style_finish_button) Button measurement_style_finish_button;
 
 
@@ -59,7 +82,11 @@ public class MeasurementStyleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement_style);
         ButterKnife.bind(this);
+
         Arrays.fill(style,false);
+        Arrays.fill(style_m,false);
+
+        getGenderInfo();
 
         style_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,6 +270,149 @@ public class MeasurementStyleActivity extends AppCompatActivity {
             }
         });
 
+        style_1_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[0]==false) {
+                    style_1_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[0]=true;
+                }else {
+                    style_1.clearColorFilter();
+                    style_m[0]=false;
+                }
+            }
+        });
+
+        style_2_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[1]==false) {
+                    style_2_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[1]=true;
+                }else {
+                    style_2_m.clearColorFilter();
+                    style_m[1]=false;
+                }
+            }
+        });
+
+        style_3_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[2]==false) {
+                    style_3_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[2]=true;
+                }else {
+                    style_3_m.clearColorFilter();
+                    style_m[2]=false;
+                }
+            }
+        });
+
+        style_4_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[3]==false) {
+                    style_4_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[3]=true;
+                }else {
+                    style_4_m.clearColorFilter();
+                    style_m[3]=false;
+                }
+            }
+        });
+
+        style_5_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[4]==false) {
+                    style_5_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[4]=true;
+                }else {
+                    style_5_m.clearColorFilter();
+                    style_m[4]=false;
+                }
+            }
+        });
+
+        style_6_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[5]==false) {
+                    style_6_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[5]=true;
+                }else {
+                    style_6_m.clearColorFilter();
+                    style_m[5]=false;
+                }
+            }
+        });
+
+        style_7_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[6]==false) {
+                    style_7_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[6]=true;
+                }else {
+                    style_7_m.clearColorFilter();
+                    style_m[6]=false;
+                }
+            }
+        });
+
+        style_8_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[7]==false) {
+                    style_8_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[7]=true;
+                }else {
+                    style_8_m.clearColorFilter();
+                    style_m[7]=false;
+                }
+            }
+        });
+
+        style_9_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[8]==false) {
+                    style_9_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[8]=true;
+                }else {
+                    style_9_m.clearColorFilter();
+                    style_m[8]=false;
+                }
+            }
+        });
+
+        style_10_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[9]==false) {
+                    style_10_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[9]=true;
+                }else {
+                    style_10_m.clearColorFilter();
+                    style_m[9]=false;
+                }
+            }
+        });
+
+        style_11_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(style_m[10]==false) {
+                    style_11_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
+                    style_m[10]=true;
+                }else {
+                    style_11_m.clearColorFilter();
+                    style_m[10]=false;
+                }
+            }
+        });
+
         // 완료 버튼을 누를 시
         measurement_style_finish_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,10 +423,19 @@ public class MeasurementStyleActivity extends AppCompatActivity {
                 List<String> styleTags=new ArrayList<>();
                 styleTags.clear();
 
-                for(int i=0; i < style.length; i++){
-                    if(style[i]==true) {
-                        styleTags.add(style_tag_name[i]);
-                        select_count++;
+                if(gender.equals("F")) {
+                    for (int i = 0; i < style.length; i++) {
+                        if (style[i] == true) {
+                            styleTags.add(style_tag_name[i]);
+                            select_count++;
+                        }
+                    }
+                }else if(gender.equals("M")){
+                    for (int i = 0; i < style_m.length; i++) {
+                        if (style_m[i] == true) {
+                            styleTags.add(style_tag_name_m[i]);
+                            select_count++;
+                        }
                     }
                 }
 
@@ -331,5 +510,31 @@ public class MeasurementStyleActivity extends AppCompatActivity {
     /* 뒤로가기 버튼을 눌렀을 때 */
     public void click_back_button(View view){
         finish();
+    }
+
+    public void getGenderInfo() {
+        String authorization = "bearer " + MainActivity.access_token;
+        String accept = "application/json";
+        APIInterface.UserInfoService userInfoService = ServiceGenerator.createService(APIInterface.UserInfoService.class);
+        retrofit2.Call<UserMyInfo> request = userInfoService.UserInfo(authorization, accept);
+        request.enqueue(new Callback<UserMyInfo>() {
+            @Override
+            public void onResponse(Call<UserMyInfo> call, Response<UserMyInfo> response) {
+                if (response.code() == 200) { //정상적으로 로그인이 되었을 때
+                    UserMyInfo userMyInfo = response.body(); // 사용자 정보를 받아온 후에
+                    gender=userMyInfo.getGender();
+                   Log.d("성별",gender);
+                    if(gender.equals("F")){
+                        table_layout_female.setVisibility(View.VISIBLE);
+                    }else{
+                        table_layout_male.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserMyInfo> call, Throwable t) {
+            }
+        });
     }
 }

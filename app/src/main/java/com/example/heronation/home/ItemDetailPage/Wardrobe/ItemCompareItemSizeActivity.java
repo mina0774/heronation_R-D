@@ -106,6 +106,7 @@ public class ItemCompareItemSizeActivity extends AppCompatActivity {
                     Integer max_num = 0;
                     for (int i = 0; i < compareWithWardrobe.getGoodsResponses().size(); i++) {
                         if (max < compareWithWardrobe.getGoodsResponses().get(i).getCompareResultDerive()) {
+                            max=compareWithWardrobe.getGoodsResponses().get(i).getCompareResultDerive();
                             max_num = i;
                         }
                     }

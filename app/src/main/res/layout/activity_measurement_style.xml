@@ -69,7 +69,7 @@
             </LinearLayout>
 
             <TableLayout
-
+android:visibility="gone"
                 android:id="@+id/table_layout_female"
                 android:layout_width="match_parent"
                 android:layout_height="1680dp"

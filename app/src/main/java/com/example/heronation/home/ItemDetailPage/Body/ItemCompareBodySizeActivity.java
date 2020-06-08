@@ -75,8 +75,6 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
 
     public void click_close_button(View view){
         finish();
-        ItemMeasurementBodySizeInfoActivity.itemMeasurementBodySizeInfoActivity.finish();
-        ItemMeasurementBodyActivity.itemMeasurementBodyActivity.finish();
         ItemMeasurementActivity.itemMeasurementActivity.finish();
     }
 
@@ -104,6 +102,7 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
                     Integer max_num = 0;
                     for (int i = 0; i < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size(); i++) {
                         if (max < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getCompareResultDerive()) {
+                            max=compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getCompareResultDerive();
                             max_num = i;
                         }
                     }

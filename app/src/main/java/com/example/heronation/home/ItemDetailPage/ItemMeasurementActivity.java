@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.heronation.R;
+import com.example.heronation.home.ItemDetailPage.Body.ItemCompareBodySizeActivity;
 import com.example.heronation.home.ItemDetailPage.Body.ItemMeasurementBodyActivity;
 import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemCompareItemSizeActivity;
 import com.example.heronation.home.ItemDetailPage.Wardrobe.ItemSelectItemForComparisonAcitivity;
@@ -101,7 +102,7 @@ public class ItemMeasurementActivity extends AppCompatActivity {
         body_compare_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ItemMeasurementActivity.this, ItemMeasurementBodyActivity.class);
+                Intent intent=new Intent(ItemMeasurementActivity.this, ItemCompareBodySizeActivity.class);
                 intent.putExtra("item_id",item_id);
                 startActivity(intent);
             }

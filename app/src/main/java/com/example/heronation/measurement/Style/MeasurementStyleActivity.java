@@ -526,8 +526,10 @@ public class MeasurementStyleActivity extends AppCompatActivity {
                    Log.d("성별",gender);
                     if(gender.equals("F")){
                         table_layout_female.setVisibility(View.VISIBLE);
+                        table_layout_male.setVisibility(View.GONE);
                     }else{
                         table_layout_male.setVisibility(View.VISIBLE);
+                        table_layout_female.setVisibility(View.GONE);
                     }
                 }
             }

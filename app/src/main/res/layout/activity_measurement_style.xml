@@ -69,182 +69,351 @@
             </LinearLayout>
 
             <TableLayout
-android:visibility="gone"
                 android:id="@+id/table_layout_female"
                 android:layout_width="match_parent"
                 android:layout_height="1680dp"
                 android:layout_marginTop="10dp"
-                android:stretchColumns="0,1">
+                android:stretchColumns="0,1"
+                android:visibility="gone">
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
+                    <LinearLayout
+                        android:layout_height="240dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/style_1"
-                        android:layout_width="0dp"
-                        android:layout_height="240dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="224dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_background"
                         android:scaleType="centerCrop"
                         android:src="@drawable/simplebasic" />
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="심플베이직"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="240dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
                     <ImageButton
                         android:id="@+id/style_2"
-                        android:layout_width="0dp"
-                        android:layout_height="240dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="224dp"
                         android:layout_weight="1"
                         android:background="@drawable/btn_background"
                         android:scaleType="centerCrop"
                         android:src="@drawable/feminine"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="페미닌"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_3"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/lovely" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/lovely"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="러블리"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_4"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/casual" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/casual"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="캐주얼"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_5"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/sexyglam" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/sexyglam"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="섹시글램"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_6"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/chic"/>
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_6"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/chic"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="시크"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_7"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/unique" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_7"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/unique"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="유니크"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_8"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/campuslook"/>
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_8"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/campuslook"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="캠퍼스룩"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_9"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/officelook" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_9"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/officelook"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="오피스룩"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_10"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/couplelook"/>
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_10"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/couplelook"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="커플룩"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_11"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/romantic" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_11"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/romantic"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="로맨틱"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_12"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/vintage"/>
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_12"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/vintage"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="빈티지"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_13"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/luxury" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_13"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/luxury"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="럭셔리"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_14"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/street"/>
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_14"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/street"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="스트릿"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
 
             </TableLayout>
 
             <TableLayout
-                android:visibility="gone"
+
                 android:id="@+id/table_layout_male"
                 android:layout_width="match_parent"
-                android:layout_height="1400dp"
+                android:layout_height="1480dp"
                 android:layout_marginTop="10dp"
                 android:stretchColumns="0,1">
 
@@ -252,130 +421,260 @@ android:visibility="gone"
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_1_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/simplebasic_m" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_1_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/simplebasic_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="심플베이직"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_2_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/casual_m"/>
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_2_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/casual_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="캐주얼"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_3_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/chic_m" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_3_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/chic_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="시크"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_4_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/unique_m" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_4_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/unique_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="유니크"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_5_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/campuslook_m" />
-
-                    <ImageButton
-                        android:id="@+id/style_6_m"
                         android:layout_width="0dp"
-                        android:layout_height="240dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/officelook_m"/>
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_5_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/campuslook_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="캠퍼스룩"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_height="240dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_6_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/officelook_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="오피스룩"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_7_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/couplelook" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_7_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/couplelook"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="커플룩"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_8_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/vintage_m"/>
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_8_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/vintage_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="빈티지"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_9_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/luxury_m" />
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_9_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/luxury_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="럭셔리"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/style_10_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/street_m"/>
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_10_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/street_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="스트릿"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                 </TableRow>
 
                 <TableRow
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/style_11_m"
-                        android:layout_width="0dp"
+                    <LinearLayout
                         android:layout_height="240dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_background"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/dandy_m" />
-
+                        android:orientation="vertical">
+                        <ImageButton
+                            android:id="@+id/style_11_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="224dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/dandy_m"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="16dp"
+                            android:text="댄디"
+                            android:textSize="12sp"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
                     <ImageButton
                         android:layout_width="0dp"
                         android:layout_height="240dp"

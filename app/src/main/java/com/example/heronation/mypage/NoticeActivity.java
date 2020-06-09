@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 
 public class NoticeActivity extends AppCompatActivity {
     @BindView(R.id.exp_listview) ExpandableListView listView;
+    @BindView(R.id.back_button) Button back_button;
     public static Context context;
 
 
@@ -33,6 +34,12 @@ public class NoticeActivity extends AppCompatActivity {
 
         Display newDisplay = getWindowManager().getDefaultDisplay();
         int width = newDisplay.getWidth();
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                finish();
+            }
+        });
 
         ArrayList<ExpandableGroup> dataList = new ArrayList<ExpandableGroup>();
         ExpandableGroup temp = new ExpandableGroup("Zeyo 앱 신규 오픈 안내");

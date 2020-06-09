@@ -142,6 +142,13 @@ public interface APIInterface {
                                                                     @Query("gender") String gender);
     }
 
+    public interface StyleRecommendationBasedUserNotGenderService {
+        @GET("api/items/style-tags/{style_tag_id}/user-base")
+        retrofit2.Call<ArrayList<StyleRecommendation>> ShopItemInfo(@Path("style_tag_id") String style_tag_id,
+                                                                    @Header("authorization") String authorization,
+                                                                    @Header("Accept") String accept);
+    }
+
     /* 타사용자 기반 스타일 추천 상품 리스트를 뿌려주는 인터페이스*/
     public interface StyleRecommendationBasedOtherService {
         @GET("api/items/others-user-base")

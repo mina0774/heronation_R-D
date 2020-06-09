@@ -2,6 +2,7 @@ package com.example.heronation.wishlist.topbarFragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +60,7 @@ public class WishlistClosetFragment extends Fragment {
     @BindView(R.id.closet_body_height) TextView closet_body_height;
     @BindView(R.id.closet_body_weight) TextView closet_body_weight;
     @BindView(R.id.have_no_closet_item) TextView have_no_closet_item;
+    @BindView(R.id.image_view_body_group) ImageView image_view_body_group;
 
     public static WishlistClosetAdapter wishlistClosetAdapter;
     Integer page_num; // 동적 로딩을 위한 page number
@@ -239,6 +242,11 @@ public class WishlistClosetFragment extends Fragment {
                         }
                         if(userMyInfo.getWeight()!=null) {
                             closet_body_weight.setText("몸무게: " + userMyInfo.getWeight().toString() + "kg");
+                        }
+                        if(userMyInfo.getGender().equals("F")){
+                            image_view_body_group.setImageDrawable(getResources().getDrawable(R.drawable.female));
+                        }else if(userMyInfo.getGender().equals("M")){
+                            image_view_body_group.setImageDrawable(getResources().getDrawable(R.drawable.male));
                         }
                     }
                     else if(response.code()==401){

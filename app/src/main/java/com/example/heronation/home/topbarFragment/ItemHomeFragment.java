@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -300,13 +301,16 @@ public class ItemHomeFragment extends Fragment {
                             }else{
                                 num=userMyInfo.getStyleTagResponses().get(i).getId();
                             }
-                            style_tag_id += num + ",";
+
                             if (i == userMyInfo.getStyleTagResponses().size() - 1) {
                                 style_tag_id += num;
+                            }else{
+                                style_tag_id += num + ",";
                             }
                         }
                     }
                     gender=userMyInfo.getGender();
+                    Log.d("스타일태그",style_tag_id);
                     GetItemInfoUser("스타일 추천");
                 } else { //토큰 만료기한이 끝나, 재로그인이 필요할 때
                     backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )

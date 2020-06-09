@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -198,9 +199,21 @@ public class ItemAiFragment extends Fragment {
                     if(userMyInfo.getStyleTagResponses()!=null) {
                         style_tag_id="";
                         for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
-                            style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
+                            int num;
+                            if(userMyInfo.getStyleTagResponses().get(i).getId()==5){
+                                num=9;
+                            }else if(userMyInfo.getStyleTagResponses().get(i).getId()==8){
+                                num=3;
+                            }else if(userMyInfo.getStyleTagResponses().get(i).getId()==11){
+                                num=10;
+                            }else{
+                                num=userMyInfo.getStyleTagResponses().get(i).getId();
+                            }
+
                             if (i == userMyInfo.getStyleTagResponses().size() - 1) {
-                                style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
+                                style_tag_id += num;
+                            }else{
+                                style_tag_id += num + ",";
                             }
                         }
                     }

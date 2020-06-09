@@ -290,9 +290,19 @@ public class ItemHomeFragment extends Fragment {
                     if(userMyInfo.getStyleTagResponses()!=null) {
                         style_tag_id="";
                         for (int i = 0; i < userMyInfo.getStyleTagResponses().size(); i++) {
-                            style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId() + ",";
+                            int num;
+                            if(userMyInfo.getStyleTagResponses().get(i).getId()==5){
+                                num=9;
+                            }else if(userMyInfo.getStyleTagResponses().get(i).getId()==8){
+                                num=3;
+                            }else if(userMyInfo.getStyleTagResponses().get(i).getId()==11){
+                                num=10;
+                            }else{
+                                num=userMyInfo.getStyleTagResponses().get(i).getId();
+                            }
+                            style_tag_id += num + ",";
                             if (i == userMyInfo.getStyleTagResponses().size() - 1) {
-                                style_tag_id += userMyInfo.getStyleTagResponses().get(i).getId();
+                                style_tag_id += num;
                             }
                         }
                     }

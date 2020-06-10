@@ -323,9 +323,9 @@ public class ItemHomeFragment extends Fragment {
                             if(userMyInfo.getStyleTagResponses().get(i).getId()==5){
                                 num=9;
                             }else if(userMyInfo.getStyleTagResponses().get(i).getId()==8){
-                                num=3;
-                            }else if(userMyInfo.getStyleTagResponses().get(i).getId()==11){
                                 num=10;
+                            }else if(userMyInfo.getStyleTagResponses().get(i).getId()==11){
+                                num=3;
                             }else{
                                 num=userMyInfo.getStyleTagResponses().get(i).getId();
                             }

@@ -35,7 +35,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/shop_item_example_img"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerInside" />
 
 
             <LinearLayout

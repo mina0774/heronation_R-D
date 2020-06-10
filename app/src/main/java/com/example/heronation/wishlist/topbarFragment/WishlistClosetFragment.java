@@ -170,10 +170,10 @@ public class WishlistClosetFragment extends Fragment {
                             ClosetResponse.WardrobeResponse wardrobeResponse = closetResponse.getWardrobeResponses().get(i);
                             if (cloth_category.equals("전체")) {
                                 item_list.add(new ClosetItem(wardrobeResponse.getImage(), wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
-                                        wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
+                                        wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString(),wardrobeResponse.getSubCategoryId()));
                             } else if (cloth_category.equals(wardrobeResponse.getSubCategoryName())) {
                                 item_list.add(new ClosetItem(wardrobeResponse.getImage(), wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
-                                        wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
+                                        wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString(),wardrobeResponse.getSubCategoryId()));
                             }
                         }
                         if(item_list.size()==0){

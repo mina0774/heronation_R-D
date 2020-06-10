@@ -35,6 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.heronation.measurement.AR.MeasurementArInfoActivity.temp_id;
+
 public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAdapter.Holder>{
 
     private Context context;
@@ -58,7 +60,36 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
     /* position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시 */
     @Override
     public void onBindViewHolder(@NonNull final WishlistClosetAdapter.Holder holder, int position) {
-        Glide.with(context).load(item_list.get(position).getImage_url()).error(R.drawable.shop_item_example_img_2).crossFade().into(holder.image);
+        // 측정 시작 시에 촬영한 사진 or 갤러리에서 받아온 사진을 띄워줌
+        if(item_list.get(position).getCategory_id().toString().equals("2"))
+            Glide.with(context).load(R.drawable.img_tshirt).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("3"))
+            Glide.with(context).load(R.drawable.img_cardigan).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("4"))
+            Glide.with(context).load(R.drawable.img_coat).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("5"))
+            Glide.with(context).load(R.drawable.img_jacket).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("6"))
+            Glide.with(context).load(R.drawable.img_shirt).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("7"))
+            Glide.with(context).load(R.drawable.img_blouse).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("8"))
+            Glide.with(context).load(R.drawable.img_padding).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("9"))
+            Glide.with(context).load(R.drawable.img_vest).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("10"))
+            Glide.with(context).load(R.drawable.img_hood).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("11"))
+            Glide.with(context).load(R.drawable.img_sleeveless).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("12"))
+            Glide.with(context).load(R.drawable.img_onepiece).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("13"))
+            Glide.with(context).load(R.drawable.img_pants).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("14"))
+            Glide.with(context).load(R.drawable.img_short_pants).into(holder.image);
+        if(item_list.get(position).getCategory_id().toString().equals("15"))
+            Glide.with(context).load(R.drawable.img_skirt).into(holder.image);
+
         holder.category.setText(item_list.get(position).getCategory());
         holder.item_name.setText(item_list.get(position).getItem_name());
         holder.date.setText(item_list.get(position).getDate());
@@ -179,6 +210,7 @@ public class WishlistClosetAdapter extends RecyclerView.Adapter<WishlistClosetAd
                         intent.putExtra("shop_name",item_list.get(position).getShop_name());
                         intent.putExtra("measurement_type",item_list.get(position).getMeasurement_type());
                         intent.putExtra("id",item_list.get(position).getId());
+                        intent.putExtra("category_id",item_list.get(position).getCategory_id().toString());
                         context.startActivity(intent);
                     }
                 }

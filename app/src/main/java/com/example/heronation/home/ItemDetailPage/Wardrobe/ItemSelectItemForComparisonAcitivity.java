@@ -106,7 +106,7 @@ public class ItemSelectItemForComparisonAcitivity extends AppCompatActivity {
                         ClosetResponse.WardrobeResponse wardrobeResponse = closetResponse.getWardrobeResponses().get(i);
                        if(cloth_category.equals(wardrobeResponse.getSubCategoryId().toString())){
                             item_list.add(new ClosetItem(wardrobeResponse.getImage(), wardrobeResponse.getSubCategoryName(), wardrobeResponse.getName(),
-                                    wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString()));
+                                    wardrobeResponse.getCreateDt(), wardrobeResponse.getShopmallName(), "AR", wardrobeResponse.getId().toString(),wardrobeResponse.getSubCategoryId()));
                             total_item_number+=1;
                         }
                     }

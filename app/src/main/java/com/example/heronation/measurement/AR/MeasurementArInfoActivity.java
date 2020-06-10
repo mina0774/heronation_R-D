@@ -2,6 +2,8 @@ package com.example.heronation.measurement.AR;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
@@ -9,12 +11,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -53,7 +59,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MeasurementArInfoActivity extends AppCompatActivity {
-    @BindView(R.id.ar_add_cloth_btn) ImageButton ar_add_cloth_btn; // 사진 등록 버튼
     @BindView(R.id.ar_start_measure) Button ar_start_measure; // 측정 시작 버튼
     @BindView(R.id.ar_cloth_name_et) EditText ar_cloth_name_et; // 등록 아이템의 이름 설정
     @BindView(R.id.ar_start_measure_image_body) ImageView ar_start_measure_image_body;  // 카테고리를 선택했을 때 밑에 나타나는 옷 카테고리 이미지
@@ -64,13 +69,13 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
     public static String category_select_id; //선택된 옷의 특정 카테고리의 ID, 이 아이디를 통해 측정 목록에 접근하여 담을 수 있음.
     public static ArrayList<String> Measure_item, Image_item, measureItemId, min_scope, max_scope; //옷 카테고리에 따른 측정 목록을 담는 변수들
     public static String clothName; // 옷 이름 저장하는 변수
+    public static String temp_id; // 옷 카테고리 아이디 저장하는 변수
 
     //카메라, 갤러리 접근 관련
     private Boolean isPermission = true; // 카메라 접근 권한 허용 여부를 나태내는 변수
     private static final int PICK_FROM_ALBUM = 1; //앨범을 선택했을 때, 고유 번호
     private static final int PICK_FROM_CAMERA = 2; //카메라를 선택했을 때 고유 번호
     private File tempFile; // 카메라로 사진 저장할 때, 임시로 사진 파일을 받는 변수
-    public static File file; // 사진 파일 저장하는 변수
     public String cameraFilePath; // 카메라에서 촬영한 사진 경로
 
     MeasurementFragment measurementFragment;
@@ -80,7 +85,6 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement_ar_info);
-
         measurementArInfoActivity=this;
 
         ButterKnife.bind(this);
@@ -93,46 +97,12 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
         /* 사진 등록 위한 카메라 접근 권한 */
         cameraPermission();
 
-        /* 옷 사진 등록 버튼을 눌렀을 때 - 사진을 받아올 경로를 선택하도록 알림창을 띄워줌 */
-        ar_add_cloth_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String title_text="선택";
-                final CharSequence[] image_path_pick = {"앨범에서 선택", "카메라 촬영"};
-                AlertDialog.Builder dialogBuilder= new AlertDialog.Builder(MeasurementArInfoActivity.this);
-                ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#353535"));
-                SpannableStringBuilder spannableStringBuilder=new SpannableStringBuilder(title_text);
-                spannableStringBuilder.setSpan(foregroundColorSpan,0,title_text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                dialogBuilder.setTitle(spannableStringBuilder);
-                /* 다이얼로그에 앨범 혹은 카메라에서 사진을 받아올 지, 선택되었을 때 일어나는 이벤트 */
-                dialogBuilder.setItems(image_path_pick, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if(i==0){ // 앨범에서 선택을 누른 경우
-                            if(isPermission) gotoAlbum();
-                            else Toast.makeText(MeasurementArInfoActivity.this, "사진 및 파일을 저장하기 위해선 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
-                        }
-                        else if(i==1){ // 카메라 촬영을 누른 경우
-                            if(isPermission) takePhoto();
-                            else Toast.makeText(MeasurementArInfoActivity.this, "사진 및 파일을 저장하기 위해선 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-                AlertDialog alertDialog=dialogBuilder.create();
-                alertDialog.show();
-            }
-        });
-
         /* 측정 시작 버튼을 눌렀을 때 */
         ar_start_measure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(ar_cloth_name_et.getText().toString().length() == 0){ //이름이 비었는지 확인
                     Toast.makeText(MeasurementArInfoActivity.this,"이름을 입력해주세요.",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else if(file == null){ //사진이 비었는지 확인
-                    Toast.makeText(MeasurementArInfoActivity.this,"사진을 등록해주세요.",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 clothName=ar_cloth_name_et.getText().toString();
@@ -172,7 +142,7 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                 int pos = ar_spinner_select_category.getSelectedItemPosition();
-                                String temp_id = subCategoryResponses.get(pos).getId();
+                                temp_id = subCategoryResponses.get(pos).getId();
                                 setClothCategoryImageView(temp_id); //스피너에 선택된 옷 카테고리에 따라 이미지 뷰 설정
                                 category_select_id = category.get(cloth_category_list.get(pos)); //선택된 카테고리 id 설정
                                 /* 선택된 옷 카테고리에 따른 측정 목록을 받아오는 함수 */
@@ -276,90 +246,5 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
                 .check();
     }
 
-    /* 앨범에 접근하여 사진을 받아오는 함수 */
-    private void gotoAlbum(){
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent,PICK_FROM_ALBUM);
-    }
 
-    /* 카메라를 이용하여 사진을 받아오는 함수 */
-    private void takePhoto(){
-        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            tempFile = createImageFile(); //카메라 촬영 후 이미지 파일을 생성하는 함수
-        } catch (IOException e) {
-            Toast.makeText(getApplicationContext(), "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-        if(tempFile != null){
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                Uri photoUri = FileProvider.getUriForFile(getApplicationContext(),"com.example.heronation.provider", tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
-            } else {
-                Uri photoUri = Uri.fromFile(tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
-            }
-        }
-
-    }
-
-    /* 카메라 촬영 후 이미지 파일을 생성하는 함수 */
-    private File createImageFile() throws IOException{
-        // 이미지 파일 이름 설정
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName="JPEG_"+timeStamp;
-        // 이미지가 저장될 폴더 이름
-        File storageDir=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),"Camera");
-        if(!storageDir.exists()) storageDir.mkdirs(); // 저장 디렉토리가 없을 시 디렉토리 생성
-        //빈 파일 생성
-        File image=File.createTempFile(imageFileName,".jpg",storageDir);
-        cameraFilePath=image.getAbsolutePath();
-        file=image;
-        return file;
-    }
-
-    /* 카메라 촬영 후 사진을 앨범에 저장하는 함수 */
-    private void galleryAddPic(){
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File file = new File(cameraFilePath);
-        Uri contentUri = Uri.fromFile(file);
-        mediaScanIntent.setData(contentUri);
-        getApplicationContext().sendBroadcast(mediaScanIntent);
-    }
-
-    /* 받아온 이미지를 이미지뷰에 뿌려주는 함수 */
-    private void setImage(){
-        Glide.with(getApplicationContext()).load(file.getAbsolutePath()).into(ar_add_cloth_btn);
-    }
-
-    /* 앨범, 카메라에서 받아온 사진 파일 처리 */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_FROM_ALBUM && resultCode == RESULT_OK) {
-            Uri photoUri = data.getData();
-            Cursor cursor = null;
-            try {
-                String[] proj = {MediaStore.Images.Media.DATA};
-                assert photoUri != null;
-                cursor = getApplicationContext().getContentResolver().query(photoUri, proj, null, null, null);
-                assert cursor != null;
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                tempFile = new File(cursor.getString(column_index));
-                file = tempFile;
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
-            }
-            setImage(); //받아온 이미지를 이미지 뷰에 뿌려줌
-        } else if (requestCode == PICK_FROM_CAMERA && resultCode == RESULT_OK) {
-            galleryAddPic(); //카메라 촬영 후 촬영 사진은 앨범에 저장
-            setImage(); //받아온 이미지를 이미지 뷰에 뿌려줌
-        }
-    }
 }

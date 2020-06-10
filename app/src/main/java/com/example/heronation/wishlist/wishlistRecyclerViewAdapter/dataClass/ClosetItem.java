@@ -9,6 +9,7 @@ public class ClosetItem implements Serializable {
     String category="";
     String item_name="";
     String date="";
+    Integer category_id;
     String shop_name="";
     String measurement_type="";
     String id="";
@@ -25,7 +26,7 @@ public class ClosetItem implements Serializable {
     }
 
 
-    public ClosetItem(String image_url, String category, String item_name, String date, String shop_name, String measurement_type,String id) {
+    public ClosetItem(String image_url, String category, String item_name, String date, String shop_name, String measurement_type,String id,Integer category_id) {
         this.image_url = image_url;
         this.category = category;
         this.item_name = item_name;
@@ -33,6 +34,16 @@ public class ClosetItem implements Serializable {
         this.shop_name = shop_name;
         this.measurement_type=measurement_type;
         this.id=id;
+        this.category_id=category_id;
+    }
+
+
+    public Integer getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(Integer category_id) {
+        this.category_id = category_id;
     }
 
     public String getImage_url() { return image_url; }

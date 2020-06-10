@@ -72,11 +72,42 @@ public class WishlistClosetItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist_closet_item_detail);
         ButterKnife.bind(this);
+        Context context=getApplicationContext();
 
         // 옷장에서 선택한 리사이클러뷰의 아이템 정보를 받아오기 위한 인텐트
         Intent intent=getIntent();
 
         Glide.with(this).load(intent.getStringExtra("image")).into(image);
+
+        if(getIntent().getStringExtra("category_id").equals("2"))
+            Glide.with(context).load(R.drawable.img_tshirt).into(image);
+        if(getIntent().getStringExtra("category_id").equals("3"))
+            Glide.with(context).load(R.drawable.img_cardigan).into(image);
+        if(getIntent().getStringExtra("category_id").equals("4"))
+            Glide.with(context).load(R.drawable.img_coat).into(image);
+        if(getIntent().getStringExtra("category_id").equals("5"))
+            Glide.with(context).load(R.drawable.img_jacket).into(image);
+        if(getIntent().getStringExtra("category_id").equals("6"))
+            Glide.with(context).load(R.drawable.img_shirt).into(image);
+        if(getIntent().getStringExtra("category_id").equals("7"))
+            Glide.with(context).load(R.drawable.img_blouse).into(image);
+        if(getIntent().getStringExtra("category_id").equals("8"))
+            Glide.with(context).load(R.drawable.img_padding).into(image);
+        if(getIntent().getStringExtra("category_id").equals("9"))
+            Glide.with(context).load(R.drawable.img_vest).into(image);
+        if(getIntent().getStringExtra("category_id").equals("10"))
+            Glide.with(context).load(R.drawable.img_hood).into(image);
+        if(getIntent().getStringExtra("category_id").equals("11"))
+            Glide.with(context).load(R.drawable.img_sleeveless).into(image);
+        if(getIntent().getStringExtra("category_id").equals("12"))
+            Glide.with(context).load(R.drawable.img_onepiece).into(image);
+        if(getIntent().getStringExtra("category_id").equals("13"))
+            Glide.with(context).load(R.drawable.img_pants).into(image);
+        if(getIntent().getStringExtra("category_id").equals("14"))
+            Glide.with(context).load(R.drawable.img_short_pants).into(image);
+        if(getIntent().getStringExtra("category_id").equals("15"))
+            Glide.with(context).load(R.drawable.img_skirt).into(image);
+
         category.setText(intent.getStringExtra("category"));
         item_name.setText(intent.getStringExtra("item_name"));
         date.setText(intent.getStringExtra("date"));

@@ -153,8 +153,6 @@ public class MeasurementARActivity extends AppCompatActivity implements GLSurfac
        long_pressed_flag=0;
        nowTouchingPointIndex=DEFAULT_VALUE;
        outOfRange=0;
-
-
         installRequested = false;
 
         // Set up tap listener.

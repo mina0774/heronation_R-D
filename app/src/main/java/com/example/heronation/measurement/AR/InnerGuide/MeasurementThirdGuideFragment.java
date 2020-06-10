@@ -45,7 +45,7 @@ public class MeasurementThirdGuideFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_measurement_third_guide, container, false);
         ImageView imageView = view.findViewById(R.id.measurement_guide_result_image);
-        Glide.with(getActivity()).load(MeasurementArInfoActivity.file.getAbsolutePath()).into(imageView);
+        Glide.with(getActivity()).load(R.drawable.img_blouse).into(imageView);
         return view;
     }
 }

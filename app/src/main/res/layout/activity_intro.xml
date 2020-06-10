@@ -19,13 +19,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="333dp"
         android:text="사고 싶으면 산다, 패핏"
+        android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:textSize="17sp"
         android:textColor="#363636"
         />
-
-
-
 
     <LinearLayout
         android:layout_marginBottom="32dp"

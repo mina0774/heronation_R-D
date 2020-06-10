@@ -53,6 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.graphics.Typeface.BOLD;
+import static com.example.heronation.measurement.AR.MeasurementArInfoActivity.temp_id;
 
 public class MeasurementResultActivity extends AppCompatActivity {
     @BindView(R.id.measurement_result_imageview) ImageView measurement_result_imageview;
@@ -82,7 +83,34 @@ public class MeasurementResultActivity extends AppCompatActivity {
 
 
         // 측정 시작 시에 촬영한 사진 or 갤러리에서 받아온 사진을 띄워줌
-        Glide.with(this).load(MeasurementArInfoActivity.file.getAbsolutePath()).into(measurement_result_imageview);
+        if(temp_id.equals("2"))
+            Glide.with(this).load(R.drawable.img_tshirt).into(measurement_result_imageview);
+        if(temp_id.equals("3"))
+            Glide.with(this).load(R.drawable.img_cardigan).into(measurement_result_imageview);
+        if(temp_id.equals("4"))
+            Glide.with(this).load(R.drawable.img_coat).into(measurement_result_imageview);
+        if(temp_id.equals("5"))
+            Glide.with(this).load(R.drawable.img_jacket).into(measurement_result_imageview);
+        if(temp_id.equals("6"))
+            Glide.with(this).load(R.drawable.img_shirt).into(measurement_result_imageview);
+        if(temp_id.equals("7"))
+            Glide.with(this).load(R.drawable.img_blouse).into(measurement_result_imageview);
+        if(temp_id.equals("8"))
+            Glide.with(this).load(R.drawable.img_padding).into(measurement_result_imageview);
+        if(temp_id.equals("9"))
+            Glide.with(this).load(R.drawable.img_vest).into(measurement_result_imageview);
+        if(temp_id.equals("10"))
+            Glide.with(this).load(R.drawable.img_hood).into(measurement_result_imageview);
+        if(temp_id.equals("11"))
+            Glide.with(this).load(R.drawable.img_sleeveless).into(measurement_result_imageview);
+        if(temp_id.equals("12"))
+            Glide.with(this).load(R.drawable.img_onepiece).into(measurement_result_imageview);
+        if(temp_id.equals("13"))
+            Glide.with(this).load(R.drawable.img_pants).into(measurement_result_imageview);
+        if(temp_id.equals("14"))
+            Glide.with(this).load(R.drawable.img_short_pants).into(measurement_result_imageview);
+        if(temp_id.equals("15"))
+            Glide.with(this).load(R.drawable.img_skirt).into(measurement_result_imageview);
 
         // 측정 결과값을 예쁘게 출력하기 위한 작업
         for(int i=0;i<MeasureItem.size();i++){
@@ -139,49 +167,11 @@ public class MeasurementResultActivity extends AppCompatActivity {
                 progressDialog.setMessage("옷장 저장 중입니다...");
                 progressDialog.show();
 
-                saveImageFile();
+                SaveMeasurementItem_JSONObejct();
             }
         });
     }
 
-    // 사진 파일 저장하는 함수
-    public void saveImageFile(){
-        File compressedImageFile = null;
-        File file=new File(MeasurementArInfoActivity.file.getAbsolutePath());
-        try {
-            compressedImageFile = new Compressor(getApplicationContext()).compressToFile(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        RequestBody requestFile=RequestBody.create(MediaType.parse("multipart/form-data"),compressedImageFile);
-        MultipartBody.Part body=MultipartBody.Part.createFormData("file",file.getName(),requestFile);
-
-        String authorization="bearer "+ MainActivity.access_token;
-        String accept="application/json";
-        String content_type="multipart/form-data";
-
-        APIInterface.UploadImageFileService uploadImageFileService=ServiceGenerator.createService(APIInterface.UploadImageFileService.class);
-        retrofit2.Call<String> request=uploadImageFileService.UploadImageFile(authorization,body);
-
-        new AsyncTask<Void, Void, Void>(){
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    Response<String> temp_file_name=request.execute();
-                    temp_file=temp_file_name.body();
-                }catch (IOException e){
-                }
-                return null;
-            }
-            //temp/upload에 정상적으로 사진이 추가되면, 그 후에 JsonObject를 생성해 옷장 추가에 필요한 body를 생성
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                SaveMeasurementItem_JSONObejct();
-            }
-        }.execute();
-    }
 
     // JSONObject를 생성하고, 측정 목록을 저장하는 함수
     public void SaveMeasurementItem_JSONObejct(){
@@ -191,13 +181,6 @@ public class MeasurementResultActivity extends AppCompatActivity {
             jsonObject.put("name",MeasurementArInfoActivity.clothName);
             jsonObject.put("subCategoryId",MeasurementArInfoActivity.category_select_id);
             jsonObject.put("registerType","D");
-
-            JSONObject fileObject=new JSONObject();
-            fileObject.put("temp_name",temp_file);
-            fileObject.put("real_name",MeasurementArInfoActivity.file.getName());
-            JSONArray attachFile=new JSONArray();
-            attachFile.put(fileObject);
-            jsonObject.put("attachFile",attachFile);
 
             JSONObject measurementObject;
             JSONArray wardrobe=new JSONArray();

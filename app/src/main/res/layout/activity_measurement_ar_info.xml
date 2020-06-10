@@ -41,22 +41,6 @@
             android:padding="16dp"
             android:layout_weight="0.140">
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1401">
-                <ImageView
-                    android:id="@+id/addclothpicture"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/addclothpicure"/>
-                <ImageButton
-                    android:id="@+id/ar_add_cloth_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:background="#00000000"/>
-            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="0dp"

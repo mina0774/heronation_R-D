@@ -7,11 +7,23 @@
     tools:context=".login_register.IntroActivity">
 
     <ImageView
-        android:layout_marginTop="48dp"
-        android:layout_width="match_parent"
-        android:layout_height="416dp"
+        android:layout_marginTop="228.6dp"
+        android:layout_width="188.6dp"
+        android:layout_height="69.8dp"
+       android:layout_centerHorizontal="true"
         android:scaleType="centerInside"
-        android:src="@drawable/intro_image"/>
+        android:src="@drawable/ic_logo_fafit"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="333dp"
+        android:text="사고 싶으면 산다, 패핏"
+        android:layout_centerHorizontal="true"
+        android:textSize="17sp"
+        android:textColor="#363636"
+        />
+
 
 
 

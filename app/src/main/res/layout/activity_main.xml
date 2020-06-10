@@ -21,7 +21,7 @@
         android:id="@+id/drawer_area"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#A0A0A0">
+        android:background="#ffffff">
         <!--상단바 좌측에 있는 이미지 버튼-->
 
         <ImageButton

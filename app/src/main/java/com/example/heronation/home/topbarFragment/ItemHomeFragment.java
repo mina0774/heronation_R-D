@@ -149,56 +149,59 @@ public class ItemHomeFragment extends Fragment {
             String authorization = "zeyo-api-key QVntgqTsu6jqt7hQSVpF7ZS8Tw==";
             String accept = "application/json";
 
-            if (style_tag_id.equals("10,10")) {
-                APIInterface.StyleRecommendationBasedUserNotGenderService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserNotGenderService.class);
-                retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(style_tag_id, authorization, accept); //사용자 정보 받아오기
+            if(style_tag_id!=null) {
 
-                request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
-                        if (response.code() == 200) {
-                            //아이템의 데이터를 받는 리스트
-                            ArrayList<StyleRecommendation> shopItemInfo = response.body();
-                            item_list.add(new ShopItemPackage(package_name, shopItemInfo));
-                            verticalAdapter.notifyItemChanged(1);
-                            if (item_list.size() == 0) {
-                                have_no_user_info.setVisibility(View.VISIBLE);
-                            } else if (item_list.size() != 0) {
-                                have_no_user_info.setVisibility(View.GONE);
+                if (style_tag_id.equals("10,10")) {
+                    APIInterface.StyleRecommendationBasedUserNotGenderService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserNotGenderService.class);
+                    retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(style_tag_id, authorization, accept); //사용자 정보 받아오기
+
+                    request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
+                            if (response.code() == 200) {
+                                //아이템의 데이터를 받는 리스트
+                                ArrayList<StyleRecommendation> shopItemInfo = response.body();
+                                item_list.add(new ShopItemPackage(package_name, shopItemInfo));
+                                verticalAdapter.notifyItemChanged(1);
+                                if (item_list.size() == 0) {
+                                    have_no_user_info.setVisibility(View.VISIBLE);
+                                } else if (item_list.size() != 0) {
+                                    have_no_user_info.setVisibility(View.GONE);
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
-                        System.out.println("error + Connect Server Error is " + t.toString());
-                    }
-                });
-            } else {
-                APIInterface.StyleRecommendationBasedUserService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserService.class);
-                retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(style_tag_id, authorization, accept, gender); //사용자 정보 받아오기
+                        @Override
+                        public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
+                            System.out.println("error + Connect Server Error is " + t.toString());
+                        }
+                    });
+                } else {
+                    APIInterface.StyleRecommendationBasedUserService itemInfoService = ServiceGenerator.createService(APIInterface.StyleRecommendationBasedUserService.class);
+                    retrofit2.Call<ArrayList<StyleRecommendation>> request = itemInfoService.ShopItemInfo(style_tag_id, authorization, accept, gender); //사용자 정보 받아오기
 
-                request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
-                        if (response.code() == 200) {
-                            //아이템의 데이터를 받는 리스트
-                            ArrayList<StyleRecommendation> shopItemInfo = response.body();
-                            item_list.add(new ShopItemPackage(package_name, shopItemInfo));
-                            verticalAdapter.notifyItemChanged(1);
-                            if (item_list.size() == 0) {
-                                have_no_user_info.setVisibility(View.VISIBLE);
-                            } else if (item_list.size() != 0) {
-                                have_no_user_info.setVisibility(View.GONE);
+                    request.enqueue(new Callback<ArrayList<StyleRecommendation>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<StyleRecommendation>> call, Response<ArrayList<StyleRecommendation>> response) {
+                            if (response.code() == 200) {
+                                //아이템의 데이터를 받는 리스트
+                                ArrayList<StyleRecommendation> shopItemInfo = response.body();
+                                item_list.add(new ShopItemPackage(package_name, shopItemInfo));
+                                verticalAdapter.notifyItemChanged(1);
+                                if (item_list.size() == 0) {
+                                    have_no_user_info.setVisibility(View.VISIBLE);
+                                } else if (item_list.size() != 0) {
+                                    have_no_user_info.setVisibility(View.GONE);
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
-                        System.out.println("error + Connect Server Error is " + t.toString());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<ArrayList<StyleRecommendation>> call, Throwable t) {
+                            System.out.println("error + Connect Server Error is " + t.toString());
+                        }
+                    });
+                }
             }
         }
 
@@ -338,7 +341,6 @@ public class ItemHomeFragment extends Fragment {
                         }
                     }
                     gender=userMyInfo.getGender();
-                    Log.d("스타일태그",style_tag_id);
                     GetItemInfoUser("스타일 추천",style_tag_id);
                 } else { //토큰 만료기한이 끝나, 재로그인이 필요할 때
                     backgroundThreadShortToast(getActivity(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )

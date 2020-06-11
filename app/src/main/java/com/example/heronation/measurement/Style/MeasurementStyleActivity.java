@@ -277,7 +277,7 @@ public class MeasurementStyleActivity extends AppCompatActivity {
                     style_1_m.setColorFilter(Color.parseColor("#747474"), PorterDuff.Mode.MULTIPLY);
                     style_m[0]=true;
                 }else {
-                    style_1.clearColorFilter();
+                    style_1_m.clearColorFilter();
                     style_m[0]=false;
                 }
             }

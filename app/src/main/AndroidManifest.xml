@@ -24,8 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_fafit_"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:largeHeap="true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mypage.PolicyActivity"></activity>
+        <activity android:name=".main.SurveyActivity"></activity>
+        <activity android:name=".mypage.PolicyActivity" />
         <activity android:name=".mypage.NoticeActivity" />
         <activity android:name=".login_register.WebViewActivity">
             <intent-filter>
@@ -78,7 +80,11 @@
         <activity android:name=".login_register.RegisterActivity" />
         <activity android:name=".home.ItemSearchActivity" />
         <activity android:name=".login_register.loginPageActivity" />
-        <activity android:name=".main.MainActivity" />
+        <activity android:name=".main.MainActivity">
+            <intent-filter>
+            <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

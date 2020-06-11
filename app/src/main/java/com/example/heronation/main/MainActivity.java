@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.btn_mypage) Button btn_mypage;
     @BindView(R.id.btn_style_recommendation) Button btn_style_recommendation;
     @BindView(R.id.btn_size_measurement) Button btn_size_measurement;
+    @BindView(R.id.survey_button) Button survey_button;
     /* Shop Ranking에 필터 버튼 눌렀을 때, seekBar 설정에 필요한 변수들 */
     int number=0;
     private SeekBar seekBar;
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        btn_close.setOnClickListener(new View.OnClickListener() { // 닫기 버튼을 클릭했을 때
+        btn_close.setOnClickListener(new View.OnClickListener() { // 닫기 버튼을 클릭했을 때=
             @Override
             public void onClick(View v) {
                 drawerLayout.closeDrawers();
@@ -201,6 +202,14 @@ public class MainActivity extends AppCompatActivity
         if(getIntent().getStringExtra("gotocloset")=="gotocloset"){
             go_to_wishlist();
         }
+
+        survey_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/jF8zdoPCMnrcuzmg9"));
+                startActivity(intent);
+            }
+        });
     }
     /* 뒤로가기 버튼을 눌렀을 경우 */
     @Override

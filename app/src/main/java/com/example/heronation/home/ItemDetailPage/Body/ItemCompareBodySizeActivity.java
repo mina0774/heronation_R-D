@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -91,53 +92,58 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     CompareWithBody compareWithBody = response.body();
 
-                    // 현재 보고있는 상품 정보 설정
-                    measurement_item_name.setText(compareWithBody.getItemResponse().getName());
-                    measurement_item_image.setBackground(new ShapeDrawable(new OvalShape()));
-                    measurement_item_image.setClipToOutline(true);
-                    Glide.with(getApplicationContext()).load(compareWithBody.getItemResponse().getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(measurement_item_image);
+                    if (compareWithBody.getBodysResponses() != null) {
+                        // 현재 보고있는 상품 정보 설정
+                        measurement_item_name.setText(compareWithBody.getItemResponse().getName());
+                        measurement_item_image.setBackground(new ShapeDrawable(new OvalShape()));
+                        measurement_item_image.setClipToOutline(true);
+                        Glide.with(getApplicationContext()).load(compareWithBody.getItemResponse().getShopImage()).error(R.drawable.shop_item_example_img_2).crossFade().into(measurement_item_image);
 
-                    // 사이즈 추천 값에 따라 첫화면 생성 - 일치 확률 최대값 찾기
-                    Double max = compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(0).getCompareResultDerive();
-                    Integer max_num = 0;
-                    for (int i = 0; i < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size(); i++) {
-                        if (max < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getCompareResultDerive()) {
-                            max=compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getCompareResultDerive();
-                            max_num = i;
+                        // 사이즈 추천 값에 따라 첫화면 생성 - 일치 확률 최대값 찾기
+                        Double max = compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(0).getCompareResultDerive();
+                        Integer max_num = 0;
+                        for (int i = 0; i < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size(); i++) {
+                            if (max < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getCompareResultDerive()) {
+                                max = compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getCompareResultDerive();
+                                max_num = i;
+                            }
                         }
-                    }
 
-                    measurement_size_button=new Button[compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size()];
-                    for(i=0;i<compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size();i++){
-                        LinearLayout.LayoutParams lp= new LinearLayout.LayoutParams(100, 100);
-                        lp.setMarginEnd(30);
+                        measurement_size_button = new Button[compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size()];
+                        for (i = 0; i < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size(); i++) {
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100, 100);
+                            lp.setMarginEnd(30);
 
-                        measurement_size_button[i]=new Button(getApplicationContext());
-                        measurement_size_button[i].setLayoutParams(lp);
+                            measurement_size_button[i] = new Button(getApplicationContext());
+                            measurement_size_button[i].setLayoutParams(lp);
 
                             measurement_size_button[i].setTextColor(Color.parseColor("#dddddd"));
                             measurement_size_button[i].setBackground(getDrawable(R.drawable.button_background));
 
-                        measurement_size_button[i].setTextSize(11);
-                        measurement_size_button[i].setText(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getSizeOptionName());
-                        measurement_size_button[i].setTextAppearance(BOLD);
+                            measurement_size_button[i].setTextSize(11);
+                            measurement_size_button[i].setText(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(i).getSizeOptionName());
+                            measurement_size_button[i].setTextAppearance(BOLD);
 
-                        size_button_linear_layout.addView(measurement_size_button[i]);
-                    }
+                            size_button_linear_layout.addView(measurement_size_button[i]);
+                        }
 
-                    for(i=0;i<compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size();i++) {
-                        size_button_onclick(compareWithBody,i,compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size());
-                    }
+                        for (i = 0; i < compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size(); i++) {
+                            size_button_onclick(compareWithBody, i, compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().size());
+                        }
 
-                    // max_num에 따라 처음 화면에 뿌려지는 수치값이 다름
-                    recommendation_size_textview.setText(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(max_num).getSizeOptionName()+" size ");
-                    recommend_size(compareWithBody,max_num);
+                        // max_num에 따라 처음 화면에 뿌려지는 수치값이 다름
+                        recommendation_size_textview.setText(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(max_num).getSizeOptionName() + " size ");
+                        recommend_size(compareWithBody, max_num);
 
-                }else if(response.code()==401){
+                    } else if (response.code() == 401) {
                     backgroundThreadShortToast(getApplicationContext(), "세션이 만료되어 재로그인이 필요합니다."); // 토스트 메시지 ( 메인 쓰레드에서 실행되어야하므로 사용 )
-                    Intent intent=new Intent(ItemCompareBodySizeActivity.this, IntroActivity.class);
+                    Intent intent = new Intent(ItemCompareBodySizeActivity.this, IntroActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(),"신체 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
                 }
             }
 
@@ -179,6 +185,7 @@ public class ItemCompareBodySizeActivity extends AppCompatActivity {
 
             String distance="";
             DecimalFormat df=new DecimalFormat("######0.00");
+
             for(int a=0;a<compareWithBody.getBodysResponses().size();a++){
                 if(compareWithBody.getBodysResponses().get(a).getMeasureItemId()==compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getMeasureItemId()){
                     distance=df.format(compareWithBody.getGoodsAndMeasureItemResponses().getGoodsResponses().get(max_num).getGoodsScmmValues().get(i).getValue()-compareWithBody.getBodysResponses().get(a).getValue());

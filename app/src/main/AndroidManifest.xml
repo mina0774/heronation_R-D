@@ -32,7 +32,6 @@
         <activity android:name=".login_register.WebViewActivity">
             <intent-filter>
                 <action android:name=".login_register.WebViewActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -48,7 +47,9 @@
         <activity android:name=".measurement.Body.MeasurementBodyActivity" />
         <activity android:name=".measurement.Body.MeasurementBodySizeInfoActivity" />
         <activity android:name=".mypage.UserModifyActivity" />
-        <activity android:name=".measurement.AR.MeasurementArInfoActivity" />
+        <activity android:name=".measurement.AR.MeasurementArInfoActivity"
+            android:screenOrientation="behind">
+        </activity>
         <activity android:name=".measurement.AR.InnerGuide.InnerGuideViewPager" />
         <activity android:name=".measurement.AR.MeasurementResultActivity" />
         <activity android:name=".measurement.AR.MeasurementARActivity" />

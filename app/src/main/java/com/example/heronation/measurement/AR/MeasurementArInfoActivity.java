@@ -11,12 +11,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -90,6 +92,10 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         measurementFragment=new MeasurementFragment();
         cloth_category_list=new ArrayList<>();
+
+        if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         /* 측정할 옷 종류 카테고리 받아오는 함수 - 스피너 설정, 이미지뷰 설정 */
         getClothCategory();
@@ -234,7 +240,7 @@ public class MeasurementArInfoActivity extends AppCompatActivity {
                 isPermission = true;
             }
             @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            public void onPermissionDenied(List<String> deniedPermissions) {
                 isPermission = false;
             }
         };

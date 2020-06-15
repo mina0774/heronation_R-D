@@ -8,20 +8,19 @@
 
     <ImageView
         android:id="@+id/item_best_image_icon"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:background="@drawable/round_rectangle"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         android:src="@drawable/shopitem_example" />
     <TextView
         android:id="@+id/item_best_item_name"
-        android:layout_width="56dp"
+        android:layout_width="72dp"
         android:layout_height="20dp"
         android:textAlignment="center"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:textColor="#000000"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp"
         tools:text="아우터"
         />
 

@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.heronation.R;
 import com.example.heronation.home.ItemDetailPage.ItemDetailActivity;
+import com.example.heronation.home.ItemSearchActivity;
 import com.example.heronation.login_register.WebViewActivity;
 import com.example.heronation.zeyoAPI.APIInterface;
 import com.example.heronation.zeyoAPI.ServiceGenerator;
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.btn_style_recommendation) Button btn_style_recommendation;
     @BindView(R.id.btn_size_measurement) Button btn_size_measurement;
     @BindView(R.id.survey_button) Button survey_button;
+    @BindView(R.id.main_search_button) ImageButton main_search_button;
     /* Shop Ranking에 필터 버튼 눌렀을 때, seekBar 설정에 필요한 변수들 */
     int number=0;
     private SeekBar seekBar;
@@ -207,6 +209,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/jF8zdoPCMnrcuzmg9"));
+                startActivity(intent);
+            }
+        });
+
+        main_search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(), ItemSearchActivity.class);
                 startActivity(intent);
             }
         });

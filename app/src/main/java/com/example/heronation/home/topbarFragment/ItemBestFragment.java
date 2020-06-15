@@ -46,10 +46,6 @@ public class ItemBestFragment extends Fragment {
     public static List<Content> item_list;
     public static RecyclerView item_recyclerView;
 
-    /* 배너 슬라이딩을 위한 변수 */
-    private bannerAdapter bannerAdapter;
-    @BindView(R.id.image_view_best) ViewPager viewPager;
-
     public static long startTime;
     private Button log;
     public static TextView log_textview;
@@ -96,10 +92,6 @@ public class ItemBestFragment extends Fragment {
         item_recyclerView.setAdapter(itemSearchAdapter);
         // 첫 화면 - 전체
         GetItemInfo(null,1);
-
-        /* 이미지 슬라이딩을 위해 뷰페이저를 이용했고, 이를 설정해주는 이미지 어댑터를 설정하여 슬라이딩 구현 */
-        bannerAdapter =new bannerAdapter(getActivity());
-        viewPager.setAdapter(bannerAdapter);
 
         load_item();
         return rootView;
@@ -157,7 +149,7 @@ public class ItemBestFragment extends Fragment {
         /* 카테고리 리스트에 아이템 추가
          *  여기서 카테고리 이름이나, 이미지 변경하면 됨
          */
-        addItem(getResources().getDrawable(R.drawable.ic_item_all),"전체");
+        addItem(getResources().getDrawable(R.drawable.ic_baseline_store_24),"전체");
         addItem(getResources().getDrawable(R.drawable.img_tshirt),"티셔츠/맨투맨");
         addItem(getResources().getDrawable(R.drawable.img_cardigan),"가디건");
         addItem(getResources().getDrawable(R.drawable.img_coat),"코트");

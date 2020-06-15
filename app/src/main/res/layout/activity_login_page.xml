@@ -12,12 +12,39 @@
         android:layout_margin="20dp"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="LOGIN"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="26sp" />
+
+        <LinearLayout
+            android:layout_marginTop="64dp"
+            android:layout_below="@id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="재요에 가입하고 다양한 방법으로 사이즈를 비교하세요"
+                android:textColor="#2f2f30"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원이 되면 측정한 데이터를 계속해서 사용할 수 있어요!"
+                android:textColor="#acacac"
+                android:textSize="11sp"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_centerInParent="true"
@@ -50,7 +77,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/btn_background"
+                android:background="@drawable/btn_background_pink"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:text="로그인" />
 
 

@@ -16,12 +16,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/image_view_best"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_best_item_category"
                 android:layout_width="match_parent"
@@ -33,6 +27,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:paddingEnd="16dp"
                 android:id="@+id/item_best_items"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

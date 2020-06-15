@@ -15,7 +15,7 @@ import com.example.heronation.R;
 /* 배너 Image를 넘기기 위해 Viewpager를 위한 Adapter */
 public class bannerAdapter extends PagerAdapter {
     //배너에 넣을 사진 모음
-    private int[] images = {R.drawable.banner_example, R.drawable.banner_example5, R.drawable.banner_example4, R.drawable.banner_example3};
+    private int[] images = {R.drawable.banner_template, R.drawable.banner_example4, R.drawable.banner_example3};
 
     private LayoutInflater inflater;
     private Context context;

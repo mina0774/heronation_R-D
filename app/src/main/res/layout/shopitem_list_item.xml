@@ -60,7 +60,8 @@
                 android:id="@+id/recycler_view_item_item_id"
                 android:layout_width="match_parent"
                 android:textSize="10sp"
-                android:layout_height="16dp" />
+                android:visibility="invisible"
+                android:layout_height="0dp" />
 
 
         </LinearLayout>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.heronation.R;
 import com.example.heronation.measurement.AR.MeasurementArInfoActivity;
@@ -21,9 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MeasurementFragment extends Fragment {
-    @BindView(R.id.measurement_AR_button) Button measurement_AR_button;
-    @BindView(R.id.measurement_style_button) Button measurement_style_button;
-    @BindView(R.id.measurement_body_button) Button measurement_body_button;
+    @BindView(R.id.measurement_AR_button) LinearLayout measurement_AR_button;
+    @BindView(R.id.measurement_style_button) LinearLayout measurement_style_button;
+    @BindView(R.id.measurement_body_button) LinearLayout measurement_body_button;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

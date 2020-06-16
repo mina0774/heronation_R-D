@@ -24,16 +24,31 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginRight="8dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/zeyo_measure3" />
+                android:src="@drawable/zeyo_measure2" />
 
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
                 android:id="@+id/measurement_style_button"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="184dp"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/round_rectangle"
-                android:text="스타일" />
+                android:background="@drawable/round_rectangle">
+                <TextView
+                    android:padding="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="스타일"
+                    android:textColor="#ff576c"
+                    android:textStyle="bold"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:paddingLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="내 스타일 정보 \n등록하기"/>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -45,24 +60,55 @@
             android:layout_margin="8dp"
             android:layout_gravity="center_horizontal">
 
-
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
                 android:id="@+id/measurement_AR_button"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="184dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/round_rectangle"
-                android:text="AR" />
+                android:background="@drawable/round_rectangle">
+                <TextView
+                    android:padding="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AR"
+                    android:textColor="#ff576c"
+                    android:textStyle="bold"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="내 옷장에 상품 \n등록하기"/>
+            </LinearLayout>
 
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
                 android:id="@+id/measurement_body_button"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="184dp"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/round_rectangle"
-                android:text="신체비교" />
+                android:background="@drawable/round_rectangle">
+                <TextView
+                    android:padding="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="신체비교"
+                    android:textColor="#ff576c"
+                    android:textStyle="bold"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="내 체형 정보 \n등록하기"/>
+            </LinearLayout>
 
 
         </LinearLayout>

@@ -35,7 +35,6 @@ public class UserModifyActivity extends AppCompatActivity {
     TextView modify_datepicker;
     @BindView(R.id.userModify_edit_btn) TextView userModify_edit_btn;
     @BindView(R.id.userModify_id_text) TextView userModify_id_text;
-    @BindView(R.id.userModify_present_pw_et) TextView userModify_present_pw_et;
     @BindView(R.id.userModify_email_text) TextView userModify_email_text;
     @BindView(R.id.userModify_name_text)
     EditText userModify_name_text;

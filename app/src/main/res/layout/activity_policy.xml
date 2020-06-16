@@ -47,7 +47,7 @@
                     android:layout_height="match_parent"
                     android:background="#00ff0000"
                     android:text="서비스 이용약관"
-                    android:textColor="#1048ff"
+                    android:textColor="#ff576c"
                     android:textSize="18dp"
                     android:gravity="center"
                     android:id="@+id/button_policy"/>

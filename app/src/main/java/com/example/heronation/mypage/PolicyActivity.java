@@ -41,7 +41,7 @@ public class PolicyActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 textView.setText(R.string.privacy);
                 //buttonPrivacy.setPaintFlags(buttonPrivacy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                buttonPrivacy.setTextColor(Color.parseColor("#1048ff"));
+                buttonPrivacy.setTextColor(Color.parseColor("#ff576c"));
                 buttonPrivacy.setPaintFlags(buttonPrivacy.getPaintFlags()|Paint.FAKE_BOLD_TEXT_FLAG);
                 buttonPolicy.setTextColor(Color.parseColor("#999999"));
                 buttonPolicy.setPaintFlags(0);
@@ -54,7 +54,7 @@ public class PolicyActivity extends AppCompatActivity {
                 textView.setText(R.string.usingpolicy);
                 //buttonPolicy.setPaintFlags(buttonPrivacy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                 buttonPrivacy.setTextColor(Color.parseColor("#999999"));
-                buttonPolicy.setTextColor(Color.parseColor("#1048ff"));
+                buttonPolicy.setTextColor(Color.parseColor("#ff576c"));
                 buttonPolicy.setPaintFlags(buttonPolicy.getPaintFlags()|Paint.FAKE_BOLD_TEXT_FLAG);
 
                 buttonPrivacy.setPaintFlags(0);

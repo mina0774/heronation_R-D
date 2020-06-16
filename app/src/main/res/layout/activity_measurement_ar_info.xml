@@ -126,7 +126,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3427"
-                android:background="@drawable/rectangle_button"
+                android:background="@drawable/btn_background_pink"
                 android:gravity="center"
                 android:text="측정 시작하기"
                 android:textColor="#ffffff"

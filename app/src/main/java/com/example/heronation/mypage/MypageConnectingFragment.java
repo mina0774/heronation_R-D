@@ -149,7 +149,7 @@ public class MypageConnectingFragment extends Fragment {
                     UserMyInfo userMyInfo = response.body();
                     //회원정보 설정
                     /* 상단 텍스트뷰 설정 */
-                    mypage_ninkname_text.setText("안녕하세요!\n"+userMyInfo.getName()+"님\n"+userMyInfo.getEmail());
+                    mypage_ninkname_text.setText(userMyInfo.getName()+"님, "+"안녕하세요!\n"+userMyInfo.getEmail());
                 }
                 /*토큰 만료기한이 끝나, 재로그인이 필요할 때*/
                 else if(response.code()==401) {

@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="버전정보 01.00.00 최신 버전입니다." />
+                android:text="버전정보 1.00.00 최신 버전입니다." />
 
 
             <TextView

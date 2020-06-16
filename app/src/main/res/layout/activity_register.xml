@@ -22,6 +22,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_name_check"
+                        android:layout_width="0px"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="345"
+                        android:text="이름을 입력해주세요."
+                        android:textColor="#ff576c"
+                        android:textSize="12dp" />
+
                     <LinearLayout
                         android:weightSum="375"
                         android:layout_width="match_parent"
@@ -355,15 +366,7 @@
                             android:layout_weight="30"
                             android:layout_width="0px"
                             android:layout_height="wrap_content"></LinearLayout>
-                        <TextView
-                            android:layout_weight="345"
-                            android:layout_marginTop="8dp"
-                            android:layout_width="0px"
-                            android:layout_height="15dp"
-                            android:text="이름을 입력해주세요."
-                            android:textColor="#ff576c"
-                            android:textSize="12dp"
-                            android:id="@+id/txt_name_check"/>
+
                     </LinearLayout>
                     <LinearLayout
                         android:weightSum="375"

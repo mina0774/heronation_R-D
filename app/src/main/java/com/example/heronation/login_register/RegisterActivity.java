@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                 buttonWoman.setTextColor(Color.parseColor("#ff576c"));
                 buttonMan.setBackgroundResource(R.drawable.rounded_rectangle_gray);
                 buttonMan.setTextColor(Color.parseColor("#777777"));
-                gender_info = "W";
+                gender_info = "F";
                 textViewGenderCheck.setTextColor(Color.parseColor("#1048ff"));
                 textViewGenderCheck.setText("성별이 입력되었습니다.");
                 gender_bool=true;
